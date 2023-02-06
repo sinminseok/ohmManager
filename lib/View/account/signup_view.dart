@@ -9,7 +9,6 @@ import '../../Utils/toast.dart';
 import '../../Utils/widget/passwordinput_widget.dart';
 import '../../Utils/widget/rouninput_widget.dart';
 
-
 class SignupView extends StatefulWidget {
   const SignupView({Key? key}) : super(key: key);
 
@@ -19,16 +18,13 @@ class SignupView extends StatefulWidget {
 
 class _SignupView extends State<SignupView>
     with SingleTickerProviderStateMixin {
-
   final TextEditingController _userIDController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _checkpasswordController = TextEditingController();
+  final TextEditingController _checkpasswordController =
+      TextEditingController();
   final TextEditingController _nicknameController = TextEditingController();
   late final int age;
   final TextEditingController _codeController = TextEditingController();
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +45,7 @@ class _SignupView extends State<SignupView>
               child: Container(
                 color: kBackgroundColor,
                 width: size.width,
-                height: size.height*1,
+                height: size.height * 1,
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -58,10 +54,10 @@ class _SignupView extends State<SignupView>
                       SizedBox(height: size.height * 0.1),
                       Text(
                         '회원가입',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 24),
                       ),
-
-                      SizedBox(height: size.height*0.05),
+                      SizedBox(height: size.height * 0.05),
                       RoundedInput(
                           controller: _userIDController,
                           icon: Icons.mail,
@@ -69,30 +65,35 @@ class _SignupView extends State<SignupView>
                       RoundedPasswordInput(
                           controller: _passwordController, hint: 'Password'),
                       RoundedPasswordInput(
-                          controller: _checkpasswordController, hint: 'check pw'),
+                          controller: _checkpasswordController,
+                          hint: 'check pw'),
                       RoundedInput(
                           icon: Icons.person_outline,
-                          controller: _nicknameController, hint: '이름'),
+                          controller: _nicknameController,
+                          hint: '이름'),
                       RoundedInput(
                           controller: _codeController,
                           icon: Icons.numbers,
                           hint: '가입번호'),
-
                       SizedBox(
                         height: size.height * 0.02,
                       ),
                       InkWell(
-                        onTap: () async{
-                          final prefs = await SharedPreferences.getInstance();
-                          var manager_id = ManagerApiController().register_manager(_userIDController.text,_passwordController.text,_nicknameController.text,_codeController.text);
-                          if(manager_id == null){
+                        onTap: () async {
+                          var manager_id = ManagerApiController()
+                              .register_manager(
+                                  _userIDController.text,
+                                  _passwordController.text,
+                                  _nicknameController.text,
+                                  _codeController.text);
+                          //가입실패
+                          if (manager_id == null) {
                             showtoast("회원가입오류 다시 가입해주세요");
-                          }else{
-                            prefs.setString("userId", manager_id.toString());
+                          } else {
+                            //가입성공
                             showtoast("회원가입 성공");
                             return Navigator.pop(context);
                           }
-
                         },
                         borderRadius: BorderRadius.circular(10),
                         child: Container(
@@ -101,44 +102,23 @@ class _SignupView extends State<SignupView>
                             borderRadius: BorderRadius.circular(10),
                             color: kPrimaryColor,
                           ),
-
                           padding: EdgeInsets.symmetric(vertical: 20),
                           alignment: Alignment.center,
                           child: Text(
                             "가입 하기",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18
-                            ),
+                            style: TextStyle(color: Colors.white, fontSize: 18),
                           ),
                         ),
                       ),
-
-
                       SizedBox(height: 30),
-                      Container(
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/center_login');
-                          },
-                          child: Text(
-                            "로그인 페이지로 이동",
-                            style: TextStyle(
-                                color: kPrimaryColor, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 ),
               ),
             ),
           )
-
         ],
       ),
     );
   }
-
-
 }

@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 import '../Model/PostDto.dart';
 import '../Model/PostImgDto.dart';
@@ -14,7 +15,7 @@ import '../Utils/toast.dart';
 class PostApiController with ChangeNotifier {
 
 
-  Future<String?> save_post(String title, String content, List<File> imageFileList,
+  Future<String?> save_post(String title, String content,
       String gymId, String token) async {
     PostDto postDto = PostDto.makeDto(title, content);
 
@@ -49,7 +50,7 @@ class PostApiController with ChangeNotifier {
   }
 
 
-  save_postimg(String postId,List<File> imageFileList,
+  save_postimg(String postId,List<XFile> imageFileList,
       String token) async {
 
 

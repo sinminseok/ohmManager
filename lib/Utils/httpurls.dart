@@ -1,13 +1,13 @@
-
 String endpoint = "http://localhost:8080/api/";
 
-class ManagerApi_Url{
-
+class ManagerApi_Url {
   String save_manager = endpoint + "manager";
 
-  String save_trainer = endpoint +  "trainer";
+  String save_trainer = endpoint + "trainer";
 
-  String info_manager = endpoint + "manager/info/";
+  String info_gym_byId = endpoint + "manager/info/";
+
+  String getinfo = endpoint + "manager";
 
   String login_manager = endpoint + "manager/login";
 
@@ -15,14 +15,14 @@ class ManagerApi_Url{
   String findall_byGymId = endpoint + "manager/findall/";
 
   String find_byId = endpoint + "manager/";
-
 }
 
-class GymApi_Url{
-
+class GymApi_Url {
   String find_byId = endpoint + "gym/";
 
-  String register_gym = endpoint +"gym";
+  String register_gym = endpoint + "gym";
+
+  String registerimg_gym = endpoint + "gym/image/";
 
   String decrease_count = endpoint + "gym/count-decrease/";
 
@@ -33,17 +33,14 @@ class GymApi_Url{
   String find_byName = endpoint + "gym/name/";
 
   String findall = endpoint + "gyms";
-
 }
 
-
-class PostApi_Url{
-
-  String find_byId = endpoint+"post/";
+class PostApi_Url {
+  String find_byId = endpoint + "post/";
 
   String findall_bygymId = endpoint + "posts/";
 
-  String save_post = endpoint +"post/";
+  String save_post = endpoint + "post/";
 
-  String save_postimgs = endpoint +"post/img/";
+  String save_postimgs = endpoint + "post/img/";
 }

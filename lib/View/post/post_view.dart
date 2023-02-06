@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ohmmanager/View/post/detailview/post_write.dart';
+import 'package:ohmmanager/View/post/widgets/post_widget.dart';
 import 'package:page_transition/page_transition.dart';
 
 
-import '../../../Client/View/post/widgets/post_item.dart';
 import '../../../Model/PostDto.dart';
+import '../../Controller/PostApiController.dart';
+import '../../Utils/constants.dart';
 
 class PostView extends StatefulWidget {
   const PostView({Key? key}) : super(key: key);
@@ -42,16 +45,11 @@ class _PostView extends State<PostView> {
                       context,
                       PageTransition(
                           type: PageTransitionType.fade,
-                          child: Post_Write()));
+                          child: PostWrite_View()));
                 },
                 child: Text("글쓰기")),
 
-            InkWell(
-                onTap: (){
-                  PostApiController().findall_posts("2");
 
-                },
-                child: Text("글 불러오기")),
             FutureBuilder(
                 future: load_posts(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -77,7 +75,7 @@ class _PostView extends State<PostView> {
                         child: ListView.builder(
                             itemCount: results.length,
                             itemBuilder: (BuildContext ctx, int idx) {
-                              return Post_Item(size, context,results[idx]);
+                              return Post_Widget(size, context,results[idx]);
                             }
                         ));
                   }

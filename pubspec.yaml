@@ -47,6 +47,7 @@ dependencies:
   geolocator: ^9.0.1
   carousel_slider: ^4.1.1
   location: ^4.3.0
+  multi_image_picker: ^4.8.1
   google_maps_flutter: ^2.1.10
   blinking_text: ^1.0.2
   permission_handler: ^10.0.0

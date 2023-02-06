@@ -4,13 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/GymApiControllerr.dart';
-import 'package:ohmmanager/Utils/constants.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Utils/gyminput.dart';
 import '../../../Utils/widget/rouninput_widget.dart';
-import 'gym_register2.dart';
 
 class GymRegisterView extends StatefulWidget {
   const GymRegisterView({Key? key}) : super(key: key);
@@ -41,10 +37,6 @@ class _GymRegisterViewState extends State<GymRegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        elevation: 0,
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -71,20 +63,10 @@ class _GymRegisterViewState extends State<GymRegisterView> {
                 hint: '소개(글자수 제한 없음)'),
 
             InkWell(
-                onTap: ()async{
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.fade,
-                          child: GymRegisterView2()));
+                onTap: (){
+                  // GymApiController().
                 },
-                child: Text("센터 사진등록 페이지")),
-            InkWell(
-                onTap: ()async{
-                  final prefs = await SharedPreferences.getInstance();
-                  GymApiController().register_gym(prefs.getString("token").toString(),_nameController.text, _addressController.text, 100, _onlineintroduceController.text, "1234", _introduceController.text, _areaController.text, "10", "10:20", "10:20", "10:20", "10:20", "10:20");
-                },
-                child: Text("센터 등록")),
+                child: Text("센터 등록"))
           ],
         ),
       ),

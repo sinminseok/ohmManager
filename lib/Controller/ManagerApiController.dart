@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/GymDto.dart';
 import '../Utils/httpurls.dart';
@@ -16,7 +17,7 @@ class ManagerApiController with ChangeNotifier {
   //managerId로 Gym정보조회
   Future<GymDto?> gyminfo_byManager(String? id,String? token)async{
 
-    var res = await http.get(Uri.parse(ManagerApi_Url().info_manager + "${id}"),
+    var res = await http.get(Uri.parse(ManagerApi_Url().info_gym_byId + "${id}"),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -42,9 +43,34 @@ class ManagerApiController with ChangeNotifier {
 
   }
 
+  Future<String?> get_userinfo(String? token)async{
+
+    var res = await http.get(Uri.parse(ManagerApi_Url().getinfo),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },);
+
+
+    if (res.statusCode == 200) {
+
+      final decodeData = utf8.decode(res.bodyBytes);
+      final data = jsonDecode(decodeData);
+
+      print(data);
+      return data['id'].toString();
+    }else{
+      showtoast("ERROR");
+      return null;
+    }
+
+  }
 
 
 
+
+  //manager 회원가입
   Future<int?> register_manager(
       String id, String password, String nickname, String code) async {
     var res = await http.post(Uri.parse(ManagerApi_Url().save_manager),
@@ -71,8 +97,10 @@ class ManagerApiController with ChangeNotifier {
     }
   }
 
+  //manager,trainer 로그인
   Future<String?> login_manager(
       String id, String password) async {
+
     var res = await http.post(Uri.parse(ManagerApi_Url().login_manager),
         headers: {
           'Content-Type': 'application/json',
@@ -85,9 +113,17 @@ class ManagerApiController with ChangeNotifier {
         }));
 
     if (res.statusCode == 200) {
+      final prefs = await SharedPreferences.getInstance();
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
-      print(data['token']);
+      var userId = prefs.getString("userId");
+
+      //초기 로그인시 userId(PK)저장
+      if(userId == null){
+        print("set userId");
+        var userId =await get_userinfo(data['token']);
+        prefs.setString("userId", userId.toString());
+      }
 
       return data['token'];
     } else {

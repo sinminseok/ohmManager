@@ -24,7 +24,6 @@ class _FrameView extends State<FrameView> {
   final screens = [
     HomeView(),
     PostView(),
-    GymView(),
     MypageView(),
   ];
 
@@ -42,7 +41,6 @@ class _FrameView extends State<FrameView> {
           iconList: [
             Icons.home,
             Icons.speaker_notes_outlined,
-            Icons.storefront,
             Icons.person,
           ],
           onChange: (val) {

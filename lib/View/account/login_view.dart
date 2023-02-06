@@ -130,6 +130,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                   InkWell(
                     onTap: () async {
                       final prefs = await SharedPreferences.getInstance();
+
                       var token = await ManagerApiController().login_manager(
                           _userIDController.text, _passwordController.text);
                       if (token == null) {
@@ -144,6 +145,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                             prefs.remove("token");
                             prefs.setString("token", token.toString());
                           }
+
 
                           Navigator.push(
                               context,

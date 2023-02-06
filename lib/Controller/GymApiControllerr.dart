@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http_parser/http_parser.dart';
 import '../../../Model/GymDto.dart';
 import '../../../Model/GymImgDto.dart';
 import 'package:http/http.dart' as http;
@@ -15,7 +18,8 @@ class GymApiController with ChangeNotifier {
 
   String? get gym_name => _gym_name;
 
-  register_gym(
+  Future<String?> register_gym(
+      String token,
       String name,
       String address,
       int count,
@@ -29,36 +33,71 @@ class GymApiController with ChangeNotifier {
       String SATURDAY,
       String WEEKDAY,
       String HOLIDAY) async {
+
     var res = await http.post(Uri.parse(GymApi_Url().register_gym),
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json',  'Authorization': 'Bearer $token',},
         body: json.encode({
-          'name': name,
-          'address': address,
-          'count': count,
-          'oneline_introduce': oneline_introduce,
-          'code': code,
-          'introduce': introduce,
-          'area': area,
-          'trainer_count': trainer_count,
-          'CLOSEDDAYS': CLOSEDDAYS,
-          'SUNDAY': SUNDAY,
-          'SATURDAY': SATURDAY,
-          'WEEKDAY': WEEKDAY,
-          'HOLIDAY': HOLIDAY,
+
+            "name":"테스트용name",
+            "address":"테스트용ADDRess",
+            "count":20,
+            "oneline_introduce":"한줄소개",
+            "code":1234,
+            "area":"500평",
+            "trainer_count":6,
+            "CLOSEDDAYS":"6:00~7:00",
+            "SUNDAY":"6:00~7:00",
+            "SATURDAY":"6:00~7:00",
+            "WEEKDAY":"6:00~7:00",
+            "HOLIDAY":"6:00~7:00"
+
         }));
 
-
-    print(res.body);
 
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
-      return data['id'];
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString("gymId", data['id']);
+      return data['id'].toString();
     } else {
       showtoast("ERROR");
       return null;
     }
   }
+
+  save_gymimg(String token,String gymId,List<XFile> imageFileList)async{
+
+
+    FormData _formData;
+
+    if(imageFileList.isNotEmpty){
+
+      final List<MultipartFile> _files = imageFileList.map((img) => MultipartFile.fromFileSync(img.path,contentType: MediaType("image", "jpg"))).toList();
+
+      final baseOptions = BaseOptions(
+
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': 'Bearer $token' },
+
+        // contentType = 'multipart/form-data' // 'Application/json'
+      );
+      Dio dio = Dio(baseOptions);
+
+
+
+      // if(imgList.isNotEmpty){
+      _formData = FormData.fromMap({
+        "images": _files,
+
+      });
+
+      var res =await dio.post(GymApi_Url().registerimg_gym + "${gymId}", data :_formData);
+      print(res.data);
+
+
+    }}
 
   Future<List<GymDto>?> search_allgym() async {
     var res = await http.get(
