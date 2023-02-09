@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ohmmanager/Controller/ManagerApiController.dart';
+import 'package:ohmmanager/Controller/managerApi.dart';
+import 'package:ohmmanager/View/account/signup_trainer.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Utils/constants.dart';
@@ -53,7 +54,7 @@ class _SignupView extends State<SignupView>
                     children: [
                       SizedBox(height: size.height * 0.1),
                       Text(
-                        '회원가입',
+                        '관리자 회원가입',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 24),
                       ),
@@ -79,8 +80,18 @@ class _SignupView extends State<SignupView>
                         height: size.height * 0.02,
                       ),
                       InkWell(
+
+                          onTap: (){
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.fade,
+                                    child: SignupTrainer()));
+                          },
+                          child: Text("트레이너로 가입하기")),
+                      InkWell(
                         onTap: () async {
-                          var manager_id = ManagerApiController()
+                          var manager_id = ManagerApi()
                               .register_manager(
                                   _userIDController.text,
                                   _passwordController.text,

@@ -6,8 +6,8 @@ import 'package:ohmmanager/View/post/widgets/post_widget.dart';
 import 'package:page_transition/page_transition.dart';
 
 
-import '../../../Model/PostDto.dart';
-import '../../Controller/PostApiController.dart';
+import '../../../Model/postDto.dart';
+import '../../Controller/postApi.dart';
 import '../../Utils/constants.dart';
 
 class PostView extends StatefulWidget {
@@ -23,7 +23,7 @@ class _PostView extends State<PostView> {
 
   Future<List<PostDto>?> load_posts()async{
     //gymId
-    results =await PostApiController().findall_posts("2");
+    results =await PostApi().findall_posts("2");
     return results;
   }
 

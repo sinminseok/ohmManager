@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'GymImgDto.dart';
-
-
+import 'gymImgDto.dart';
 
 class GymDto {
-
   String? name;
   String? address;
   int? count;
@@ -15,9 +12,14 @@ class GymDto {
   List<GymImgDto> imgs;
 
   GymDto(
-      {required this.name, required this.address, required this.count, required this.introduce, required this.oneline_introduce,required this.imgs});
+      {required this.name,
+      required this.address,
+      required this.count,
+      required this.introduce,
+      required this.oneline_introduce,
+      required this.imgs});
 
-  factory GymDto.fromJson(Map<String, dynamic> json,imgs) {
+  factory GymDto.fromJson(Map<String, dynamic> json, imgs) {
     return GymDto(
       name: json['name'],
       address: json['address'],

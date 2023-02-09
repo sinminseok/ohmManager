@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ohmmanager/Controller/ManagerApiController.dart';
-import 'package:ohmmanager/View/account/signup_view.dart';
+import 'package:ohmmanager/Controller/managerApi.dart';
+import 'package:ohmmanager/View/account/signup_manager.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,6 +22,7 @@ class LoginView extends StatefulWidget {
 class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
   bool isLogin = true;
   bool ischeck = false;
+  String? colsedday;
   final TextEditingController _userIDController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -37,7 +38,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
     if(disk_id == null || disk_pw == null){
       return;
     }else{
-      var token =await ManagerApiController().login_manager(disk_id!, disk_pw!);
+      var token =await ManagerApi().login_manager(disk_id!, disk_pw!);
       if (prefs.getString("token") == null) {
         prefs.setString("token", token.toString());
       } else {
@@ -131,7 +132,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                     onTap: () async {
                       final prefs = await SharedPreferences.getInstance();
 
-                      var token = await ManagerApiController().login_manager(
+                      var token = await ManagerApi().login_manager(
                           _userIDController.text, _passwordController.text);
                       if (token == null) {
                         return showtoast("로그인 실패");

@@ -7,12 +7,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
-import '../Model/PostDto.dart';
-import '../Model/PostImgDto.dart';
+import '../Model/postDto.dart';
+import '../Model/postImgDto.dart';
 import '../Utils/httpurls.dart';
 import '../Utils/toast.dart';
 
-class PostApiController with ChangeNotifier {
+class PostApi with ChangeNotifier {
 
 
   Future<String?> save_post(String title, String content,

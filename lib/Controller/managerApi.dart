@@ -5,13 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Model/GymDto.dart';
+import '../Model/gymDto.dart';
 import '../Utils/httpurls.dart';
 import '../Utils/toast.dart';
-import 'GymApiControllerr.dart';
+import 'gymApi.dart';
 
 
-class ManagerApiController with ChangeNotifier {
+class ManagerApi with ChangeNotifier {
 
 
   //managerId로 Gym정보조회
@@ -31,7 +31,7 @@ class ManagerApiController with ChangeNotifier {
       final data = jsonDecode(decodeData);
 
 
-      GymDto? search_byId =await GymApiController().search_byId(data['gymDto']['id']);
+      GymDto? search_byId =await GymApi().search_byId(data['gymDto']['id']);
 
       //    GymDto gymDto = GymDto.fromJson(data['gymDto']);
 
@@ -83,6 +83,32 @@ class ManagerApiController with ChangeNotifier {
           'nickname': nickname,
           'code': code,
           'name': id,
+        }));
+
+    print(res.body);
+
+    if (res.statusCode == 200) {
+      final decodeData = utf8.decode(res.bodyBytes);
+      final data = jsonDecode(decodeData);
+      return data['id'];
+    } else {
+      showtoast("ERROR");
+      return null;
+    }
+  }
+
+  //trainer 회원가입
+  Future<int?> register_trainer(
+      String id, String password, String nickname,String gymId) async {
+    var res = await http.post(Uri.parse(ManagerApi_Url().save_trainer+"$gymId"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: json.encode({
+          'name': id,
+          'password': password,
+          'nickname': nickname,
         }));
 
     print(res.body);

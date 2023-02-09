@@ -3,7 +3,7 @@ String endpoint = "http://localhost:8080/api/";
 class ManagerApi_Url {
   String save_manager = endpoint + "manager";
 
-  String save_trainer = endpoint + "trainer";
+  String save_trainer = endpoint + "trainer/";
 
   String info_gym_byId = endpoint + "manager/info/";
 
@@ -19,6 +19,10 @@ class ManagerApi_Url {
 
 class GymApi_Url {
   String find_byId = endpoint + "gym/";
+
+  String register_time = endpoint + "gym/time/";
+
+  String check_code = endpoint + "gym/code/";
 
   String register_gym = endpoint + "gym";
 

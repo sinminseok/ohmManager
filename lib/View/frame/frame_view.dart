@@ -2,9 +2,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ohmmanager/View/gym/gym_view.dart';
 import 'package:ohmmanager/View/mypage/mypage_view.dart';
 import 'package:ohmmanager/View/post/post_view.dart';
+import 'package:ohmmanager/View/trainer/trainerView.dart';
 
 import '../../Utils/widget/bottomnav_widget.dart';
 import '../home/home_view.dart';
@@ -24,6 +24,7 @@ class _FrameView extends State<FrameView> {
   final screens = [
     HomeView(),
     PostView(),
+    TrainerView(),
     MypageView(),
   ];
 
@@ -41,6 +42,7 @@ class _FrameView extends State<FrameView> {
           iconList: [
             Icons.home,
             Icons.speaker_notes_outlined,
+            Icons.person_outline,
             Icons.person,
           ],
           onChange: (val) {

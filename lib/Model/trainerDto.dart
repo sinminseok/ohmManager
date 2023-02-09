@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
 
-import 'GymDto.dart';
+import 'gymDto.dart';
 
 class TrainerDto {
 

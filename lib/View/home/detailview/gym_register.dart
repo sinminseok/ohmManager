@@ -3,7 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ohmmanager/Controller/GymApiControllerr.dart';
+import 'package:ohmmanager/Controller/gymApi.dart';
 
 import '../../../Utils/gyminput.dart';
 import '../../../Utils/widget/rouninput_widget.dart';

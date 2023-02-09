@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/View/gym/detailview/gym_register.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../Controller/ManagerApiController.dart';
-import '../../Model/GymDto.dart';
+import '../../Controller/managerApi.dart';
+import '../../Model/gymDto.dart';
 import '../../Utils/constants.dart';
 
 class HomeView extends StatefulWidget {
@@ -31,14 +31,14 @@ class _HomeView extends State<HomeView> {
     final prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userId");
 
-    var return_value = await ManagerApiController()
+    var gym = await ManagerApi()
         .gyminfo_byManager(userId, prefs.getString("token"));
 
-    if (return_value == null) {
+    if (gym == null) {
       return null;
     } else {
       setState(() {
-        gymDto = return_value;
+        gymDto = gym;
       });
       return gymDto;
     }
@@ -125,47 +125,15 @@ class _HomeView extends State<HomeView> {
                     return SingleChildScrollView(
                       child: Column(
                         children: [
-                          Container(
-                            child: Text(
-                              "헬스장 이름 : ${gymDto?.name}",
-                              style: TextStyle(
-                                  fontSize: 21, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Container(
-                            child: Text(
-                              "헬스장 주소 : ${gymDto?.address}",
-                              style: TextStyle(
-                                  fontSize: 21, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Container(
-                            child: Text(
-                              "헬스장 인원수 : ${gymDto?.count}",
-                              style: TextStyle(
-                                  fontSize: 21, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Container(
-                            child: Text(
-                              "헬스장 소개 : ${gymDto?.introduce}",
-                              style: TextStyle(
-                                  fontSize: 21, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Container(
-                            child: Text(
-                              "헬스장 한줄소개 : ${gymDto?.oneline_introduce}",
-                              style: TextStyle(
-                                  fontSize: 21, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Container(
-                            child: Text("헬스장 상세 정보 보기버튼"),
-                          ),
-                          Container(
-                            child: Text("헬스장 정보수정"),
-                          ),
+                          Text("센터 이름",style: TextStyle(fontSize: 21),),
+                          Text("센터 주소",style: TextStyle(fontSize: 21),),
+                          Text("현재 센터 인원수",style: TextStyle(fontSize: 21),),
+                          Text("센터 사진(최대5장)",style: TextStyle(fontSize: 21),),
+                          Text("센터 한줄",style: TextStyle(fontSize: 21),),
+                          Text("센터 소개",style: TextStyle(fontSize: 21),),
+
+                          SizedBox(height: size.height*0.05,),
+                          Text("센터 정보 수정 버튼")
                         ],
                       ),
                     );

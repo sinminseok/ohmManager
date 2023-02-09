@@ -9,7 +9,7 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../Utils/constants.dart';
 import '../../../../Utils/permission.dart';
-import '../../../Controller/PostApiController.dart';
+import '../../../Controller/postApi.dart';
 
 class PostWrite_View extends StatefulWidget {
   const PostWrite_View({Key? key}) : super(key: key);
@@ -154,9 +154,8 @@ class _PostWrite_View extends State<PostWrite_View> {
               InkWell(
                   onTap: () async {
                     final prefs = await SharedPreferences.getInstance();
-                    var save_post =await PostApiController().save_post(_titleController.text,_contentController.text,"2",prefs.getString("token").toString());
-                    print(image_picked.length);
-                    PostApiController().save_postimg(save_post.toString(), image_picked, prefs.getString("token").toString());
+                    var save_post =await PostApi().save_post(_titleController.text,_contentController.text,"2",prefs.getString("token").toString());
+                    PostApi().save_postimg(save_post.toString(), image_picked, prefs.getString("token").toString());
                   },
                   child: Text("글 작성 클릭!"))
             ],

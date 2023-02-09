@@ -3,7 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../Model/PostDto.dart';
+import '../../../Model/postDto.dart';
 import '../../../Utils/constants.dart';
 
 

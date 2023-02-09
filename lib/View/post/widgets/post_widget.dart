@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../Model/PostDto.dart';
+import '../../../Model/postDto.dart';
 import '../detailview/post_detail.dart';
 
 
