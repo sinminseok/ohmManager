@@ -3,6 +3,8 @@ String endpoint = "http://localhost:8080/api/";
 class ManagerApi_Url {
   String save_manager = endpoint + "manager";
 
+  String check_code = endpoint+"manager/code/";
+
   String save_trainer = endpoint + "trainer/";
 
   String info_gym_byId = endpoint + "manager/info/";
@@ -10,6 +12,8 @@ class ManagerApi_Url {
   String getinfo = endpoint + "manager";
 
   String login_manager = endpoint + "manager/login";
+
+  String finall_trainer = endpoint+"manager/findall/";
 
   //GymId로 해당 Gym에 소속된 manager모두조회
   String findall_byGymId = endpoint + "manager/findall/";

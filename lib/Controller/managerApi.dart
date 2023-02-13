@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:ohmmanager/Model/trainerDto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/gymDto.dart';
@@ -13,6 +14,48 @@ import 'gymApi.dart';
 
 class ManagerApi with ChangeNotifier {
 
+  Future<bool?> check_code(String code)async{
+    var res = await http.post(Uri.parse(ManagerApi_Url().check_code + "${code}"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },);
+
+    if(res.statusCode == 200){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+// Future<List<TrainerDto>>
+  Future<List<TrainerDto>> findall_trainer(String gymId)async{
+    List<TrainerDto> trainers = [];
+    var res = await http.get(Uri.parse(ManagerApi_Url().finall_trainer + "${gymId}"),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+
+      },);
+
+
+    if(res.statusCode == 200){
+      final decodeData = utf8.decode(res.bodyBytes);
+      final data = jsonDecode(decodeData);
+
+      for(int i = 0 ; i<data.length;i++){
+
+        trainers.add(TrainerDto.fromJson(data[i]));
+
+      }
+      print("trainers = ");
+      print(trainers.length);
+
+      return trainers;
+    }else{
+      return [];
+    }
+  }
 
   //managerId로 Gym정보조회
   Future<GymDto?> gyminfo_byManager(String? id,String? token)async{
@@ -68,11 +111,11 @@ class ManagerApi with ChangeNotifier {
   }
 
 
-
-
   //manager 회원가입
   Future<int?> register_manager(
-      String id, String password, String nickname, String code) async {
+      String id, String password, String nickname, String oneline_introduce,String introduce) async {
+    print("Ddd");
+
     var res = await http.post(Uri.parse(ManagerApi_Url().save_manager),
         headers: {
           'Content-Type': 'application/json',
@@ -81,11 +124,11 @@ class ManagerApi with ChangeNotifier {
         body: json.encode({
           'password': password,
           'nickname': nickname,
-          'code': code,
+          'oneline_introduce':oneline_introduce,
+          'introduce':introduce,
           'name': id,
         }));
 
-    print(res.body);
 
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);

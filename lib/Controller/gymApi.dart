@@ -9,7 +9,6 @@ import 'package:http_parser/http_parser.dart';
 import '../../../Model/gymDto.dart';
 import '../../../Model/gymImgDto.dart';
 import 'package:http/http.dart' as http;
-
 import '../Utils/httpurls.dart';
 import '../Utils/toast.dart';
 
@@ -18,15 +17,15 @@ class GymApi with ChangeNotifier {
 
   String? get gym_name => _gym_name;
 
-  Future<int?> check_code(String code)async{
-    var res = await http.get(Uri.parse(GymApi_Url().check_code+"$code"),
-        headers: {'Content-Type': 'application/json'},
+  Future<int?> check_code(String code) async {
+    var res = await http.get(
+      Uri.parse(GymApi_Url().check_code + "$code"),
+      headers: {'Content-Type': 'application/json'},
     );
 
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
-
 
       return data;
     } else {
@@ -35,42 +34,38 @@ class GymApi with ChangeNotifier {
     }
   }
 
-
-
-   Future<bool?> save_gymimg(String token,String gymId,List<XFile> imageFileList)async{
-
-
+  Future<bool?> save_gymimg(
+      String token, String gymId, List<XFile> imageFileList) async {
     FormData _formData;
 
-    if(imageFileList.isNotEmpty){
-
-      final List<MultipartFile> _files = imageFileList.map((img) => MultipartFile.fromFileSync(img.path,contentType: MediaType("image", "jpg"))).toList();
+    if (imageFileList.isNotEmpty) {
+      final List<MultipartFile> _files = imageFileList
+          .map((img) => MultipartFile.fromFileSync(img.path,
+              contentType: MediaType("image", "jpg")))
+          .toList();
 
       final baseOptions = BaseOptions(
-
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': 'Bearer $token' },
-
+          'Authorization': 'Bearer $token'
+        },
       );
       Dio dio = Dio(baseOptions);
 
       _formData = FormData.fromMap({
         "images": _files,
-
       });
 
-      var res =await dio.post(GymApi_Url().registerimg_gym + "${gymId}", data :_formData);
-      print(res.statusCode);
+      var res = await dio.post(GymApi_Url().registerimg_gym + "${gymId}",
+          data: _formData);
       if (res.statusCode == 200) {
         return true;
       } else {
         showtoast("ERROR");
         return false;
       }
-
-
-    }}
+    }
+  }
 
   Future<List<GymDto>?> search_allgym() async {
     var res = await http.get(
@@ -151,55 +146,56 @@ class GymApi with ChangeNotifier {
     }
   }
 
-  Future<bool> register_time(String? gymId,String? token,String closeddays,String sunday,String saturday,String weekday,String holiday)async{
+  Future<bool> register_time(String? gymId, String? token, String closeddays,
+      String sunday, String saturday, String weekday, String holiday) async {
     var res = await http.post(
-      Uri.parse(GymApi_Url().register_time + "${gymId.toString()}"),
-      headers: {'Content-Type': 'application/json','Authorization': 'Bearer $token',},
-      body: json.encode(({
-        "closeddays":closeddays,
-        "sunday":sunday,
-        "saturday":saturday,
-        "weekday":weekday,
-        "holiday":holiday
-      }))
-    );
+        Uri.parse(GymApi_Url().register_time + "${gymId.toString()}"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode(({
+          "closeddays": closeddays,
+          "sunday": sunday,
+          "saturday": saturday,
+          "weekday": weekday,
+          "holiday": holiday
+        })));
 
     if (res.statusCode == 200) {
-
       return true;
     } else {
       showtoast("ERROR");
       return false;
     }
-
   }
 
   Future<String?> register_gym(
-      String token,
-      String name,
-      String address,
-      int count,
-      String oneline_introduce,
-      String code,
-      String introduce,
-      String area,
-      String trainer_count,
-     ) async {
-
+    String token,
+    String name,
+    String address,
+    int count,
+    String oneline_introduce,
+    String code,
+    String introduce,
+    String area,
+    String trainer_count,
+  ) async {
     var res = await http.post(Uri.parse(GymApi_Url().register_gym),
-        headers: {'Content-Type': 'application/json',  'Authorization': 'Bearer $token',},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
         body: json.encode({
-
-          "name":name,
-          "address":address,
-          "count":count,
-          "oneline_introduce":oneline_introduce,
-          "code":code,
-          "area":area,
-          "trainer_count":trainer_count,
-
+          "name": name,
+          "address": address,
+          "count": count,
+          "oneline_introduce": oneline_introduce,
+          "introduce":introduce,
+          "code": code,
+          "area": area,
+          "trainer_count": trainer_count,
         }));
-
 
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
@@ -207,6 +203,7 @@ class GymApi with ChangeNotifier {
 
       final prefs = await SharedPreferences.getInstance();
       prefs.setString("gymId", data.toString());
+
       return data.toString();
     } else {
       showtoast("ERROR");

@@ -59,23 +59,23 @@ class _SignupTrainer extends State<SignupTrainer>
                             fontWeight: FontWeight.bold, fontSize: 24),
                       ),
                       SizedBox(height: size.height * 0.05),
-                      RoundedInput(
-                          controller: _userIDController,
-                          icon: Icons.mail,
-                          hint: 'ID'),
-                      RoundedPasswordInput(
-                          controller: _passwordController, hint: 'Password'),
-                      RoundedPasswordInput(
-                          controller: _checkpasswordController,
-                          hint: 'check pw'),
-                      RoundedInput(
-                          icon: Icons.person_outline,
-                          controller: _nicknameController,
-                          hint: '이름'),
-                      RoundedInput(
-                          controller: _codeController,
-                          icon: Icons.numbers,
-                          hint: '가입번호'),
+                      // RoundedInput(
+                      //     controller: _userIDController,
+                      //     icon: Icons.mail,
+                      //     hint: 'ID'),
+                      // RoundedPasswordInput(
+                      //     controller: _passwordController, hint: 'Password'),
+                      // RoundedPasswordInput(
+                      //     controller: _checkpasswordController,
+                      //     hint: 'check pw'),
+                      // RoundedInput(
+                      //     icon: Icons.person_outline,
+                      //     controller: _nicknameController,
+                      //     hint: '이름'),
+                      // RoundedInput(
+                      //     controller: _codeController,
+                      //     icon: Icons.numbers,
+                      //     hint: '가입번호'),
                       SizedBox(
                         height: size.height * 0.02,
                       ),

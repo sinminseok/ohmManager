@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/managerApi.dart';
-import 'package:ohmmanager/View/account/signup_manager.dart';
+import 'package:ohmmanager/View/account/code_view.dart';
+import 'package:ohmmanager/View/account/role_view.dart';
+import 'package:ohmmanager/View/account/manager/signup_manager.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,6 +31,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
+    get_logininfo();
     super.initState();
   }
 
@@ -65,70 +69,97 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
         backgroundColor: kPrimaryColor,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Lets add some decorations
-            // Login Form
-            Container(
-              color: kBackgroundColor,
-              width: size.width,
-              height: size.height * 1,
-              child: Column(
-                children: [
-                  SizedBox(height: size.height * 0.1),
-                  // Text("오 헬 몇?",style: TextStyle(fontFamily: "boldfont",fontSize: 50,fontWeight: FontWeight.bold),),
-                  Container(
-                    child: Image.asset("assets/images/main_text.png"),
-                  ),
-                  SizedBox(height: size.height * 0.1),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "센터 관리자만 로그인 할수있습니다",
-                      style: TextStyle(fontFamily: "boldfont", fontSize: 18),
-                    ),
-                  ),
-                  RoundedInput(
-                      controller: _userIDController,
-                      icon: Icons.person,
-                      hint: 'ID'),
-                  RoundedPasswordInput(
-                      controller: _passwordController, hint: 'Password'),
+      backgroundColor: kPrimaryColor,
+      body: Column(
+        children: [
+          // Lets add some decorations
+          // Login Form
+          Container(
 
-                  Center(
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      width: size.width * 0.3,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "자동로그인",
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          Checkbox(
-                              focusColor: kPrimaryColor,
-                              checkColor: kPrimaryColor,
-                              fillColor:
-                                  MaterialStateProperty.resolveWith<Color>(
-                                      (Set<MaterialState> states) {
-                                if (states.contains(MaterialState.disabled)) {
-                                  return Colors.orange.withOpacity(.32);
-                                }
-                                return Colors.grey;
-                              }),
-                              value: ischeck,
-                              onChanged: (value) {
-                                setState(() {
-                                  ischeck = value!;
-                                });
-                              }),
-                        ],
-                      ),
+            width: size.width,
+
+            child: Column(
+              children: [
+
+                // Text("오 헬 몇?",style: TextStyle(fontFamily: "boldfont",fontSize: 50,fontWeight: FontWeight.bold),),
+                Container(
+                  child: Image.asset("assets/images/main_text.png"),
+                ),
+                SizedBox(height: size.height * 0.27),
+
+                Container(
+                  decoration: BoxDecoration(
+                      color: kContainerColor,
+                      borderRadius: BorderRadius.circular(15)
+                  ),
+                  width: 320.w,
+                  child: TextFormField(
+                    controller: _userIDController,
+                    textAlign: TextAlign.start,
+                    cursorColor: kContainerColor,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(20),
+                        hintText: "ID",
+                        border: InputBorder.none
                     ),
                   ),
-                  InkWell(
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  decoration: BoxDecoration(
+                      color: kContainerColor,
+                      borderRadius: BorderRadius.circular(15)
+                  ),
+                  width: 320.w,
+                  child: TextFormField(
+                    obscureText: true,
+                    controller: _passwordController,
+                    textAlign: TextAlign.start,
+                    cursorColor: kContainerColor,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(20),
+                        hintText: "PW",
+                        border: InputBorder.none
+                    ),
+                  ),
+                ),
+
+
+
+                Center(
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 10,top: 20),
+                    width: size.width * 0.4,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "자동로그인",
+
+                          style: TextStyle(fontSize: 19,fontWeight: FontWeight.bold),
+                        ),
+                        Checkbox(
+                            focusColor: kPrimaryColor,
+                            checkColor: kPrimaryColor,
+                            fillColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                                    (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.disabled)) {
+                                    return Colors.orange.withOpacity(.32);
+                                  }
+                                  return Colors.grey;
+                                }),
+                            value: ischeck,
+                            onChanged: (value) {
+                              setState(() {
+                                ischeck = value!;
+                              });
+                            }),
+                      ],
+                    ),
+                  ),
+                ),
+                InkWell(
                     onTap: () async {
                       final prefs = await SharedPreferences.getInstance();
 
@@ -169,40 +200,51 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                         }
                       }
                     },
-                    child: RoundedButton(
-                      id_controller: _userIDController,
-                      pw_controller: _passwordController,
-                      title: 'LOGIN',
-                      check_pw_controller: null,
-                    ),
-                  ),
-
-                  SizedBox(
-                    height: size.height * 0.045,
-                  ),
-                  Container(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: SignupView()));
-                      },
-                      child: Text(
-                        "회원가입 하러가기",
-                        style: TextStyle(
-                            color: kPrimaryColor, fontWeight: FontWeight.bold),
+                    child: Container(
+                      width: size.width * 0.8,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: kContainerColor,
                       ),
-                    ),
-                  )
-                ],
-              ),
-            )
 
-            // buildRegisterContainer(size)
-          ],
-        ),
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "로그인",
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18
+                        ),
+                      ),
+                    )
+                ),
+
+                SizedBox(
+                  height: size.height * 0.045,
+                ),
+                Container(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.fade,
+                              child: CodeView()));
+                    },
+                    child: Text(
+                      "회원가입 하러가기",
+                      style: TextStyle(
+                          color: Colors.black,fontSize: 19, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )
+
+          // buildRegisterContainer(size)
+        ],
       ),
     );
   }

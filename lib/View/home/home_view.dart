@@ -7,6 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../Controller/managerApi.dart';
 import '../../Model/gymDto.dart';
 import '../../Utils/constants.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -26,13 +28,23 @@ class _HomeView extends State<HomeView> {
     myFuture = get_gyminfo();
     super.initState();
   }
+  final spinkit = SpinKitDoubleBounce(
+    itemBuilder: (BuildContext context, int index) {
+      return DecoratedBox(
 
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(100)),
+          color: index.isEven ? kPrimaryColor : Colors.black26,
+        ),
+      );
+    },
+  );
   Future<GymDto?> get_gyminfo() async {
     final prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userId");
 
-    var gym = await ManagerApi()
-        .gyminfo_byManager(userId, prefs.getString("token"));
+    var gym =
+        await ManagerApi().gyminfo_byManager(userId, prefs.getString("token"));
 
     if (gym == null) {
       return null;
@@ -52,21 +64,21 @@ class _HomeView extends State<HomeView> {
           preferredSize: Size.fromHeight(50.h),
           child: AppBar(
             automaticallyImplyLeading: false,
-            backgroundColor: kBackgroundColor,
+            backgroundColor: kPrimaryColor,
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset(
-                  'assets/images/main_text.png',
-                  fit: BoxFit.contain,
-                  height: 40.h,
+                Text(
+                  "헬스장 정보",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                 ),
+                Icon(Icons.settings)
               ],
             ),
             elevation: 0,
           ),
         ),
-        backgroundColor: kBackgroundColor,
+        backgroundColor: kPrimaryColor,
         body: SingleChildScrollView(
             child: Column(
           children: [
@@ -81,8 +93,36 @@ class _HomeView extends State<HomeView> {
                     },
                     child: Center(
                       child: Container(
-                        margin: EdgeInsets.all(50),
-                        child: Text("헬스장 등록"),
+
+                        width: size.width * 1,
+                        height: size.height * 0.1,
+                        decoration: BoxDecoration(
+                            color: kContainerColor,
+                            borderRadius: BorderRadius.circular(10)),
+                        margin: EdgeInsets.all(10),
+                        child: Center(
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  margin: EdgeInsets.only(left: 25.0,right: 25),
+                                  decoration: BoxDecoration(
+                                    color: kPrimaryColor,
+                                    shape: BoxShape.circle
+                                  ),
+                                  child: Icon(Icons.turned_in_not,color: kContainerColor,),
+                                ),
+                                // Icon(Icons.turned_in_not,),
+                                Text(
+                                  "헬스장 등록",
+                                  style: TextStyle(
+                                      fontSize: 21,
+                                      fontWeight: FontWeight.bold,
+                                      color: kTextColor),
+                                )
+                              ],
+                            )),
                       ),
                     ),
                   )
@@ -105,9 +145,16 @@ class _HomeView extends State<HomeView> {
                   if (snapshot.hasData == false) {
                     return Column(
                       children: [
-                        Container(
-                          child: Text("등록된 헬스장이 없습니다"),
-                        ),
+                       Container(
+                         margin: EdgeInsets.all(10),
+                         width: size.width * 1,
+                         height: size.height * 0.64,
+                         decoration: BoxDecoration(
+                             color: kContainerColor,
+                             borderRadius: BorderRadius.circular(10)),
+                         child: spinkit,
+
+                       )
                       ],
                     );
                   }
@@ -125,14 +172,33 @@ class _HomeView extends State<HomeView> {
                     return SingleChildScrollView(
                       child: Column(
                         children: [
-                          Text("센터 이름",style: TextStyle(fontSize: 21),),
-                          Text("센터 주소",style: TextStyle(fontSize: 21),),
-                          Text("현재 센터 인원수",style: TextStyle(fontSize: 21),),
-                          Text("센터 사진(최대5장)",style: TextStyle(fontSize: 21),),
-                          Text("센터 한줄",style: TextStyle(fontSize: 21),),
-                          Text("센터 소개",style: TextStyle(fontSize: 21),),
-
-                          SizedBox(height: size.height*0.05,),
+                          Text(
+                            "센터 이름 :${gymDto?.name}",
+                            style: TextStyle(fontSize: 21),
+                          ),
+                          Text(
+                            "센터 주소 :${gymDto?.name}",
+                            style: TextStyle(fontSize: 21),
+                          ),
+                          Text(
+                            "현재 센터 인원수:${gymDto?.name}",
+                            style: TextStyle(fontSize: 21),
+                          ),
+                          Text(
+                            "센터 사진(최대5장):${gymDto?.name}",
+                            style: TextStyle(fontSize: 21),
+                          ),
+                          Text(
+                            "센터 한줄:${gymDto?.name}",
+                            style: TextStyle(fontSize: 21),
+                          ),
+                          Text(
+                            "센터 소개:${gymDto?.name}",
+                            style: TextStyle(fontSize: 21),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.05,
+                          ),
                           Text("센터 정보 수정 버튼")
                         ],
                       ),
