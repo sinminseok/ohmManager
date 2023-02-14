@@ -17,6 +17,7 @@ class TrainerView extends StatefulWidget {
 class _TrainerViewState extends State<TrainerView> {
   Future? myfuture;
   List<TrainerDto> trainers = [];
+  bool delete = false;
 
   @override
   void initState() {
@@ -37,25 +38,37 @@ class _TrainerViewState extends State<TrainerView> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(50.h),
+        appBar:  PreferredSize(
+          preferredSize: Size.fromHeight(40.h),
           child: AppBar(
+            iconTheme: IconThemeData(
+              color: kTextColor, //change your color here
+            ),
             automaticallyImplyLeading: false,
-            backgroundColor: kBackgroundColor,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/main_text.png',
-                  fit: BoxFit.contain,
-                  height: 40.h,
-                ),
-              ],
+            backgroundColor: kPrimaryColor,
+            shape: Border(
+                bottom: BorderSide(
+                    color: Colors.grey,
+                    width: 0.3
+                )
             ),
             elevation: 0,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "트레이너",
+                  style: TextStyle(fontSize: 21,
+                      color: kTextColor,
+                      ),
+                ),
+
+              ],
+            ),
+
           ),
         ),
-        backgroundColor: kBackgroundColor,
+        backgroundColor: Colors.grey.shade200,
         body: SingleChildScrollView(
             child: Column(
           children: [

@@ -4,8 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../Utils/constants.dart';
 import '../../../../Utils/permission.dart';
@@ -39,16 +41,6 @@ class _PostWrite_View extends State<PostWrite_View> {
       image_picked=images;
     });
 
-    // if ((images ?? []).isNotEmpty) {
-    //   //get the path of the first image from the select images
-    //   String imagePath = images?.first.path ?? '';
-    //
-    //   //get the content of the first image from the select images as bytes
-    //   Uint8List? imageAsBytes = await images?.first.readAsBytes();
-    //
-    //   //get the content of the first image from the select images as a String based on a given encoding
-    //   String? imageAsString = await images?.first.readAsString();
-    // }
   }
 
   //이미지 Uint8 변환 함수
@@ -62,63 +54,86 @@ class _PostWrite_View extends State<PostWrite_View> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        backgroundColor: kBackgroundColor,
+        backgroundColor: Colors.grey.shade200,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: kBackgroundColor,
+          backgroundColor: kPrimaryColor,
           iconTheme: IconThemeData(
-            color: Colors.black, //change your color here
+            color: kTextColor, //change your color here
+          ),
+          shape: Border(
+              bottom: BorderSide(
+                  color: Colors.grey,
+                  width: 0.3
+              )
           ),
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Text(
-                "글 작성",
-                style: TextStyle(fontSize: 30),
-              ),
-              InkWell(
-                  onTap: () {
-                    Permission_handler().requestCameraPermission(context);
-                    getImages();
-                  },
-                  child: Text("이미지 선택")),
               Container(
-                height: size.height * 0.35,
-                width: size.width * 1,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                      color: Colors.white12,
-                      style: BorderStyle.solid,
-                      width: 0),
+                margin: EdgeInsets.only(top: 15.h,right: 240.w),
+                child: Text(
+                  "글 작성",
+                  style: TextStyle(fontSize: 21,color: kTextColor,fontWeight: FontWeight.bold),
                 ),
+              ),
+              image_picked.isNotEmpty
+                  ? Container()
+                  : InkWell(
+                onTap: () {
+                  Permission_handler().requestCameraPermission(context);
+                  getImages();
+                },
                 child: Center(
-                  child: image_picked.isEmpty
-                      ? Container()
-                      : Container(
-                    height: 400,
-                    width: MediaQuery.of(context).size.width,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: image_picked.length,
-                        itemBuilder: (BuildContext context, int index) {
-
-                          return Container(
-                            decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: FileImage(File(image_picked[index].path))
-                              )
-                            ),
-                          );
-                        }),
+                  child: Container(
+                    margin: EdgeInsets.all(10),
+                    width: size.width * 0.9,
+                    height: size.height * 0.34,
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.25),
+                            spreadRadius: 3,
+                            blurRadius: 10,
+                            offset: Offset(1, 1), // changes position of shadow
+                          ),
+                        ],
+                        color: kContainerColor,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Icon(
+                      Icons.add,
+                      color: kTextColor,
+                      size: 35,
+                    ),
                   ),
                 ),
               ),
-              SizedBox(
-                height: size.height * 0.05,
+              image_picked.isEmpty
+                  ? Container()
+                  : Center(
+                child: Container(
+                  margin: EdgeInsets.all(10),
+                  width: size.width * 0.9,
+                  height: size.height * 0.34,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: image_picked.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          decoration: BoxDecoration(
+
+                              borderRadius: BorderRadius.all(Radius.circular(10))
+                          ),
+                          width: size.width * 0.9,
+                          height: size.height * 0.2,
+                          child: Image.file(File(image_picked[index].path),fit: BoxFit.fitHeight,),
+                        );
+                      }),
+                ),
               ),
+
+
               Container(
                   height: size.height * 0.08,
                   child: TextField(
@@ -136,7 +151,7 @@ class _PostWrite_View extends State<PostWrite_View> {
                         ),
                       ))),
               Container(
-                  height: size.height * 0.08,
+                  height: size.height * 0.24,
                   child: TextField(
                       maxLines: 10,
                       textInputAction: TextInputAction.done,
@@ -157,7 +172,7 @@ class _PostWrite_View extends State<PostWrite_View> {
                     var save_post =await PostApi().save_post(_titleController.text,_contentController.text,"2",prefs.getString("token").toString());
                     PostApi().save_postimg(save_post.toString(), image_picked, prefs.getString("token").toString());
                   },
-                  child: Text("글 작성 클릭!"))
+                  child: Button("게시"))
             ],
           ),
         ));

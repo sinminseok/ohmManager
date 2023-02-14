@@ -1,8 +1,17 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'dart:convert';
 
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Model/trainerDto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -110,6 +119,39 @@ class ManagerApi with ChangeNotifier {
 
   }
 
+  Future<bool?> register_profile(PickedFile profile,String managerId) async{
+    FormData _formData;
+
+
+      final MultipartFile _files = MultipartFile.fromFileSync(profile.path,
+          contentType: MediaType("image", "jpg"));
+
+      final baseOptions = BaseOptions(
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      );
+      Dio dio = Dio(baseOptions);
+
+      _formData = FormData.fromMap({
+        "images": _files,
+      });
+
+      var res = await dio.post(ManagerApi_Url().save_img + "${managerId}",
+          data: _formData);
+
+      print(res.statusCode);
+      print(res.data);
+
+
+      // if (res.statusCode == 200) {
+      //   return true;
+      // } else {
+      //   showtoast("ERROR");
+      //   return false;
+      // }
+
+  }
 
   //manager 회원가입
   Future<int?> register_manager(

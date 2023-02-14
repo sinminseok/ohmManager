@@ -5,6 +5,8 @@ class ManagerApi_Url {
 
   String check_code = endpoint+"manager/code/";
 
+  String save_img = endpoint+"manager/image/";
+
   String save_trainer = endpoint + "trainer/";
 
   String info_gym_byId = endpoint + "manager/info/";
@@ -23,6 +25,8 @@ class ManagerApi_Url {
 
 class GymApi_Url {
   String find_byId = endpoint + "gym/";
+
+  String register_price = endpoint + "gym/price/";
 
   String register_time = endpoint + "gym/time/";
 

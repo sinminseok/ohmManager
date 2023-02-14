@@ -15,19 +15,38 @@ class _MypageViewState extends State<MypageView> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: kBackgroundColor,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Icon(Icons.notifications,color: Colors.grey,size: 30,)
-              
-            ],
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(40.h),
+          child: AppBar(
+            iconTheme: IconThemeData(
+              color: kIconColor, //change your color here
+            ),
+            automaticallyImplyLeading: false,
+            backgroundColor: kPrimaryColor,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "내 정보",
+                  style: TextStyle(color: kTextColor, fontSize: 23),
+                ),
+                InkWell(
+                    onTap: () {
+
+                    },
+                    child: Icon(Icons.settings))
+              ],
+            ),
+            shape: Border(
+                bottom: BorderSide(
+                    color: Colors.grey,
+                    width: 0.3
+                )
+            ),
+            elevation: 0,
           ),
-          elevation: 0,
         ),
-        backgroundColor: kBackgroundColor,
+        backgroundColor: kPrimaryColor,
         body: Stack(
           children: [
             Align(

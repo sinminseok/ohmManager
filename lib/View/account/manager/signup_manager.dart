@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Controller/managerApi.dart';
+import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/View/account/manager/signup_manager2.dart';
 import 'package:ohmmanager/View/account/signup_trainer.dart';
 import 'package:page_transition/page_transition.dart';
@@ -34,7 +35,10 @@ class _SignupView extends State<SignupView>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("정보입력",style: TextStyle(fontWeight: FontWeight.bold),),
+        iconTheme: IconThemeData(
+          color: kIconColor, //change your color here
+        ),
+        title: Text("정보입력",style: TextStyle(fontWeight: FontWeight.bold,color: kTextColor),),
         backgroundColor: kPrimaryColor,
         elevation: 0,
       ),
@@ -71,7 +75,7 @@ class _SignupView extends State<SignupView>
 
 
                 SizedBox(
-                  height: size.height * 0.02,
+                  height: size.height * 0.4,
                 ),
 
                 InkWell(
@@ -90,20 +94,7 @@ class _SignupView extends State<SignupView>
 
                   },
                   borderRadius: BorderRadius.circular(10),
-                  child: Container(
-                    margin: EdgeInsets.only(top: 340),
-                    width: size.width * 0.9,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: kContainerColor,
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "다음",
-                      style: TextStyle(color: kTextColor,fontWeight: FontWeight.bold, fontSize: 18),
-                    ),
-                  ),
+                  child: Button("다음")
                 ),
                 SizedBox(height: 30),
               ],

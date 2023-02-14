@@ -3,17 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/managerApi.dart';
 import 'package:ohmmanager/View/account/code_view.dart';
-import 'package:ohmmanager/View/account/role_view.dart';
-import 'package:ohmmanager/View/account/manager/signup_manager.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import '../../Utils/buttom_container.dart';
 import '../../Utils/constants.dart';
 import '../../Utils/toast.dart';
-import '../../Utils/widget/button_widget.dart';
-import '../../Utils/widget/passwordinput_widget.dart';
-import '../../Utils/widget/rouninput_widget.dart';
+
+
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -83,12 +80,23 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
 
                 // Text("오 헬 몇?",style: TextStyle(fontFamily: "boldfont",fontSize: 50,fontWeight: FontWeight.bold),),
                 Container(
-                  child: Image.asset("assets/images/main_text.png"),
+                  width:size.width*0.5,
+                  height: size.height*0.14,
+                  child: Image.asset("assets/images/main_logo.png",fit: BoxFit.fitWidth,),
                 ),
                 SizedBox(height: size.height * 0.27),
 
                 Container(
                   decoration: BoxDecoration(
+
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 3,
+                          blurRadius: 10,
+                          offset: Offset(0, 5), // changes position of shadow
+                        ),
+                      ],
                       color: kContainerColor,
                       borderRadius: BorderRadius.circular(15)
                   ),
@@ -107,8 +115,17 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                 Container(
                   margin: EdgeInsets.only(top: 20),
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 3,
+                          blurRadius: 10,
+                          offset: Offset(0, 5), // changes position of shadow
+                        ),
+                      ],
                       color: kContainerColor,
                       borderRadius: BorderRadius.circular(15)
+
                   ),
                   width: 320.w,
                   child: TextFormField(
@@ -200,29 +217,11 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                         }
                       }
                     },
-                    child: Container(
-                      width: size.width * 0.8,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: kContainerColor,
-                      ),
-
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "로그인",
-                        style: TextStyle(
-                            color: kPrimaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18
-                        ),
-                      ),
-                    )
+                    child: Button("로그인")
                 ),
+                SizedBox(height: 30.h,),
 
-                SizedBox(
-                  height: size.height * 0.045,
-                ),
+
                 Container(
                   child: InkWell(
                     onTap: () {

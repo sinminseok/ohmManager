@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Controller/managerApi.dart';
+import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/View/account/manager/signup_manager.dart';
 import 'package:ohmmanager/View/account/signup_trainer.dart';
 import 'package:page_transition/page_transition.dart';
@@ -31,7 +32,10 @@ class _Role_View extends State<Role_View>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("관리자 정보"),
+        iconTheme: IconThemeData(
+          color: kIconColor, //change your color here
+        ),
+        title: Text("관리자 정보",style: TextStyle(fontWeight: FontWeight.bold,color: kTextColor),),
         backgroundColor: kPrimaryColor,
         elevation: 0,
       ),
@@ -51,7 +55,7 @@ class _Role_View extends State<Role_View>
                     children: [
                       Container(
                           margin: EdgeInsets.all(20),
-                          child: Text("센터에서의 역할을 선택해주세요!",style: TextStyle(fontSize: 21,fontWeight: FontWeight.bold,color: Colors.white),)),
+                          child: Text("센터에서의 역할을 선택해주세요!",style: TextStyle(fontSize: 21,fontWeight: FontWeight.bold,color: kTextBlackColor),)),
 
                      SizedBox(height: size.height*0.6,),
 
@@ -65,19 +69,8 @@ class _Role_View extends State<Role_View>
                         },
                         child: Center(
                           child: Container(
-                            width: size.width*0.9,
-                            height: size.height*0.06,
-                            margin: EdgeInsets.all(4),
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: kBackgroundColor,
-                                borderRadius: BorderRadius.circular(10)
-                            ),
-                            child: Center(child: Text("관리자",style: TextStyle(fontSize: 21,fontWeight: FontWeight.bold,color: Colors.black),)),
-
-
-
-                          ),
+                              margin: EdgeInsets.only(bottom: 15),
+                              child: Button("관리자"))
                         ),
                       ),
                       InkWell(
@@ -89,20 +82,7 @@ class _Role_View extends State<Role_View>
                                   child: SignupTrainer()));
                         },
                         child: Center(
-                          child: Container(
-                            width: size.width*0.9,
-                            height: size.height*0.06,
-                            margin: EdgeInsets.all(4),
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: kBackgroundColor,
-                                borderRadius: BorderRadius.circular(10)
-                            ),
-                            child: Center(child: Text("트레이너",style: TextStyle(fontSize: 21,fontWeight: FontWeight.bold,color: Colors.black),)),
-
-
-
-                          ),
+                          child: Button("트레이너")
                         ),
                       ),
 

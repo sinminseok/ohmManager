@@ -7,6 +7,7 @@ import 'package:ohmmanager/Utils/constants.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../Utils/buttom_container.dart';
 import 'gym_register3.dart';
 
 class GymRegisterView2 extends StatefulWidget {
@@ -42,11 +43,19 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: kIconColor, //change your color here
+        ),
+        shape: Border(
+            bottom: BorderSide(
+                color: Colors.black26,
+                width: 0.3
+            )
+        ),
         backgroundColor: kPrimaryColor,
         elevation: 0,
-        title: Text("운영시간 설정",style: TextStyle(fontWeight: FontWeight.bold),),
       ),
-      backgroundColor: kPrimaryColor,
+      backgroundColor: Colors.grey.shade200,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +68,7 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                     onTap: (){
                       //  showDialog_weekdaystart(size, context, "title");
                     },
-                    child: Text("평일 운영 시간",style: TextStyle(fontSize: 21,fontWeight: FontWeight.bold,color: Colors.white),))),
+                    child: Text("평일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
             Center(
               child: Container(
                   decoration: BoxDecoration(
@@ -101,7 +110,7 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                     onTap: (){
 
                     },
-                    child: Text("토요일 운영 시간",style: TextStyle(fontSize: 21,fontWeight: FontWeight.bold,color: Colors.white),))),
+                    child: Text("토요일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
             widget.closedday=="토요일"?Container(): Center(
               child: Container(
                   decoration: BoxDecoration(
@@ -127,7 +136,7 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                         margin: EdgeInsets.only(top: 10,left: 10),
                         child: InkWell(
                             onTap: (){
-                              showDialog_weekdayend(size, context, "title");
+                              showDialog_staurdayend(size, context, "title");
                             },
                             child: Text("종료 시간 : ${saturday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
                       ),
@@ -143,7 +152,7 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                     onTap: (){
                       //  showDialog_weekdaystart(size, context, "title");
                     },
-                    child: Text("일요일 운영 시간",style: TextStyle(fontSize: 21,fontWeight: FontWeight.bold,color: Colors.white),))),
+                    child: Text("일요일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
             widget.closedday=="일요일"?Container(): Center(
               child: Container(
                   decoration: BoxDecoration(
@@ -185,7 +194,7 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                     onTap: (){
                       //  showDialog_weekdaystart(size, context, "title");
                     },
-                    child: Text("공휴일 운영 시간",style: TextStyle(fontSize: 21,fontWeight: FontWeight.bold,color: Colors.white),))),
+                    child: Text("공휴일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
             widget.holyday_bool==true?Container():Center(
               child: Container(
                   decoration: BoxDecoration(
@@ -244,23 +253,7 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                     return;
                   }
                 },
-                child: Container(
-
-                  width: size.width * 0.9,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: kContainerColor,
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  alignment: Alignment.center,
-                  child: Text(
-                    "다음",
-                    style: TextStyle(
-                        color: kTextColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
-                ),
+                child: Button("다음")
               ),
             ),
             SizedBox(height: 30),

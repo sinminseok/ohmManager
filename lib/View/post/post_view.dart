@@ -5,7 +5,6 @@ import 'package:ohmmanager/View/post/detailview/post_write.dart';
 import 'package:ohmmanager/View/post/widgets/post_widget.dart';
 import 'package:page_transition/page_transition.dart';
 
-
 import '../../../Model/postDto.dart';
 import '../../Controller/postApi.dart';
 import '../../Utils/constants.dart';
@@ -18,38 +17,61 @@ class PostView extends StatefulWidget {
 }
 
 class _PostView extends State<PostView> {
-
   var results;
 
-  Future<List<PostDto>?> load_posts()async{
+  Future<List<PostDto>?> load_posts() async {
     //gymId
-    results =await PostApi().findall_posts("2");
+    results = await PostApi().findall_posts("2");
     return results;
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: kBackgroundColor,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(40.h),
+        child: AppBar(
+          iconTheme: IconThemeData(
+            color: kTextColor, //change your color here
+          ),
+          automaticallyImplyLeading: false,
+          backgroundColor: kPrimaryColor,
+          shape: Border(
+              bottom: BorderSide(
+                  color: Colors.grey,
+                  width: 0.3
+              )
+          ),
+          elevation: 0,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "게시물",
+                style: TextStyle(fontSize: 21,
+                    color: kTextColor,
+                   ),
+              ),
+              InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            type: PageTransitionType.fade,
+                            child: PostWrite_View()));
+                  },
+                  child: Icon(Icons.add))
+            ],
+          ),
+
+        ),
+      ),
+      backgroundColor: kPrimaryColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(height: 70,),
-            InkWell(
-                onTap: (){
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.fade,
-                          child: PostWrite_View()));
-                },
-                child: Text("글쓰기")),
-
-
             FutureBuilder(
                 future: load_posts(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -75,12 +97,10 @@ class _PostView extends State<PostView> {
                         child: ListView.builder(
                             itemCount: results.length,
                             itemBuilder: (BuildContext ctx, int idx) {
-                              return Post_Widget(size, context,results[idx]);
-                            }
-                        ));
+                              return Post_Widget(size, context, results[idx]);
+                            }));
                   }
                 }),
-
           ],
         ),
       ),

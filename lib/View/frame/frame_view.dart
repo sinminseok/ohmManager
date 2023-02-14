@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ohmmanager/View/mypage/mypage_view.dart';
 import 'package:ohmmanager/View/post/post_view.dart';
-import 'package:ohmmanager/View/trainer/trainerView.dart';
+import 'package:ohmmanager/View/trainer/trainer_view.dart';
 
 import '../../Utils/widget/bottomnav_widget.dart';
 import '../home/home_view.dart';
@@ -39,6 +39,7 @@ class _FrameView extends State<FrameView> {
         // drawer: Drawer(),
 
         bottomNavigationBar: CustomBottomNavigationBar(
+
           iconList: [
             Icons.home,
             Icons.speaker_notes_outlined,

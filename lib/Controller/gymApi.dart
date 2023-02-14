@@ -9,6 +9,7 @@ import 'package:http_parser/http_parser.dart';
 import '../../../Model/gymDto.dart';
 import '../../../Model/gymImgDto.dart';
 import 'package:http/http.dart' as http;
+import '../Model/gymPriceDto.dart';
 import '../Utils/httpurls.dart';
 import '../Utils/toast.dart';
 
@@ -168,6 +169,27 @@ class GymApi with ChangeNotifier {
       showtoast("ERROR");
       return false;
     }
+  }
+
+
+  Future<bool> register_price(String? gymId,String? token,List<GymPriceDto> prices) async {
+
+
+    for(int i=0;i<prices.length;i++){
+      var res = await http.post(
+          Uri.parse(GymApi_Url().register_price + "${gymId.toString()}"),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: json.encode(({
+            "during": prices[i].during,
+            "price": prices[i].price
+          })));
+    }
+
+    return true;
+
   }
 
   Future<String?> register_gym(

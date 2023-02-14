@@ -19,23 +19,23 @@ Widget Post_Widget(Size size,context,PostDto postDto) {
               child: Post_Detail(postDto:postDto)));
     },
     child:Padding(
-      padding: const EdgeInsets.only(bottom: 50.0),
+      padding: const EdgeInsets.only(bottom: 30.0,top: 10),
       child: Container(
-        height: size.height * 0.62,
+        height: size.height * 0.55,
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.9),
+                color: Colors.grey.withOpacity(0.2),
                 spreadRadius: 3,
                 blurRadius: 3,
-                offset: Offset(0, 2), // changes position of shadow
+                offset: Offset(1, 1), // changes position of shadow
               ),
             ],
             color: Colors.grey.shade200,
             borderRadius: BorderRadius.all(Radius.circular(1))),
         child: Column(
           children: [
-            postDto.imgs[0] == null?Container():Container(
+            postDto.imgs.length == 0?Container():Container(
               height: size.height * 0.4,
               width: size.width * 1,
               child: ClipRRect(

@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Controller/managerApi.dart';
+import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/View/account/role_view.dart';
 import 'package:ohmmanager/View/account/signup_trainer.dart';
 import 'package:page_transition/page_transition.dart';
@@ -39,9 +40,13 @@ class _CodeView extends State<CodeView>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("가입코드",style: TextStyle(fontWeight: FontWeight.bold),),
+        iconTheme: IconThemeData(
+          color: kIconColor, //change your color here
+        ),
+        title: Text("가입코드",style: TextStyle(fontWeight: FontWeight.bold,color: kTextColor),),
         backgroundColor: kPrimaryColor,
         elevation: 0,
+
       ),
       body: Stack(
         children: [
@@ -65,10 +70,10 @@ class _CodeView extends State<CodeView>
                       pinTheme: PinTheme(
                         activeColor: kPrimaryColor,
                         inactiveColor: kPrimaryColor,
-                        disabledColor: kPrimaryColor,
-                        selectedColor: kPrimaryColor,
-                        inactiveFillColor: kContainerColor,
-                        selectedFillColor: kContainerColor,
+                        disabledColor: kTextColor,
+                        selectedColor: kTextColor,
+                        inactiveFillColor: kTextColor,
+                        selectedFillColor: kTextColor,
                         shape: PinCodeFieldShape.box,
                         borderRadius: BorderRadius.circular(20),
                         fieldHeight: 40,
@@ -121,21 +126,7 @@ class _CodeView extends State<CodeView>
 
                   },
                   borderRadius: BorderRadius.circular(10),
-                  child: Container(
-
-
-                    width: size.width * 0.9,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: kContainerColor,
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "다음",
-                      style: TextStyle(color: kTextColor,fontWeight: FontWeight.bold, fontSize: 18),
-                    ),
-                  ),
+                  child: Button( "다음")
                 ),
                 SizedBox(height: 30),
               ],

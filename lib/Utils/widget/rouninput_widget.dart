@@ -26,10 +26,12 @@ class RoundedInput extends StatelessWidget {
       margin: EdgeInsets.only(top: 20),
 
 
+
+
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: Colors.white),),
+          Text(title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor),),
           Container(
             decoration: BoxDecoration(
                 color: kContainerColor,

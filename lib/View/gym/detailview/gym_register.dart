@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/gymApi.dart';
+import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/Utils/constants.dart';
 import 'package:ohmmanager/Utils/toast.dart';
 import 'package:page_transition/page_transition.dart';
@@ -43,10 +44,19 @@ class _GymRegisterViewState extends State<GymRegisterView> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: kIconColor, //change your color here
+        ),
+        shape: Border(
+            bottom: BorderSide(
+                color: Colors.black26,
+                width: 0.3
+            )
+        ),
         backgroundColor: kPrimaryColor,
         elevation: 0,
       ),
-      backgroundColor: kPrimaryColor,
+      backgroundColor: Colors.grey.shade200,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +64,7 @@ class _GymRegisterViewState extends State<GymRegisterView> {
           children: [
             Container(
                 margin: EdgeInsets.only(left: 15,top: 10,bottom: 10),
-                child: Text("헬스장 소개",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),)),
+                child: Text("헬스장 소개",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),)),
             Center(
               child: Container(
                 margin: EdgeInsets.only(top: 10),
@@ -113,7 +123,7 @@ class _GymRegisterViewState extends State<GymRegisterView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("휴관일",style: TextStyle(fontSize: 18,color: Colors.white),),
+                    Text("휴관일",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor),),
                     Padding(
                       padding: const EdgeInsets.all(0.0),
                       child: Container(
@@ -159,7 +169,7 @@ class _GymRegisterViewState extends State<GymRegisterView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("공휴일 휴무 여부",style: TextStyle(fontSize: 18,color: Colors.white,fontWeight: FontWeight.bold),),
+                    Text("공휴일 휴무 여부",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor),),
                     Checkbox(
                         focusColor: kPrimaryColor,
                         checkColor: kPrimaryColor,
@@ -212,16 +222,7 @@ class _GymRegisterViewState extends State<GymRegisterView> {
 
                 },
                 child: Center(
-                  child: Container(
-                      width: size.width * 0.9,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: kContainerColor,
-                      ),
-
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      alignment: Alignment.center,
-                      child: Text("다음",style: TextStyle(fontSize: 21,fontWeight: FontWeight.bold,color: kTextColor),)),
+                  child: Button("다음")
                 )),
             SizedBox(height: 30),
           ],
