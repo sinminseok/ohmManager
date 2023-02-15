@@ -218,10 +218,13 @@ class GymApi with ChangeNotifier {
           "area": area,
           "trainer_count": trainer_count,
         }));
+    print(res);
 
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
+      print("REGISTER GYM ID");
+      print(data);
 
       final prefs = await SharedPreferences.getInstance();
       prefs.setString("gymId", data.toString());

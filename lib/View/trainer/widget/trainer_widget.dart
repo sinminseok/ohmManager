@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ohmmanager/Model/trainerDto.dart';
+import 'package:ohmmanager/Utils/constants.dart';
 import 'package:ohmmanager/View/trainer/detailview/trainer_detail.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -21,16 +22,9 @@ Widget Trainer_Widget(Size size,context,TrainerDto trainerDto) {
       child: Container(
         height: size.height * 0.2,
         decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.9),
-                spreadRadius: 3,
-                blurRadius: 3,
-                offset: Offset(0, 2), // changes position of shadow
-              ),
-            ],
-            color: Colors.grey.shade200,
-            borderRadius: BorderRadius.all(Radius.circular(10))),
+
+            color: kContainerColor,
+            borderRadius: BorderRadius.all(Radius.circular(5))),
         child: Row(
           children: [
             //  assets/images/img1.jpeg
@@ -39,7 +33,7 @@ Widget Trainer_Widget(Size size,context,TrainerDto trainerDto) {
               width: size.width*0.4,
               child: ClipRRect(
 
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(5.0),
                   child: Image.asset("assets/images/teacher.jpeg",fit: BoxFit.cover,)),
             ),
             Column(

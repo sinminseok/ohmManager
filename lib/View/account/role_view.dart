@@ -33,20 +33,21 @@ class _Role_View extends State<Role_View>
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: kIconColor, //change your color here
+          color: kTextBlackColor, //change your color here
         ),
-        title: Text("관리자 정보",style: TextStyle(fontWeight: FontWeight.bold,color: kTextColor),),
-        backgroundColor: kPrimaryColor,
+        title: Text("관리자 정보",style: TextStyle(fontWeight: FontWeight.bold,color: kTextBlackColor),),
+        backgroundColor: kBackgroundColor,
         elevation: 0,
       ),
+
       body: Stack(
         children: [
           Scaffold(
-            backgroundColor: kPrimaryColor,
+
             body: Align(
               alignment: Alignment.topCenter,
               child: Container(
-                color: kPrimaryColor,
+                color: kBackgroundColor,
                 width: size.width,
                 height: size.height * 1,
                 child: SingleChildScrollView(

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
@@ -17,13 +18,13 @@ class PostApi with ChangeNotifier {
 
   Future<String?> save_post(String title, String content,
       String gymId, String token) async {
+    print(gymId);
+    print("DDDDDd");
     PostDto postDto = PostDto.makeDto(title, content);
 
-    String postdto = jsonEncode(postDto);
 
 
-
-    var res = await http.post(Uri.parse(PostApi_Url().save_post+"${gymId}"),
+    var res = await http.post(Uri.parse(PostApi_Url().save_post+"${int.parse(gymId)}"),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token'
@@ -33,12 +34,13 @@ class PostApi with ChangeNotifier {
           'content':content
 
         }));
+    print(res.body);
 
     if (res.statusCode == 200) {
 
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
-      print(data.runtimeType);
+
 
       return data.toString();
 
@@ -80,7 +82,6 @@ class PostApi with ChangeNotifier {
       });
 
       var res =await dio.post(PostApi_Url().save_postimgs + "${postId}", data :_formData);
-      print(res.data);
 
 
 

@@ -63,10 +63,10 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: kBackgroundColor,
         elevation: 0,
       ),
-      backgroundColor: kPrimaryColor,
+      backgroundColor: kBackgroundColor,
       body: Column(
         children: [
           // Lets add some decorations
@@ -88,15 +88,6 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
 
                 Container(
                   decoration: BoxDecoration(
-
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 3,
-                          blurRadius: 10,
-                          offset: Offset(0, 5), // changes position of shadow
-                        ),
-                      ],
                       color: kContainerColor,
                       borderRadius: BorderRadius.circular(15)
                   ),
@@ -115,14 +106,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                 Container(
                   margin: EdgeInsets.only(top: 20),
                   decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 3,
-                          blurRadius: 10,
-                          offset: Offset(0, 5), // changes position of shadow
-                        ),
-                      ],
+
                       color: kContainerColor,
                       borderRadius: BorderRadius.circular(15)
 
@@ -234,7 +218,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                     child: Text(
                       "회원가입 하러가기",
                       style: TextStyle(
-                          color: Colors.black,fontSize: 19, fontWeight: FontWeight.bold),
+                          color: Colors.black,fontSize: 19),
                     ),
                   ),
                 )

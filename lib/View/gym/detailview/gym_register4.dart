@@ -68,7 +68,7 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
                 width: 0.3
             )
         ),
-        backgroundColor: kPrimaryColor,
+        backgroundColor: kBackgroundColor,
         elevation: 0,
       ),
       backgroundColor: Colors.grey.shade200,

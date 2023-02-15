@@ -52,7 +52,7 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                 width: 0.3
             )
         ),
-        backgroundColor: kPrimaryColor,
+        backgroundColor: kBackgroundColor,
         elevation: 0,
       ),
       backgroundColor: Colors.grey.shade200,
@@ -284,8 +284,8 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                     child: Column(
                   children: [
                     Container(
-                      height: size.height * 0.45,
-                      width: size.width * 0.8,
+                      height: size.height * 0.55,
+                      width: size.width * 0.85,
                       child: CupertinoDatePicker(
                         mode: CupertinoDatePickerMode.time,
                         onDateTimeChanged: (value) {
@@ -316,7 +316,9 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Text("설정")),
+                        child: Container(
+                            margin: EdgeInsets.all(20),
+                            child: Button("완료")))
                   ],
                 )),
               ),
@@ -346,8 +348,8 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                     child: Column(
                   children: [
                     Container(
-                      height: size.height * 0.45,
-                      width: size.width * 0.8,
+                      height: size.height * 0.55,
+                      width: size.width * 0.85,
                       child: CupertinoDatePicker(
                         mode: CupertinoDatePickerMode.time,
                         onDateTimeChanged: (value) {
@@ -391,7 +393,9 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Text("완료"))
+                        child: Container(
+                            margin: EdgeInsets.all(20),
+                            child: Button("완료")))
                   ],
                 )),
               ),
@@ -421,8 +425,8 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                     child: Column(
                   children: [
                     Container(
-                      height: size.height * 0.45,
-                      width: size.width * 0.8,
+                      height: size.height * 0.55,
+                      width: size.width * 0.85,
                       child: CupertinoDatePicker(
                         mode: CupertinoDatePickerMode.time,
                         onDateTimeChanged: (value) {
@@ -453,7 +457,9 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Text("완료"))
+                        child: Container(
+                            margin: EdgeInsets.all(20),
+                            child: Button("완료")))
                   ],
                 )),
               ),
@@ -483,8 +489,8 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                     child: Column(
                   children: [
                     Container(
-                      height: size.height * 0.45,
-                      width: size.width * 0.8,
+                      height: size.height * 0.55,
+                      width: size.width * 0.85,
                       child: CupertinoDatePicker(
                         mode: CupertinoDatePickerMode.time,
                         onDateTimeChanged: (value) {
@@ -515,7 +521,9 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Text("완료"))
+                        child: Container(
+                            margin: EdgeInsets.all(20),
+                            child: Button("완료")))
                   ],
                 )),
               ),
@@ -545,8 +553,8 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                     child: Column(
                   children: [
                     Container(
-                      height: size.height * 0.45,
-                      width: size.width * 0.8,
+                      height: size.height * 0.55,
+                      width: size.width * 0.85,
                       child: CupertinoDatePicker(
                         mode: CupertinoDatePickerMode.time,
                         onDateTimeChanged: (value) {
@@ -577,7 +585,9 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Text("완료"))
+                        child: Container(
+                            margin: EdgeInsets.all(20),
+                            child: Button("완료")))
                   ],
                 )),
               ),
@@ -607,8 +617,8 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                     child: Column(
                   children: [
                     Container(
-                      height: size.height * 0.45,
-                      width: size.width * 0.8,
+                      height: size.height * 0.55,
+                      width: size.width * 0.85,
                       child: CupertinoDatePicker(
                         mode: CupertinoDatePickerMode.time,
                         onDateTimeChanged: (value) {
@@ -639,7 +649,9 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Text("완료"))
+                        child: Container(
+                            margin: EdgeInsets.all(20),
+                            child: Button("완료")))
                   ],
                 )),
               ),
@@ -669,8 +681,8 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                     child: Column(
                   children: [
                     Container(
-                      height: size.height * 0.45,
-                      width: size.width * 0.8,
+                      height: size.height * 0.55,
+                      width: size.width * 0.85,
                       child: CupertinoDatePicker(
                         mode: CupertinoDatePickerMode.time,
                         onDateTimeChanged: (value) {
@@ -701,7 +713,9 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Text("완료"))
+                        child: Container(
+                            margin: EdgeInsets.all(20),
+                            child: Button("완료")))
                   ],
                 )),
               ),
@@ -731,8 +745,8 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                     child: Column(
                   children: [
                     Container(
-                      height: size.height * 0.45,
-                      width: size.width * 0.8,
+                      height: size.height * 0.55,
+                      width: size.width * 0.85,
                       child: CupertinoDatePicker(
                         mode: CupertinoDatePickerMode.time,
                         onDateTimeChanged: (value) {
@@ -763,7 +777,9 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: Text("완료"))
+                        child: Container(
+                            margin: EdgeInsets.all(20),
+                            child: Button("완료")))
                   ],
                 )),
               ),

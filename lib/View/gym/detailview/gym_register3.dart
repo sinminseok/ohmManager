@@ -51,7 +51,7 @@ class _GymRegisterView3 extends State<GymRegisterView3> {
                 width: 0.3
             )
         ),
-        backgroundColor: kPrimaryColor,
+        backgroundColor: kBackgroundColor,
         elevation: 0,
       ),
       backgroundColor: Colors.grey.shade200,
@@ -78,14 +78,7 @@ class _GymRegisterView3 extends State<GymRegisterView3> {
                       width: size.width * 0.9,
                       height: size.height * 0.2,
                       decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.25),
-                              spreadRadius: 3,
-                              blurRadius: 10,
-                              offset: Offset(1, 1), // changes position of shadow
-                            ),
-                          ],
+
                           color: kContainerColor,
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: Icon(

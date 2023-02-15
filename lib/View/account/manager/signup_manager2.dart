@@ -54,19 +54,19 @@ class _SignupView2 extends State<SignupView2>
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: kIconColor, //change your color here
+          color: kTextBlackColor, //change your color here
         ),
         title: Text(
           "프로필 정보",
-          style: TextStyle(fontWeight: FontWeight.bold,color: kTextColor),
+          style: TextStyle(fontWeight: FontWeight.bold,color: kTextBlackColor),
         ),
-        backgroundColor: kPrimaryColor,
+        backgroundColor:  Colors.grey.shade200,
         elevation: 0,
       ),
       body: Stack(
         children: [
           Scaffold(
-            backgroundColor: kPrimaryColor,
+            backgroundColor:  Colors.grey.shade200,
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -86,14 +86,7 @@ class _SignupView2 extends State<SignupView2>
                 Container(
                   margin: EdgeInsets.only(top: 50),
                   decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.15),
-                          spreadRadius: 3,
-                          blurRadius: 10,
-                          offset: Offset(0, 5), // changes position of shadow
-                        ),
-                      ],
+
                       color: kContainerColor,
                       borderRadius: BorderRadius.circular(15)),
                   width: 340.w,
@@ -110,14 +103,7 @@ class _SignupView2 extends State<SignupView2>
                 Container(
                   margin: EdgeInsets.only(top: 20),
                   decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 3,
-                          blurRadius: 10,
-                          offset: Offset(0, 5), // changes position of shadow
-                        ),
-                      ],
+
                       color: kContainerColor,
                       borderRadius: BorderRadius.circular(15)),
                   width: 340.w,

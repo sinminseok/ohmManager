@@ -10,7 +10,7 @@ Widget Button(String title){
     width: 330.w,
     height: 47.h,
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(10),
       color: kButtonColor,
     ),
 
@@ -19,7 +19,7 @@ Widget Button(String title){
     child: Text(
       "$title",
       style: TextStyle(
-          color: kPrimaryColor,
+          color: kTextWhiteColor,
           fontWeight: FontWeight.bold,
           fontSize: 18
       ),

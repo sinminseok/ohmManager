@@ -10,10 +10,12 @@ class RoundedInput extends StatelessWidget {
     Key? key,
     required this.title,
     required this.controller,
+    required this.number_mode
 
   }) : super(key: key);
 
   final String title;
+  final bool number_mode;
 
 
   final TextEditingController controller;
@@ -38,9 +40,22 @@ class RoundedInput extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10)
             ),
             width: 200.w,
-            child: TextFormField(
+            child: number_mode == true?
+            TextFormField(
               controller: controller,
               textAlign: TextAlign.center,
+              keyboardType: TextInputType.number,
+              cursorColor: kContainerColor,
+              decoration: InputDecoration(
+                // contentPadding: EdgeInsets.,
+                  hintText: "-",
+                  border: InputBorder.none
+              ),
+            )
+                : TextFormField(
+              controller: controller,
+              textAlign: TextAlign.center,
+
               cursorColor: kContainerColor,
               decoration: InputDecoration(
                 // contentPadding: EdgeInsets.,

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/View/post/detailview/post_write.dart';
 import 'package:ohmmanager/View/post/widgets/post_widget.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Model/postDto.dart';
 import '../../Controller/postApi.dart';
@@ -20,8 +21,8 @@ class _PostView extends State<PostView> {
   var results;
 
   Future<List<PostDto>?> load_posts() async {
-    //gymId
-    results = await PostApi().findall_posts("2");
+    final prefs = await SharedPreferences.getInstance();
+    results = await PostApi().findall_posts(prefs.getString("gymId").toString());
     return results;
   }
 
@@ -37,13 +38,8 @@ class _PostView extends State<PostView> {
             color: kTextColor, //change your color here
           ),
           automaticallyImplyLeading: false,
-          backgroundColor: kPrimaryColor,
-          shape: Border(
-              bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.3
-              )
-          ),
+          backgroundColor: kBackgroundColor,
+
           elevation: 0,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,7 +64,7 @@ class _PostView extends State<PostView> {
 
         ),
       ),
-      backgroundColor: kPrimaryColor,
+      backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -77,7 +73,10 @@ class _PostView extends State<PostView> {
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
                   if (snapshot.hasData == false) {
-                    return CircularProgressIndicator();
+                    return Container(
+                      margin: EdgeInsets.only(top: 100.h),
+                      child: Center(child: Text("아직 등록된 게시물이 없습니다.",style: TextStyle(fontSize: 23),)),
+                    );
                   }
                   //error가 발생하게 될 경우 반환하게 되는 부분
                   else if (snapshot.hasError) {

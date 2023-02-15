@@ -53,7 +53,7 @@ class _GymRegisterViewState extends State<GymRegisterView> {
                 width: 0.3
             )
         ),
-        backgroundColor: kPrimaryColor,
+        backgroundColor: kBackgroundColor,
         elevation: 0,
       ),
       backgroundColor: Colors.grey.shade200,
@@ -63,7 +63,7 @@ class _GymRegisterViewState extends State<GymRegisterView> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
-                margin: EdgeInsets.only(left: 15,top: 10,bottom: 10),
+                margin: EdgeInsets.only(left: 15,top: 20,bottom: 10),
                 child: Text("헬스장 소개",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),)),
             Center(
               child: Container(
@@ -107,14 +107,14 @@ class _GymRegisterViewState extends State<GymRegisterView> {
                 ),
               ),
             ),
-            Center(child: RoundedInput(title: "헬스장이름", controller: _nameController)),
+            Center(child: RoundedInput(title: "헬스장이름", controller: _nameController, number_mode: false,)),
 
-            Center(child: RoundedInput(title: "주소", controller: _addressController)),
-            Center(child: RoundedInput(title: "면적수", controller: _areaController)),
+            Center(child: RoundedInput(title: "주소", controller: _addressController, number_mode: false)),
+            Center(child: RoundedInput(title: "면적 (평수)", controller: _areaController, number_mode: true)),
 
-            Center(child: RoundedInput(title: "회원수", controller: _countController)),
-            Center(child: RoundedInput(title: "가입코드", controller: _codeController)),
-            Center(child: RoundedInput(title: "트레이너 인원", controller: _trainerCountController)),
+            Center(child: RoundedInput(title: "회원수", controller: _countController, number_mode: true)),
+            Center(child: RoundedInput(title: "가입코드(4자리)", controller: _codeController, number_mode: true)),
+            Center(child: RoundedInput(title: "트레이너 인원", controller: _trainerCountController, number_mode: true)),
             Center(
               child: Container(
                 width: 340.w,

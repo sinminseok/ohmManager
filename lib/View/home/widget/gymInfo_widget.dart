@@ -14,7 +14,7 @@ Widget GymInfo_Widget(String? title,String? content){
           child: Text(
             "$title",
             style: TextStyle(
-                fontSize: 21, color: kTextBlackColor),
+                fontSize: 19, color: kPrimaryColor,fontWeight: FontWeight.bold),
           )),
       Container(
         margin: EdgeInsets.only(left: 20, right: 20),
@@ -29,9 +29,8 @@ Widget GymInfo_Widget(String? title,String? content){
               child: Text(
                 "${content}",
                 style: TextStyle(
-                    color: kTextColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 21),
+                    color: kTextBlackColor,
+                    fontSize: 17),
               ),
             )),
       ),

@@ -43,15 +43,16 @@ class _CodeView extends State<CodeView>
         iconTheme: IconThemeData(
           color: kIconColor, //change your color here
         ),
-        title: Text("가입코드",style: TextStyle(fontWeight: FontWeight.bold,color: kTextColor),),
-        backgroundColor: kPrimaryColor,
+        title: Text("가입코드",style: TextStyle(fontWeight: FontWeight.bold,color: kTextBlackColor),),
+        backgroundColor: kBackgroundColor,
         elevation: 0,
 
       ),
+
       body: Stack(
         children: [
           Scaffold(
-            backgroundColor: kPrimaryColor,
+            backgroundColor: kBackgroundColor,
             body:Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -62,23 +63,25 @@ class _CodeView extends State<CodeView>
                     width:size.width*0.7,
 
                     child: PinCodeTextField(
-                      cursorColor: kPrimaryColor,
-                      backgroundColor: kPrimaryColor,
+                      cursorColor: kBackgroundColor,
+                      backgroundColor: kBackgroundColor,
                       length: 4,
                       obscureText: false,
                       animationType: AnimationType.fade,
                       pinTheme: PinTheme(
-                        activeColor: kPrimaryColor,
-                        inactiveColor: kPrimaryColor,
-                        disabledColor: kTextColor,
-                        selectedColor: kTextColor,
-                        inactiveFillColor: kTextColor,
+                        activeColor: kBackgroundColor,
+                        inactiveColor: kBackgroundColor,
+                        disabledColor: kBackgroundColor,
+                        selectedColor: kBackgroundColor,
+
+
+                        inactiveFillColor: kPrimaryColor,
                         selectedFillColor: kTextColor,
                         shape: PinCodeFieldShape.box,
                         borderRadius: BorderRadius.circular(20),
                         fieldHeight: 40,
                         fieldWidth: 40,
-                        activeFillColor: kPrimaryColor,
+                        activeFillColor: kBackgroundColor,
                       ),
                       animationDuration: Duration(milliseconds: 300),
                       enableActiveFill: true,

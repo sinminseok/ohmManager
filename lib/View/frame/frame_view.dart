@@ -43,8 +43,8 @@ class _FrameView extends State<FrameView> {
           iconList: [
             Icons.home,
             Icons.speaker_notes_outlined,
-            Icons.person_outline,
-            Icons.person,
+            Icons.group_outlined,
+            Icons.person_outlined,
           ],
           onChange: (val) {
             setState(() {

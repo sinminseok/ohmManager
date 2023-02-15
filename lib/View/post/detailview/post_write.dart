@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
+import 'package:ohmmanager/Utils/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../Utils/constants.dart';
 import '../../../../Utils/permission.dart';
@@ -57,27 +58,17 @@ class _PostWrite_View extends State<PostWrite_View> {
         backgroundColor: Colors.grey.shade200,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: kPrimaryColor,
+          backgroundColor: kBackgroundColor,
           iconTheme: IconThemeData(
             color: kTextColor, //change your color here
           ),
-          shape: Border(
-              bottom: BorderSide(
-                  color: Colors.grey,
-                  width: 0.3
-              )
-          ),
+          title: Text("글 작성",style: TextStyle(color: kTextBlackColor,fontWeight: FontWeight.bold),),
+
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                margin: EdgeInsets.only(top: 15.h,right: 240.w),
-                child: Text(
-                  "글 작성",
-                  style: TextStyle(fontSize: 21,color: kTextColor,fontWeight: FontWeight.bold),
-                ),
-              ),
+
               image_picked.isNotEmpty
                   ? Container()
                   : InkWell(
@@ -87,18 +78,11 @@ class _PostWrite_View extends State<PostWrite_View> {
                 },
                 child: Center(
                   child: Container(
-                    margin: EdgeInsets.all(10),
+                    margin: EdgeInsets.all(20),
                     width: size.width * 0.9,
                     height: size.height * 0.34,
                     decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.25),
-                            spreadRadius: 3,
-                            blurRadius: 10,
-                            offset: Offset(1, 1), // changes position of shadow
-                          ),
-                        ],
+
                         color: kContainerColor,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: Icon(
@@ -169,9 +153,20 @@ class _PostWrite_View extends State<PostWrite_View> {
               InkWell(
                   onTap: () async {
                     final prefs = await SharedPreferences.getInstance();
-                    var save_post =await PostApi().save_post(_titleController.text,_contentController.text,"2",prefs.getString("token").toString());
-                    PostApi().save_postimg(save_post.toString(), image_picked, prefs.getString("token").toString());
-                  },
+                    var save_post =await PostApi().save_post(_titleController.text,_contentController.text,prefs.getString("gymId").toString(),prefs.getString("token").toString());
+                    print(save_post);
+                    print("object");
+
+                    var save_postimg = await PostApi().save_postimg(save_post.toString(), image_picked, prefs.getString("token").toString());
+
+                    if(save_post == null){
+                      return showtoast("서버가 원활하지 않습니다");
+                    }else{
+                      Navigator.pop(context);
+                    }
+
+                    }
+                  ,
                   child: Button("게시"))
             ],
           ),

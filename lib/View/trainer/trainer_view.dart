@@ -45,13 +45,8 @@ class _TrainerViewState extends State<TrainerView> {
               color: kTextColor, //change your color here
             ),
             automaticallyImplyLeading: false,
-            backgroundColor: kPrimaryColor,
-            shape: Border(
-                bottom: BorderSide(
-                    color: Colors.grey,
-                    width: 0.3
-                )
-            ),
+            backgroundColor: kBackgroundColor,
+
             elevation: 0,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,7 +54,7 @@ class _TrainerViewState extends State<TrainerView> {
                 Text(
                   "트레이너",
                   style: TextStyle(fontSize: 21,
-                      color: kTextColor,
+                      color: kPrimaryColor,
                       ),
                 ),
 
@@ -68,7 +63,7 @@ class _TrainerViewState extends State<TrainerView> {
 
           ),
         ),
-        backgroundColor: Colors.grey.shade200,
+        backgroundColor: kBackgroundColor,
         body: SingleChildScrollView(
             child: Column(
           children: [

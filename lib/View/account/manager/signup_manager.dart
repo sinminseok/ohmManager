@@ -36,16 +36,16 @@ class _SignupView extends State<SignupView>
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
-          color: kIconColor, //change your color here
+          color: kTextBlackColor, //change your color here
         ),
-        title: Text("정보입력",style: TextStyle(fontWeight: FontWeight.bold,color: kTextColor),),
-        backgroundColor: kPrimaryColor,
+        title: Text("정보입력",style: TextStyle(fontWeight: FontWeight.bold,color: kTextBlackColor),),
+        backgroundColor: kBackgroundColor,
         elevation: 0,
       ),
       body: Stack(
         children: [
           Scaffold(
-            backgroundColor: kPrimaryColor,
+            backgroundColor:  kBackgroundColor,
             body: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -56,7 +56,7 @@ class _SignupView extends State<SignupView>
                   child: RoundedInput(
                       controller: _userIDController,
 
-                      title: "아이디",
+                      title: "아이디", number_mode: false,
                      ),
                 ),
                 RoundedPasswordInput(
@@ -68,7 +68,7 @@ class _SignupView extends State<SignupView>
 
                   child: RoundedInput(
                       controller: _nicknameController,
-
+                    number_mode: false,
                       title: "이름",
                      ),
                 ),
@@ -89,9 +89,6 @@ class _SignupView extends State<SignupView>
                               type: PageTransitionType.fade,
                               child: SignupView2(name: _userIDController.text, nickname: _nicknameController.text, password: _passwordController.text,)));
                     }
-
-
-
                   },
                   borderRadius: BorderRadius.circular(10),
                   child: Button("다음")
