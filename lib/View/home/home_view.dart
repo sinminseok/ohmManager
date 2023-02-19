@@ -6,18 +6,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Utils/date.dart';
+import 'package:ohmmanager/Utils/toast.dart';
 import 'package:ohmmanager/View/gym/detailview/gym_register.dart';
-import 'package:ohmmanager/View/home/widget/bar_widget.dart';
-import 'package:ohmmanager/View/home/widget/gymInfo_widget.dart';
+import 'package:ohmmanager/View/gym/edit/gymEdit_view.dart';
+import 'package:ohmmanager/View/home/detailview/gymInfo_view.dart';
+import 'package:ohmmanager/View/home/popup/edit_popup.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../Controller/gymApi.dart';
 import '../../Controller/managerApi.dart';
 import '../../Model/gymDto.dart';
 import '../../Utils/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-import 'detailview/home_view2.dart';
+import 'detailview/gymStatistics_View.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -32,7 +35,7 @@ class _HomeView extends State<HomeView> {
   Future? myFuture;
   bool select_mode = false;
   var current_datetime;
-
+  List<double> time_avg = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -55,8 +58,6 @@ class _HomeView extends State<HomeView> {
   Future<GymDto?> get_gyminfo() async {
     final prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userId");
-    print(userId);
-
 
     var gym =
         await ManagerApi().gyminfo_byManager(userId, prefs.getString("token"));
@@ -67,16 +68,25 @@ class _HomeView extends State<HomeView> {
       setState(() {
         gymDto = gym;
       });
+      await get_avg();
       return gymDto;
     }
+  }
+
+  get_avg()async{
+    final prefs = await SharedPreferences.getInstance();
+    time_avg = (await GymApi().get_timeavg(prefs.getString("gymId").toString()))!;
+    return time_avg;
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(38.h),
+
           child: AppBar(
             iconTheme: IconThemeData(
               color: kIconColor, //change your color here
@@ -86,7 +96,8 @@ class _HomeView extends State<HomeView> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(),
+
+
                 Switch(
                   activeColor: Colors.grey,
                   value: select_mode,
@@ -95,7 +106,18 @@ class _HomeView extends State<HomeView> {
                       select_mode = value;
                     });
                   },
-                )
+                ),
+                InkWell(
+                    onTap: (){
+                      if(gymDto == null){
+                        showtoast("헬스장을 먼저 등록해주세요");
+                      }else{
+                        Edit_Popup().showDialog( context,gymDto!);
+
+                      }
+
+                    },
+                    child: Icon(Icons.settings,color: kTextWhiteColor,)),
               ],
             ),
             elevation: 0,
@@ -183,82 +205,9 @@ class _HomeView extends State<HomeView> {
                   } else {
                     return select_mode == true
                         ? SingleChildScrollView(
-                            child: Home_View2(current_datetime: current_datetime,)
+                            child: GymStatistics_View(current_datetime: current_datetime, time_avg: time_avg,)
                           )
-                        : SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 360.w,
-                                  height: 120.h,
-                                  decoration: BoxDecoration(
-                                      color: kBottomColor,
-                                      borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          bottomLeft: Radius.circular(10))),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                left: 20, top: 10,right: 20),
-                                            child: Icon(Icons.fitness_center,color: Colors.white,size: 55,),
-                                          ),
-                                          Container(
-                                              margin: EdgeInsets.only(
-                                                  left: 10, top: 30,right: 20),
-                                              child: Text(
-                                                "${gymDto?.name}",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: kTextWhiteColor,
-                                                    fontSize: 35),
-                                              )),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                GymInfo_Widget("주소", "${gymDto?.address}"),
-                                GymInfo_Widget("한줄소개", "${gymDto?.oneline_introduce}"),
-                                GymInfo_Widget("헬스장 소개", "${gymDto?.introduce}"),
-
-                                Container(
-                                  width: 320.w,
-
-                                  margin: EdgeInsets.only(top: 30),
-                                  height: size.height*0.15,
-
-                                  decoration: BoxDecoration(
-                                    color: kBoxColor,
-                                    borderRadius: BorderRadius.all(Radius.circular(10))
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                              margin: EdgeInsets.only(left: 22.w,right: 20,top: 30.h),
-                                              child: Text("현재 헬스장 인원수를 알려주는",style: TextStyle(fontSize: 18,color: kPrimaryColor,fontWeight: FontWeight.bold),)),
-                                          Container(
-                                              margin: EdgeInsets.only(left: 22.w,right: 20),
-                                              child: Text("오헬몇",style: TextStyle(fontSize: 25,color: kPrimaryColor,fontWeight: FontWeight.bold),)),
-                                        ],
-                                      ),
-
-                                      Icon(Icons.emergency_share,color: kPrimaryColor,size: 50,)
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: size.height * 0.1,
-                                ),
-                              ],
-                            ),
-                          );
+                        :GymInfo_View(gymDto: gymDto);
                   }
                 })
           ],

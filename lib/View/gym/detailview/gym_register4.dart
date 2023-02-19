@@ -155,24 +155,33 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
                                     fontWeight: FontWeight.bold,
                                     color: kTextColor),
                               )),
-                          Container(
-                            margin: EdgeInsets.only(bottom: 10, right: 10),
-                            width: size.width * 0.25,
-                            height: size.height * 0.04,
-                            decoration: BoxDecoration(
-                                color: Colors.deepPurple.shade200,
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                            child: TextFormField(
-                              controller: _priceController,
-                              textAlign: TextAlign.center,
-                              cursorColor: kContainerColor,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(10),
-                                  hintText: "원",
-                                  border: InputBorder.none),
-                            ),
-                          )
+                          Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(bottom: 10, right: 10),
+                                width: size.width * 0.25,
+                                height: size.height * 0.04,
+                                decoration: BoxDecoration(
+                                    color: kBoxColor,
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                                child: TextFormField(
+                                  controller: _priceController,
+                                  textAlign: TextAlign.center,
+                                  cursorColor: kContainerColor,
+                                  decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.all(10),
+                                      hintText: "원",
+                                      border: InputBorder.none),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(right: 10),
+                                child: Text("원",style: TextStyle(fontSize: 18),),
+                              )
+                            ],
+                          ),
+
                         ],
                       )
                     ],
@@ -189,7 +198,7 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
                       return showtoast("해당 기간은 이미 등록하셨습니다!");
                     }else{
                       GymPriceDto gymprice = new GymPriceDto(
-                          during: _selectedValue, price: _priceController.text);
+                          during: _selectedValue, price: _priceController.text, id: null);
                       prices.add(gymprice);
                       setState(() {
                         _selectedValue = "1일";

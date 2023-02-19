@@ -83,15 +83,17 @@ class ManagerApi with ChangeNotifier {
 
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
+      print("datadatadata");
+      print(data);
+
 
 
       GymDto? search_byId =await GymApi().search_byId(data['gymDto']['id']);
 
-      //    GymDto gymDto = GymDto.fromJson(data['gymDto']);
 
       return search_byId;
     }else{
-      showtoast("ERROR");
+
       return null;
     }
 

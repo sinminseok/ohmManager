@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Model/trainerDto.dart';
 import 'package:ohmmanager/Utils/constants.dart';
 import 'package:ohmmanager/View/trainer/detailview/trainer_detail.dart';
@@ -20,34 +21,43 @@ Widget Trainer_Widget(Size size,context,TrainerDto trainerDto) {
     child: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: size.height * 0.2,
+        height: 120.h,
         decoration: BoxDecoration(
-
             color: kContainerColor,
-            borderRadius: BorderRadius.all(Radius.circular(5))),
+            borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Row(
           children: [
             //  assets/images/img1.jpeg
 
             Container(
-              width: size.width*0.4,
+              width: 120.w,
               child: ClipRRect(
-
-                  borderRadius: BorderRadius.circular(5.0),
-                  child: Image.asset("assets/images/teacher.jpeg",fit: BoxFit.cover,)),
+                  borderRadius: BorderRadius.circular(3.0),
+                  child: Image.asset(
+                    "assets/images/teacher.jpeg",
+                    fit: BoxFit.cover,
+                  )),
             ),
             Column(
-
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("신민석 선생님",style: TextStyle(fontSize: 18,fontFamily: "boldfont"),),
+                Container(
+                  margin: EdgeInsets.only(left: 10.w, top: 20.h),
+                  child: Text(
+                    "${trainerDto.nickname} 트레이너",
+                    style: TextStyle(fontSize: 18, fontFamily: "boldfont"),
+                  ),
                 ),
-                Text("비나이더 안산점",style: TextStyle(color: Colors.grey,fontFamily: "boldfont"),),
-                SizedBox(height: size.height*0.06,),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: Text("근세포 하나하나 자극을",style: TextStyle(fontFamily: "boldfont"),),
+                Container(
+                  margin: EdgeInsets.only(left: 10.w, top: 10.h),
+                  width: 210.w,
+                  child: Text(
+                    "${trainerDto.oneline_introduce}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style:
+                    TextStyle(fontFamily: "boldfont", color: Colors.grey),
+                  ),
                 )
               ],
             )

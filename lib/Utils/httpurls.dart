@@ -26,6 +26,12 @@ class ManagerApi_Url {
 class GymApi_Url {
   String find_byId = endpoint + "gym/";
 
+  String find_gymPrice = endpoint+"gym/price/";
+
+  String find_gymTime = endpoint+"gym/price/";
+
+  String time_avg = endpoint+"gym/avg/";
+
   String register_price = endpoint + "gym/price/";
 
   String register_time = endpoint + "gym/time/";
@@ -45,6 +51,8 @@ class GymApi_Url {
   String find_byName = endpoint + "gym/name/";
 
   String findall = endpoint + "gyms";
+
+  String udpate_gymInfo = endpoint+"gym";
 }
 
 class PostApi_Url {

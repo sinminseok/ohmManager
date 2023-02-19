@@ -22,7 +22,7 @@ class GymTimeDto {
       required this.holiday,
       required this.weekday});
 
-  factory GymTimeDto.fromJson(Map<String, dynamic> json, imgs) {
+  factory GymTimeDto.fromJson(Map<String, dynamic> json) {
     return GymTimeDto(
       id: json['id'],
       closeddays: json['closeddays'],

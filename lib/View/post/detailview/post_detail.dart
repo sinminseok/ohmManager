@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../Model/postDto.dart';
 import '../../../Utils/constants.dart';
@@ -31,45 +32,36 @@ class _Post_Detail extends State<Post_Detail> {
           color: Colors.black, //change your color here
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.9),
-                  spreadRadius: 3,
-                  blurRadius: 3,
-                  offset: Offset(0, 2), // changes position of shadow
-                ),
-              ],
-              color: Colors.grey.shade200,
-              borderRadius: BorderRadius.all(Radius.circular(20))),
-          child: Column(
-            children: [
-              Container(
-                height: size.height * 0.3,
-                width: size.width * 0.9,
-                child:ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.asset(
-                      "assets/images/gym_img.png",
-                      fit: BoxFit.cover,
-                    )
-                ),
+      body:SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 240.h,
+              width: 360.w,
+              child:ClipRRect(
+                  borderRadius: BorderRadius.circular(0.0),
+                  child: Image.asset(
+                    "assets/images/gym_img.png",
+                    fit: BoxFit.cover,
+                  )
               ),
-              Container(
-                width: size.width,
-                height: size.height * 0.13,
-                child: Column(
-                  children: [
-                    Text("${widget.postDto.title}",style: TextStyle(fontSize: 30),),
-                    Text("${widget.postDto.content}",style: TextStyle(fontSize: 30),),
-                  ],
-                ),
+            ),
+            Container(
+              width: size.width,
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      margin: EdgeInsets.only(left: 20,right: 20,top: 10),
+                      child: Text("${widget.postDto.title}",style: TextStyle(fontSize: 30),)),
+                  Container(
+                      margin: EdgeInsets.only(left: 20,right: 20,top: 30,bottom: 50),
+                      child: Text("${widget.postDto.content}",style: TextStyle(fontSize: 30),)),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
 
