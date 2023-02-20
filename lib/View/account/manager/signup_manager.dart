@@ -5,7 +5,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Controller/managerApi.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/View/account/manager/signup_manager2.dart';
-import 'package:ohmmanager/View/account/signup_trainer.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Utils/constants.dart';

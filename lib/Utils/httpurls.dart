@@ -62,5 +62,7 @@ class PostApi_Url {
 
   String save_post = endpoint + "post/";
 
+  String update_post = endpoint + "post";
+
   String save_postimgs = endpoint + "post/img/";
 }

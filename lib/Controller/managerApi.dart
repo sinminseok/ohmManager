@@ -68,9 +68,10 @@ class ManagerApi with ChangeNotifier {
 
   //managerId로 Gym정보조회
   Future<GymDto?> gyminfo_byManager(String? id,String? token)async{
+    print(id);
+    print("ID");
 
-
-    var res = await http.get(Uri.parse(ManagerApi_Url().info_gym_byId + "${id}"),
+    var res = await http.get(Uri.parse(ManagerApi_Url().info_gym_byId + "${int.parse(id!)}"),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -78,6 +79,8 @@ class ManagerApi with ChangeNotifier {
       },);
 
 
+    print(res.body);
+    print(res.bodyBytes);
 
     if (res.statusCode == 200) {
 
@@ -127,33 +130,54 @@ class ManagerApi with ChangeNotifier {
     FormData _formData;
 
 
-      final MultipartFile _files = MultipartFile.fromFileSync(profile.path,
-          contentType: MediaType("image", "jpg"));
+    final MultipartFile _files = MultipartFile.fromFileSync(profile.path,
+        contentType: MediaType("image", "jpg"));
 
-      final baseOptions = BaseOptions(
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      );
-      Dio dio = Dio(baseOptions);
+    final baseOptions = BaseOptions(
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    );
+    Dio dio = Dio(baseOptions);
 
-      _formData = FormData.fromMap({
-        "images": _files,
-      });
+    _formData = FormData.fromMap({
+      "images": _files,
+    });
 
-      var res = await dio.post(ManagerApi_Url().save_img + "${managerId}",
-          data: _formData);
+    var res = await dio.post(ManagerApi_Url().save_img + "${managerId}",
+        data: _formData);
 
-      print(res.statusCode);
-      print(res.data);
+    print(res.statusCode);
+    print(res.data);
 
 
-      // if (res.statusCode == 200) {
-      //   return true;
-      // } else {
-      //   showtoast("ERROR");
-      //   return false;
-      // }
+  }
+
+  //프사변경
+  Future<bool?> update_profile(PickedFile profile,String managerId) async{
+    FormData _formData;
+
+
+    final MultipartFile _files = MultipartFile.fromFileSync(profile.path,
+        contentType: MediaType("image", "jpg"));
+
+    final baseOptions = BaseOptions(
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    );
+    Dio dio = Dio(baseOptions);
+
+    _formData = FormData.fromMap({
+      "images": _files,
+    });
+
+    var res = await dio.patch(ManagerApi_Url().save_img + "${managerId}",
+        data: _formData);
+
+    print(res.statusCode);
+    print(res.data);
+
 
   }
 
@@ -188,9 +212,44 @@ class ManagerApi with ChangeNotifier {
     }
   }
 
+  //manager 정보수정
+  Future<int?> update_manager(
+      String token,int? id,String nickname, String oneline_introduce,String introduce) async {
+
+
+    var res = await http.patch(Uri.parse(ManagerApi_Url().save_manager),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode({
+          'id':id,
+
+          'nickname': nickname,
+          'oneline_introduce':oneline_introduce,
+          'introduce':introduce,
+
+        }));
+
+
+    print(res.body);
+    print("object");
+    if (res.statusCode == 200) {
+      final decodeData = utf8.decode(res.bodyBytes);
+      final data = jsonDecode(decodeData);
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString("userId", data['id'].toString());
+      return data['id'];
+    } else {
+
+      return null;
+    }
+  }
+
   //trainer 회원가입
   Future<int?> register_trainer(
-      String id, String password, String nickname,String gymId) async {
+      String id,String oneline_introduce,String introduce ,String password, String nickname,String gymId) async {
     var res = await http.post(Uri.parse(ManagerApi_Url().save_trainer+"$gymId"),
         headers: {
           'Content-Type': 'application/json',
@@ -199,6 +258,8 @@ class ManagerApi with ChangeNotifier {
         body: json.encode({
           'name': id,
           'password': password,
+          'oneline_introduce':oneline_introduce,
+          'introduce':introduce,
           'nickname': nickname,
         }));
 
@@ -236,9 +297,8 @@ class ManagerApi with ChangeNotifier {
 
       //초기 로그인시 userId(PK)저장
       if(userId == null){
-        print("set userId");
-        var userId =await get_userinfo(data['token']);
-        prefs.setString("userId", userId.toString());
+        TrainerDto? trainerDto =await get_userinfo(data['token']);
+        prefs.setString("userId", trainerDto!.id.toString());
       }
 
       return data['token'];

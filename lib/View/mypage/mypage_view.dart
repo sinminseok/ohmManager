@@ -3,10 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ohmmanager/Controller/managerApi.dart';
+import 'package:ohmmanager/Model/gymDto.dart';
 import 'package:ohmmanager/Model/trainerDto.dart';
 import 'package:ohmmanager/Utils/constants.dart';
+import 'package:ohmmanager/View/mypage/detailview/profile_edit.dart';
+import 'package:ohmmanager/View/mypage/detailview/question_view.dart';
+import 'package:ohmmanager/View/post/widgets/bottm_sheet.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
+import 'detailview/ohm_introduce.dart';
 class MypageView extends StatefulWidget {
   const MypageView({Key? key}) : super(key: key);
 
@@ -17,6 +24,12 @@ class MypageView extends StatefulWidget {
 class _MypageViewState extends State<MypageView> {
   Future? myFuture;
   TrainerDto? user;
+  GymDto? gymDto;
+
+  _callNumber() async{
+    const number = '01083131764'; //set the number here
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+  }
   final spinkit = SpinKitDoubleBounce(
     itemBuilder: (BuildContext context, int index) {
       return DecoratedBox(
@@ -27,6 +40,24 @@ class _MypageViewState extends State<MypageView> {
       );
     },
   );
+
+  Future<GymDto?> get_gyminfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    var userId = prefs.getString("userId");
+
+    var gym =
+    await ManagerApi().gyminfo_byManager(userId, prefs.getString("token"));
+
+    if (gym == null) {
+      return null;
+    } else {
+      setState(() {
+        gymDto = gym;
+      });
+
+      return gymDto;
+    }
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -35,9 +66,10 @@ class _MypageViewState extends State<MypageView> {
     super.initState();
   }
 
-  get_userinfo()async{
+  get_userinfo() async {
     final prefs = await SharedPreferences.getInstance();
-    user =await ManagerApi().get_userinfo(prefs.getString("token"));
+    user = await ManagerApi().get_userinfo(prefs.getString("token"));
+    await get_gyminfo();
     return user;
   }
 
@@ -63,198 +95,265 @@ class _MypageViewState extends State<MypageView> {
                 ),
                 InkWell(
                     onTap: () {
-
+                      showModalBottomSheet<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Bottom_Sheet();
+                          });
                     },
                     child: Icon(Icons.settings))
               ],
             ),
-            shape: Border(
-                bottom: BorderSide(
-                    color: Colors.grey,
-                    width: 0.3
-                )
-            ),
+            shape: Border(bottom: BorderSide(color: Colors.grey, width: 0.3)),
             elevation: 0,
           ),
         ),
         backgroundColor: kBackgroundColor,
         body: SingleChildScrollView(
-
             child: Column(
-              children: [
-                FutureBuilder(
-                    future: myFuture,
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData == false) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Waiting: ${snapshot.error}', // 에러명을 텍스트에 뿌려줌
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        );
-                      }
+          children: [
+            FutureBuilder(
+                future: myFuture,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData == false) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Waiting: ${snapshot.error}', // 에러명을 텍스트에 뿌려줌
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    );
+                  }
 
-                      //error가 발생하게 될 경우 반환하게 되는 부분
-                      else if (snapshot.hasError) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Error: ${snapshot.error}', // 에러명을 텍스트에 뿌려줌
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        );
-                      } else {
-                        return Center(
-                          child: Container(
-                            width: 350.w,
-                            height: 120.h,
-                            decoration: BoxDecoration(
-                              color: kContainerColor,
-                              borderRadius: BorderRadius.all(Radius.circular(0))
+                  //error가 발생하게 될 경우 반환하게 되는 부분
+                  else if (snapshot.hasError) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Error: ${snapshot.error}', // 에러명을 텍스트에 뿌려줌
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    );
+                  } else {
+                    return Center(
+                      child: Container(
+                        width: 350.w,
+                        height: 120.h,
+                        decoration: BoxDecoration(
+                            color: kContainerColor,
+                            borderRadius: BorderRadius.all(Radius.circular(0))),
+                        margin: EdgeInsets.only(top: 0.h, left: 0),
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(top: 5, left: 23),
+                              width: size.width * 0.16,
+                              height: size.height * 0.08,
+                              child: CircleAvatar(
+                                backgroundColor: kContainerColor,
+                                backgroundImage: NetworkImage(
+                                    "https://cdn.icon-icons.com/icons2/2506/PNG/512/user_icon_150670.png"),
+                              ),
                             ),
-                            margin: EdgeInsets.only(top: 0.h, left: 0),
-                            child: Row(
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(top: 5, left: 23),
-                                  width: size.width * 0.16,
-                                  height: size.height * 0.08,
-                                  child: CircleAvatar(
-                                    backgroundColor: kContainerColor,
-                                    backgroundImage: NetworkImage(
-                                        "https://cdn.icon-icons.com/icons2/2506/PNG/512/user_icon_150670.png"),
-
-                                  ),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                        margin: EdgeInsets.only(top: 37.h, left: 20),
-                                        child: Text(
-                                          "신민석",
-                                          style: TextStyle(
-                                              fontSize: 20, fontWeight: FontWeight.bold),
-                                        )),
-                                    Container(
-                                      margin: EdgeInsets.only(left: 15.w,top: 5.h),
-                                      width:200.w,
-                                      height:25.h,
-                                      decoration: BoxDecoration(
+                                    margin:
+                                    EdgeInsets.only(top: 23.h, left: 20),
+                                    child: Text(
+                                      "${user?.nickname}",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                Container(
+                                    margin:
+                                    EdgeInsets.only(top: 6.h, left: 20,bottom: 10),
+                                    child: Text(
+                                      "${gymDto?.name}",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          ),
+                                    )),
+                                InkWell(
+                                  onTap: (){
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            type: PageTransitionType.fade,
+                                            child: Profile_Edit(user: user!, gymDto: gymDto!,)));
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(left: 15.w, top: 5.h),
+                                    width: 200.w,
+                                    height: 25.h,
+                                    decoration: BoxDecoration(
                                         border: Border.all(color: Colors.grey),
-                                          borderRadius: BorderRadius.all(Radius.circular(10),)
-
-                                      ),
-                                      child: Center(child: Text("프로필 관리")),
-                                    )
-
-                                  ],
-                                ),
-
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(10),
+                                        )),
+                                    child: Center(child: Text("프로필 관리")),
+                                  ),
+                                )
                               ],
                             ),
-                          ),
-                        );
-                      }
-                    }),
-
-                Container(
-                    margin: EdgeInsets.only(top: 30),
-                    width: 330.w,
-                    height: 50.h,
-                    decoration: BoxDecoration(
-                        color: kBoxColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10))
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(left: 20.w,top: 3.h),
-                            child: Icon(Icons.support_agent,size: 30,color: kPrimaryColor,)),
-                        Container(
-                            margin: EdgeInsets.only(left: 20.w,top: 5.h),
-                            child: Text("고객센터",style: TextStyle(fontSize: 17,color: kPrimaryColor,fontWeight: FontWeight.bold),)),
-                      ],
-                    )
-                ),
-                Container(
-                    margin: EdgeInsets.only(top: 10),
-                    width: 330.w,
-                    height: 50.h,
-                    decoration: BoxDecoration(
-                        color: kBoxColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10))
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(left: 20.w,top: 3.h),
-                            child: Icon(Icons.question_mark,size: 30,color: kPrimaryColor,)),
-                        Container(
-                            margin: EdgeInsets.only(left: 20.w,top: 5.h),
-                            child: Text("자주 묻는 질문",style: TextStyle(fontSize: 17,color: kPrimaryColor,fontWeight: FontWeight.bold),)),
-                      ],
-                    )
-                ),
-                Container(
-                    margin: EdgeInsets.only(top: 10),
-                    width: 330.w,
-                    height: 50.h,
-                    decoration: BoxDecoration(
-                        color: kBoxColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10))
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(left: 20.w,top: 3.h),
-                            child: Icon(Icons.alarm,size: 30,color: kPrimaryColor,)),
-                        Container(
-                            margin: EdgeInsets.only(left: 20.w,top: 5.h),
-                            child: Text("오헬몇 이란?",style: TextStyle(fontSize: 17,color: kPrimaryColor,fontWeight: FontWeight.bold),)),
-                      ],
-                    )
-                ),
-                Container(
-                    margin: EdgeInsets.only(top: 30),
-                    width: 330.w,
-                    height: 70.h,
-                    decoration: BoxDecoration(
-                        color: kPrimaryColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10))
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                        Container(
-                            margin: EdgeInsets.only(left: 20.w,top: 15.h),
-                            child: Text("카카오톡으로 문의하기",style: TextStyle(fontSize: 17,color: kTextWhiteColor,fontWeight: FontWeight.bold),)),
-                        Container(
-                            margin: EdgeInsets.only(left: 20.w,top: 5.h),
-                            child: Text("소중한 피드백을 보내주세요.",style: TextStyle(fontSize: 15,color: kTextWhiteColor,fontWeight: FontWeight.bold),)),
-                      ],
-                    )
-                ),
-
-                Column(
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                }),
+            Container(
+                margin: EdgeInsets.only(top: 30),
+                width: 330.w,
+                height: 50.h,
+                decoration: BoxDecoration(
+                    color: kBoxColor,
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: Row(
                   children: [
-                    SizedBox(
-                      height: size.height * 0.15,
+                    Container(
+                        margin: EdgeInsets.only(left: 20.w, top: 3.h),
+                        child: Icon(
+                          Icons.support_agent,
+                          size: 30,
+                          color: kPrimaryColor,
+                        )),
+                    InkWell(
+                      onTap: (){
+                        _callNumber();
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(left: 20.w, top: 5.h),
+                          child: Text(
+                            "고객센터",
+                            style: TextStyle(
+                                fontSize: 17,
+                                color: kPrimaryColor,
+                                fontWeight: FontWeight.bold),
+                          )),
                     ),
-
-                    Text(
-                      "(주)코무무 | komumu",
-                      style: TextStyle(color: Colors.black38),
-                    ),
-                    Text(
-                      "@Copyright 신민석,김영솔",
-                      style: TextStyle(color: Colors.black38),
-                    )
                   ],
+                )),
+            InkWell(
+              onTap: (){
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade,
+                        child: Question_View()));
+              },
+              child: Container(
+                  margin: EdgeInsets.only(top: 10),
+                  width: 330.w,
+                  height: 50.h,
+                  decoration: BoxDecoration(
+                      color: kBoxColor,
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Row(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(left: 20.w, top: 3.h),
+                          child: Icon(
+                            Icons.question_mark,
+                            size: 30,
+                            color: kPrimaryColor,
+                          )),
+                      Container(
+                          margin: EdgeInsets.only(left: 20.w, top: 5.h),
+                          child: Text(
+                            "자주 묻는 질문",
+                            style: TextStyle(
+                                fontSize: 17,
+                                color: kPrimaryColor,
+                                fontWeight: FontWeight.bold),
+                          )),
+                    ],
+                  )),
+            ),
+            InkWell(
+              onTap: (){
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade,
+                        child: Introduce_View()));
+              },
+              child: Container(
+                  margin: EdgeInsets.only(top: 10),
+                  width: 330.w,
+                  height: 50.h,
+                  decoration: BoxDecoration(
+                      color: kBoxColor,
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Row(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(left: 20.w, top: 3.h),
+                          child: Icon(
+                            Icons.alarm,
+                            size: 30,
+                            color: kPrimaryColor,
+                          )),
+                      Container(
+                          margin: EdgeInsets.only(left: 20.w, top: 5.h),
+                          child: Text(
+                            "오헬몇 이란?",
+                            style: TextStyle(
+                                fontSize: 17,
+                                color: kPrimaryColor,
+                                fontWeight: FontWeight.bold),
+                          )),
+                    ],
+                  )),
+            ),
+            Container(
+                margin: EdgeInsets.only(top: 30),
+                width: 330.w,
+                height: 70.h,
+                decoration: BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(left: 20.w, top: 15.h),
+                        child: Text(
+                          "카카오톡으로 문의하기",
+                          style: TextStyle(
+                              fontSize: 17,
+                              color: kTextWhiteColor,
+                              fontWeight: FontWeight.bold),
+                        )),
+                    Container(
+                        margin: EdgeInsets.only(left: 20.w, top: 5.h),
+                        child: Text(
+                          "소중한 피드백을 보내주세요.",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: kTextWhiteColor,
+                              fontWeight: FontWeight.bold),
+                        )),
+                  ],
+                )),
+            Column(
+              children: [
+                SizedBox(
+                  height: size.height * 0.15,
                 ),
+                Text(
+                  "(주)코무무 | komumu",
+                  style: TextStyle(color: Colors.black38),
+                ),
+                Text(
+                  "@Copyright 신민석,김영솔",
+                  style: TextStyle(color: Colors.black38),
+                )
               ],
-            )));
+            ),
+          ],
+        )));
   }
 }

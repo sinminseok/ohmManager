@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/postDto.dart';
 import '../Model/postImgDto.dart';
@@ -14,78 +15,93 @@ import '../Utils/httpurls.dart';
 import '../Utils/toast.dart';
 
 class PostApi with ChangeNotifier {
+  Future<bool?> delete_post(int postId) async {
+    final prefs = await SharedPreferences.getInstance();
 
+    var res = await http.delete(Uri.parse(PostApi_Url().save_post+"${postId}"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${prefs.getString("token")}'
+        },
+        );
 
-  Future<String?> save_post(String title, String content,
-      String gymId, String token) async {
-    print(gymId);
-    print("DDDDDd");
-    PostDto postDto = PostDto.makeDto(title, content);
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      showtoast("ERRORR");
+      return null;
+    }
+  }
 
+  Future<bool?> update_post(int postId, String title, String content) async {
+    final prefs = await SharedPreferences.getInstance();
 
+    var res = await http.patch(Uri.parse(PostApi_Url().update_post),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${prefs.getString("token")}'
+        },
+        body: json.encode({'id': postId, 'title': title, 'content': content}));
+    print(res.body);
 
-    var res = await http.post(Uri.parse(PostApi_Url().save_post+"${int.parse(gymId)}"),
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      showtoast("ERRORR");
+      return null;
+    }
+  }
+
+  Future<String?> save_post(
+      String title, String content, String gymId, String token) async {
+    var res = await http.post(
+        Uri.parse(PostApi_Url().save_post + "${int.parse(gymId)}"),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token'
         },
-        body: json.encode({
-          'title': title,
-          'content':content
-
-        }));
+        body: json.encode({'title': title, 'content': content}));
     print(res.body);
 
     if (res.statusCode == 200) {
-
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
 
-
       return data.toString();
-
-    }else{
+    } else {
       showtoast("ERRORR");
       return null;
     }
-
   }
 
-
-  save_postimg(String postId,List<XFile> imageFileList,
-      String token) async {
-
-
-
+  save_postimg(String postId, List<XFile> imageFileList, String token) async {
     FormData _formData;
 
-    if(imageFileList.isNotEmpty){
-
-      final List<MultipartFile> _files = imageFileList.map((img) => MultipartFile.fromFileSync(img.path,contentType: MediaType("image", "jpg"))).toList();
+    if (imageFileList.isNotEmpty) {
+      final List<MultipartFile> _files = imageFileList
+          .map((img) => MultipartFile.fromFileSync(img.path,
+              contentType: MediaType("image", "jpg")))
+          .toList();
 
       final baseOptions = BaseOptions(
-
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': 'Bearer $token' },
+          'Authorization': 'Bearer $token'
+        },
 
         // contentType = 'multipart/form-data' // 'Application/json'
       );
       Dio dio = Dio(baseOptions);
 
-
-
       // if(imgList.isNotEmpty){
       _formData = FormData.fromMap({
         "images": _files,
-
       });
 
-      var res =await dio.post(PostApi_Url().save_postimgs + "${postId}", data :_formData);
-
-
-
-    }}
+      var res = await dio.post(PostApi_Url().save_postimgs + "${postId}",
+          data: _formData);
+    }
+  }
 
   //Gym에 종속된 Post 모두 조회
   Future<List<PostDto>?> findall_posts(String gymId) async {

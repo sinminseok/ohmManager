@@ -50,15 +50,20 @@ class _PostView extends State<PostView> {
                     color: kTextColor,
                    ),
               ),
-              InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            type: PageTransitionType.fade,
-                            child: PostWrite_View()));
-                  },
-                  child: Icon(Icons.add))
+              Row(
+                children: [
+
+                  InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.fade,
+                                child: PostWrite_View()));
+                      },
+                      child: Icon(Icons.add)),
+                ],
+              )
             ],
           ),
 

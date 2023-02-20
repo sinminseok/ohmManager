@@ -6,29 +6,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ohmmanager/Controller/gymApi.dart';
 import 'package:ohmmanager/Controller/managerApi.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/View/account/role_view.dart';
-import 'package:ohmmanager/View/account/signup_trainer.dart';
+import 'package:ohmmanager/View/account/trainer/signup_trainer.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../Utils/constants.dart';
-import '../../../Utils/toast.dart';
-import '../../../Utils/widget/passwordinput_widget.dart';
-import '../../../Utils/widget/rouninput_widget.dart';
+import '../../../../Utils/constants.dart';
+import '../../../../Utils/toast.dart';
+import '../../../../Utils/widget/passwordinput_widget.dart';
+import '../../../../Utils/widget/rouninput_widget.dart';
 
-class CodeView extends StatefulWidget {
-  const CodeView({Key? key}) : super(key: key);
+class Trainer_CodeView extends StatefulWidget {
+  const Trainer_CodeView({Key? key}) : super(key: key);
 
   @override
-  _CodeView createState() => _CodeView();
+  _Trainer_CodeView createState() => _Trainer_CodeView();
 }
 
-class _CodeView extends State<CodeView>
+class _Trainer_CodeView extends State<Trainer_CodeView>
     with SingleTickerProviderStateMixin {
-  final TextEditingController _onlineController = TextEditingController();
-  final TextEditingController _introduceController = TextEditingController();
+
   String? code;
 
   @override
@@ -107,29 +107,29 @@ class _CodeView extends State<CodeView>
                 SizedBox(height: size.height*0.4,),
 
                 InkWell(
-                  onTap: () async {
-                    if(code?.length != 4){
-                      showtoast("4자리를 모두 입력해주세요");
-
-                    }else{
-                      var check_code =await ManagerApi().check_code(code!);
-                      if(check_code == true){
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: Role_View()));
+                    onTap: () async {
+                      if(code?.length != 4){
+                        showtoast("4자리를 모두 입력해주세요");
 
                       }else{
-                        return showtoast("유효하지 않은 코드 입니다.");
+                        var check_code =await GymApi().check_code(code!);
+                        if(check_code != null){
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: Signup_Trainer(gymId: check_code.toString(),)));
+
+                        }else{
+                          return showtoast("유효하지 않은 코드 입니다.");
+                        }
                       }
-                    }
 
 
 
-                  },
-                  borderRadius: BorderRadius.circular(10),
-                  child: Button( "다음")
+                    },
+                    borderRadius: BorderRadius.circular(10),
+                    child: Button( "다음")
                 ),
                 SizedBox(height: 30),
               ],

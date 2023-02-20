@@ -19,6 +19,9 @@ class GymApi with ChangeNotifier {
 
   String? get gym_name => _gym_name;
 
+
+
+
   Future<int?> check_code(String code) async {
     var res = await http.get(
       Uri.parse(GymApi_Url().check_code + "$code"),
@@ -31,7 +34,6 @@ class GymApi with ChangeNotifier {
 
       return data;
     } else {
-      showtoast("ERROR");
       return null;
     }
   }

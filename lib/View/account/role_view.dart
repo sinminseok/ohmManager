@@ -1,18 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:ohmmanager/Controller/managerApi.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
-import 'package:ohmmanager/View/account/manager/signup_manager.dart';
-import 'package:ohmmanager/View/account/signup_trainer.dart';
+import 'package:ohmmanager/View/account/trainer/trainer_code.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../Utils/constants.dart';
-import '../../Utils/toast.dart';
-import '../../Utils/widget/passwordinput_widget.dart';
-import '../../Utils/widget/rouninput_widget.dart';
+import 'manager/manager_code.dart';
 
 class Role_View extends StatefulWidget {
   const Role_View({Key? key}) : super(key: key);
@@ -66,7 +59,7 @@ class _Role_View extends State<Role_View>
                               context,
                               PageTransition(
                                   type: PageTransitionType.fade,
-                                  child: SignupView()));
+                                  child: Manager_CodeView()));
                         },
                         child: Center(
                           child: Container(
@@ -80,7 +73,7 @@ class _Role_View extends State<Role_View>
                               context,
                               PageTransition(
                                   type: PageTransitionType.fade,
-                                  child: SignupTrainer()));
+                                  child: Trainer_CodeView()));
                         },
                         child: Center(
                           child: Button("트레이너")

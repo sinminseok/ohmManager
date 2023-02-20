@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/managerApi.dart';
-import 'package:ohmmanager/View/account/code_view.dart';
+import 'package:ohmmanager/View/account/manager/manager_code.dart';
+import 'package:ohmmanager/View/account/role_view.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -213,7 +214,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                           context,
                           PageTransition(
                               type: PageTransitionType.fade,
-                              child: CodeView()));
+                              child: Role_View()));
                     },
                     child: Text(
                       "회원가입 하러가기",
