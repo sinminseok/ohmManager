@@ -66,3 +66,11 @@ class PostApi_Url {
 
   String save_postimgs = endpoint + "post/img/";
 }
+
+class QuestionApi_Url {
+  String findall_question = endpoint + "question/all/";
+
+  String find_question = endpoint + "question/";
+
+
+}

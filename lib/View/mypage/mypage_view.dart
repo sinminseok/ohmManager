@@ -116,11 +116,15 @@ class _MypageViewState extends State<MypageView> {
                 future: myFuture,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData == false) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Waiting: ${snapshot.error}', // 에러명을 텍스트에 뿌려줌
-                        style: TextStyle(fontSize: 15),
+                    return Container(
+                      width: 330.w,
+                      height: 90.h,
+                      decoration: BoxDecoration(
+                        color: kBoxColor,
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                      ),
+                      child: Center(
+                        child: Text("회원가입을 진행해주세요"),
                       ),
                     );
                   }
@@ -308,36 +312,38 @@ class _MypageViewState extends State<MypageView> {
                     ],
                   )),
             ),
-            Container(
-                margin: EdgeInsets.only(top: 30),
-                width: 330.w,
-                height: 70.h,
-                decoration: BoxDecoration(
-                    color: kPrimaryColor,
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(left: 20.w, top: 15.h),
-                        child: Text(
-                          "카카오톡으로 문의하기",
-                          style: TextStyle(
-                              fontSize: 17,
-                              color: kTextWhiteColor,
-                              fontWeight: FontWeight.bold),
-                        )),
-                    Container(
-                        margin: EdgeInsets.only(left: 20.w, top: 5.h),
-                        child: Text(
-                          "소중한 피드백을 보내주세요.",
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: kTextWhiteColor,
-                              fontWeight: FontWeight.bold),
-                        )),
-                  ],
-                )),
+            Center(
+              child: Container(
+                  margin: EdgeInsets.only(top: 30),
+                  width: 330.w,
+                  height: 70.h,
+                  decoration: BoxDecoration(
+                      color: kPrimaryColor,
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(left: 20.w, top: 15.h),
+                          child: Text(
+                            "카카오톡으로 문의하기",
+                            style: TextStyle(
+                                fontSize: 17,
+                                color: kTextWhiteColor,
+                                fontWeight: FontWeight.bold),
+                          )),
+                      Container(
+                          margin: EdgeInsets.only(left: 20.w, top: 5.h),
+                          child: Text(
+                            "소중한 피드백을 보내주세요.",
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: kTextWhiteColor,
+                                fontWeight: FontWeight.bold),
+                          )),
+                    ],
+                  )),
+            ),
             Column(
               children: [
                 SizedBox(

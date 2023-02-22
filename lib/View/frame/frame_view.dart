@@ -2,12 +2,14 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ohmmanager/View/mypage/detailview/question_view.dart';
 import 'package:ohmmanager/View/mypage/mypage_view.dart';
 import 'package:ohmmanager/View/post/post_view.dart';
 import 'package:ohmmanager/View/trainer/trainer_view.dart';
 
 import '../../Utils/widget/bottomnav_widget.dart';
 import '../home/home_view.dart';
+import '../question/question_view.dart';
 
 class FrameView extends StatefulWidget {
   const FrameView({Key? key}) : super(key: key);
@@ -24,6 +26,7 @@ class _FrameView extends State<FrameView> {
   final screens = [
     HomeView(),
     PostView(),
+    QuestionView(),
     TrainerView(),
     MypageView(),
   ];
@@ -43,6 +46,7 @@ class _FrameView extends State<FrameView> {
           iconList: [
             Icons.home,
             Icons.speaker_notes_outlined,
+            Icons.question_answer,
             Icons.group_outlined,
             Icons.person_outlined,
           ],
