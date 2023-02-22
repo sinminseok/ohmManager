@@ -213,8 +213,8 @@ class ManagerApi with ChangeNotifier {
   }
 
   //manager 정보수정
-  Future<int?> update_manager(
-      String token,int? id,String nickname, String oneline_introduce,String introduce) async {
+  Future<bool?> update_manager(
+      String token,int? id,String nickname, String oneline_introduce,String introduce,String name) async {
 
 
     var res = await http.patch(Uri.parse(ManagerApi_Url().save_manager),
@@ -225,7 +225,7 @@ class ManagerApi with ChangeNotifier {
         },
         body: json.encode({
           'id':id,
-
+          'name':name,
           'nickname': nickname,
           'oneline_introduce':oneline_introduce,
           'introduce':introduce,
@@ -236,14 +236,14 @@ class ManagerApi with ChangeNotifier {
     print(res.body);
     print("object");
     if (res.statusCode == 200) {
-      final decodeData = utf8.decode(res.bodyBytes);
-      final data = jsonDecode(decodeData);
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString("userId", data['id'].toString());
-      return data['id'];
+      // final decodeData = utf8.decode(res.bodyBytes);
+      // final data = jsonDecode(decodeData);
+      // final prefs = await SharedPreferences.getInstance();
+      // prefs.setString("userId", data['id'].toString());
+      return true;
     } else {
 
-      return null;
+      return false;
     }
   }
 

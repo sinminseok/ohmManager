@@ -4,11 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/questionApi.dart';
 import 'package:ohmmanager/Model/questionDto.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
+import 'package:ohmmanager/Utils/toast.dart';
 
 import '../../../Utils/constants.dart';
 
 class DeleteQuestion_Popup {
-  void showDialog( BuildContext context,QuestionDto questionDto) {
+  int? showDialog( BuildContext context,QuestionDto questionDto) {
     showGeneralDialog(
         context: context,
         barrierDismissible: true,
@@ -47,8 +48,15 @@ class DeleteQuestion_Popup {
                             margin: EdgeInsets.only(top: 30.h,left: 10.w,right: 10.h),
                             child: Text("해당 질문을 삭제하겠습니까?",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),)),
                         InkWell(
-                            onTap: (){
-                              QuestionApi().delete_question(questionDto.id);
+                            onTap: ()async{
+                              var delete_question =await QuestionApi().delete_question(questionDto.id);
+                              if(delete_question == true){
+                                showtoast("삭제완료");
+                                Navigator.pop(context);
+
+                              }else{
+                                showtoast("네트워크를 확인해주세요");
+                              }
                             },
                             child: Container(
                                 margin: EdgeInsets.only(left: 20.w,right: 20.w,bottom: 20.h,top: 40.h),

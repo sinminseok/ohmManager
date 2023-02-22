@@ -51,7 +51,7 @@ class QuestionApi with ChangeNotifier {
   Future<bool> delete_question(int questionId)async{
     final prefs = await SharedPreferences.getInstance();
 
-    var res = await http.get(
+    var res = await http.delete(
       Uri.parse(QuestionApi_Url().find_question + "${questionId}"),
       headers: {
         'Content-Type': 'application/json',
@@ -61,6 +61,54 @@ class QuestionApi with ChangeNotifier {
     );
 
 
+    if (res.statusCode == 200) {
+
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> register_answer(int questionId,String content)async{
+    final prefs = await SharedPreferences.getInstance();
+
+    var res = await http.post(
+        Uri.parse(QuestionApi_Url().register_answer + "${questionId}"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${prefs.getString("token")}'
+        },
+        body: json.encode(({
+          "content": content,
+        })));
+
+
+    print(res);
+    if (res.statusCode == 200) {
+
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> edit_answer(int answerId,String content)async{
+    final prefs = await SharedPreferences.getInstance();
+
+    var res = await http.patch(
+        Uri.parse(QuestionApi_Url().register_answer + "${answerId}"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${prefs.getString("token")}'
+        },
+        body: json.encode(({
+          "content": content,
+        })));
+
+
+    print(res);
     if (res.statusCode == 200) {
 
       return true;

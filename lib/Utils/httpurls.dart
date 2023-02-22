@@ -72,5 +72,7 @@ class QuestionApi_Url {
 
   String find_question = endpoint + "question/";
 
+  String register_answer = endpoint + "answer/";
+
 
 }

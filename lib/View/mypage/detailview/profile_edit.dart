@@ -28,7 +28,7 @@ class _Profile_EditState extends State<Profile_Edit> {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _nameController =
+    final TextEditingController _nickNameController =
         TextEditingController(text: widget.user.nickname);
     final TextEditingController _onlineController =
         TextEditingController(text: widget.user.oneline_introduce);
@@ -110,7 +110,7 @@ class _Profile_EditState extends State<Profile_Edit> {
                           width: 200.w,
                           margin: EdgeInsets.only(left: 20.w,top: 10.h),
                           child: TextFormField(
-                            controller: _nameController,
+                            controller: _nickNameController,
                             textAlign: TextAlign.start,
                             cursorColor: kContainerColor,
                             decoration: InputDecoration(
@@ -183,11 +183,11 @@ class _Profile_EditState extends State<Profile_Edit> {
             InkWell(
                 onTap: ()async{
                   final prefs = await SharedPreferences.getInstance();
-                  ManagerApi().update_manager(prefs.getString("token").toString(),widget.user!.id,_nameController.text,_onlineController.text,_introduceController.text);
+                  await ManagerApi().update_manager(prefs.getString("token").toString(),widget.user!.id,_nickNameController.text,_onlineController.text,_introduceController.text,widget.user.name.toString());
                   if(_image == null){
                     Navigator.pop(context);
                   }else{
-                    ManagerApi().update_profile(_image!, widget.user.id.toString());
+                    await ManagerApi().update_profile(_image!, widget.user.id.toString());
                     Navigator.pop(context);
                   }
                 },

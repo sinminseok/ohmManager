@@ -8,7 +8,7 @@ import 'package:ohmmanager/Model/trainerDto.dart';
 import 'package:ohmmanager/Utils/constants.dart';
 import 'package:ohmmanager/View/mypage/detailview/profile_edit.dart';
 import 'package:ohmmanager/View/mypage/detailview/question_view.dart';
-import 'package:ohmmanager/View/post/widgets/bottm_sheet.dart';
+import 'package:ohmmanager/View/mypage/popup/bottm_sheet.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
@@ -98,7 +98,7 @@ class _MypageViewState extends State<MypageView> {
                       showModalBottomSheet<void>(
                           context: context,
                           builder: (BuildContext context) {
-                            return Bottom_Sheet();
+                            return Profile_BottomSheet();
                           });
                     },
                     child: Icon(Icons.settings))
