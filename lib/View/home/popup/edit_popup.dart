@@ -33,6 +33,10 @@ class Edit_Popup {
                     child: Container(
                   child: Column(
                     children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 20.h,bottom: 10.h),
+                        child: Text("헬스장 정보 수정",style: TextStyle(color: kPrimaryColor,fontWeight: FontWeight.bold,fontSize: 17.sp,fontFamily: "boldfont"),),
+                      ),
                       InkWell(
                         onTap: (){
                           Navigator.push(
@@ -42,7 +46,7 @@ class Edit_Popup {
                                   child: GymEdit_View(gymDto: gymDto,)));
                         },
                         child: Container(
-                          margin: EdgeInsets.only(top: 40, left: 20, right: 20),
+                          margin: EdgeInsets.only(top: 20, left: 20, right: 20),
                           width: 320.w,
                           height: 50.h,
                           decoration: BoxDecoration(
@@ -67,10 +71,10 @@ class Edit_Popup {
                               context,
                               PageTransition(
                                   type: PageTransitionType.fade,
-                                  child: GymPrice_View(gymDto: gymDto,)));
+                                  child: GymPriceEdit_View(gymDto: gymDto,)));
                         },
                         child: Container(
-                          margin: EdgeInsets.only(top: 40, left: 20, right: 20),
+                          margin: EdgeInsets.only(top: 20, left: 20, right: 20),
                           width: 320.w,
                           height: 50.h,
                           decoration: BoxDecoration(
@@ -98,7 +102,7 @@ class Edit_Popup {
                                   child: GymTimeEdit_View(gymDto: gymDto,)));
                         },
                         child: Container(
-                          margin: EdgeInsets.only(top: 40, left: 20, right: 20),
+                          margin: EdgeInsets.only(top: 20, left: 20, right: 20),
                           width: 320.w,
                           height: 50.h,
                           decoration: BoxDecoration(
@@ -119,7 +123,7 @@ class Edit_Popup {
                       ),
                       InkWell(
                           onTap: () {
-                            print("object");
+                            Navigator.pop(context);
                           },
                           child: Container(
                               margin: EdgeInsets.only(bottom: 15,top: 30,left: 20,right: 20),

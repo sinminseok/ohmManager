@@ -7,16 +7,17 @@ import '../detailview/post_detail.dart';
 
 
 
-Widget Post_Widget(Size size,context,PostDto postDto) {
+Widget Post_Widget(Size size,context,PostDto postDto,var fun) {
 
   return InkWell(
     onTap: (){
       //  print(postDto.imgs[0].filePath);
+
       Navigator.push(
           context,
           PageTransition(
               type: PageTransitionType.fade,
-              child: Post_Detail(postDto:postDto)));
+              child: Post_Detail(postDto:postDto, fun: fun,)));
     },
     child:Padding(
       padding: const EdgeInsets.only(bottom: 30.0,top: 10),

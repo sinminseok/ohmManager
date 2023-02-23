@@ -40,104 +40,108 @@ class _GymRegisterView3 extends State<GymRegisterView3> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: kIconColor, //change your color here
-        ),
-        shape: Border(
-            bottom: BorderSide(
-                color: Colors.black26,
-                width: 0.3
-            )
-        ),
-        backgroundColor: kBackgroundColor,
-        elevation: 0,
-      ),
-      backgroundColor: Colors.grey.shade200,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            margin: EdgeInsets.only(left: 20, bottom: 15),
-            child: Text(
-              "헬스장 사진",
-              style: TextStyle(color: kTextColor, fontSize: 23),
-            ),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          iconTheme: IconThemeData(
+            color: kIconColor, //change your color here
           ),
-          image_picked.isNotEmpty
-              ? Container()
-              : InkWell(
-                  onTap: () {
-                    Permission_handler().requestCameraPermission(context);
-                    getImages();
-                  },
-                  child: Center(
-                    child: Container(
-                      width: size.width * 0.9,
-                      height: size.height * 0.2,
-                      decoration: BoxDecoration(
+          shape: Border(
+              bottom: BorderSide(
+                  color: Colors.black26,
+                  width: 0.3
+              )
+          ),
+          backgroundColor: kBackgroundColor,
+          elevation: 0,
+        ),
+        backgroundColor: Colors.grey.shade200,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              margin: EdgeInsets.only(left: 20, bottom: 15),
+              child: Text(
+                "헬스장 사진",
+                style: TextStyle(color: kTextColor, fontSize: 23,fontWeight: FontWeight.bold),
+              ),
+            ),
+            image_picked.isNotEmpty
+                ? Container()
+                : InkWell(
+                    onTap: () {
+                      Permission_handler().requestCameraPermission(context);
+                      getImages();
+                    },
+                    child: Center(
+                      child: Container(
+                        width: size.width * 0.9,
+                        height: size.height * 0.2,
+                        decoration: BoxDecoration(
 
-                          color: kContainerColor,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: Icon(
-                        Icons.add,
-                        color: kTextColor,
-                        size: 35,
+                            color: kContainerColor,
+                            borderRadius: BorderRadius.all(Radius.circular(10))),
+                        child: Icon(
+                          Icons.add,
+                          color: kTextColor,
+                          size: 35,
+                        ),
                       ),
                     ),
                   ),
-                ),
-          image_picked.isEmpty
-              ? Container()
-              : Center(
-                  child: Container(
-                    width: size.width * 0.9,
+            image_picked.isEmpty
+                ? Container()
+                : Center(
+                    child: Container(
+                      width: size.width * 0.9,
 
-                    height: size.height * 0.2,
+                      height: size.height * 0.2,
 
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: image_picked.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            decoration: BoxDecoration(
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: image_picked.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              decoration: BoxDecoration(
 
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                            ),
-                            width: size.width * 0.9,
-                            height: size.height * 0.2,
-                            child: Image.file(File(image_picked[index].path)),
-                          );
-                        }),
+                                borderRadius: BorderRadius.all(Radius.circular(10))
+                              ),
+                              width: size.width * 0.9,
+                              height: size.height * 0.2,
+                              child: Image.file(File(image_picked[index].path)),
+                            );
+                          }),
+                    ),
                   ),
-                ),
 
-          SizedBox(height: size.height*0.5,),
-          InkWell(
-            onTap: () async {
-              final prefs = await SharedPreferences.getInstance();
-              var gymId = await prefs.getString("gymId");
-              var bool = await GymApi().save_gymimg(
-                  prefs.getString("token").toString(), gymId!, image_picked);
-              print(bool);
-              if (bool == true) {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.fade, child: GymRegisterView4()));
-              } else {
-                showtoast("이미지 등록 실패");
-              }
-            },
+            SizedBox(height: size.height*0.5,),
+            InkWell(
+              onTap: () async {
+                final prefs = await SharedPreferences.getInstance();
+                var gymId = await prefs.getString("gymId");
+                var bool = await GymApi().save_gymimg(
+                    prefs.getString("token").toString(), gymId!, image_picked);
+                print(bool);
+                if (bool == true) {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.fade, child: GymRegisterView4()));
+                } else {
+                  showtoast("이미지 등록 실패");
+                }
+              },
 
-            child: Center(
-              child: Button("다음")
+              child: Center(
+                child: Button("다음")
+              ),
             ),
-          ),
-          SizedBox(height: 30),
-        ],
+            SizedBox(height: 30),
+          ],
+        ),
       ),
     );
   }

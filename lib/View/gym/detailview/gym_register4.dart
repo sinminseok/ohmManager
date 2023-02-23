@@ -10,6 +10,7 @@ import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/Utils/toast.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:ohmmanager/View/gym/detailview/finish_view.dart';
+import 'package:ohmmanager/View/gym/popup/check_price.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -57,235 +58,252 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: kIconColor, //change your color here
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          iconTheme: IconThemeData(
+            color: kIconColor, //change your color here
+          ),
+          shape: Border(
+              bottom: BorderSide(
+                  color: Colors.black26,
+                  width: 0.3
+              )
+          ),
+          backgroundColor: kBackgroundColor,
+          elevation: 0,
         ),
-        shape: Border(
-            bottom: BorderSide(
-                color: Colors.black26,
-                width: 0.3
-            )
-        ),
-        backgroundColor: kBackgroundColor,
-        elevation: 0,
-      ),
-      backgroundColor: Colors.grey.shade200,
-      body: Column(
+        backgroundColor: Colors.grey.shade200,
+        body: Column(
 
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: EdgeInsets.only(left: 25, bottom: 15,top: 10),
-                child: Text(
-                  "이용 가격",
-                  style: TextStyle(color: kTextColor, fontSize: 23),
-                ),
-              ),
-              Center(
-                child: Container(
-                  margin: EdgeInsets.only(bottom: 10),
-                  width: size.width * 0.9,
-                  height: size.height * 0.15,
-                  decoration: BoxDecoration(
-                      color: kContainerColor,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              margin:
-                              EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                              child: Text(
-                                "이용기간",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: kTextColor),
-                              )),
-                          Container(
-                              margin:
-                              EdgeInsets.only(right: 15, top: 10, bottom: 10),
-                              width: 100.w,
-                              height: 50.h,
-                              decoration: BoxDecoration(
-                                  color: kContainerColor,
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                              child: DropdownButton(
-                                isExpanded: true,
-                                //make true to take width of parent widget
-                                underline: Container(),
-                                //empty line
-                                style: TextStyle(fontSize: 18, color: Colors.black),
-                                dropdownColor: kContainerColor,
-                                iconEnabledColor: Colors.black,
-                                //Icon color
-                                value: _selectedValue,
-                                items: _valueList.map(
-                                      (value) {
-                                    return DropdownMenuItem(
-                                      value: value,
-                                      child: Center(child: Text(value)),
-                                    );
-                                  },
-                                ).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedValue = value!;
-                                  });
-                                },
-                              )),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(left: 15, top: 0, bottom: 10),
-                              child: Text(
-                                "가격",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: kTextColor),
-                              )),
-                          Row(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(bottom: 10, right: 10),
-                                width: size.width * 0.25,
-                                height: size.height * 0.04,
-                                decoration: BoxDecoration(
-                                    color: kBoxColor,
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                                child: TextFormField(
-                                  controller: _priceController,
-                                  textAlign: TextAlign.center,
-                                  cursorColor: kContainerColor,
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.all(10),
-                                      hintText: "원",
-                                      border: InputBorder.none),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(right: 10),
-                                child: Text("원",style: TextStyle(fontSize: 18),),
-                              )
-                            ],
-                          ),
-
-                        ],
-                      )
-                    ],
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 25, bottom: 15,top: 10),
+                  child: Text(
+                    "이용 가격",
+                    style: TextStyle(color: kTextColor, fontSize: 23,fontFamily: "boldfont",fontWeight: FontWeight.bold),
                   ),
                 ),
-              ),
-              InkWell(
-                onTap: () async {
-                  if(_priceController.text == ""){
-                    return showtoast("가격을 입력주세요");
-                  }else{
-                    var bool = check_date(_selectedValue);
-                    if(bool == false){
-                      return showtoast("해당 기간은 이미 등록하셨습니다!");
-                    }else{
-                      GymPriceDto gymprice = new GymPriceDto(
-                          during: _selectedValue, price: _priceController.text, id: null);
-                      prices.add(gymprice);
-                      setState(() {
-                        _selectedValue = "1일";
-
-                        _priceController.text = "";
-                      });
-                      print(prices);
-                    }
-
-                  }
-
-                },
-                child: Center(
+                Center(
                   child: Container(
+                    margin: EdgeInsets.only(bottom: 10),
                     width: size.width * 0.9,
+                    height: size.height * 0.15,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: kContainerColor,
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "등록",
-                      style: TextStyle(
-                          color: kTextColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: size.height*0.05,),
-              Container(
-                width: size.width*0.95,
-                margin: EdgeInsets.all(8),
-                height: size.height*0.12,
-                child: ListView.builder(reverse: true,
-
-                    scrollDirection: Axis.horizontal,
-                    itemCount: prices.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        margin: EdgeInsets.all(8),
-
-                        height: size.height*0.03,
-                        decoration: BoxDecoration(
-                            color: kContainerColor,
-                            borderRadius: BorderRadius.all(Radius.circular(10))
-                        ),
-                        child: Row(
+                        color: kContainerColor,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                                margin: EdgeInsets.all(20),
-                                child: Text("${prices[index].during}",style: TextStyle(color: kTextColor,fontSize: 20,fontWeight: FontWeight.bold),)),
+                                margin:
+                                EdgeInsets.only(left: 15, top: 10, bottom: 10),
+                                child: Text(
+                                  "이용기간",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: kTextColor),
+                                )),
                             Container(
-                                margin: EdgeInsets.all(20),
-                                child: Text("${prices[index].price}원",style: TextStyle(fontSize: 20),))
+                                margin:
+                                EdgeInsets.only(right: 15, top: 10, bottom: 10),
+                                width: 100.w,
+                                height: 50.h,
+                                decoration: BoxDecoration(
+                                    color: kContainerColor,
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                                child: DropdownButton(
+                                  isExpanded: true,
+                                  //make true to take width of parent widget
+                                  underline: Container(),
+                                  //empty line
+                                  style: TextStyle(fontSize: 18, color: Colors.black),
+                                  dropdownColor: kContainerColor,
+                                  iconEnabledColor: Colors.black,
+                                  //Icon color
+                                  value: _selectedValue,
+                                  items: _valueList.map(
+                                        (value) {
+                                      return DropdownMenuItem(
+                                        value: value,
+                                        child: Center(child: Text(value)),
+                                      );
+                                    },
+                                  ).toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedValue = value!;
+                                    });
+                                  },
+                                )),
                           ],
                         ),
-                      );
-                    }),
-              ),
-            ],
-          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                                margin: EdgeInsets.only(left: 15, top: 0, bottom: 10),
+                                child: Text(
+                                  "가격",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: kTextColor),
+                                )),
+                            Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(bottom: 10, right: 10),
+                                  width: size.width * 0.25,
+                                  height: size.height * 0.04,
+                                  decoration: BoxDecoration(
+                                      color: kBoxColor,
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                                  child: TextFormField(
+                                    controller: _priceController,
+                                    textAlign: TextAlign.center,
+                                    cursorColor: kContainerColor,
+                                    decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.all(10),
+                                        hintText: "원",
+                                        border: InputBorder.none),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(right: 10),
+                                  child: Text("원",style: TextStyle(fontSize: 18),),
+                                )
+                              ],
+                            ),
 
-          SizedBox(height: size.height*0.25,),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    if(_priceController.text == ""){
+                      return showtoast("가격을 입력주세요");
+                    }else{
+                      var bool = check_date(_selectedValue);
+                      if(bool == false){
+                        return showtoast("해당 기간은 이미 등록하셨습니다!");
+                      }else{
+                        GymPriceDto gymprice = new GymPriceDto(
+                            during: _selectedValue, price: _priceController.text, id: null);
+                        prices.add(gymprice);
+                        setState(() {
+                          _selectedValue = "1일";
 
-          InkWell(
-            onTap: () async {
-              final prefs = await SharedPreferences.getInstance();
-              var bool = await GymApi().register_price(prefs.getString("gymId"), prefs.getString("token"), prices);
-              if(bool == null){
-                return showtoast("서버오류");
-              }else{
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.fade,
-                        child: GymSave_Finish()));
-              }
-              },
-            child: Center(
-              child: Button("다음")
+                          _priceController.text = "";
+                        });
+                        print(prices);
+                      }
+
+                    }
+
+                  },
+                  child: Center(
+                    child: Container(
+                      width: size.width * 0.9,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: kContainerColor,
+                      ),
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "등록",
+                        style: TextStyle(
+                            color: kTextColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: size.height*0.05,),
+                Container(
+                  width: size.width*0.95,
+                  margin: EdgeInsets.all(8),
+                  height: size.height*0.12,
+                  child: ListView.builder(reverse: true,
+
+                      scrollDirection: Axis.horizontal,
+                      itemCount: prices.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          margin: EdgeInsets.all(8),
+
+                          height: size.height*0.03,
+                          decoration: BoxDecoration(
+                              color: kContainerColor,
+                              borderRadius: BorderRadius.all(Radius.circular(10))
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    child: Text(""),
+                                  ),
+                                  Container(
+                                      margin: EdgeInsets.only(left: 150.w),
+                                      child: InkWell(
+                                          onTap: (){
+                                            setState(() {
+                                              prices.remove(prices[index]);
+                                            });
+                                          },
+                                          child: Icon(Icons.cancel)))
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                      margin: EdgeInsets.only(left: 20.w,top: 10.h),
+                                      child: Text("${prices[index].during}",style: TextStyle(color: kTextColor,fontSize: 20,fontWeight: FontWeight.bold),)),
+                                  Container(
+                                      margin: EdgeInsets.only(left: 20.w,top: 10.h,right: 20.w),
+                                      child: Text("${prices[index].price}원",style: TextStyle(fontSize: 20),))
+                                ],
+                              ),
+                            ],
+                          )
+                        );
+                      }),
+                ),
+              ],
             ),
-          ),
 
-        ],
+            SizedBox(height: size.height*0.25,),
+
+            InkWell(
+              onTap: () async {
+                final prefs = await SharedPreferences.getInstance();
+                CheckPrice_Popup().showDialog(size, context,prices);
+
+                },
+              child: Center(
+                child: Button("다음")
+              ),
+            ),
+
+          ],
+        ),
       ),
     );
   }

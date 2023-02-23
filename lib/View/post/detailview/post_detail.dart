@@ -11,14 +11,19 @@ import '../../../Utils/constants.dart';
 
 class Post_Detail extends StatefulWidget {
   PostDto postDto;
+  var fun;
 
-  Post_Detail({required this.postDto});
+  Post_Detail({required this.postDto,required this.fun});
 
   @override
   _Post_Detail createState() => _Post_Detail();
 }
 
 class _Post_Detail extends State<Post_Detail> {
+
+
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -54,14 +59,24 @@ class _Post_Detail extends State<Post_Detail> {
                           color: kPrimaryColor,
                         ))),
                 InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.fade,
-                              child: Post_Edit(
-                                postDto: widget.postDto,
-                              )));
+                    onTap: () async{
+                      bool isBack = await Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Post_Edit( postDto: widget.postDto,)));
+                      if (isBack) {
+                        widget.fun;
+                      }
+                      // await Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) => Post_Edit( postDto: widget.postDto,)))
+                      //     .then((value) {
+                      //   setState(() {});
+                      // });
+                      // Navigator.push(
+                      //     context,
+                      //     PageTransition(
+                      //         type: PageTransitionType.fade,
+                      //         child: Post_Edit(
+                      //           postDto: widget.postDto,
+                      //         )));
                     },
                     child: Icon(
                       Icons.edit,

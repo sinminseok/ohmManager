@@ -8,6 +8,7 @@ import 'package:ohmmanager/Controller/managerApi.dart';
 import 'package:ohmmanager/Model/gymDto.dart';
 import 'package:ohmmanager/Model/trainerDto.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
+import 'package:ohmmanager/Utils/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Utils/constants.dart';
@@ -185,10 +186,12 @@ class _Profile_EditState extends State<Profile_Edit> {
                   final prefs = await SharedPreferences.getInstance();
                   await ManagerApi().update_manager(prefs.getString("token").toString(),widget.user!.id,_nickNameController.text,_onlineController.text,_introduceController.text,widget.user.name.toString());
                   if(_image == null){
-                    Navigator.pop(context);
+                    showtoast("프로필이 수정되었습니다.");
+                    Navigator.pop(context,true);
                   }else{
+                    showtoast("프로필이 수정되었습니다.");
                     await ManagerApi().update_profile(_image!, widget.user.id.toString());
-                    Navigator.pop(context);
+                    Navigator.pop(context,true);
                   }
                 },
                 child: Center(child: Button("수정")))

@@ -11,6 +11,7 @@ import 'package:ohmmanager/Model/gymImgDto.dart';
 import 'package:ohmmanager/Model/gymTimeDto.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/Utils/constants.dart';
+import 'package:ohmmanager/Utils/toast.dart';
 import 'package:ohmmanager/View/home/widget/gymInfo_widget.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -302,6 +303,7 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
                                 holiday_start! + " ~ " + holiday_end!);
 
                             if (register_time == true) {
+                              showtoast("운영시간이 수정되었습니다.");
                               Navigator.pop(context);
                             } else {
                               return;

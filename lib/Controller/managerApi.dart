@@ -57,8 +57,7 @@ class ManagerApi with ChangeNotifier {
         trainers.add(TrainerDto.fromJson(data[i]));
 
       }
-      print("trainers = ");
-      print(trainers.length);
+
 
       return trainers;
     }else{
@@ -68,8 +67,7 @@ class ManagerApi with ChangeNotifier {
 
   //managerId로 Gym정보조회
   Future<GymDto?> gyminfo_byManager(String? id,String? token)async{
-    print(id);
-    print("ID");
+
 
     var res = await http.get(Uri.parse(ManagerApi_Url().info_gym_byId + "${int.parse(id!)}"),
       headers: {
@@ -79,15 +77,11 @@ class ManagerApi with ChangeNotifier {
       },);
 
 
-    print(res.body);
-    print(res.bodyBytes);
 
     if (res.statusCode == 200) {
 
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
-      print("datadatadata");
-      print(data);
 
 
 
@@ -147,8 +141,6 @@ class ManagerApi with ChangeNotifier {
     var res = await dio.post(ManagerApi_Url().save_img + "${managerId}",
         data: _formData);
 
-    print(res.statusCode);
-    print(res.data);
 
 
   }
@@ -175,8 +167,6 @@ class ManagerApi with ChangeNotifier {
     var res = await dio.patch(ManagerApi_Url().save_img + "${managerId}",
         data: _formData);
 
-    print(res.statusCode);
-    print(res.data);
 
 
   }
@@ -232,14 +222,7 @@ class ManagerApi with ChangeNotifier {
 
         }));
 
-
-    print(res.body);
-    print("object");
     if (res.statusCode == 200) {
-      // final decodeData = utf8.decode(res.bodyBytes);
-      // final data = jsonDecode(decodeData);
-      // final prefs = await SharedPreferences.getInstance();
-      // prefs.setString("userId", data['id'].toString());
       return true;
     } else {
 

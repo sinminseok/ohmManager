@@ -163,6 +163,7 @@ class _HomeView extends State<HomeView> {
                               "헬스장 등록",
                               style: TextStyle(
                                   fontSize: 21,
+                                  fontFamily: "boldfont",
                                   fontWeight: FontWeight.bold,
                                   color: kTextColor),
                             )
@@ -205,7 +206,7 @@ class _HomeView extends State<HomeView> {
                   } else {
                     return select_mode == true
                         ? SingleChildScrollView(
-                            child: GymStatistics_View(current_datetime: current_datetime, time_avg: time_avg,)
+                            child: GymStatistics_View(current_datetime: current_datetime, time_avg: time_avg, current_count: gymDto?.current_count.toString(),)
                           )
                         :GymInfo_View(gymDto: gymDto);
                   }

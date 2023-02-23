@@ -93,6 +93,7 @@ class _QuestionView extends State<QuestionView> {
                 "회원 문의",
                 style: TextStyle(
                     fontSize: 21,
+                    fontFamily: "boldfont",
                     color: kTextColor,
                     fontWeight: FontWeight.bold),
               ),

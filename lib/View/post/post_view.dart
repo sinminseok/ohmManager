@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ohmmanager/Utils/toast.dart';
 import 'package:ohmmanager/View/post/detailview/post_write.dart';
 import 'package:ohmmanager/View/post/widgets/post_widget.dart';
 import 'package:page_transition/page_transition.dart';
@@ -20,11 +21,33 @@ class PostView extends StatefulWidget {
 class _PostView extends State<PostView> {
   var results;
 
+
+
   Future<List<PostDto>?> load_posts() async {
+    print("loaddd");
+    results =[];
     final prefs = await SharedPreferences.getInstance();
-    results = await PostApi().findall_posts(prefs.getString("gymId").toString());
+    results =
+        await PostApi().findall_posts(prefs.getString("gymId").toString());
     return results;
   }
+
+  Future<bool> check_gym() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("gymId") == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    print("initit");
+    load_posts();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,34 +62,40 @@ class _PostView extends State<PostView> {
           ),
           automaticallyImplyLeading: false,
           backgroundColor: kBackgroundColor,
-
           elevation: 0,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 "게시물",
-                style: TextStyle(fontSize: 21,
-                    color: kTextColor,
-                   ),
+                style: TextStyle(
+                  fontSize: 21,
+                  fontFamily: "boldfont",
+                  fontWeight: FontWeight.bold,
+                  color: kTextColor,
+                ),
               ),
               Row(
                 children: [
-
                   InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: PostWrite_View()));
+                      onTap: () async{
+                        bool check =await check_gym();
+                        if(check == false){
+                          showAlertDialog(context,"알림","헬스장을 먼저 등록하세요");
+                        }else{
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => PostWrite_View()))
+                              .then((value) {
+                            setState(() {});
+                          });
+                        }
+
                       },
                       child: Icon(Icons.add)),
                 ],
               )
             ],
           ),
-
         ),
       ),
       backgroundColor: kBackgroundColor,
@@ -80,7 +109,11 @@ class _PostView extends State<PostView> {
                   if (snapshot.hasData == false) {
                     return Container(
                       margin: EdgeInsets.only(top: 100.h),
-                      child: Center(child: Text("아직 등록된 게시물이 없습니다.",style: TextStyle(fontSize: 23),)),
+                      child: Center(
+                          child: Text(
+                        "아직 등록된 게시물이 없습니다.",
+                        style: TextStyle(fontSize: 23),
+                      )),
                     );
                   }
                   //error가 발생하게 될 경우 반환하게 되는 부분
@@ -98,11 +131,18 @@ class _PostView extends State<PostView> {
                     return Container(
                         width: 360.w,
                         height: 600.h,
-                        child: ListView.builder(
-                            itemCount: results.length,
-                            itemBuilder: (BuildContext ctx, int idx) {
-                              return Post_Widget(size, context, results[idx]);
-                            }));
+                        child: RefreshIndicator(
+                          onRefresh: () async {
+                            setState(() {
+                              load_posts();
+                            });
+                          },
+                          child: ListView.builder(
+                              itemCount: results.length,
+                              itemBuilder: (BuildContext ctx, int idx) {
+                                return Post_Widget(size,context, results[idx],load_posts());
+                              }),
+                        ));
                   }
                 }),
           ],

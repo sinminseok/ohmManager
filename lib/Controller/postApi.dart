@@ -42,7 +42,9 @@ class PostApi with ChangeNotifier {
           'Authorization': 'Bearer ${prefs.getString("token")}'
         },
         body: json.encode({'id': postId, 'title': title, 'content': content}));
-    print(res.body);
+
+
+
 
     if (res.statusCode == 200) {
       return true;
@@ -61,7 +63,7 @@ class PostApi with ChangeNotifier {
           'Authorization': 'Bearer $token'
         },
         body: json.encode({'title': title, 'content': content}));
-    print(res.body);
+
 
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);

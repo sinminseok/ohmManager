@@ -1,12 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:dio/dio.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/Utils/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -154,14 +150,12 @@ class _PostWrite_View extends State<PostWrite_View> {
                   onTap: () async {
                     final prefs = await SharedPreferences.getInstance();
                     var save_post =await PostApi().save_post(_titleController.text,_contentController.text,prefs.getString("gymId").toString(),prefs.getString("token").toString());
-                    print(save_post);
-                    print("object");
-
                     var save_postimg = await PostApi().save_postimg(save_post.toString(), image_picked, prefs.getString("token").toString());
 
                     if(save_post == null){
                       return showtoast("서버가 원활하지 않습니다");
                     }else{
+                      showtoast("글이 등록었습니다!");
                       Navigator.pop(context);
                     }
 

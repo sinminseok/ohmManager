@@ -55,6 +55,8 @@ class _TrainerViewState extends State<TrainerView> {
                   "트레이너",
                   style: TextStyle(fontSize: 21,
                       color: kPrimaryColor,
+                    fontFamily: "boldfont",
+                    fontWeight: FontWeight.bold
                       ),
                 ),
 

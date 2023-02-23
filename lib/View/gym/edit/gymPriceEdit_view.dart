@@ -18,16 +18,16 @@ import '../../../Utils/permission.dart';
 import '../../../Utils/toast.dart';
 import '../widget/gymEdit_widget.dart';
 
-class GymPrice_View extends StatefulWidget {
+class GymPriceEdit_View extends StatefulWidget {
   GymDto? gymDto;
 
-  GymPrice_View({required this.gymDto});
+  GymPriceEdit_View({required this.gymDto});
 
   @override
-  _GymPrice_View createState() => _GymPrice_View();
+  _GymPriceEdit_View createState() => _GymPriceEdit_View();
 }
 
-class _GymPrice_View extends State<GymPrice_View> {
+class _GymPriceEdit_View extends State<GymPriceEdit_View> {
   Future? myfuture;
   List<GymPriceDto> prices = [];
   List<GymPriceDto> add_prices = [];
@@ -293,7 +293,7 @@ class _GymPrice_View extends State<GymPrice_View> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: size.height * 0.05,),
+                            SizedBox(height: 40.h),
                             Container(
                               width: 340.w,
                               margin: EdgeInsets.all(8),
@@ -355,7 +355,7 @@ class _GymPrice_View extends State<GymPrice_View> {
                           ],
                         ),
 
-                        SizedBox(height: size.height * 0.25,),
+                        SizedBox(height: 130.h),
 
                         InkWell(
                             onTap: () async{

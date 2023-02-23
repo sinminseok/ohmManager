@@ -58,79 +58,95 @@ class _SignupView2 extends State<SignupView2>
         ),
         title: Text(
           "프로필 정보",
-          style: TextStyle(fontWeight: FontWeight.bold,color: kTextBlackColor),
+          style: TextStyle(fontFamily: "boldfont",fontWeight: FontWeight.bold,color: kTextBlackColor),
         ),
-        backgroundColor:  Colors.grey.shade200,
+        backgroundColor:  Color(0xff2651f0).withAlpha(20),
         elevation: 0,
       ),
-      body: Stack(
-        children: [
-          Scaffold(
-            backgroundColor:  Colors.grey.shade200,
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Center(child: SizedBox(height: size.height * 0.01)),
-                _image != null
-                    ? CircleAvatar(backgroundImage: new FileImage(File(image_picked!.path)), radius: 65.0,)
-                    : InkWell(
-                        onTap: () {
-                          getImageFromGallery();
-                        },
-                        child: CircleAvatar(
-                          radius: 65,
-                          backgroundImage: AssetImage("assets/images/user.jpg"),
-                        ),
-                      ),
-                Container(
-                  margin: EdgeInsets.only(top: 50),
-                  decoration: BoxDecoration(
+      body: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  stops: [
+                    0.2,
+                    0.4,
+                    0.2,
+                    0.7
+                  ],
+                  colors: [
+                    Color(0xff2651f0).withAlpha(20),
+                    Color(0xff2651f0).withAlpha(20),
+                    Color(0xff2651f0).withAlpha(100),
+                    Color(0xff2651f0).withAlpha(200),
 
-                      color: kContainerColor,
-                      borderRadius: BorderRadius.circular(15)),
-                  width: 340.w,
-                  child: TextFormField(
-                    controller: _onlineController,
-                    textAlign: TextAlign.center,
-                    cursorColor: kContainerColor,
-                    decoration: InputDecoration(
-                        // contentPadding: EdgeInsets.,
-                        hintText: "한줄소개",
-                        border: InputBorder.none),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  decoration: BoxDecoration(
+                  ])),
 
-                      color: kContainerColor,
-                      borderRadius: BorderRadius.circular(15)),
-                  width: 340.w,
-                  height: 100.h,
-                  child: TextFormField(
-                    maxLines: null,
-                    controller: _introduceController,
-                    textAlign: TextAlign.center,
-                    cursorColor: kContainerColor,
-                    decoration: InputDecoration(
-                        // contentPadding: EdgeInsets.,
-                        hintText: "자기 소개",
-                        border: InputBorder.none),
-                  ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Center(child: SizedBox(height: size.height * 0.01)),
+              _image != null
+                  ? CircleAvatar(backgroundImage: new FileImage(File(image_picked!.path)), radius: 65.0,)
+                  : InkWell(
+                onTap: () {
+                  getImageFromGallery();
+                },
+                child: CircleAvatar(
+                  radius: 65,
+                  backgroundImage: AssetImage("assets/images/user.jpg"),
                 ),
-                SizedBox(
-                  height: size.height * 0.3,
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 50),
+                decoration: BoxDecoration(
+
+                    color: kContainerColor,
+                    borderRadius: BorderRadius.circular(15)),
+                width: 340.w,
+                child: TextFormField(
+                  controller: _onlineController,
+                  textAlign: TextAlign.center,
+                  cursorColor: kContainerColor,
+                  decoration: InputDecoration(
+                    // contentPadding: EdgeInsets.,
+                      hintText: "한줄소개",
+                      border: InputBorder.none),
                 ),
-                InkWell(
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                decoration: BoxDecoration(
+
+                    color: kContainerColor,
+                    borderRadius: BorderRadius.circular(15)),
+                width: 340.w,
+                height: 100.h,
+                child: TextFormField(
+                  maxLines: null,
+                  controller: _introduceController,
+                  textAlign: TextAlign.center,
+                  cursorColor: kContainerColor,
+                  decoration: InputDecoration(
+                    // contentPadding: EdgeInsets.,
+                      hintText: "자기 소개",
+                      border: InputBorder.none),
+                ),
+              ),
+              SizedBox(
+                height: size.height * 0.3,
+              ),
+              InkWell(
                   onTap: () async {
 
                     if(_introduceController.text =="" || _onlineController.text == ""){
                       showtoast("내용을 모두 입력해주세요");
                     }else{
-                      print(widget.nickname);
-                      int? id = await ManagerApi().register_manager(widget.name, widget.password, widget.nickname, _onlineController.text,_introduceController.text);
 
+                      int? id = await ManagerApi().register_manager(widget.name, widget.password, widget.nickname, _onlineController.text,_introduceController.text);
 
                       if(id == null){
                         return showtoast("회원가입 실패");
@@ -153,15 +169,16 @@ class _SignupView2 extends State<SignupView2>
 
                       }
                     }
+
+                    showtoast("회원가입이 완료되었습니다.");
                   },
                   borderRadius: BorderRadius.circular(10),
                   child: Button("다음")
-                ),
-                SizedBox(height: 30),
-              ],
-            ),
+              ),
+              SizedBox(height: 30),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

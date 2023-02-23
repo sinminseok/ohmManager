@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/postApi.dart';
+import 'package:ohmmanager/Utils/toast.dart';
 
 import '../../../Model/postDto.dart';
 import '../../../Utils/constants.dart';
@@ -26,6 +27,8 @@ class _Post_Edit extends State<Post_Edit> {
     Size size = MediaQuery.of(context).size;
     TextEditingController _titleController = TextEditingController(text: widget.postDto.title);
     TextEditingController _contentController = TextEditingController(text: widget.postDto.content);
+
+
 
     return Scaffold(
       backgroundColor: kBackgroundColor,
@@ -50,9 +53,13 @@ class _Post_Edit extends State<Post_Edit> {
                   child: InkWell(
 
                       onTap: ()async{
-                        print(widget.postDto.id);
-                        print("object");
-                        await PostApi().update_post(widget.postDto.id,_titleController.text, _contentController.text);
+
+                       await PostApi().update_post(widget.postDto.id,_titleController.text, _contentController.text);
+
+                          showtoast("수정되었습니다");
+                       Navigator.pop(context,true);
+                       Navigator.pop(context,true);
+
                       },
                       child: Center(child: Text("수정하기",style: TextStyle(fontSize: 18),))),)
               ],

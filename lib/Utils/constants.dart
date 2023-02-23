@@ -29,7 +29,8 @@ const kContainerColor = Color(0XFFe6e3e3);
 const kBoxColor = Color(0XFFd5d9f7);
 
 //버튼색
-const kButtonColor = Color(0XFF2651f0);
+const kButtonColor = Color(0XFF111112);
+//const kButtonColor = Color(0XFF2651f0);
 
 
 

@@ -6,6 +6,7 @@ import 'package:ohmmanager/Controller/managerApi.dart';
 import 'package:ohmmanager/Model/gymDto.dart';
 import 'package:ohmmanager/Model/trainerDto.dart';
 import 'package:ohmmanager/Utils/constants.dart';
+import 'package:ohmmanager/Utils/toast.dart';
 import 'package:ohmmanager/View/mypage/detailview/profile_edit.dart';
 import 'package:ohmmanager/View/mypage/detailview/question_view.dart';
 import 'package:ohmmanager/View/mypage/popup/bottm_sheet.dart';
@@ -67,6 +68,7 @@ class _MypageViewState extends State<MypageView> {
   }
 
   get_userinfo() async {
+    print("dddddd");
     final prefs = await SharedPreferences.getInstance();
     user = await ManagerApi().get_userinfo(prefs.getString("token"));
     await get_gyminfo();
@@ -91,7 +93,8 @@ class _MypageViewState extends State<MypageView> {
               children: [
                 Text(
                   "내 정보",
-                  style: TextStyle(color: kTextColor, fontSize: 21),
+
+                  style: TextStyle(fontWeight: FontWeight.bold,fontFamily: "boldfont",color: kTextColor, fontSize: 21),
                 ),
                 InkWell(
                     onTap: () {
@@ -168,10 +171,20 @@ class _MypageViewState extends State<MypageView> {
                                     child: Text(
                                       "${user?.nickname}",
                                       style: TextStyle(
+                                        fontFamily: "boldfont",
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),
                                     )),
+                                gymDto?.name == null?
                                 Container(
+                                margin:
+                                EdgeInsets.only(top: 6.h, left: 20,bottom: 10),
+                                child: Text(
+                                "등록된 헬스장이 없습니다.",
+                                style: TextStyle(
+                                fontSize: 16,
+                                ),
+                                )):Container(
                                     margin:
                                     EdgeInsets.only(top: 6.h, left: 20,bottom: 10),
                                     child: Text(
@@ -181,12 +194,25 @@ class _MypageViewState extends State<MypageView> {
                                           ),
                                     )),
                                 InkWell(
-                                  onTap: (){
-                                    Navigator.push(
-                                        context,
-                                        PageTransition(
-                                            type: PageTransitionType.fade,
-                                            child: Profile_Edit(user: user!, gymDto: gymDto!,)));
+                                  onTap: ()async{
+                                    if(gymDto == null){
+                                      showAlertDialog(context,"알림","헬스장을 먼저 등록하세요");
+                                    }else{
+                                      // Navigator.push(
+                                      //     context,
+                                      //     PageTransition(
+                                      //         type: PageTransitionType.fade,
+                                      //         child: Profile_Edit(user: user!, gymDto: gymDto!,)));
+                                      bool isBack = await Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) => Profile_Edit(user: user!, gymDto: gymDto!,)));
+                                      if (isBack) {
+                                        setState(() {
+                                          get_userinfo();
+
+                                        });
+                                      }
+                                    }
+
                                   },
                                   child: Container(
                                     margin: EdgeInsets.only(left: 15.w, top: 5.h),
