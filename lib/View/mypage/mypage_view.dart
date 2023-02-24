@@ -45,7 +45,7 @@ class _MypageViewState extends State<MypageView> {
     },
   );
 
-  Future<GymDto?> get_gyminfo() async {
+  Future<bool> get_gyminfo() async {
     final prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userId");
 
@@ -53,13 +53,13 @@ class _MypageViewState extends State<MypageView> {
     await ManagerApi().gyminfo_byManager(userId, prefs.getString("token"));
 
     if (gym == null) {
-      return null;
+      return false;
     } else {
       setState(() {
         gymDto = gym;
       });
 
-      return gymDto;
+      return true;
     }
   }
   @override
@@ -70,12 +70,15 @@ class _MypageViewState extends State<MypageView> {
     super.initState();
   }
 
-  get_userinfo() async {
-    print("dddddd");
+  Future<bool> get_userinfo() async {
     final prefs = await SharedPreferences.getInstance();
     user = await ManagerApi().get_userinfo(prefs.getString("token"));
-    await get_gyminfo();
-    return user;
+    var gymDto = await get_gyminfo();
+    if(user == null){
+      return false;
+    }else{
+      return true;
+    }
   }
 
   //1고객센터,이용방법,Q&A,자주묻는 질문,유료회원 등록(추후 서비스)
@@ -123,14 +126,28 @@ class _MypageViewState extends State<MypageView> {
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData == false) {
                     return Container(
-                      width: 330.w,
-                      height: 90.h,
+                      width: 350.w,
+                      height: 120.h,
                       decoration: BoxDecoration(
-                        color: kBoxColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10))
-                      ),
-                      child: Center(
-                        child: Text("회원가입을 진행해주세요"),
+                          color: kContainerColor,
+                          borderRadius: BorderRadius.all(Radius.circular(0))),
+                      margin: EdgeInsets.only(top: 0.h, left: 0),
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 5, left: 23),
+                            width: size.width * 0.16,
+                            height: size.height * 0.08,
+                            child: CircleAvatar(
+                              backgroundColor: kContainerColor,
+                              backgroundImage: NetworkImage(
+                                  "https://cdn.icon-icons.com/icons2/2506/PNG/512/user_icon_150670.png"),
+                            ),
+                          ),
+                          Container(
+                            child: Text(""),
+                          )
+                        ],
                       ),
                     );
                   }
@@ -254,8 +271,9 @@ class _MypageViewState extends State<MypageView> {
                           color: kPrimaryColor,
                         )),
                     InkWell(
-                      onTap: (){
-                        _callNumber();
+                      onTap: ()async{
+                        const number = '01083131764'; //set the number here
+                        bool? res = await FlutterPhoneDirectCaller.callNumber(number);
                       },
                       child: Container(
                           margin: EdgeInsets.only(left: 20.w, top: 5.h),

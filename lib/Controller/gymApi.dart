@@ -29,7 +29,7 @@ class GymApi with ChangeNotifier {
       final data = jsonDecode(decodeData);
 
 
-      print(data);
+
       return data.toString();
     } else {
 
@@ -82,7 +82,6 @@ class GymApi with ChangeNotifier {
       if (res.statusCode == 200) {
         return true;
       } else {
-        showtoast("ERROR");
         return false;
       }
     }
@@ -110,7 +109,7 @@ class GymApi with ChangeNotifier {
 
       return result;
     } else {
-      showtoast("ERROR");
+
       return null;
     }
   }
@@ -126,15 +125,14 @@ class GymApi with ChangeNotifier {
 
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
-      print("dddadasdas");
-      print(data);
+
       for (int i = 0; i < data['imgs'].length; i++) {
         imgs.add(GymImgDto.fromJson(data['imgs'][i]));
       }
 
       return GymDto.fromJson(data, imgs);
     } else {
-      showtoast("ERROR");
+
       return null;
     }
   }
@@ -164,7 +162,7 @@ class GymApi with ChangeNotifier {
       print(result);
       return result;
     } else {
-      showtoast("ERROR");
+
       return gymDto;
     }
   }
@@ -188,7 +186,7 @@ class GymApi with ChangeNotifier {
     if (res.statusCode == 200) {
       return true;
     } else {
-      showtoast("ERROR");
+
       return false;
     }
   }
@@ -213,7 +211,7 @@ class GymApi with ChangeNotifier {
     if (res.statusCode == 200) {
       return true;
     } else {
-      showtoast("ERROR");
+
       return false;
     }
   }
@@ -297,7 +295,7 @@ class GymApi with ChangeNotifier {
 
       return data.toString();
     } else {
-      showtoast("ERROR");
+
       return null;
     }
   }
@@ -393,7 +391,7 @@ class GymApi with ChangeNotifier {
       if (res.statusCode == 200) {
         return true;
       } else {
-        showtoast("ERROR");
+
         return false;
       }
 

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'package:ohmmanager/View/frame/frame_view.dart';
-import 'package:provider/provider.dart';
-
-import 'Controller/providers.dart';
 import 'View/account/login_view.dart';
 
 void main() {
@@ -17,12 +13,7 @@ void main() {
   );
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => Providers()),
-      ],
-      child: MyApp(),
-    ),
+    MyApp(),
   );
 }
 
@@ -42,7 +33,7 @@ class _MyAppState extends State<MyApp> {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context , child) {
+      builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'First Method',
@@ -54,7 +45,7 @@ class _MyAppState extends State<MyApp> {
           home: child,
         );
       },
-      child:  LoginView(),
+      child: LoginView(),
     );
   }
 }

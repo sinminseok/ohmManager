@@ -83,10 +83,11 @@ class ManagerApi with ChangeNotifier {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
 
-
-
       GymDto? search_byId =await GymApi().search_byId(data['gymDto']['id']);
-
+      final prefs = await SharedPreferences.getInstance();
+      if(prefs.getString("gymId") == null){
+        prefs.setString("gymId", search_byId!.id.toString());
+      }
 
       return search_byId;
     }else{
@@ -114,7 +115,6 @@ class ManagerApi with ChangeNotifier {
       TrainerDto trainerDto = TrainerDto.fromJson(data);
       return trainerDto;
     }else{
-      showtoast("ERROR");
       return null;
     }
 
@@ -197,7 +197,7 @@ class ManagerApi with ChangeNotifier {
       prefs.setString("userId", data['id'].toString());
       return data['id'];
     } else {
-      showtoast("ERROR");
+
       return null;
     }
   }
@@ -252,7 +252,7 @@ class ManagerApi with ChangeNotifier {
       final data = jsonDecode(decodeData);
       return data['id'];
     } else {
-      showtoast("ERROR");
+
       return null;
     }
   }
@@ -286,7 +286,7 @@ class ManagerApi with ChangeNotifier {
 
       return data['token'];
     } else {
-      showtoast("ERROR");
+
       return null;
     }
   }

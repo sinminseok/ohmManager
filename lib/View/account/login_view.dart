@@ -198,7 +198,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                             var token = await ManagerApi().login_manager(
                                 _userIDController.text, _passwordController.text);
                             if (token == null) {
-                              return showtoast("로그인 실패");
+                              return showtoast("아이디 혹은 비밀번호가 틀립니다.");
                             } else {
                               if (ischeck == true) {
                                 prefs.setString("loginId", _userIDController.text);

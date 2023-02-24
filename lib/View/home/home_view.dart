@@ -36,6 +36,7 @@ class _HomeView extends State<HomeView> {
   bool select_mode = false;
   var current_datetime;
   List<double> time_avg = [];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -43,8 +44,6 @@ class _HomeView extends State<HomeView> {
     myFuture = get_gyminfo();
     super.initState();
   }
-
-
 
   final spinkit = SpinKitDoubleBounce(
     itemBuilder: (BuildContext context, int index) {
@@ -57,27 +56,33 @@ class _HomeView extends State<HomeView> {
     },
   );
 
-  Future<GymDto?> get_gyminfo() async {
+  Future<bool> get_gyminfo() async {
     final prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userId");
 
     var gym =
         await ManagerApi().gyminfo_byManager(userId, prefs.getString("token"));
+    print("FGSGGDFS");
 
     if (gym == null) {
-      return null;
+      print("nuddd");
+      gymDto = null;
+      return false;
     } else {
+      print("object");
       setState(() {
         gymDto = gym;
       });
       await get_avg();
-      return gymDto;
+      print("objecasdt");
+      return true;
     }
   }
 
-  get_avg()async{
+  get_avg() async {
     final prefs = await SharedPreferences.getInstance();
-    time_avg = (await GymApi().get_timeavg(prefs.getString("gymId").toString()))!;
+    time_avg =
+        (await GymApi().get_timeavg(prefs.getString("gymId").toString()))!;
     return time_avg;
   }
 
@@ -85,10 +90,8 @@ class _HomeView extends State<HomeView> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(38.h),
-
           child: AppBar(
             iconTheme: IconThemeData(
               color: kIconColor, //change your color here
@@ -98,8 +101,6 @@ class _HomeView extends State<HomeView> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
-
                 Switch(
                   activeColor: Colors.grey,
                   value: select_mode,
@@ -110,16 +111,17 @@ class _HomeView extends State<HomeView> {
                   },
                 ),
                 InkWell(
-                    onTap: (){
-                      if(gymDto == null){
+                    onTap: () {
+                      if (gymDto == null) {
                         showtoast("헬스장을 먼저 등록해주세요");
-                      }else{
-                        Edit_Popup().showDialog( context,gymDto!);
-
+                      } else {
+                        Edit_Popup().showDialog(context, gymDto!);
                       }
-
                     },
-                    child: Icon(Icons.settings,color: kTextWhiteColor,)),
+                    child: Icon(
+                      Icons.settings,
+                      color: kTextWhiteColor,
+                    )),
               ],
             ),
             elevation: 0,
@@ -129,88 +131,101 @@ class _HomeView extends State<HomeView> {
         body: SingleChildScrollView(
             child: Column(
           children: [
-            gymDto == null
-                ? InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.fade,
-                              child: GymRegisterView()));
-                    },
-                    child: Center(
-                      child: Container(
-                        width: size.width * 1,
-                        height: size.height * 0.1,
-                        decoration: BoxDecoration(
-                            color: kContainerColor,
-                            borderRadius: BorderRadius.circular(10)),
-                        margin: EdgeInsets.all(10),
-                        child: Center(
-                            child: Row(
-                          children: [
-                            Container(
-                              width: 40,
-                              height: 40,
-                              margin: EdgeInsets.only(left: 25.0, right: 25),
-                              decoration: BoxDecoration(
-                                  color: kBoxColor, shape: BoxShape.circle),
-                              child: Icon(
-                                Icons.add,
-                                color: kTextColor,
-                              ),
-                            ),
-                            // Icon(Icons.turned_in_not,),
-                            Text(
-                              "헬스장 등록",
-                              style: TextStyle(
-                                  fontSize: 21,
-                                  fontFamily: "boldfont",
-                                  fontWeight: FontWeight.bold,
-                                  color: kTextColor),
-                            )
-                          ],
-                        )),
-                      ),
-                    ),
-                  )
-                : select_mode == true
-                    ? Container()
-                    : Container(),
+
             FutureBuilder(
                 future: myFuture,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData == false) {
+                  if (snapshot.data == null) {
                     return Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.all(10),
-                          width: size.width * 1,
-                          height: size.height * 0.64,
+                          width: 360.w,
+                          height: 120.h,
                           decoration: BoxDecoration(
-                              color: kContainerColor,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: spinkit,
-                        )
+                            color: kBottomColor,
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(0.0),
+                                bottomLeft: Radius.circular(0.0)),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text("${snapshot.data}")
+
+
+                            ],
+                          ),
+                        ),
+                        Container(height: 30.h,),
+                        Text("인터넷 연결중 ., ",style: TextStyle(fontFamily: "boldfont",fontSize: 18,color: kPrimaryColor),)
                       ],
                     );
                   }
-
+                  if (snapshot.hasData == false) {
+                    return Text("${snapshot.data}");
+                  }
                   //error가 발생하게 될 경우 반환하게 되는 부분
                   else if (snapshot.hasError) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'Error: ${snapshot.error}', // 에러명을 텍스트에 뿌려줌
+                        'Error: ${snapshot.error}',
                         style: TextStyle(fontSize: 15),
                       ),
                     );
                   } else {
-                    return select_mode == true
+                    return gymDto == null
+                        ? InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.fade,
+                                child: GymRegisterView()));
+                      },
+                      child: Center(
+                        child: Container(
+                          width: size.width * 1,
+                          height: size.height * 0.1,
+                          decoration: BoxDecoration(
+                              color: kContainerColor,
+                              borderRadius: BorderRadius.circular(10)),
+                          margin: EdgeInsets.all(10),
+                          child: Center(
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 40,
+                                    height: 40,
+                                    margin: EdgeInsets.only(left: 25.0, right: 25),
+                                    decoration: BoxDecoration(
+                                        color: kBoxColor, shape: BoxShape.circle),
+                                    child: Icon(
+                                      Icons.add,
+                                      color: kTextColor,
+                                    ),
+                                  ),
+                                  // Icon(Icons.turned_in_not,),
+                                  Text(
+                                    "헬스장 등록",
+                                    style: TextStyle(
+                                        fontSize: 21,
+                                        fontFamily: "boldfont",
+                                        fontWeight: FontWeight.bold,
+                                        color: kTextColor),
+                                  )
+                                ],
+                              )),
+                        ),
+                      ),
+                    ):select_mode == true
                         ? SingleChildScrollView(
-                            child: GymStatistics_View(current_datetime: current_datetime, time_avg: time_avg, current_count: gymDto?.current_count.toString(),)
-                          )
-                        :GymInfo_View(gymDto: gymDto);
+                            child: GymStatistics_View(
+                            current_datetime: current_datetime,
+                            time_avg: time_avg,
+                            current_count: gymDto?.current_count.toString(),
+                          ))
+                        : GymInfo_View(gymDto: gymDto);
                   }
                 })
           ],

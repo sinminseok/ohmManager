@@ -28,7 +28,7 @@ class PostApi with ChangeNotifier {
     if (res.statusCode == 200) {
       return true;
     } else {
-      showtoast("ERRORR");
+
       return null;
     }
   }
@@ -49,7 +49,8 @@ class PostApi with ChangeNotifier {
     if (res.statusCode == 200) {
       return true;
     } else {
-      showtoast("ERRORR");
+
+
       return null;
     }
   }
@@ -71,7 +72,7 @@ class PostApi with ChangeNotifier {
 
       return data.toString();
     } else {
-      showtoast("ERRORR");
+
       return null;
     }
   }
