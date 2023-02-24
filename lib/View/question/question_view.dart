@@ -30,7 +30,7 @@ class _QuestionView extends State<QuestionView> {
   bool state = false;
 
   get_questions() async {
-    print("GET GUN");
+    print("GET QUESTIOn");
     setState(() {
       not_answers = [];
       ok_answers = [];
@@ -46,18 +46,13 @@ class _QuestionView extends State<QuestionView> {
       for (int i = 0; i < questions.length; i++) {
         //아직 답변이 안된 줄민
         if (questions[i].answerDto != null) {
-          print("답장O");
-          print(questions[i].content);
           ok_answers.add(questions[i]);
         } else {
           not_answers.add(questions[i]);
         }
       }
 
-      for(int i=0;i<ok_answers.length;i++){
-        print("HHH");
-        print(ok_answers[i].content);
-      }
+
       return questions;
     }
   }
@@ -66,7 +61,7 @@ class _QuestionView extends State<QuestionView> {
   void initState() {
     // TODO: implement initState
 
-    //myfuture = get_questions();
+    myfuture = get_questions();
     super.initState();
   }
 
@@ -117,21 +112,16 @@ class _QuestionView extends State<QuestionView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             FutureBuilder(
-                future: get_questions(),
+                future: myfuture,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData == false) {
-                    return Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          width: size.width * 1,
-                          height: size.height * 0.64,
-                          decoration: BoxDecoration(
-                              color: kContainerColor,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Text("Wating..."),
-                        )
-                      ],
+                    return Container(
+                      margin: EdgeInsets.only(top: 100.h),
+                      child: Center(
+                          child: Text(
+                            "",
+                            style: TextStyle(fontSize: 17,fontFamily: "lightfont"),
+                          )),
                     );
                   }
 
@@ -197,6 +187,7 @@ class _QuestionView extends State<QuestionView> {
                                                 //답변전 위젯
                                                 await showModalBottomSheet<void>(
                                                     context: context,
+                                                    isScrollControlled: true,
                                                     builder:
                                                         (BuildContext context) {
                                                       return StatefulBuilder(
@@ -213,7 +204,7 @@ class _QuestionView extends State<QuestionView> {
                                                     });
 
                                                 setState(() {
-
+                                                  myfuture = get_questions();
                                                   state;
                                                 });
                                               },
@@ -241,10 +232,16 @@ class _QuestionView extends State<QuestionView> {
                                                 margin: EdgeInsets.only(
                                                     top: 3.h, right: 5.w),
                                                 child: InkWell(
-                                                    onTap: () {
-                                                      DeleteQuestion_Popup()
+                                                    onTap: () async{
+                                                      await DeleteQuestion_Popup()
                                                           .showDialog(context,
                                                               not_answers[idx]);
+
+                                                      setState(() {
+                                                        state;
+                                                        myfuture = get_questions();
+                                                      });
+
                                                     },
                                                     child: Icon(Icons.cancel)),
                                               )
@@ -296,6 +293,7 @@ class _QuestionView extends State<QuestionView> {
                                                 setState(() {
                                                   print("Dd");
                                                   state;
+                                                  myfuture = get_questions();
                                                 });
                                               },
                                               child: Container(
@@ -327,10 +325,9 @@ class _QuestionView extends State<QuestionView> {
                                                           .showDialog(context,
                                                               ok_answers[idx]);
 
-                                                       print("object");
-                                                       print(i);
                                                        setState(() {
                                                          state;
+                                                         myfuture = get_questions();
                                                        });
                                                     },
                                                     child: Icon(Icons.cancel)),

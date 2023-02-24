@@ -10,6 +10,7 @@ import 'package:ohmmanager/Model/gymDto.dart';
 import 'package:ohmmanager/Model/gymImgDto.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/Utils/constants.dart';
+import 'package:ohmmanager/Utils/toast.dart';
 import 'package:ohmmanager/View/home/widget/gymInfo_widget.dart';
 
 import '../../../Utils/permission.dart';
@@ -169,19 +170,22 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
                     );
                   }),
             ),
-            GymEdit_Widget("헬스장 이름", widget.gymDto?.name, _nameController),
-            GymEdit_Widget("헬스장 주소", widget.gymDto?.name, _addressController),
-            GymEdit_Widget("헬스장 한줄소개", widget.gymDto?.name, _onelineController),
-            GymEdit_Widget("헬스장 소개", widget.gymDto?.name, _introduceController),
-            GymEdit_Widget("트레이너 가입코드", widget.gymDto?.code.toString(), _codeController),
-            GymEdit_Widget("트레이너 인원", widget.gymDto?.count.toString(), _trainerCountController),
-            GymEdit_Widget("회원수", widget.gymDto?.count.toString(), _countController),
+            GymEdit_Widget("헬스장 이름", widget.gymDto?.name, _nameController,false),
+            GymEdit_Widget("헬스장 주소", widget.gymDto?.name, _addressController,false),
+            GymEdit_Widget("헬스장 한줄소개", widget.gymDto?.name, _onelineController,false),
+            GymEdit_Widget("헬스장 소개", widget.gymDto?.name, _introduceController,false),
+            GymEdit_Widget("트레이너 가입코드", widget.gymDto?.code.toString(), _codeController,true),
+            GymEdit_Widget("트레이너 인원", widget.gymDto?.count.toString(), _trainerCountController,true),
+            GymEdit_Widget("회원수", widget.gymDto?.count.toString(), _countController,true),
             InkWell(
                 onTap: (){
 
                   GymApi().update_gymInfo(widget.gymDto?.id, _nameController.text, _addressController.text, int.parse(_countController.text), _onelineController.text, _introduceController.text, int.parse(_trainerCountController.text), int.parse(_codeController.text));
 
                   GymApi().update_gymImgs(widget.gymDto?.id, delete_imgs, image_picked);
+
+                  showtoast("정보가 수정되었습니다.");
+                  Navigator.pop(context);
                 },
                 child: Container(
                     margin: EdgeInsets.only(top: 20,bottom: 40),

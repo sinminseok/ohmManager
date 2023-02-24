@@ -8,6 +8,7 @@ import 'package:ohmmanager/Utils/toast.dart';
 
 import '../../../Model/postDto.dart';
 import '../../../Utils/constants.dart';
+import '../../frame/frame_view.dart';
 
 
 class Post_Edit extends StatefulWidget {
@@ -21,13 +22,23 @@ class Post_Edit extends StatefulWidget {
 }
 
 class _Post_Edit extends State<Post_Edit> {
+  TextEditingController? _titleController;
+  TextEditingController? _contentController;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    print("initit");
+    _titleController = TextEditingController(text: widget.postDto.title);
+    _contentController = TextEditingController(text: widget.postDto.content);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    TextEditingController _titleController = TextEditingController(text: widget.postDto.title);
-    TextEditingController _contentController = TextEditingController(text: widget.postDto.content);
 
+    // TextEditingController _titleController = TextEditingController(text: widget.postDto.title);
+    // TextEditingController _contentController = TextEditingController(text: widget.postDto.content);
 
 
     return Scaffold(
@@ -54,11 +65,13 @@ class _Post_Edit extends State<Post_Edit> {
 
                       onTap: ()async{
 
-                       await PostApi().update_post(widget.postDto.id,_titleController.text, _contentController.text);
+                       await PostApi().update_post(widget.postDto.id,_titleController!.text, _contentController!.text);
 
                           showtoast("수정되었습니다");
-                       Navigator.pop(context,true);
-                       Navigator.pop(context,true);
+                       Navigator.pop(context);
+                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                           builder: (BuildContext context) =>
+                               FrameView()), (route) => false);
 
                       },
                       child: Center(child: Text("수정하기",style: TextStyle(fontSize: 18),))),)
@@ -90,6 +103,8 @@ class _Post_Edit extends State<Post_Edit> {
                   Container(
                       margin: EdgeInsets.only(left: 20,right: 20,top: 10),
                       child: TextField(
+
+
                         controller: _titleController,
                         decoration: InputDecoration(
 

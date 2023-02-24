@@ -40,6 +40,7 @@ class _SignupView2 extends State<SignupView2>
     double defaultLoginSize = size.height - (size.height * 0.2);
 
     Future getImageFromGallery() async {
+      image_picked = null;
       // for gallery
       image_picked =
           await ImagePicker.platform.pickImage(source: ImageSource.gallery);
@@ -49,6 +50,13 @@ class _SignupView2 extends State<SignupView2>
           _image = image_picked!;
         });
       }
+    }
+
+    @override
+    void dispose() {
+      // TODO: implement dispose
+      image_picked = null;
+      super.dispose();
     }
 
     return Scaffold(
@@ -66,6 +74,7 @@ class _SignupView2 extends State<SignupView2>
       body: Scaffold(
         backgroundColor: Colors.transparent,
         body: Container(
+          height: size.height*1,
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topRight,
@@ -84,99 +93,108 @@ class _SignupView2 extends State<SignupView2>
 
                   ])),
 
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Center(child: SizedBox(height: size.height * 0.01)),
-              _image != null
-                  ? CircleAvatar(backgroundImage: new FileImage(File(image_picked!.path)), radius: 65.0,)
-                  : InkWell(
-                onTap: () {
-                  getImageFromGallery();
-                },
-                child: CircleAvatar(
-                  radius: 65,
-                  backgroundImage: AssetImage("assets/images/user.jpg"),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 50),
-                decoration: BoxDecoration(
-
-                    color: kContainerColor,
-                    borderRadius: BorderRadius.circular(15)),
-                width: 340.w,
-                child: TextFormField(
-                  controller: _onlineController,
-                  textAlign: TextAlign.center,
-                  cursorColor: kContainerColor,
-                  decoration: InputDecoration(
-                    // contentPadding: EdgeInsets.,
-                      hintText: "한줄소개",
-                      border: InputBorder.none),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 20),
-                decoration: BoxDecoration(
-
-                    color: kContainerColor,
-                    borderRadius: BorderRadius.circular(15)),
-                width: 340.w,
-                height: 100.h,
-                child: TextFormField(
-                  maxLines: null,
-                  controller: _introduceController,
-                  textAlign: TextAlign.center,
-                  cursorColor: kContainerColor,
-                  decoration: InputDecoration(
-                    // contentPadding: EdgeInsets.,
-                      hintText: "자기 소개",
-                      border: InputBorder.none),
-                ),
-              ),
-              SizedBox(
-                height: size.height * 0.3,
-              ),
-              InkWell(
-                  onTap: () async {
-
-                    if(_introduceController.text =="" || _onlineController.text == ""){
-                      showtoast("내용을 모두 입력해주세요");
-                    }else{
-
-                      int? id = await ManagerApi().register_manager(widget.name, widget.password, widget.nickname, _onlineController.text,_introduceController.text);
-
-                      if(id == null){
-                        return showtoast("회원가입 실패");
-                      }else{
-                        if(_image == null){
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  type: PageTransitionType.fade,
-                                  child: LoginView()));
-                        }else{
-                          ManagerApi().register_profile(_image!,id.toString());
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  type: PageTransitionType.fade,
-                                  child: LoginView()));
-                        }
-
-
-                      }
-                    }
-
-                    showtoast("회원가입이 완료되었습니다.");
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Center(child: SizedBox(height: size.height * 0.01)),
+                _image != null
+                    ? InkWell(
+                  onTap: (){
+                    getImageFromGallery();
                   },
-                  borderRadius: BorderRadius.circular(10),
-                  child: Button("다음")
-              ),
-              SizedBox(height: 30),
-            ],
+                    child: CircleAvatar(backgroundImage: new FileImage(File(image_picked!.path)), radius: 65.0,))
+                    : InkWell(
+                  onTap: () {
+                    getImageFromGallery();
+                  },
+                  child: CircleAvatar(
+                    radius: 65,
+                    backgroundImage: AssetImage("assets/images/user.jpg"),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 50),
+                  decoration: BoxDecoration(
+
+                      color: kContainerColor,
+                      borderRadius: BorderRadius.circular(15)),
+                  width: 340.w,
+                  child: TextFormField(
+                    controller: _onlineController,
+                    textAlign: TextAlign.center,
+                    cursorColor: kContainerColor,
+                    decoration: InputDecoration(
+                      // contentPadding: EdgeInsets.,
+                        hintText: "한줄소개",
+                        border: InputBorder.none),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  decoration: BoxDecoration(
+
+                      color: kContainerColor,
+                      borderRadius: BorderRadius.circular(15)),
+                  width: 340.w,
+                  height: 100.h,
+                  child: TextFormField(
+                    maxLines: null,
+                    textInputAction:TextInputAction.done,
+                    controller: _introduceController,
+                    textAlign: TextAlign.center,
+                    cursorColor: kContainerColor,
+                    decoration: InputDecoration(
+                      // contentPadding: EdgeInsets.,
+                        hintText: "자기 소개",
+                        border: InputBorder.none),
+                  ),
+                ),
+                SizedBox(
+                  height: size.height * 0.3,
+                ),
+                InkWell(
+                    onTap: () async {
+
+                      if(_introduceController.text =="" || _onlineController.text == ""){
+                        showtoast("내용을 모두 입력해주세요");
+                      }else{
+
+                        int? id = await ManagerApi().register_manager(widget.name, widget.password, widget.nickname, _onlineController.text,_introduceController.text);
+
+                        if(id == null){
+                          return showtoast("회원가입 실패");
+                        }else{
+                          if(_image == null){
+                            showtoast("회원가입이 완료되었습니다.");
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.fade,
+                                    child: LoginView()));
+                          }else{
+                            showtoast("회원가입이 완료되었습니다.");
+                            ManagerApi().register_profile(_image!,id.toString());
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.fade,
+                                    child: LoginView()));
+                          }
+
+
+                        }
+                      }
+
+
+                    },
+                    borderRadius: BorderRadius.circular(10),
+                    child: Button("다음")
+                ),
+                SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
       ),

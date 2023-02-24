@@ -44,6 +44,7 @@ class _SignupView extends State<SignupView>
       body:  Scaffold(
         backgroundColor:  Colors.transparent,
         body: Container(
+          height: size.height*1,
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topRight,
@@ -61,66 +62,68 @@ class _SignupView extends State<SignupView>
                     Color(0xff2651f0).withAlpha(200),
 
                   ])),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Center(child: SizedBox(height: size.height * 0.01)),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Center(child: SizedBox(height: size.height * 0.01)),
 
-              Container(
+                Container(
 
-                child: RoundedInput(
-                  controller: _userIDController,
+                  child: RoundedInput(
+                    controller: _userIDController,
 
-                  title: "아이디", number_mode: false,
+                    title: "아이디", number_mode: false,
+                  ),
                 ),
-              ),
-              RoundedPasswordInput(
-                controller: _passwordController, hint: 'Password',title: "비밀번호",),
-              RoundedPasswordInput(
-                controller: _checkpasswordController,
-                hint: 'check pw',title: "비밀번호 확인",),
-              Container(
+                RoundedPasswordInput(
+                  controller: _passwordController, hint: 'Password',title: "비밀번호",),
+                RoundedPasswordInput(
+                  controller: _checkpasswordController,
+                  hint: 'check pw',title: "비밀번호 확인",),
+                Container(
 
-                child: RoundedInput(
-                  controller: _nicknameController,
-                  number_mode: false,
-                  title: "이름",
+                  child: RoundedInput(
+                    controller: _nicknameController,
+                    number_mode: false,
+                    title: "이름",
+                  ),
                 ),
-              ),
 
 
-              SizedBox(
-                height: size.height * 0.4,
-              ),
+                SizedBox(
+                  height: size.height * 0.4,
+                ),
 
-              InkWell(
-                  onTap: () async {
-                    if(_userIDController.text == "" || _passwordController.text == "" || _nicknameController.text == ""){
-                      return showtoast("정보를 모두 입력해주세요");
-                    }else{
-                      if(_passwordController.text != _checkpasswordController.text){
-                        showtoast("비밀번호가 일치하지 않습니다.");
-                      }
-                      else{
-                        if(_passwordController.text.length <6){
-                          return showtoast("비밀번호는 6자리 이상으로 설정해주세요");
-                        }else{
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  type: PageTransitionType.fade,
-                                  child: SignupView2(name: _userIDController.text, nickname: _nicknameController.text, password: _passwordController.text,)));
+                InkWell(
+                    onTap: () async {
+                      if(_userIDController.text == "" || _passwordController.text == "" || _nicknameController.text == ""){
+                        return showtoast("정보를 모두 입력해주세요");
+                      }else{
+                        if(_passwordController.text != _checkpasswordController.text){
+                          showtoast("비밀번호가 일치하지 않습니다.");
+                        }
+                        else{
+                          if(_passwordController.text.length <6){
+                            return showtoast("비밀번호는 6자리 이상으로 설정해주세요");
+                          }else{
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.fade,
+                                    child: SignupView2(name: _userIDController.text, nickname: _nicknameController.text, password: _passwordController.text,)));
+                          }
+
                         }
 
                       }
-
-                    }
-                  },
-                  borderRadius: BorderRadius.circular(10),
-                  child: Button("다음")
-              ),
-              SizedBox(height: 30),
-            ],
+                    },
+                    borderRadius: BorderRadius.circular(10),
+                    child: Button("다음")
+                ),
+                SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
       )

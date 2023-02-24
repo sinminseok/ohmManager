@@ -61,14 +61,32 @@ class _Signup_Trainer2 extends State<Signup_Trainer2>
           "프로필 정보",
           style: TextStyle(fontWeight: FontWeight.bold,color: kTextBlackColor),
         ),
-        backgroundColor:  Colors.grey.shade200,
+        backgroundColor:   Color(0xff2651f0).withAlpha(20),
         elevation: 0,
       ),
-      body: Stack(
-        children: [
-          Scaffold(
-            backgroundColor:  Colors.grey.shade200,
-            body: Column(
+      body: Scaffold(
+        backgroundColor:  Colors.transparent,
+        body: Container(
+          height: size.height*1,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  stops: [
+                    0.2,
+                    0.4,
+                    0.2,
+                    0.7
+                  ],
+                  colors: [
+                    Color(0xff2651f0).withAlpha(20),
+                    Color(0xff2651f0).withAlpha(20),
+                    Color(0xff2651f0).withAlpha(100),
+                    Color(0xff2651f0).withAlpha(200),
+
+                  ])),
+          child: SingleChildScrollView(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -109,8 +127,9 @@ class _Signup_Trainer2 extends State<Signup_Trainer2>
                       borderRadius: BorderRadius.circular(15)),
                   width: 340.w,
                   height: 100.h,
-                  child: TextFormField(
+                  child:  TextFormField(
                     maxLines: null,
+                    textInputAction:TextInputAction.done,
                     controller: _introduceController,
                     textAlign: TextAlign.center,
                     cursorColor: kContainerColor,
@@ -137,12 +156,14 @@ class _Signup_Trainer2 extends State<Signup_Trainer2>
                           return showtoast("회원가입 실패");
                         }else{
                           if(_image == null){
+                            showtoast("회원가입 완료 로그인을 진행해주세요");
                             Navigator.push(
                                 context,
                                 PageTransition(
                                     type: PageTransitionType.fade,
                                     child: LoginView()));
                           }else{
+                            showtoast("회원가입 완료 로그인을 진행해주세요");
                             ManagerApi().register_profile(_image!,id.toString());
                             Navigator.push(
                                 context,
@@ -162,7 +183,7 @@ class _Signup_Trainer2 extends State<Signup_Trainer2>
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

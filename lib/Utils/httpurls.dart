@@ -1,4 +1,4 @@
-String endpoint = "http://localhost:8080/api/";
+String endpoint = "http://192.168.0.101:8080/api/";
 
 class ManagerApi_Url {
   String save_manager = endpoint + "manager";

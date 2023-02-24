@@ -20,15 +20,15 @@ class PostView extends StatefulWidget {
 
 class _PostView extends State<PostView> {
   var results;
-
-
+  Future? myfuture;
 
   Future<List<PostDto>?> load_posts() async {
-    print("loaddd");
-    results =[];
+    results = [];
     final prefs = await SharedPreferences.getInstance();
     results =
         await PostApi().findall_posts(prefs.getString("gymId").toString());
+    print(results);
+
     return results;
   }
 
@@ -40,14 +40,13 @@ class _PostView extends State<PostView> {
       return true;
     }
   }
+
   @override
   void initState() {
     // TODO: implement initState
-    print("initit");
-    load_posts();
+    myfuture = load_posts();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -78,18 +77,19 @@ class _PostView extends State<PostView> {
               Row(
                 children: [
                   InkWell(
-                      onTap: () async{
-                        bool check =await check_gym();
-                        if(check == false){
-                          showAlertDialog(context,"알림","헬스장을 먼저 등록하세요");
-                        }else{
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => PostWrite_View()))
+                      onTap: () async {
+                        bool check = await check_gym();
+                        if (check == false) {
+                          showAlertDialog(context, "알림", "헬스장을 먼저 등록하세요");
+                        } else {
+                          Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PostWrite_View()))
                               .then((value) {
                             setState(() {});
                           });
                         }
-
                       },
                       child: Icon(Icons.add)),
                 ],
@@ -103,7 +103,7 @@ class _PostView extends State<PostView> {
         child: Column(
           children: [
             FutureBuilder(
-                future: load_posts(),
+                future: myfuture,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
                   if (snapshot.hasData == false) {
@@ -111,8 +111,8 @@ class _PostView extends State<PostView> {
                       margin: EdgeInsets.only(top: 100.h),
                       child: Center(
                           child: Text(
-                        "아직 등록된 게시물이 없습니다.",
-                        style: TextStyle(fontSize: 23),
+                        "",
+                        style: TextStyle(fontSize: 17, fontFamily: "lightfont"),
                       )),
                     );
                   }
@@ -131,18 +131,11 @@ class _PostView extends State<PostView> {
                     return Container(
                         width: 360.w,
                         height: 600.h,
-                        child: RefreshIndicator(
-                          onRefresh: () async {
-                            setState(() {
-                              load_posts();
-                            });
-                          },
-                          child: ListView.builder(
-                              itemCount: results.length,
-                              itemBuilder: (BuildContext ctx, int idx) {
-                                return Post_Widget(size,context, results[idx],load_posts());
-                              }),
-                        ));
+                        child: ListView.builder(
+                            itemCount: results.length,
+                            itemBuilder: (BuildContext ctx, int idx) {
+                              return Post_Widget(size, context, results[idx]);
+                            }));
                   }
                 }),
           ],

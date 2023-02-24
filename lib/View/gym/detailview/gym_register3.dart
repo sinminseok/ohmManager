@@ -79,7 +79,7 @@ class _GymRegisterView3 extends State<GymRegisterView3> {
                     child: Center(
                       child: Container(
                         width: size.width * 0.9,
-                        height: size.height * 0.2,
+                        height: size.height * 0.4,
                         decoration: BoxDecoration(
 
                             color: kContainerColor,
@@ -98,7 +98,7 @@ class _GymRegisterView3 extends State<GymRegisterView3> {
                     child: Container(
                       width: size.width * 0.9,
 
-                      height: size.height * 0.2,
+                      height: size.height * 0.4,
 
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
@@ -110,14 +110,14 @@ class _GymRegisterView3 extends State<GymRegisterView3> {
                                 borderRadius: BorderRadius.all(Radius.circular(10))
                               ),
                               width: size.width * 0.9,
-                              height: size.height * 0.2,
-                              child: Image.file(File(image_picked[index].path)),
+                              height: size.height * 0.4,
+                              child: Image.file(File(image_picked[index].path),fit: BoxFit.fitWidth,),
                             );
                           }),
                     ),
                   ),
 
-            SizedBox(height: size.height*0.5,),
+            SizedBox(height: size.height*0.27,),
             InkWell(
               onTap: () async {
                 final prefs = await SharedPreferences.getInstance();

@@ -75,8 +75,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             : BoxDecoration(),
         child: Icon(
           icon,
-          size: 30,
-          color: index == _selectedIndex ? kButtonColor : Colors.grey,
+          size: 26,
+          color: index == _selectedIndex ? kPrimaryColor : Colors.grey,
         ),
       ),
     );

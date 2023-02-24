@@ -45,7 +45,7 @@ class RoundedInput extends StatelessWidget {
               controller: controller,
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
-              cursorColor: kContainerColor,
+              cursorColor: kPrimaryColor,
               decoration: InputDecoration(
                 // contentPadding: EdgeInsets.,
                   hintText: "-",
@@ -56,7 +56,7 @@ class RoundedInput extends StatelessWidget {
               controller: controller,
               textAlign: TextAlign.center,
 
-              cursorColor: kContainerColor,
+              cursorColor: kPrimaryColor,
               decoration: InputDecoration(
                 // contentPadding: EdgeInsets.,
                 hintText: "-",

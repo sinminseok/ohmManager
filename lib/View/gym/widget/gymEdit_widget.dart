@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../Utils/constants.dart';
 
-Widget GymEdit_Widget(String? title,String? content,TextEditingController _controller){
+Widget GymEdit_Widget(String? title,String? content,TextEditingController _controller,bool numberstate){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -26,7 +26,17 @@ Widget GymEdit_Widget(String? title,String? content,TextEditingController _contr
         child: Container(
             margin: EdgeInsets.only(top: 20, bottom: 20,left: 20,right: 20),
             child: Center(
-              child:TextField(
+              child:numberstate == true?
+              TextField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  focusColor: kPrimaryColor,
+                  hoverColor: kPrimaryColor,
+                  border: InputBorder.none,
+                ),
+                controller: _controller,)
+                  :TextField(
+
                 decoration: InputDecoration(
                   focusColor: kPrimaryColor,
                   hoverColor: kPrimaryColor,

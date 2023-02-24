@@ -44,6 +44,8 @@ class _HomeView extends State<HomeView> {
     super.initState();
   }
 
+
+
   final spinkit = SpinKitDoubleBounce(
     itemBuilder: (BuildContext context, int index) {
       return DecoratedBox(

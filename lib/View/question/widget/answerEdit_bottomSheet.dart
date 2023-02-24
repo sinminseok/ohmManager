@@ -21,9 +21,20 @@ class AnswerEdit_BottomSheet extends StatefulWidget {
 }
 
 class _AnswerEdit_BottomSheetState extends State<AnswerEdit_BottomSheet> {
+
+  TextEditingController? _answerController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _answerController = TextEditingController(text: widget.questionDto.answerDto?.content);
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController _answerController = TextEditingController(text: widget.questionDto.answerDto?.content);
+
     return Container(
         height: 350.h,
         color: kBackgroundColor,
@@ -66,7 +77,7 @@ class _AnswerEdit_BottomSheetState extends State<AnswerEdit_BottomSheet> {
               child: InkWell(
 
                   onTap: ()async{
-                    var register_answer =await QuestionApi().edit_answer(widget.questionDto.answerDto!.id, _answerController.text);
+                    var register_answer =await QuestionApi().edit_answer(widget.questionDto.answerDto!.id, _answerController!.text);
                     if(register_answer == true){
                       showtoast("답변이 수정되었습니다.");
                        // widget.fun;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/postApi.dart';
 import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:ohmmanager/View/post/detailview/post_edit.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -11,19 +12,15 @@ import '../../../Utils/constants.dart';
 
 class Post_Detail extends StatefulWidget {
   PostDto postDto;
-  var fun;
 
-  Post_Detail({required this.postDto,required this.fun});
+
+  Post_Detail({required this.postDto});
 
   @override
-  _Post_Detail createState() => _Post_Detail();
+  State<Post_Detail> createState() => _Post_DetailState();
 }
 
-class _Post_Detail extends State<Post_Detail> {
-
-
-
-
+class _Post_DetailState extends State<Post_Detail> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -47,7 +44,12 @@ class _Post_Detail extends State<Post_Detail> {
                           await PostApi().delete_post(widget.postDto.id);
                       if (delete_post == true) {
                         Navigator.pop(context);
-                        showtoast("게시물이 삭제되었습니다.");
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                FrameView()), (route) => false);
+
+
+                      showtoast("게시물이 삭제되었습니다.");
                       } else {
                         showtoast("삭제중 오류가 발생했습니다");
                       }
@@ -63,20 +65,9 @@ class _Post_Detail extends State<Post_Detail> {
                       bool isBack = await Navigator.push(context,
                           MaterialPageRoute(builder: (context) => Post_Edit( postDto: widget.postDto,)));
                       if (isBack) {
-                        widget.fun;
+
                       }
-                      // await Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) => Post_Edit( postDto: widget.postDto,)))
-                      //     .then((value) {
-                      //   setState(() {});
-                      // });
-                      // Navigator.push(
-                      //     context,
-                      //     PageTransition(
-                      //         type: PageTransitionType.fade,
-                      //         child: Post_Edit(
-                      //           postDto: widget.postDto,
-                      //         )));
+
                     },
                     child: Icon(
                       Icons.edit,

@@ -4,6 +4,19 @@
 <dict>
 <key>com.apple.security.network.client</key>
 <true/>
+ <key>LSApplicationQueriesSchemes</key>
+  <array>
+      <!-- common -->
+      <string>kakao88f4eda0b98d703a08d9b1a48ced925c</string>
+
+      <!-- KakaoTalk login -->
+      <string>kakaokompassauth</string>
+      <string>storykompassauth</string>
+
+      <!-- KakaoLink -->
+      <string>kakaolink</string>
+      <string>kakaotalk-5.9.7</string>
+  </array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>

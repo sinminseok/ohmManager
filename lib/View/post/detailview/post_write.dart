@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../Utils/constants.dart';
 import '../../../../Utils/permission.dart';
 import '../../../Controller/postApi.dart';
+import '../../frame/frame_view.dart';
 
 class PostWrite_View extends StatefulWidget {
   const PostWrite_View({Key? key}) : super(key: key);
@@ -107,7 +108,7 @@ class _PostWrite_View extends State<PostWrite_View> {
                           ),
                           width: size.width * 0.9,
                           height: size.height * 0.2,
-                          child: Image.file(File(image_picked[index].path),fit: BoxFit.fitHeight,),
+                          child: Image.file(File(image_picked[index].path),fit: BoxFit.fitWidth,),
                         );
                       }),
                 ),
@@ -157,6 +158,9 @@ class _PostWrite_View extends State<PostWrite_View> {
                     }else{
                       showtoast("글이 등록었습니다!");
                       Navigator.pop(context);
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              FrameView()), (route) => false);
                     }
 
                     }

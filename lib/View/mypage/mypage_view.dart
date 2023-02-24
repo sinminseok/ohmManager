@@ -13,8 +13,11 @@ import 'package:ohmmanager/View/mypage/popup/bottm_sheet.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
-
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk_talk.dart';
 import 'detailview/ohm_introduce.dart';
+
+
+
 class MypageView extends StatefulWidget {
   const MypageView({Key? key}) : super(key: key);
 
@@ -339,36 +342,51 @@ class _MypageViewState extends State<MypageView> {
                   )),
             ),
             Center(
-              child: Container(
-                  margin: EdgeInsets.only(top: 30),
-                  width: 330.w,
-                  height: 70.h,
-                  decoration: BoxDecoration(
-                      color: kPrimaryColor,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          margin: EdgeInsets.only(left: 20.w, top: 15.h),
-                          child: Text(
-                            "카카오톡으로 문의하기",
-                            style: TextStyle(
-                                fontSize: 17,
-                                color: kTextWhiteColor,
-                                fontWeight: FontWeight.bold),
-                          )),
-                      Container(
-                          margin: EdgeInsets.only(left: 20.w, top: 5.h),
-                          child: Text(
-                            "소중한 피드백을 보내주세요.",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: kTextWhiteColor,
-                                fontWeight: FontWeight.bold),
-                          )),
-                    ],
-                  )),
+              child: InkWell(
+                onTap: ()async{
+                  showtoast("서비스 준비중입니다");
+                  // 연결 페이지 URL 구하기
+//                   Uri url = await TalkApi.instance.addChannelUrl('_WTJexj');
+//                   print(url);
+//
+// // 연결 페이지 URL을 브라우저에서 열기
+//                   try {
+//                     await launchBrowserTab(url);
+//                   } catch (error) {
+//                     print('카카오톡 채널 추가 실패 $error');
+//                   }
+                },
+                child: Container(
+                    margin: EdgeInsets.only(top: 30),
+                    width: 330.w,
+                    height: 70.h,
+                    decoration: BoxDecoration(
+                        color: kPrimaryColor,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(left: 20.w, top: 15.h),
+                            child: Text(
+                              "카카오톡으로 문의하기",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  color: kTextWhiteColor,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                        Container(
+                            margin: EdgeInsets.only(left: 20.w, top: 5.h),
+                            child: Text(
+                              "소중한 피드백을 보내주세요.",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: kTextWhiteColor,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                      ],
+                    )),
+              ),
             ),
             Column(
               children: [

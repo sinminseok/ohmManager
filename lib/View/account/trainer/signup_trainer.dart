@@ -30,79 +30,97 @@ class _Signup_Trainer extends State<Signup_Trainer>
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: kTextBlackColor, //change your color here
+        appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: kTextBlackColor, //change your color here
+          ),
+          title: Text(
+            "정보입력",
+            style:
+                TextStyle(fontWeight: FontWeight.bold, color: kTextBlackColor),
+          ),
+          backgroundColor: Color(0xff2651f0).withAlpha(20),
+          elevation: 0,
         ),
-        title: Text(
-          "정보입력",
-          style: TextStyle(fontWeight: FontWeight.bold, color: kTextBlackColor),
-        ),
-        backgroundColor: kBackgroundColor,
-        elevation: 0,
-      ),
-      body: Stack(
-        children: [
-          Scaffold(
-            backgroundColor: kBackgroundColor,
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Center(child: SizedBox(height: size.height * 0.01)),
-                Container(
-                  child: RoundedInput(
-                    controller: _userIDController,
-                    title: "아이디",
-                    number_mode: false,
+        body: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    stops: [
+                      0.2,
+                      0.4,
+                      0.2,
+                      0.7
+                    ],
+                    colors: [
+                      Color(0xff2651f0).withAlpha(20),
+                      Color(0xff2651f0).withAlpha(20),
+                      Color(0xff2651f0).withAlpha(100),
+                      Color(0xff2651f0).withAlpha(200),
+
+                    ])),
+            height: size.height * 1,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Center(child: SizedBox(height: size.height * 0.01)),
+                  Container(
+                    child: RoundedInput(
+                      controller: _userIDController,
+                      title: "아이디",
+                      number_mode: false,
+                    ),
                   ),
-                ),
-                RoundedPasswordInput(
-                  controller: _passwordController,
-                  hint: 'Password',
-                  title: "비밀번호",
-                ),
-                RoundedPasswordInput(
-                  controller: _checkpasswordController,
-                  hint: 'check pw',
-                  title: "비밀번호 확인",
-                ),
-                Container(
-                  child: RoundedInput(
-                    controller: _nicknameController,
-                    number_mode: false,
-                    title: "이름",
+                  RoundedPasswordInput(
+                    controller: _passwordController,
+                    hint: 'Password',
+                    title: "비밀번호",
                   ),
-                ),
-                SizedBox(
-                  height: size.height * 0.4,
-                ),
-                InkWell(
-                    onTap: () async {
-                      if (_userIDController.text == "" ||
-                          _passwordController.text == "" ||
-                          _nicknameController.text == "") {
-                        return showtoast("정보를 모두 입력해주세요");
-                      } else {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: Signup_Trainer2(
-                                  name: _userIDController.text,
-                                  nickname: _nicknameController.text,
-                                  password: _passwordController.text,
-                                  gymId: widget.gymId,
-                                )));
-                      }
-                    },
-                    borderRadius: BorderRadius.circular(10),
-                    child: Button("다음")),
-                SizedBox(height: 30),
-              ],
+                  RoundedPasswordInput(
+                    controller: _checkpasswordController,
+                    hint: 'check pw',
+                    title: "비밀번호 확인",
+                  ),
+                  Container(
+                    child: RoundedInput(
+                      controller: _nicknameController,
+                      number_mode: false,
+                      title: "이름",
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.4,
+                  ),
+                  InkWell(
+                      onTap: () async {
+                        if (_userIDController.text == "" ||
+                            _passwordController.text == "" ||
+                            _nicknameController.text == "") {
+                          return showtoast("정보를 모두 입력해주세요");
+                        } else {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: Signup_Trainer2(
+                                    name: _userIDController.text,
+                                    nickname: _nicknameController.text,
+                                    password: _passwordController.text,
+                                    gymId: widget.gymId,
+                                  )));
+                        }
+                      },
+                      borderRadius: BorderRadius.circular(10),
+                      child: Button("다음")),
+                  SizedBox(height: 30),
+                ],
+              ),
             ),
-          )
-        ],
-      ),
-    );
+          ),
+        ));
   }
 }

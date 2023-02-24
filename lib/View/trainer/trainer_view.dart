@@ -54,7 +54,7 @@ class _TrainerViewState extends State<TrainerView> {
                 Text(
                   "트레이너",
                   style: TextStyle(fontSize: 21,
-                      color: kPrimaryColor,
+                      color: kTextColor,
                     fontFamily: "boldfont",
                     fontWeight: FontWeight.bold
                       ),
@@ -74,12 +74,13 @@ class _TrainerViewState extends State<TrainerView> {
                 future: myfuture,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData == false) {
-                    return Column(
-                      children: [
-                        Container(
-                          child: Text("등록된 트레이너가 없습니다."),
-                        ),
-                      ],
+                    return Container(
+                      margin: EdgeInsets.only(top: 100.h),
+                      child: Center(
+                          child: Text(
+                            "",
+                            style: TextStyle(fontSize: 17,fontFamily: "lightfont"),
+                          )),
                     );
                   }
 

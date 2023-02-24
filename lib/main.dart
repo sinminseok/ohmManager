@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +8,14 @@ import 'Controller/providers.dart';
 import 'View/account/login_view.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // runApp() 호출 전 Flutter SDK 초기화
+  KakaoSdk.init(
+    nativeAppKey: '88f4eda0b98d703a08d9b1a48ced925c',
+    javaScriptAppKey: '64b5f35391bcd94fefe94a04752b4f99',
+  );
+
   runApp(
     MultiProvider(
       providers: [

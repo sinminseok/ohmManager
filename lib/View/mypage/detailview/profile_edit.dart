@@ -113,7 +113,7 @@ class _Profile_EditState extends State<Profile_Edit> {
                           child: TextFormField(
                             controller: _nickNameController,
                             textAlign: TextAlign.start,
-                            cursorColor: kContainerColor,
+                            cursorColor: kPrimaryColor,
                             decoration: InputDecoration(
                                 // contentPadding: EdgeInsets.,
                                 hintText: "이름",
@@ -152,7 +152,7 @@ class _Profile_EditState extends State<Profile_Edit> {
                   controller: _onlineController,
                   textAlign: TextAlign.center,
 
-                  cursorColor: kContainerColor,
+                  cursorColor: kPrimaryColor,
                   decoration: InputDecoration(
                       // contentPadding: EdgeInsets.,
                       hintText: "한줄소개",
@@ -172,7 +172,7 @@ class _Profile_EditState extends State<Profile_Edit> {
                   maxLines: null,
                   controller: _introduceController,
                   textAlign: TextAlign.center,
-                  cursorColor: kContainerColor,
+                  cursorColor: kPrimaryColor,
                   decoration: InputDecoration(
                       // contentPadding: EdgeInsets.,
                       hintText: "자기 소개",
