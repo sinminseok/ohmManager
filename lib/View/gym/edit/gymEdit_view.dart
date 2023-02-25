@@ -11,7 +11,9 @@ import 'package:ohmmanager/Model/gymImgDto.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/Utils/constants.dart';
 import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:ohmmanager/View/home/widget/gymInfo_widget.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../Utils/permission.dart';
 import '../widget/gymEdit_widget.dart';
@@ -185,7 +187,11 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
                   GymApi().update_gymImgs(widget.gymDto?.id, delete_imgs, image_picked);
 
                   showtoast("정보가 수정되었습니다.");
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.fade,
+                          child: FrameView()));
                 },
                 child: Container(
                     margin: EdgeInsets.only(top: 20,bottom: 40),

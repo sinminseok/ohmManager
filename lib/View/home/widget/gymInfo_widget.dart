@@ -14,7 +14,7 @@ Widget GymInfo_Widget(String? title,String? content){
           child: Text(
             "$title",
             style: TextStyle(
-                fontSize: 19, color: kPrimaryColor,fontWeight: FontWeight.bold),
+                fontFamily: "boldfont",fontSize: 19, color: kPrimaryColor,fontWeight: FontWeight.bold),
           )),
       Container(
         margin: EdgeInsets.only(left: 20, right: 20),

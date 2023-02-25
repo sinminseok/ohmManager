@@ -280,6 +280,7 @@ class _MypageViewState extends State<MypageView> {
                           child: Text(
                             "고객센터",
                             style: TextStyle(
+                              fontFamily: "boldfont",
                                 fontSize: 17,
                                 color: kPrimaryColor,
                                 fontWeight: FontWeight.bold),
@@ -316,6 +317,7 @@ class _MypageViewState extends State<MypageView> {
                           child: Text(
                             "자주 묻는 질문",
                             style: TextStyle(
+                                fontFamily: "boldfont",
                                 fontSize: 17,
                                 color: kPrimaryColor,
                                 fontWeight: FontWeight.bold),
@@ -352,6 +354,7 @@ class _MypageViewState extends State<MypageView> {
                           child: Text(
                             "오헬몇 이란?",
                             style: TextStyle(
+                                fontFamily: "boldfont",
                                 fontSize: 17,
                                 color: kPrimaryColor,
                                 fontWeight: FontWeight.bold),

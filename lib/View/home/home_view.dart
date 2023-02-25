@@ -62,19 +62,15 @@ class _HomeView extends State<HomeView> {
 
     var gym =
         await ManagerApi().gyminfo_byManager(userId, prefs.getString("token"));
-    print("FGSGGDFS");
 
     if (gym == null) {
-      print("nuddd");
       gymDto = null;
       return false;
     } else {
-      print("object");
       setState(() {
         gymDto = gym;
       });
       await get_avg();
-      print("objecasdt");
       return true;
     }
   }
@@ -131,7 +127,6 @@ class _HomeView extends State<HomeView> {
         body: SingleChildScrollView(
             child: Column(
           children: [
-
             FutureBuilder(
                 future: myFuture,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -149,15 +144,19 @@ class _HomeView extends State<HomeView> {
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text("${snapshot.data}")
-
-
-                            ],
+                            children: [Text("")],
                           ),
                         ),
-                        Container(height: 30.h,),
-                        Text("인터넷 연결중 ., ",style: TextStyle(fontFamily: "boldfont",fontSize: 18,color: kPrimaryColor),)
+                        Container(
+                          height: 30.h,
+                        ),
+                        Text(
+                          "인터넷 연결중 ., ",
+                          style: TextStyle(
+                              fontFamily: "boldfont",
+                              fontSize: 18,
+                              color: kPrimaryColor),
+                        )
                       ],
                     );
                   }
@@ -175,57 +174,73 @@ class _HomeView extends State<HomeView> {
                     );
                   } else {
                     return gymDto == null
-                        ? InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: GymRegisterView()));
-                      },
-                      child: Center(
-                        child: Container(
-                          width: size.width * 1,
-                          height: size.height * 0.1,
-                          decoration: BoxDecoration(
-                              color: kContainerColor,
-                              borderRadius: BorderRadius.circular(10)),
-                          margin: EdgeInsets.all(10),
-                          child: Center(
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 40,
-                                    height: 40,
-                                    margin: EdgeInsets.only(left: 25.0, right: 25),
+                        ? Column(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.fade,
+                                          child: GymRegisterView()));
+                                },
+                                child: Center(
+                                  child: Container(
+                                    width: size.width * 1,
+                                    height: size.height * 0.1,
                                     decoration: BoxDecoration(
-                                        color: kBoxColor, shape: BoxShape.circle),
-                                    child: Icon(
-                                      Icons.add,
-                                      color: kTextColor,
-                                    ),
+                                        color: kContainerColor,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    margin: EdgeInsets.all(10),
+                                    child: Center(
+                                        child: Row(
+                                      children: [
+                                        Container(
+                                          width: 40,
+                                          height: 40,
+                                          margin: EdgeInsets.only(
+                                              left: 25.0, right: 25),
+                                          decoration: BoxDecoration(
+                                              color: kBoxColor,
+                                              shape: BoxShape.circle),
+                                          child: Icon(
+                                            Icons.add,
+                                            color: kTextColor,
+                                          ),
+                                        ),
+                                        // Icon(Icons.turned_in_not,),
+                                        Text(
+                                          "헬스장 등록",
+                                          style: TextStyle(
+                                              fontSize: 21,
+                                              fontFamily: "boldfont",
+                                              fontWeight: FontWeight.bold,
+                                              color: kTextColor),
+                                        )
+                                      ],
+                                    )),
                                   ),
-                                  // Icon(Icons.turned_in_not,),
-                                  Text(
-                                    "헬스장 등록",
-                                    style: TextStyle(
-                                        fontSize: 21,
-                                        fontFamily: "boldfont",
-                                        fontWeight: FontWeight.bold,
-                                        color: kTextColor),
-                                  )
-                                ],
-                              )),
-                        ),
-                      ),
-                    ):select_mode == true
-                        ? SingleChildScrollView(
-                            child: GymStatistics_View(
-                            current_datetime: current_datetime,
-                            time_avg: time_avg,
-                            current_count: gymDto?.current_count.toString(),
-                          ))
-                        : GymInfo_View(gymDto: gymDto);
+                                ),
+                              ),
+                              Container(
+                                width: 340.w,
+                                height: 450.h,
+                                decoration: BoxDecoration(color: kBoxColor,
+                                
+                                borderRadius: BorderRadius.all(Radius.circular(10))),
+                                child: spinkit,
+                              )
+                            ],
+                          )
+                        : select_mode == true
+                            ? SingleChildScrollView(
+                                child: GymStatistics_View(
+                                current_datetime: current_datetime,
+                                time_avg: time_avg,
+                                current_count: gymDto?.current_count.toString(),
+                              ))
+                            : GymInfo_View(gymDto: gymDto);
                   }
                 })
           ],

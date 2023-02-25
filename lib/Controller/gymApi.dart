@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ohmmanager/Model/countDto.dart';
 import 'package:ohmmanager/Model/gymTimeDto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
@@ -19,7 +20,7 @@ class GymApi with ChangeNotifier {
 
   String? get gym_name => _gym_name;
 
-  Future<String?> current_count(String gymId)async{
+  Future<CountDto?> current_count(String gymId)async{
     var res = await http.get(
       Uri.parse(GymApi_Url().current_count + "${gymId}"),
       headers: {'Content-Type': 'application/json'},
@@ -27,10 +28,11 @@ class GymApi with ChangeNotifier {
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
+      print(data);
+      print("datadata");
+      CountDto countDto = CountDto.fromJson(data);
 
-
-
-      return data.toString();
+      return countDto;
     } else {
 
       return null;

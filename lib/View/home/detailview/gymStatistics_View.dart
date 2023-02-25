@@ -2,6 +2,7 @@ import 'package:animate_icons/animate_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ohmmanager/Model/countDto.dart';
 import 'package:ohmmanager/View/home/detailview/chart_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,9 +32,9 @@ class _GymStatistics_View extends State<GymStatistics_View> {
   refresh() async {
     final prefs = await SharedPreferences.getInstance();
     var gymId = prefs.getString("gymId");
-    var r = await GymApi().current_count(gymId.toString());
+    CountDto? r = await GymApi().current_count(gymId.toString());
     setState(() {
-      widget.current_count = r!;
+      widget.current_count = r?.count.toString();
     });
   }
 

@@ -17,6 +17,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Utils/permission.dart';
+import '../../frame/frame_view.dart';
 import '../widget/gymEdit_widget.dart';
 
 class GymTimeEdit_View extends StatefulWidget {
@@ -304,7 +305,11 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
 
                             if (register_time == true) {
                               showtoast("운영시간이 수정되었습니다.");
-                              Navigator.pop(context);
+                              Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.fade,
+                                      child: FrameView()));
                             } else {
                               return;
                             }

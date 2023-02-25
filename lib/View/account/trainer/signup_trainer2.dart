@@ -148,12 +148,11 @@ class _Signup_Trainer2 extends State<Signup_Trainer2>
                       if(_introduceController.text =="" || _onlineController.text == ""){
                         showtoast("내용을 모두 입력해주세요");
                       }else{
-                        print(widget.nickname);
                         int? id = await ManagerApi().register_trainer(widget.name,_onlineController.text,_introduceController.text,widget.password,widget.nickname,widget.gymId);
 
 
                         if(id == null){
-                          return showtoast("회원가입 실패");
+                          return showtoast("이미 존재하는 아이디입니다.");
                         }else{
                           if(_image == null){
                             showtoast("회원가입 완료 로그인을 진행해주세요");

@@ -164,7 +164,7 @@ class _SignupView2 extends State<SignupView2>
                         int? id = await ManagerApi().register_manager(widget.name, widget.password, widget.nickname, _onlineController.text,_introduceController.text);
 
                         if(id == null){
-                          return showtoast("회원가입 실패");
+                          return showtoast("이미 존재하는 아이디입니다.");
                         }else{
                           if(_image == null){
                             showtoast("회원가입이 완료되었습니다.");

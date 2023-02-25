@@ -16,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Utils/permission.dart';
 import '../../../Utils/toast.dart';
+import '../../frame/frame_view.dart';
 import '../widget/gymEdit_widget.dart';
 
 class GymPriceEdit_View extends StatefulWidget {
@@ -374,7 +375,11 @@ class _GymPriceEdit_View extends State<GymPriceEdit_View> {
                                GymApi().delete_price(prefs.getString("gymId"), prefs.getString("token"), delete_priceIds);
                              }
                              showtoast("가격 수정이 완료되었습니다");
-                              Navigator.pop(context);
+                              Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.fade,
+                                      child: FrameView()));
 
                             },
                             child: Container(

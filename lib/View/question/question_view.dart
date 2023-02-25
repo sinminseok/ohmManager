@@ -3,18 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/questionApi.dart';
 import 'package:ohmmanager/Model/questionDto.dart';
-import 'package:ohmmanager/View/post/detailview/post_write.dart';
-import 'package:ohmmanager/View/post/widgets/post_widget.dart';
 import 'package:ohmmanager/View/question/popup/delete_popup.dart';
 import 'package:ohmmanager/View/question/widget/answerEdit_bottomSheet.dart';
 import 'package:ohmmanager/View/question/widget/answer_bottomSheet.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../Model/postDto.dart';
-import '../../Controller/postApi.dart';
 import '../../Utils/constants.dart';
-import '../mypage/popup/bottm_sheet.dart';
 
 class QuestionView extends StatefulWidget {
   const QuestionView({Key? key}) : super(key: key);
@@ -30,7 +23,6 @@ class _QuestionView extends State<QuestionView> {
   bool state = false;
 
   get_questions() async {
-    print("GET QUESTIOn");
     setState(() {
       not_answers = [];
       ok_answers = [];

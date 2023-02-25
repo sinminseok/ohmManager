@@ -38,16 +38,17 @@ class _GymInfo_ViewState extends State<GymInfo_View> {
                   children: [
                     Container(
                       margin: EdgeInsets.only(
-                          left: 20, top: 10,right: 20),
+                          left: 20, top: 20,right: 15),
                       child: Icon(Icons.fitness_center,color: Colors.white,size: 55,),
                     ),
                     Container(
                       width: 230.w,
                         margin: EdgeInsets.only(
-                            left: 10, top: 30,right: 20),
+                            left: 10, top:5,right: 20,bottom: 5),
                         child: Text(
                           "${widget.gymDto?.name}",
                           style: TextStyle(
+                            fontFamily: "boldfont",
                               fontWeight: FontWeight.bold,
                               color: kTextWhiteColor,
                               fontSize: 28),
@@ -78,10 +79,10 @@ class _GymInfo_ViewState extends State<GymInfo_View> {
                   children: [
                     Container(
                         margin: EdgeInsets.only(left: 22.w,right: 20,top: 30.h),
-                        child: Text("현재 헬스장 인원수를 알려주는",style: TextStyle(fontSize: 18,color: kPrimaryColor,fontWeight: FontWeight.bold),)),
+                        child: Text("현재 헬스장 인원수를 알려주는",style: TextStyle(fontSize: 15.sp,color: kPrimaryColor,fontWeight: FontWeight.bold,fontFamily: "lightfont"),)),
                     Container(
-                        margin: EdgeInsets.only(left: 22.w,right: 20),
-                        child: Text("오헬몇",style: TextStyle(fontSize: 25,color: kPrimaryColor,fontWeight: FontWeight.bold),)),
+                        margin: EdgeInsets.only(left: 22.w,right: 20,top: 5),
+                        child: Text("오헬몇",style: TextStyle(fontSize: 23,color: kPrimaryColor,fontWeight: FontWeight.bold,fontFamily: "boldfont"),)),
                   ],
                 ),
 
