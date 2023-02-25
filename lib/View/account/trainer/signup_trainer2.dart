@@ -140,7 +140,6 @@ class _Signup_Trainer2 extends State<Signup_Trainer2>
                   ),
                 ),
                 SizedBox(
-
                   height: size.height * 0.3,
                 ),
                 InkWell(
