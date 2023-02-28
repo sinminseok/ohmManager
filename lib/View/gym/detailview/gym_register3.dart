@@ -63,10 +63,10 @@ class _GymRegisterView3 extends State<GymRegisterView3> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
-              margin: EdgeInsets.only(left: 20, bottom: 15),
+              margin: EdgeInsets.only(left: 20, bottom: 30),
               child: Text(
                 "헬스장 사진",
-                style: TextStyle(color: kTextColor, fontSize: 23,fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily: "boldfont",color: kTextColor, fontSize: 23,fontWeight: FontWeight.bold),
               ),
             ),
             image_picked.isNotEmpty
@@ -111,7 +111,7 @@ class _GymRegisterView3 extends State<GymRegisterView3> {
                               ),
                               width: size.width * 0.9,
                               height: size.height * 0.4,
-                              child: Image.file(File(image_picked[index].path),fit: BoxFit.fitWidth,),
+                              child: Image.file(File(image_picked[index].path),fit: BoxFit.fitHeight,),
                             );
                           }),
                     ),
@@ -120,19 +120,24 @@ class _GymRegisterView3 extends State<GymRegisterView3> {
             SizedBox(height: size.height*0.27,),
             InkWell(
               onTap: () async {
-                final prefs = await SharedPreferences.getInstance();
-                var gymId = await prefs.getString("gymId");
-                var bool = await GymApi().save_gymimg(
-                    prefs.getString("token").toString(), gymId!, image_picked);
-                print(bool);
-                if (bool == true) {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.fade, child: GymRegisterView4()));
-                } else {
-                  showtoast("이미지 등록 실패");
+                if(image_picked.length == 0){
+                  showtoast("최소 한장 이상의 사진이 필요합니다");
+                }else{
+                  final prefs = await SharedPreferences.getInstance();
+                  var gymId = await prefs.getString("gymId");
+                  var bool = await GymApi().save_gymimg(
+                      prefs.getString("token").toString(), gymId!, image_picked);
+                  print(bool);
+                  if (bool == true) {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            type: PageTransitionType.fade, child: GymRegisterView4()));
+                  } else {
+                    showtoast("이미지 등록 실패");
+                  }
                 }
+
               },
 
               child: Center(

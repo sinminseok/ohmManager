@@ -6,11 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ohmmanager/Controller/gymApi.dart';
 import 'package:ohmmanager/Controller/adminApi.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
+import 'package:ohmmanager/View/account/ceo/signup_ceo.dart';
+import 'package:ohmmanager/View/account/manager/signup_manager.dart';
 import 'package:ohmmanager/View/account/role_view.dart';
-import 'package:ohmmanager/View/account/trainer/signup_trainer.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,16 +19,17 @@ import '../../../../Utils/toast.dart';
 import '../../../../Utils/widget/passwordinput_widget.dart';
 import '../../../../Utils/widget/rouninput_widget.dart';
 
-class Trainer_CodeView extends StatefulWidget {
-  const Trainer_CodeView({Key? key}) : super(key: key);
+class CEO_CodeView extends StatefulWidget {
+  const CEO_CodeView({Key? key}) : super(key: key);
 
   @override
-  _Trainer_CodeView createState() => _Trainer_CodeView();
+  _CEO_CodeView createState() => _CEO_CodeView();
 }
 
-class _Trainer_CodeView extends State<Trainer_CodeView>
+class _CEO_CodeView extends State<CEO_CodeView>
     with SingleTickerProviderStateMixin {
-
+  final TextEditingController _onlineController = TextEditingController();
+  final TextEditingController _introduceController = TextEditingController();
   String? code;
 
   @override
@@ -44,13 +45,14 @@ class _Trainer_CodeView extends State<Trainer_CodeView>
         iconTheme: IconThemeData(
           color: kIconColor, //change your color here
         ),
-        title: Text("가입코드",style: TextStyle(fontWeight: FontWeight.bold,color: kTextBlackColor),),
-        backgroundColor:   Color(0xff2651f0).withAlpha(20),
+        title: Text("가입코드",style: TextStyle(fontFamily: "boldfont",fontWeight: FontWeight.bold,color: kTextBlackColor),),
+        backgroundColor:     Color(0xff2651f0).withAlpha(20),
         elevation: 0,
 
       ),
 
-      body: Container(
+      body:    Container(
+
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topRight,
@@ -75,11 +77,11 @@ class _Trainer_CodeView extends State<Trainer_CodeView>
 
             Center(
               child: Container(
-                width: 330.w,
+                width:size.width*0.7,
                 child: PinCodeTextField(
                   cursorColor: kBackgroundColor,
                   backgroundColor: Colors.transparent,
-                  length: 6,
+                  length: 4,
                   obscureText: false,
                   animationType: AnimationType.fade,
                   pinTheme: PinTheme(
@@ -120,17 +122,17 @@ class _Trainer_CodeView extends State<Trainer_CodeView>
 
             InkWell(
                 onTap: () async {
-                  if(code?.length != 6){
+                  if(code?.length != 4){
                     showtoast("4자리를 모두 입력해주세요");
 
                   }else{
-                    var check_code =await GymApi().check_code(code!);
-                    if(check_code != null){
+                    var check_code =await AdminApi().check_code(code!);
+                    if(check_code == true){
                       Navigator.push(
                           context,
                           PageTransition(
                               type: PageTransitionType.fade,
-                              child: Signup_Trainer(gymId: check_code.toString(),)));
+                              child: Signup_Ceo()));
 
                     }else{
                       return showtoast("유효하지 않은 코드 입니다.");
@@ -147,7 +149,6 @@ class _Trainer_CodeView extends State<Trainer_CodeView>
           ],
         ),
       ),
-
     );
   }
 }

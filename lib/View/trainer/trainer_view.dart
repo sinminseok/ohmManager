@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ohmmanager/Controller/managerApi.dart';
+import 'package:ohmmanager/Controller/adminApi.dart';
 import 'package:ohmmanager/Model/trainerDto.dart';
 import 'package:ohmmanager/View/trainer/widget/trainer_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,7 +29,7 @@ class _TrainerViewState extends State<TrainerView> {
   get_trainers() async {
     final prefs = await SharedPreferences.getInstance();
 
-    trainers = await ManagerApi().findall_trainer(prefs.get("gymId").toString());
+    trainers = await AdminApi().findall_admin(prefs.get("gymId").toString());
 
     return trainers;
   }

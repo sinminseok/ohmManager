@@ -24,11 +24,9 @@ class _PostWrite_View extends State<PostWrite_View> {
   final ImagePicker _picker = ImagePicker();
   List<XFile> image_picked = [];
 
-
   PickedFile? _image;
   var imim;
   List<File> imageFileList = [];
-
 
   Future<void> getImages() async {
     ImagePicker imagePicker = ImagePicker();
@@ -36,9 +34,8 @@ class _PostWrite_View extends State<PostWrite_View> {
     List<XFile> images = await imagePicker.pickMultiImage();
 
     setState(() {
-      image_picked=images;
+      image_picked = images;
     });
-
   }
 
   //이미지 Uint8 변환 함수
@@ -59,62 +56,64 @@ class _PostWrite_View extends State<PostWrite_View> {
           iconTheme: IconThemeData(
             color: kTextColor, //change your color here
           ),
-          title: Text("글 작성",style: TextStyle(color: kTextBlackColor,fontWeight: FontWeight.bold),),
-
+          title: Text(
+            "글 작성",
+            style:
+                TextStyle(color: kTextBlackColor, fontWeight: FontWeight.bold),
+          ),
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
-
               image_picked.isNotEmpty
                   ? Container()
                   : InkWell(
-                onTap: () {
-                  Permission_handler().requestCameraPermission(context);
-                  getImages();
-                },
-                child: Center(
-                  child: Container(
-                    margin: EdgeInsets.all(20),
-                    width: size.width * 0.9,
-                    height: size.height * 0.34,
-                    decoration: BoxDecoration(
-
-                        color: kContainerColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Icon(
-                      Icons.add,
-                      color: kTextColor,
-                      size: 35,
+                      onTap: () {
+                        Permission_handler().requestCameraPermission(context);
+                        getImages();
+                      },
+                      child: Center(
+                        child: Container(
+                          margin: EdgeInsets.all(20),
+                          width: size.width * 0.9,
+                          height: size.height * 0.34,
+                          decoration: BoxDecoration(
+                              color: kContainerColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: Icon(
+                            Icons.add,
+                            color: kTextColor,
+                            size: 35,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
               image_picked.isEmpty
                   ? Container()
                   : Center(
-                child: Container(
-                  margin: EdgeInsets.all(10),
-                  width: size.width * 0.9,
-                  height: size.height * 0.34,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: image_picked.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          decoration: BoxDecoration(
-
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          width: size.width * 0.9,
-                          height: size.height * 0.2,
-                          child: Image.file(File(image_picked[index].path),fit: BoxFit.fitWidth,),
-                        );
-                      }),
-                ),
-              ),
-
-
+                      child: Container(
+                        margin: EdgeInsets.all(10),
+                        width: size.width * 0.9,
+                        height: size.height * 0.34,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: image_picked.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
+                                width: size.width * 0.9,
+                                height: size.height * 0.2,
+                                child: Image.file(
+                                  File(image_picked[index].path),
+                                  fit: BoxFit.fitWidth,
+                                ),
+                              );
+                            }),
+                      ),
+                    ),
               Container(
                   height: size.height * 0.08,
                   child: TextField(
@@ -150,21 +149,28 @@ class _PostWrite_View extends State<PostWrite_View> {
               InkWell(
                   onTap: () async {
                     final prefs = await SharedPreferences.getInstance();
-                    var save_post =await PostApi().save_post(_titleController.text,_contentController.text,prefs.getString("gymId").toString(),prefs.getString("token").toString());
-                    var save_postimg = await PostApi().save_postimg(save_post.toString(), image_picked, prefs.getString("token").toString());
+                    var save_post = await PostApi().save_post(
+                        _titleController.text,
+                        _contentController.text,
+                        prefs.getString("gymId").toString(),
+                        prefs.getString("token").toString());
+                    var save_postimg = await PostApi().save_postimg(
+                        save_post.toString(),
+                        image_picked,
+                        prefs.getString("token").toString());
 
-                    if(save_post == null){
+                    if (save_post == null) {
                       return showtoast("서버가 원활하지 않습니다");
-                    }else{
+                    } else {
                       showtoast("글이 등록었습니다!");
                       Navigator.pop(context);
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              FrameView()), (route) => false);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => FrameView()),
+                          (route) => false);
                     }
-
-                    }
-                  ,
+                  },
                   child: Button("게시"))
             ],
           ),

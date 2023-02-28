@@ -92,11 +92,9 @@ class PostApi with ChangeNotifier {
           'Authorization': 'Bearer $token'
         },
 
-        // contentType = 'multipart/form-data' // 'Application/json'
       );
       Dio dio = Dio(baseOptions);
 
-      // if(imgList.isNotEmpty){
       _formData = FormData.fromMap({
         "images": _files,
       });

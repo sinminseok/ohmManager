@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:ohmmanager/Controller/managerApi.dart';
+import 'package:ohmmanager/Controller/adminApi.dart';
 import 'package:ohmmanager/Model/gymDto.dart';
 import 'package:ohmmanager/Model/trainerDto.dart';
 import 'package:ohmmanager/Utils/constants.dart';
@@ -50,7 +50,7 @@ class _MypageViewState extends State<MypageView> {
     var userId = prefs.getString("userId");
 
     var gym =
-    await ManagerApi().gyminfo_byManager(userId, prefs.getString("token"));
+    await AdminApi().gyminfo_byManager(userId, prefs.getString("token"));
 
     if (gym == null) {
       return false;
@@ -72,7 +72,7 @@ class _MypageViewState extends State<MypageView> {
 
   Future<bool> get_userinfo() async {
     final prefs = await SharedPreferences.getInstance();
-    user = await ManagerApi().get_userinfo(prefs.getString("token"));
+    user = await AdminApi().get_userinfo(prefs.getString("token"));
     var gymDto = await get_gyminfo();
     if(user == null){
       return false;

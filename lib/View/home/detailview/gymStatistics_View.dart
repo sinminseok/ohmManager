@@ -32,9 +32,9 @@ class _GymStatistics_View extends State<GymStatistics_View> {
   refresh() async {
     final prefs = await SharedPreferences.getInstance();
     var gymId = prefs.getString("gymId");
-    CountDto? r = await GymApi().current_count(gymId.toString());
+    String? r = await GymApi().current_count(gymId.toString());
     setState(() {
-      widget.current_count = r?.count.toString();
+      widget.current_count = r;
     });
   }
 

@@ -1,26 +1,32 @@
 String endpoint = "http://192.168.0.101:8080/api/";
 
-class ManagerApi_Url {
-  String save_manager = endpoint + "manager";
+class AdminApi_Url {
+  String save_ceo = endpoint+"ceo";
 
-  String check_code = endpoint+"manager/code/";
+  String checkCode_ceo = endpoint+"ceo/code/"; //+{code}
 
-  String save_img = endpoint+"manager/image/";
+  String save_manager = endpoint+"manager/"; //+{gymId}
 
   String save_trainer = endpoint + "trainer/";
 
-  String info_gym_byId = endpoint + "manager/info/";
+  String login = endpoint + "admin/login";
 
-  String getinfo = endpoint + "manager";
+  String register_profile = endpoint + "admin/image/"; //+{managerId}
 
-  String login_manager = endpoint + "manager/login";
+  String getInfo = endpoint + "admin";
 
-  String finall_trainer = endpoint+"manager/findall/";
+  String getInfo_byId = endpoint + "admin/info/"; // +{managerId}
 
-  //GymId로 해당 Gym에 소속된 manager모두조회
-  String findall_byGymId = endpoint + "manager/findall/";
+  String update_profile = endpoint+"admin/image/"; // +{managerId}
 
-  String find_byId = endpoint + "manager/";
+  String update_info = endpoint+"admin"; // +{managerId}
+
+  String delete_account = endpoint+"admin/"; // +{managerId}
+
+  String findall_admin = endpoint + "admin/findall/"; //+{{gymId}}
+
+
+
 }
 
 class GymApi_Url {

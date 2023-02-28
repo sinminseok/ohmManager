@@ -14,7 +14,7 @@ import 'package:ohmmanager/View/home/popup/edit_popup.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Controller/gymApi.dart';
-import '../../Controller/managerApi.dart';
+import '../../Controller/adminApi.dart';
 import '../../Model/gymDto.dart';
 import '../../Utils/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -61,7 +61,7 @@ class _HomeView extends State<HomeView> {
     var userId = prefs.getString("userId");
 
     var gym =
-        await ManagerApi().gyminfo_byManager(userId, prefs.getString("token"));
+        await AdminApi().gyminfo_byManager(userId, prefs.getString("token"));
 
     if (gym == null) {
       gymDto = null;

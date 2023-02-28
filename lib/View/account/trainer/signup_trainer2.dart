@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ohmmanager/Controller/managerApi.dart';
+import 'package:ohmmanager/Controller/adminApi.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/Utils/toast.dart';
 import 'package:ohmmanager/View/account/login_view.dart';
@@ -148,7 +148,7 @@ class _Signup_Trainer2 extends State<Signup_Trainer2>
                       if(_introduceController.text =="" || _onlineController.text == ""){
                         showtoast("내용을 모두 입력해주세요");
                       }else{
-                        int? id = await ManagerApi().register_trainer(widget.name,_onlineController.text,_introduceController.text,widget.password,widget.nickname,widget.gymId);
+                        int? id = await AdminApi().register_trainer(widget.name,_onlineController.text,_introduceController.text,widget.password,widget.nickname,widget.gymId);
 
 
                         if(id == null){
@@ -163,7 +163,7 @@ class _Signup_Trainer2 extends State<Signup_Trainer2>
                                     child: LoginView()));
                           }else{
                             showtoast("회원가입 완료 로그인을 진행해주세요");
-                            ManagerApi().register_profile(_image!,id.toString());
+                            AdminApi().register_profile(_image!,id.toString());
                             Navigator.push(
                                 context,
                                 PageTransition(

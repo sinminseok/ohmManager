@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ohmmanager/Controller/managerApi.dart';
+import 'package:ohmmanager/Controller/adminApi.dart';
 import 'package:ohmmanager/View/account/manager/manager_code.dart';
 import 'package:ohmmanager/View/account/role_view.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
@@ -39,7 +39,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
     if (disk_id == null || disk_pw == null) {
       return;
     } else {
-      var token = await ManagerApi().login_manager(disk_id!, disk_pw!);
+      var token = await AdminApi().login_manager(disk_id!, disk_pw!);
       if (prefs.getString("token") == null) {
         prefs.setString("token", token.toString());
       } else {
@@ -195,7 +195,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                           onTap: () async {
                             final prefs = await SharedPreferences.getInstance();
 
-                            var token = await ManagerApi().login_manager(
+                            var token = await AdminApi().login_manager(
                                 _userIDController.text, _passwordController.text);
                             if (token == null) {
                               return showtoast("아이디 혹은 비밀번호가 틀립니다.");

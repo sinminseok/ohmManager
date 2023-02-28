@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ohmmanager/Controller/managerApi.dart';
+import 'package:ohmmanager/Controller/adminApi.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/View/account/manager/signup_manager.dart';
 import 'package:ohmmanager/View/account/role_view.dart';
@@ -17,6 +17,7 @@ import '../../../../Utils/constants.dart';
 import '../../../../Utils/toast.dart';
 import '../../../../Utils/widget/passwordinput_widget.dart';
 import '../../../../Utils/widget/rouninput_widget.dart';
+import '../../../Controller/gymApi.dart';
 
 class Manager_CodeView extends StatefulWidget {
   const Manager_CodeView({Key? key}) : super(key: key);
@@ -76,11 +77,11 @@ class _Manager_CodeView extends State<Manager_CodeView>
 
             Center(
               child: Container(
-                width:size.width*0.7,
+                width: 330.w,
                 child: PinCodeTextField(
                   cursorColor: kBackgroundColor,
                   backgroundColor: Colors.transparent,
-                  length: 4,
+                  length: 6,
                   obscureText: false,
                   animationType: AnimationType.fade,
                   pinTheme: PinTheme(
@@ -121,17 +122,18 @@ class _Manager_CodeView extends State<Manager_CodeView>
 
             InkWell(
                 onTap: () async {
-                  if(code?.length != 4){
+                  if(code?.length != 6){
                     showtoast("4자리를 모두 입력해주세요");
 
                   }else{
-                    var check_code =await ManagerApi().check_code(code!);
-                    if(check_code == true){
+                    print(code);
+                    var check_code =await GymApi().check_code(code!);
+                    if(check_code != null){
                       Navigator.push(
                           context,
                           PageTransition(
                               type: PageTransitionType.fade,
-                              child: SignupView()));
+                              child: Signup_Manager(gymId: check_code.toString(),)));
 
                     }else{
                       return showtoast("유효하지 않은 코드 입니다.");

@@ -13,20 +13,19 @@ import 'package:page_transition/page_transition.dart';
 import '../../../Utils/constants.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class SignupView2 extends StatefulWidget {
-  SignupView2(
-      {required this.name, required this.nickname, required this.password,required this.gymId});
+class Signup_Ceo2 extends StatefulWidget {
+  Signup_Ceo2(
+      {required this.name, required this.nickname, required this.password});
 
-  String gymId;
   String name;
   String password;
   String nickname;
 
   @override
-  _SignupView2 createState() => _SignupView2();
+  _Signup_Ceo2 createState() => _Signup_Ceo2();
 }
 
-class _SignupView2 extends State<SignupView2>
+class _Signup_Ceo2 extends State<Signup_Ceo2>
     with SingleTickerProviderStateMixin {
   final TextEditingController _onlineController = TextEditingController();
   final TextEditingController _introduceController = TextEditingController();
@@ -41,23 +40,15 @@ class _SignupView2 extends State<SignupView2>
     double defaultLoginSize = size.height - (size.height * 0.2);
 
     Future getImageFromGallery() async {
-      image_picked = null;
       // for gallery
       image_picked =
-          await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+      await ImagePicker.platform.pickImage(source: ImageSource.gallery);
       print(image_picked);
       if (mounted) {
         setState(() {
           _image = image_picked!;
         });
       }
-    }
-
-    @override
-    void dispose() {
-      // TODO: implement dispose
-      image_picked = null;
-      super.dispose();
     }
 
     return Scaffold(
@@ -67,13 +58,13 @@ class _SignupView2 extends State<SignupView2>
         ),
         title: Text(
           "프로필 정보",
-          style: TextStyle(fontFamily: "boldfont",fontWeight: FontWeight.bold,color: kTextBlackColor),
+          style: TextStyle(fontWeight: FontWeight.bold,color: kTextBlackColor),
         ),
-        backgroundColor:  Color(0xff2651f0).withAlpha(20),
+        backgroundColor:   Color(0xff2651f0).withAlpha(20),
         elevation: 0,
       ),
       body: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor:  Colors.transparent,
         body: Container(
           height: size.height*1,
           decoration: BoxDecoration(
@@ -93,7 +84,6 @@ class _SignupView2 extends State<SignupView2>
                     Color(0xff2651f0).withAlpha(200),
 
                   ])),
-
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -101,11 +91,7 @@ class _SignupView2 extends State<SignupView2>
               children: [
                 Center(child: SizedBox(height: size.height * 0.01)),
                 _image != null
-                    ? InkWell(
-                  onTap: (){
-                    getImageFromGallery();
-                  },
-                    child: CircleAvatar(backgroundImage: new FileImage(File(image_picked!.path)), radius: 65.0,))
+                    ? CircleAvatar(backgroundImage: new FileImage(File(image_picked!.path)), radius: 65.0,)
                     : InkWell(
                   onTap: () {
                     getImageFromGallery();
@@ -119,8 +105,8 @@ class _SignupView2 extends State<SignupView2>
                   margin: EdgeInsets.only(top: 50),
                   decoration: BoxDecoration(
 
-                      color: kContainerColor,
-                      borderRadius: BorderRadius.circular(15)),
+                      color: kBoxColor,
+                      borderRadius: BorderRadius.circular(10)),
                   width: 340.w,
                   child: TextFormField(
                     controller: _onlineController,
@@ -129,6 +115,7 @@ class _SignupView2 extends State<SignupView2>
                     decoration: InputDecoration(
                       // contentPadding: EdgeInsets.,
                         hintText: "한줄소개",
+                        labelStyle: TextStyle(fontFamily: "lightfont"),
                         border: InputBorder.none),
                   ),
                 ),
@@ -136,11 +123,11 @@ class _SignupView2 extends State<SignupView2>
                   margin: EdgeInsets.only(top: 20),
                   decoration: BoxDecoration(
 
-                      color: kContainerColor,
-                      borderRadius: BorderRadius.circular(15)),
+                      color: kBoxColor,
+                      borderRadius: BorderRadius.circular(10)),
                   width: 340.w,
                   height: 100.h,
-                  child: TextFormField(
+                  child:  TextFormField(
                     maxLines: null,
                     textInputAction:TextInputAction.done,
                     controller: _introduceController,
@@ -155,27 +142,28 @@ class _SignupView2 extends State<SignupView2>
                 SizedBox(
                   height: size.height * 0.3,
                 ),
+
                 InkWell(
                     onTap: () async {
 
                       if(_introduceController.text =="" || _onlineController.text == ""){
                         showtoast("내용을 모두 입력해주세요");
                       }else{
+                        int? id = await AdminApi().register_ceo(widget.name,widget.password,widget.nickname,_onlineController.text,_introduceController.text);
 
-                        int? id = await AdminApi().register_manager(widget.name, widget.password, widget.nickname, _onlineController.text,_introduceController.text,widget.gymId);
 
                         if(id == null){
                           return showtoast("이미 존재하는 아이디입니다.");
                         }else{
                           if(_image == null){
-                            showtoast("회원가입이 완료되었습니다.");
+                            showtoast("회원가입 완료 로그인을 진행해주세요");
                             Navigator.push(
                                 context,
                                 PageTransition(
                                     type: PageTransitionType.fade,
                                     child: LoginView()));
                           }else{
-                            showtoast("회원가입이 완료되었습니다.");
+                            showtoast("회원가입 완료 로그인을 진행해주세요");
                             AdminApi().register_profile(_image!,id.toString());
                             Navigator.push(
                                 context,
@@ -187,8 +175,6 @@ class _SignupView2 extends State<SignupView2>
 
                         }
                       }
-
-
                     },
                     borderRadius: BorderRadius.circular(10),
                     child: Button("다음")

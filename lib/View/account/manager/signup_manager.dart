@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ohmmanager/Controller/managerApi.dart';
+import 'package:ohmmanager/Controller/adminApi.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/View/account/manager/signup_manager2.dart';
 import 'package:page_transition/page_transition.dart';
@@ -12,14 +12,15 @@ import '../../../Utils/toast.dart';
 import '../../../Utils/widget/passwordinput_widget.dart';
 import '../../../Utils/widget/rouninput_widget.dart';
 
-class SignupView extends StatefulWidget {
-  const SignupView({Key? key}) : super(key: key);
+class Signup_Manager extends StatefulWidget {
+  String gymId;
+  Signup_Manager({required this.gymId});
 
   @override
-  _SignupView createState() => _SignupView();
+  _Signup_Manager createState() => _Signup_Manager();
 }
 
-class _SignupView extends State<SignupView>
+class _Signup_Manager extends State<Signup_Manager>
     with SingleTickerProviderStateMixin {
   final TextEditingController _userIDController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -111,7 +112,7 @@ class _SignupView extends State<SignupView>
                                 context,
                                 PageTransition(
                                     type: PageTransitionType.fade,
-                                    child: SignupView2(name: _userIDController.text, nickname: _nicknameController.text, password: _passwordController.text,)));
+                                    child: SignupView2(name: _userIDController.text, nickname: _nicknameController.text, password: _passwordController.text,gymId: widget.gymId,)));
                           }
 
                         }

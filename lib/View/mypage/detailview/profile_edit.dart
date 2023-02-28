@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ohmmanager/Controller/managerApi.dart';
+import 'package:ohmmanager/Controller/adminApi.dart';
 import 'package:ohmmanager/Model/gymDto.dart';
 import 'package:ohmmanager/Model/trainerDto.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
@@ -68,7 +68,10 @@ class _Profile_EditState extends State<Profile_Edit> {
               margin: EdgeInsets.only(left: 15.w, top: 20.h),
               child: Text(
                 "프로필 정보",
-                style: TextStyle(color: kPrimaryColor, fontSize: 18.sp),
+                style: TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: 18.sp,
+                    fontFamily: "boldfont"),
               ),
             ),
             Center(
@@ -107,9 +110,8 @@ class _Profile_EditState extends State<Profile_Edit> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-
                           width: 200.w,
-                          margin: EdgeInsets.only(left: 20.w,top: 10.h),
+                          margin: EdgeInsets.only(left: 20.w, top: 10.h),
                           child: TextFormField(
                             controller: _nickNameController,
                             textAlign: TextAlign.start,
@@ -138,7 +140,10 @@ class _Profile_EditState extends State<Profile_Edit> {
               margin: EdgeInsets.only(left: 15.w, top: 20.h),
               child: Text(
                 "소개 정보",
-                style: TextStyle(color: kPrimaryColor, fontSize: 18.sp),
+                style: TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: 18.sp,
+                    fontFamily: "boldfont"),
               ),
             ),
             Center(
@@ -151,7 +156,6 @@ class _Profile_EditState extends State<Profile_Edit> {
                 child: TextFormField(
                   controller: _onlineController,
                   textAlign: TextAlign.center,
-
                   cursorColor: kPrimaryColor,
                   decoration: InputDecoration(
                       // contentPadding: EdgeInsets.,
@@ -180,18 +184,27 @@ class _Profile_EditState extends State<Profile_Edit> {
                 ),
               ),
             ),
-            SizedBox(height: 150.h,),
+            SizedBox(
+              height: 150.h,
+            ),
             InkWell(
-                onTap: ()async{
+                onTap: () async {
                   final prefs = await SharedPreferences.getInstance();
-                  await ManagerApi().update_manager(prefs.getString("token").toString(),widget.user!.id,_nickNameController.text,_onlineController.text,_introduceController.text,widget.user.name.toString());
-                  if(_image == null){
+                  await AdminApi().update_admin(
+                      prefs.getString("token").toString(),
+                      widget.user!.id,
+                      _nickNameController.text,
+                      _onlineController.text,
+                      _introduceController.text,
+                      widget.user.name.toString());
+                  if (_image == null) {
                     showtoast("프로필이 수정되었습니다.");
-                    Navigator.pop(context,true);
-                  }else{
+                    Navigator.pop(context, true);
+                  } else {
                     showtoast("프로필이 수정되었습니다.");
-                    await ManagerApi().update_profile(_image!, widget.user.id.toString());
-                    Navigator.pop(context,true);
+                    await AdminApi()
+                        .update_profile(_image!, widget.user.id.toString());
+                    Navigator.pop(context, true);
                   }
                 },
                 child: Center(child: Button("수정")))

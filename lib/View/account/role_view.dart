@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
+import 'package:ohmmanager/View/account/ceo/ceo_code.dart';
 import 'package:ohmmanager/View/account/trainer/trainer_code.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Utils/constants.dart';
@@ -68,7 +69,20 @@ class _Role_View extends State<Role_View> with SingleTickerProviderStateMixin {
                             color: kTextBlackColor),
                       )),
                   SizedBox(
-                    height: size.height * 0.6,
+                    height: size.height * 0.5,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.fade,
+                              child: CEO_CodeView()));
+                    },
+                    child: Center(
+                        child: Container(
+                            margin: EdgeInsets.only(bottom: 15),
+                            child: Button("사장"))),
                   ),
                   InkWell(
                     onTap: () {

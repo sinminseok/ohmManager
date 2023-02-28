@@ -57,7 +57,7 @@ class Introduce_View extends StatelessWidget {
                 ),
                 child: Container(
                     margin: EdgeInsets.all(20.h),
-                    child: Text("오헬몇 서비스 소유권은 Comumu가 가지고 있습니다\n 010-8313-1764로 전화 혹은 문자를 남겨주시면 빠르고 친절하게 입점 안내를 도와드립니다.!",style: TextStyle(fontSize: 21),)),
+                    child: Text("오헬몇 서비스 소유권은 Comumu가 가지고 있습니다\n 010-8313-1764로 전화 혹은 문자를 남겨주시면 빠르고 친절하게 입점 안내를 도와드립니다!",style: TextStyle(fontSize: 21),)),
               ),
             ),
 
@@ -75,7 +75,7 @@ class Introduce_View extends StatelessWidget {
                 ),
                 child: Container(
                     margin: EdgeInsets.all(20.h),
-                    child: Text("오헬몇 서비스는 현재 무료로 사용하실수 있습니다! 추후 사용자가 증가해 서버비,유지보수를 위한 비용이 필요할 경우 최소한의 금액만을 측정해 헬스장측에 청구드릴 예정입니다 ㅜ",style: TextStyle(fontSize: 21),)),
+                    child: Text("오헬몇 서비스는 현재 무료로 사용하실수 있습니다! 추후 사용자가 증가해 서버비,유지보수를 위한 비용이 필요할 경우 최소한의 금액만을 측정해 헬스장측에 청구드릴 예정입니다",style: TextStyle(fontSize: 21),)),
               ),
             ),
           ],

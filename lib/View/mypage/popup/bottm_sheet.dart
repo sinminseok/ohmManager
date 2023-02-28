@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Utils/constants.dart';
 import 'package:ohmmanager/Utils/toast.dart';
 import 'package:ohmmanager/View/account/login_view.dart';
+import 'package:ohmmanager/View/mypage/detailview/delete_view.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile_BottomSheet extends StatelessWidget {
@@ -21,9 +23,6 @@ class Profile_BottomSheet extends StatelessWidget {
 
             InkWell(
               onTap: ()async{
-                print("dasdasd");
-
-
 
               },
               child: Container(
@@ -44,7 +43,6 @@ class Profile_BottomSheet extends StatelessWidget {
                         "numberfont"),
                   ),
                   onTap: () async{
-                    print("d");
                     final prefs = await SharedPreferences.getInstance();
                     prefs.remove("token");
                     prefs.remove("loginId");
@@ -76,7 +74,11 @@ class Profile_BottomSheet extends StatelessWidget {
                       "numberfont"),
                 ),
                 onTap: () {
-
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.fade,
+                          child: Delete_View()));
                 },
               ),
             ),

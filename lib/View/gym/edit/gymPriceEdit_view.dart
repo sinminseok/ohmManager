@@ -361,25 +361,38 @@ class _GymPriceEdit_View extends State<GymPriceEdit_View> {
                         InkWell(
                             onTap: () async{
                               final prefs = await SharedPreferences.getInstance();
+                              bool? check;
 
                               if(add_prices.length == 0){
-                                print("no");
+
                               }else{
-                                await GymApi().register_price(prefs.getString("gymId"), prefs.getString("token"),add_prices);
+                                check = await GymApi().register_price(prefs.getString("gymId"), prefs.getString("token"),add_prices);
                               }
 
 
                              if(delete_priceIds.length == 0){
-                               print("no");
+
                              }else{
-                               GymApi().delete_price(prefs.getString("gymId"), prefs.getString("token"), delete_priceIds);
+                               check = await GymApi().delete_price(prefs.getString("gymId"), prefs.getString("token"), delete_priceIds);
                              }
-                             showtoast("가격 수정이 완료되었습니다");
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.fade,
-                                      child: FrameView()));
+
+                             if(check == false){
+                               Navigator.push(
+                                   context,
+                                   PageTransition(
+                                       type: PageTransitionType.fade,
+                                       child: FrameView()));
+
+                             }else{
+                               showtoast("가격 수정이 완료되었습니다");
+                               Navigator.push(
+                                   context,
+                                   PageTransition(
+                                       type: PageTransitionType.fade,
+                                       child: FrameView()));
+                             }
+
+
 
                             },
                             child: Container(

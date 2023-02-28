@@ -21,6 +21,9 @@ class _QuestionView extends State<QuestionView> {
   List<QuestionDto> ok_answers = [];
   Future? myfuture;
   bool state = false;
+  List<QuestionDto> questions = [];
+  List<String> dropdownList = ['답변전', '답변후'];
+  String selectedDropdown = '답변전';
 
   get_questions() async {
     setState(() {
@@ -32,7 +35,7 @@ class _QuestionView extends State<QuestionView> {
     String gymId = prefs.getString("gymId").toString();
     if (gymId == null) {
     } else {
-      List<QuestionDto> questions = await QuestionApi()
+      questions = await QuestionApi()
           .findall_question(prefs.getString("gymId").toString());
 
       for (int i = 0; i < questions.length; i++) {
@@ -43,7 +46,6 @@ class _QuestionView extends State<QuestionView> {
           not_answers.add(questions[i]);
         }
       }
-
 
       return questions;
     }
@@ -84,16 +86,35 @@ class _QuestionView extends State<QuestionView> {
                     color: kTextColor,
                     fontWeight: FontWeight.bold),
               ),
-              InkWell(
-                  onTap: () {
-                    setState(() {
-                      state = !state;
-                    });
-                  },
-                  child: Icon(
-                    Icons.change_circle,
-                    size: 28,
-                  ))
+              Container(
+                width: 100.w,
+                decoration: BoxDecoration(
+                    color: kBoxColor,
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: Container(
+                  margin: EdgeInsets.only(left: 20),
+                  child: DropdownButton(
+                    alignment: Alignment.center,
+                    value: selectedDropdown,
+                    underline: SizedBox.shrink(),
+                    items: dropdownList.map((String item) {
+                      return DropdownMenuItem<String>(
+                        child: Text(
+                          '$item',
+                          style: TextStyle(
+                              fontSize: 15.sp, fontFamily: "boldfont"),
+                        ),
+                        value: item,
+                      );
+                    }).toList(),
+                    onChanged: (dynamic value) {
+                      setState(() {
+                        selectedDropdown = value;
+                      });
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -111,9 +132,9 @@ class _QuestionView extends State<QuestionView> {
                       margin: EdgeInsets.only(top: 100.h),
                       child: Center(
                           child: Text(
-                            "",
-                            style: TextStyle(fontSize: 17,fontFamily: "lightfont"),
-                          )),
+                        "",
+                        style: TextStyle(fontSize: 17, fontFamily: "lightfont"),
+                      )),
                     );
                   }
 
@@ -130,205 +151,243 @@ class _QuestionView extends State<QuestionView> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        state == false
-                            ? Container(
-                                margin: EdgeInsets.only(
-                                    left: 15.w, bottom: 20.h, top: 10.h),
-                                child: Text(
-                                  "답변전",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 21),
-                                ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        questions.length == 0
+                            ? Center(
+                                child: Container(
+                                    margin: EdgeInsets.only(top: 200.h),
+                                    child: Text(
+                                      "아직 등록된 문의가 없습니다.",
+                                      style: TextStyle(
+                                          fontFamily: "lightfont",
+                                          fontSize: 18.sp),
+                                    )),
                               )
-                            : Container(
-                                margin: EdgeInsets.only(
-                                    left: 15.w, bottom: 20.h, top: 10.h),
-                                child: Text(
-                                  "답변후",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 21),
-                                ),
-                              ),
-                        state == false
-                            ? Container(
-                                margin: EdgeInsets.only(
-                                    left: 15.w,
-                                    bottom: 20.h,
-                                    top: 10.h,
-                                    right: 15.w),
-                                width: 360.w,
-                                height: 600.h,
-                                child: ListView.builder(
-                                    itemCount: not_answers.length,
-                                    itemBuilder: (BuildContext ctx, int idx) {
-                                      return Stack(
-                                        children: [
-                                          Container(
-                                            margin:
-                                                EdgeInsets.only(bottom: 10.h),
-                                            width: 340.w,
-                                            height: 60.h,
-                                            decoration: BoxDecoration(
-                                                color: kBoxColor,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                            child: InkWell(
-                                              onTap: () async{
-                                                //답변전 위젯
-                                                await showModalBottomSheet<void>(
-                                                    context: context,
-                                                    isScrollControlled: true,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return StatefulBuilder(
-                                                          builder: (BuildContext
-                                                                  context,
-                                                              StateSetter
-                                                                  bottomState) {
-                                                        return Answer_BottomSheet(
-                                                          questionDto:
-                                                              not_answers[idx],
-                                                          setter: bottomState,
-                                                        );
-                                                      });
-                                                    });
+                            : selectedDropdown == "답변전"
+                                ? not_answers.length == 0
+                                    ? Center(
+                                        child: Container(
+                                            margin: EdgeInsets.only(top: 200.h),
+                                            child: Text(
+                                              "아직 등록된 문의가 없습니다.",
+                                              style: TextStyle(
+                                                  fontFamily: "lightfont",
+                                                  fontSize: 18.sp),
+                                            )),
+                                      )
+                                    : Container(
+                                        margin: EdgeInsets.only(
+                                            left: 15.w,
+                                            bottom: 20.h,
+                                            top: 10.h,
+                                            right: 15.w),
+                                        width: 360.w,
+                                        height: 600.h,
+                                        child: ListView.builder(
+                                            itemCount: not_answers.length,
+                                            itemBuilder:
+                                                (BuildContext ctx, int idx) {
+                                              return Stack(
+                                                children: [
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        bottom: 10.h),
+                                                    width: 340.w,
+                                                    height: 60.h,
+                                                    decoration: BoxDecoration(
+                                                        color: kBoxColor,
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    10))),
+                                                    child: InkWell(
+                                                      onTap: () async {
+                                                        //답변전 위젯
+                                                        await showModalBottomSheet<
+                                                                void>(
+                                                            context: context,
+                                                            isScrollControlled:
+                                                                true,
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return StatefulBuilder(builder:
+                                                                  (BuildContext
+                                                                          context,
+                                                                      StateSetter
+                                                                          bottomState) {
+                                                                return Answer_BottomSheet(
+                                                                  questionDto:
+                                                                      not_answers[
+                                                                          idx],
+                                                                  setter:
+                                                                      bottomState,
+                                                                );
+                                                              });
+                                                            });
 
-                                                setState(() {
-                                                  myfuture = get_questions();
-                                                  state;
-                                                });
-                                              },
-                                              child: Container(
-                                                  width: 320.w,
-                                                  margin: EdgeInsets.only(
-                                                      left: 10.w, right: 10),
-                                                  child: Center(
-                                                      child: Text(
-                                                    "${not_answers[idx].content}",
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        color: kPrimaryColor,
-                                                        fontSize: 16),
-                                                  ))),
-                                            ),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                                        setState(() {
+                                                          myfuture =
+                                                              get_questions();
+                                                          selectedDropdown;
+                                                        });
+                                                      },
+                                                      child: Container(
+                                                          width: 320.w,
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  left: 10.w,
+                                                                  right: 10),
+                                                          child: Center(
+                                                              child: Text(
+                                                            "${not_answers[idx].content}",
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: TextStyle(
+                                                                color:
+                                                                    kPrimaryColor,
+                                                                fontSize: 16),
+                                                          ))),
+                                                    ),
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Container(),
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            top: 3.h,
+                                                            right: 5.w),
+                                                        child: InkWell(
+                                                            onTap: () async {
+                                                              await DeleteQuestion_Popup()
+                                                                  .showDialog(
+                                                                      context,
+                                                                      not_answers[
+                                                                          idx]);
+
+                                                              setState(() {
+                                                                selectedDropdown;
+                                                                myfuture =
+                                                                    get_questions();
+                                                              });
+                                                            },
+                                                            child: Icon(
+                                                                Icons.cancel)),
+                                                      )
+                                                    ],
+                                                  )
+                                                ],
+                                              );
+                                            }))
+                                :ok_answers.length ==0?Center(child: Container(
+
+                            margin: EdgeInsets.only(top: 200.h),
+                            child: Text("아직 등록된 답변이 없습니다.",style: TextStyle(fontFamily: "lightfont",fontSize: 18.sp),)),): Container(
+                                    margin: EdgeInsets.only(
+                                        left: 15.w,
+                                        bottom: 20.h,
+                                        top: 10.h,
+                                        right: 15.w),
+                                    width: 360.w,
+                                    height: 600.h,
+                                    child: ListView.builder(
+                                        itemCount: ok_answers.length,
+                                        itemBuilder:
+                                            (BuildContext ctx, int idx) {
+                                          return Stack(
                                             children: [
-                                              Container(),
                                               Container(
                                                 margin: EdgeInsets.only(
-                                                    top: 3.h, right: 5.w),
+                                                    bottom: 10.h),
+                                                width: 340.w,
+                                                height: 60.h,
+                                                decoration: BoxDecoration(
+                                                    color: kBoxColor,
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10))),
                                                 child: InkWell(
-                                                    onTap: () async{
-                                                      await DeleteQuestion_Popup()
-                                                          .showDialog(context,
-                                                              not_answers[idx]);
+                                                  onTap: () async {
+                                                    await showModalBottomSheet<
+                                                            void>(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return StatefulBuilder(
+                                                              builder: (BuildContext
+                                                                      context,
+                                                                  StateSetter
+                                                                      bottomState) {
+                                                            return AnswerEdit_BottomSheet(
+                                                              questionDto:
+                                                                  ok_answers[
+                                                                      idx],
+                                                            );
+                                                          });
+                                                        });
 
-                                                      setState(() {
-                                                        state;
-                                                        myfuture = get_questions();
-                                                      });
-
-                                                    },
-                                                    child: Icon(Icons.cancel)),
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      );
-                                    }))
-                            : Container(
-                                margin: EdgeInsets.only(
-                                    left: 15.w,
-                                    bottom: 20.h,
-                                    top: 10.h,
-                                    right: 15.w),
-                                width: 360.w,
-                                height: 600.h,
-                                child: ListView.builder(
-                                    itemCount: ok_answers.length,
-                                    itemBuilder: (BuildContext ctx, int idx) {
-                                      return Stack(
-                                        children: [
-                                          Container(
-                                            margin:
-                                                EdgeInsets.only(bottom: 10.h),
-                                            width: 340.w,
-                                            height: 60.h,
-                                            decoration: BoxDecoration(
-                                                color: kBoxColor,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10))),
-                                            child: InkWell(
-                                              onTap: () async{
-                                                await showModalBottomSheet<void>(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return StatefulBuilder(
-                                                          builder: (BuildContext
-                                                                  context,
-                                                              StateSetter
-                                                                  bottomState) {
-                                                        return AnswerEdit_BottomSheet(
-                                                          questionDto:
-                                                              ok_answers[idx],
-                                                        );
-                                                      });
+                                                    setState(() {
+                                                      selectedDropdown;
+                                                      myfuture =
+                                                          get_questions();
                                                     });
+                                                  },
+                                                  child: Container(
+                                                      width: 320.w,
+                                                      margin: EdgeInsets.only(
+                                                          left: 10.w,
+                                                          right: 10),
+                                                      child: Center(
+                                                          child: Text(
+                                                        "${ok_answers[idx].content}",
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                            color:
+                                                                kPrimaryColor,
+                                                            fontSize: 16),
+                                                      ))),
+                                                ),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Container(),
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: 3.h, right: 5.w),
+                                                    child: InkWell(
+                                                        onTap: () async {
+                                                          var i =
+                                                              await DeleteQuestion_Popup()
+                                                                  .showDialog(
+                                                                      context,
+                                                                      ok_answers[
+                                                                          idx]);
 
-                                                setState(() {
-                                                  print("Dd");
-                                                  state;
-                                                  myfuture = get_questions();
-                                                });
-                                              },
-                                              child: Container(
-                                                  width: 320.w,
-                                                  margin: EdgeInsets.only(
-                                                      left: 10.w, right: 10),
-                                                  child: Center(
-                                                      child: Text(
-                                                    "${ok_answers[idx].content}",
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        color: kPrimaryColor,
-                                                        fontSize: 16),
-                                                  ))),
-                                            ),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(),
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                    top: 3.h, right: 5.w),
-                                                child: InkWell(
-                                                    onTap: () async{
-                                                       var i = await DeleteQuestion_Popup()
-                                                          .showDialog(context,
-                                                              ok_answers[idx]);
-
-                                                       setState(() {
-                                                         state;
-                                                         myfuture = get_questions();
-                                                       });
-                                                    },
-                                                    child: Icon(Icons.cancel)),
+                                                          setState(() {
+                                                            selectedDropdown;
+                                                            myfuture =
+                                                                get_questions();
+                                                          });
+                                                        },
+                                                        child:
+                                                            Icon(Icons.cancel)),
+                                                  )
+                                                ],
                                               )
                                             ],
-                                          )
-                                        ],
-                                      );
-                                    }))
+                                          );
+                                        }))
                       ],
                     );
                   }

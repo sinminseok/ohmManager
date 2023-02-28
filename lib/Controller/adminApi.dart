@@ -21,10 +21,10 @@ import '../Utils/toast.dart';
 import 'gymApi.dart';
 
 
-class ManagerApi with ChangeNotifier {
+class AdminApi with ChangeNotifier {
 
   Future<bool?> check_code(String code)async{
-    var res = await http.post(Uri.parse(ManagerApi_Url().check_code + "${code}"),
+    var res = await http.post(Uri.parse(AdminApi_Url().checkCode_ceo + "${code}"),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
@@ -38,9 +38,9 @@ class ManagerApi with ChangeNotifier {
   }
 
 // Future<List<TrainerDto>>
-  Future<List<TrainerDto>> findall_trainer(String gymId)async{
+  Future<List<TrainerDto>> findall_admin(String gymId)async{
     List<TrainerDto> trainers = [];
-    var res = await http.get(Uri.parse(ManagerApi_Url().finall_trainer + "${gymId}"),
+    var res = await http.get(Uri.parse(AdminApi_Url().findall_admin + "${gymId}"),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -65,11 +65,29 @@ class ManagerApi with ChangeNotifier {
     }
   }
 
-  //managerId로 Gym정보조회
+  Future<bool> delete_account(String managerId,String token)async{
+    var res = await http.delete(Uri.parse(AdminApi_Url().delete_account + "${managerId}"),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+
+      },);
+    print(res.body);
+
+
+    if(res.statusCode == 200){
+
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   Future<GymDto?> gyminfo_byManager(String? id,String? token)async{
 
 
-    var res = await http.get(Uri.parse(ManagerApi_Url().info_gym_byId + "${int.parse(id!)}"),
+    var res = await http.get(Uri.parse(AdminApi_Url().getInfo_byId + "${int.parse(id!)}"),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -99,7 +117,7 @@ class ManagerApi with ChangeNotifier {
 
   Future<TrainerDto?> get_userinfo(String? token)async{
 
-    var res = await http.get(Uri.parse(ManagerApi_Url().getinfo),
+    var res = await http.get(Uri.parse(AdminApi_Url().getInfo),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -138,7 +156,7 @@ class ManagerApi with ChangeNotifier {
       "images": _files,
     });
 
-    var res = await dio.post(ManagerApi_Url().save_img + "${managerId}",
+    var res = await dio.post(AdminApi_Url().update_profile + "${managerId}",
         data: _formData);
 
 
@@ -164,19 +182,19 @@ class ManagerApi with ChangeNotifier {
       "images": _files,
     });
 
-    var res = await dio.patch(ManagerApi_Url().save_img + "${managerId}",
+    var res = await dio.patch(AdminApi_Url().register_profile + "${managerId}",
         data: _formData);
 
 
 
   }
 
+
   //manager 회원가입
-  Future<int?> register_manager(
+  Future<int?> register_ceo(
       String id, String password, String nickname, String oneline_introduce,String introduce) async {
 
-
-    var res = await http.post(Uri.parse(ManagerApi_Url().save_manager),
+    var res = await http.post(Uri.parse(AdminApi_Url().save_ceo),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
@@ -202,12 +220,45 @@ class ManagerApi with ChangeNotifier {
     }
   }
 
+  //manager 회원가입
+  Future<int?> register_manager(
+      String id, String password, String nickname, String oneline_introduce,String introduce,String gymId) async {
+
+    print(gymId);
+
+    var res = await http.post(Uri.parse(AdminApi_Url().save_manager+"$gymId"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: json.encode({
+          'password': password,
+          'nickname': nickname,
+          'oneline_introduce':oneline_introduce,
+          'introduce':introduce,
+          'name': id,
+        }));
+
+
+    print(res.body);
+    if (res.statusCode == 200) {
+      final decodeData = utf8.decode(res.bodyBytes);
+      final data = jsonDecode(decodeData);
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString("userId", data['id'].toString());
+      return data['id'];
+    } else {
+
+      return null;
+    }
+  }
+
   //manager 정보수정
-  Future<bool?> update_manager(
+  Future<bool?> update_admin(
       String token,int? id,String nickname, String oneline_introduce,String introduce,String name) async {
 
 
-    var res = await http.patch(Uri.parse(ManagerApi_Url().save_manager),
+    var res = await http.patch(Uri.parse(AdminApi_Url().save_manager),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -233,7 +284,7 @@ class ManagerApi with ChangeNotifier {
   //trainer 회원가입
   Future<int?> register_trainer(
       String id,String oneline_introduce,String introduce ,String password, String nickname,String gymId) async {
-    var res = await http.post(Uri.parse(ManagerApi_Url().save_trainer+"$gymId"),
+    var res = await http.post(Uri.parse(AdminApi_Url().save_trainer+"$gymId"),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
@@ -257,11 +308,11 @@ class ManagerApi with ChangeNotifier {
     }
   }
 
-  //manager,trainer 로그인
+  //manager,trainer,ceo 로그인
   Future<String?> login_manager(
       String id, String password) async {
 
-    var res = await http.post(Uri.parse(ManagerApi_Url().login_manager),
+    var res = await http.post(Uri.parse(AdminApi_Url().login),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
@@ -271,6 +322,8 @@ class ManagerApi with ChangeNotifier {
           'password': password,
 
         }));
+
+    print(res.body);
 
     if (res.statusCode == 200) {
       final prefs = await SharedPreferences.getInstance();
