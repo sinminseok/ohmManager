@@ -29,21 +29,31 @@ class GymEdit_View extends StatefulWidget {
 
 class _GymEdit_ViewState extends State<GymEdit_View> {
   List<XFile> image_picked = [];
-  var imim;
-  List<File> imageFileList = [];
 
+  //삭제할 사진
+  List<String?> delete_imgs = [];
+
+  //이미지 추가
   Future<void> getImages() async {
     ImagePicker imagePicker = ImagePicker();
 
     List<XFile> images = await imagePicker.pickMultiImage(
         maxWidth: 640, maxHeight: 280, imageQuality: 100);
 
-    setState(() {
-      image_picked = images;
-    });
+    for (int i = 0; i < images.length; i++) {
+      setState(() {
+        image_picked.add(images[i]);
+      });
+    }
   }
 
-  List<String?> delete_imgs = [];
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    image_picked = [];
+    delete_imgs = [];
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,115 +84,140 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-
-             Container(
-              width: 360.w,
-              height: 180.h,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: gymImgs?.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  width: 300.w,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-
-
-                                    delete_imgs
-                                        ?.add(gymImgs![index].id.toString());
-                                    setState((){
-                                      gymImgs?.remove(gymImgs[index]);
-                                    });
-
-
-
-                                  },
-                                  child: Container(
-                                      margin: EdgeInsets.all(0),
-                                      child: Icon(Icons.cancel)),
-                                )
-                              ],
-                            ),
-                            Container(
-                                width: 300.w,
-                                height: 140.h,
-                                margin: EdgeInsets.all(6),
-                                child: Image.asset(
-                                  "assets/images/gym_img.png",
-                                  fit: BoxFit.fitWidth,
-                                )),
-                          ],
+            gymImgs?.length == 0 && image_picked.length == 0
+                ? Container(
+                    width: 330.w,
+                    height: 170.h,
+                    child: InkWell(
+                      onTap: () {
+                        Permission_handler().requestCameraPermission(context);
+                        getImages();
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10.h),
+                        width: 300.w,
+                        height: 140.h,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: kContainerColor),
+                        child: Center(
+                          child: Icon(
+                            Icons.add_circle_outline,
+                            color: Colors.grey.shade500,
+                          ),
                         ),
-                        index + 1 == gymImgs?.length
-                            ? Row(
+                      ),
+                    ),
+                  )
+                : Row(
+                    children: [
+                      Container(
+                        width: 360.w,
+                        height: 180.h,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: gymImgs!.length + image_picked.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  image_picked.length == 0
-                                      ? Container()
-                                      : Container(
-                                          width: 300.w,
-                                          height: 140.h,
-                                          margin: EdgeInsets.only(
-                                              top: 10.h, right: 10.w),
-                                          child: ListView.builder(
-                                              scrollDirection: Axis.horizontal,
-                                              itemCount: image_picked.length,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                return Container(
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  10))),
-                                                  width: 300.w,
-                                                  height: 140.h,
-                                                  child: Image.file(
-                                                    File(
-                                                      image_picked[index].path,
-                                                    ),
-                                                    fit: BoxFit.fitHeight,
-                                                  ),
-                                                );
-                                              }),
-                                        ),
-                                  InkWell(
-                                    onTap: () {
-                                      Permission_handler()
-                                          .requestCameraPermission(context);
-                                      getImages();
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(top: 10.h),
-                                      width: 300.w,
-                                      height: 140.h,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10)),
-                                          color: kContainerColor),
-                                      child: Center(
-                                        child: Icon(
-                                          Icons.add_circle_outline,
-                                          color: Colors.grey.shade500,
-                                        ),
+                                  Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: 300.w,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              // print(gymImgs.length);
+                                              // print(index+1);
+
+                                              if (gymImgs.length >= index + 1) {
+                                                delete_imgs?.add(gymImgs![index]
+                                                    .id
+                                                    .toString());
+                                                setState(() {
+                                                  gymImgs
+                                                      ?.remove(gymImgs[index]);
+                                                });
+                                              } else {
+                                                // print(index+1 - gymImgs.length);
+                                                // print(image_picked[index - gymImgs.length]);
+                                                setState(() {
+                                                  image_picked.remove(
+                                                      image_picked[index -
+                                                          gymImgs.length]);
+                                                });
+                                              }
+                                            },
+                                            child: Container(
+                                                margin: EdgeInsets.all(0),
+                                                child: Icon(Icons.cancel)),
+                                          )
+                                        ],
                                       ),
-                                    ),
-                                  )
+                                      gymImgs.length < index + 1
+                                          ? Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(10))),
+                                              width: 300.w,
+                                              height: 140.h,
+                                              child: Image.file(
+                                                File(
+                                                  image_picked[index -
+                                                          gymImgs.length]
+                                                      .path,
+                                                ),
+                                                fit: BoxFit.fitHeight,
+                                              ),
+                                            )
+                                          : Container(
+                                              width: 300.w,
+                                              height: 140.h,
+                                              margin: EdgeInsets.all(6),
+                                              //추후 gym_img[index] 로변경
+                                              child: Image.asset(
+                                                "assets/images/gym_img.png",
+                                                fit: BoxFit.fitWidth,
+                                              ))
+                                    ],
+                                  ),
+                                  index + 1 !=
+                                          gymImgs!.length + image_picked.length
+                                      ? Container()
+                                      : InkWell(
+                                          onTap: () {
+                                            Permission_handler()
+                                                .requestCameraPermission(
+                                                    context);
+                                            getImages();
+                                          },
+                                          child: Container(
+                                            margin: EdgeInsets.only(top: 10.h),
+                                            width: 300.w,
+                                            height: 140.h,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                                color: kContainerColor),
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.add_circle_outline,
+                                                color: Colors.grey.shade500,
+                                              ),
+                                            ),
+                                          ),
+                                        )
                                 ],
-                              )
-                            : Container()
-                      ],
-                    );
-                  }),
-            ),
+                              );
+                            }),
+                      ),
+                    ],
+                  ),
             GymEdit_Widget(
                 "헬스장 이름", widget.gymDto?.name, _nameController, false),
             GymEdit_Widget(

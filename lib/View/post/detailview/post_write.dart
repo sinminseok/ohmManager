@@ -148,28 +148,34 @@ class _PostWrite_View extends State<PostWrite_View> {
                       ))),
               InkWell(
                   onTap: () async {
-                    final prefs = await SharedPreferences.getInstance();
-                    var save_post = await PostApi().save_post(
-                        _titleController.text,
-                        _contentController.text,
-                        prefs.getString("gymId").toString(),
-                        prefs.getString("token").toString());
-                    var save_postimg = await PostApi().save_postimg(
-                        save_post.toString(),
-                        image_picked,
-                        prefs.getString("token").toString());
+                    if(_titleController.text == "" || _contentController.text ==""){
+                      showtoast("제목,내용은 필수 항목입니다");
 
-                    if (save_post == null) {
-                      return showtoast("서버가 원활하지 않습니다");
-                    } else {
-                      showtoast("글이 등록었습니다!");
-                      Navigator.pop(context);
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => FrameView()),
-                          (route) => false);
+                    }else{
+                      final prefs = await SharedPreferences.getInstance();
+                      var save_post = await PostApi().save_post(
+                          _titleController.text,
+                          _contentController.text,
+                          prefs.getString("gymId").toString(),
+                          prefs.getString("token").toString());
+                      var save_postimg = await PostApi().save_postimg(
+                          save_post.toString(),
+                          image_picked,
+                          prefs.getString("token").toString());
+
+                      if (save_post == null) {
+                        return showtoast("서버가 원활하지 않습니다");
+                      } else {
+                        showtoast("글이 등록었습니다!");
+                        Navigator.pop(context);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) => FrameView()),
+                                (route) => false);
+                      }   
                     }
+                   
                   },
                   child: Button("게시"))
             ],
