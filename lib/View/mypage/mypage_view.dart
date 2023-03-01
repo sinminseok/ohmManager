@@ -100,7 +100,7 @@ class _MypageViewState extends State<MypageView> {
                 Text(
                   "내 정보",
 
-                  style: TextStyle(fontWeight: FontWeight.bold,fontFamily: "boldfont",color: kTextColor, fontSize: 21),
+                  style: TextStyle(fontWeight: FontWeight.bold,fontFamily: "lightfont",color: kTextColor, fontSize: 21),
                 ),
                 InkWell(
                     onTap: () {
@@ -276,12 +276,12 @@ class _MypageViewState extends State<MypageView> {
                         bool? res = await FlutterPhoneDirectCaller.callNumber(number);
                       },
                       child: Container(
-                          margin: EdgeInsets.only(left: 20.w, top: 5.h),
+                          margin: EdgeInsets.only(left: 15.w, top: 5.h),
                           child: Text(
                             "고객센터",
                             style: TextStyle(
-                              fontFamily: "boldfont",
-                                fontSize: 17,
+                                fontFamily: "lightfont",
+                                fontSize: 18.sp,
                                 color: kPrimaryColor,
                                 fontWeight: FontWeight.bold),
                           )),
@@ -306,19 +306,19 @@ class _MypageViewState extends State<MypageView> {
                   child: Row(
                     children: [
                       Container(
-                          margin: EdgeInsets.only(left: 20.w, top: 3.h),
+                          margin: EdgeInsets.only(left: 20.w, top: 2.h),
                           child: Icon(
                             Icons.question_mark,
                             size: 30,
                             color: kPrimaryColor,
                           )),
                       Container(
-                          margin: EdgeInsets.only(left: 20.w, top: 5.h),
+                          margin: EdgeInsets.only(left: 10.w, top: 3.h),
                           child: Text(
                             "자주 묻는 질문",
                             style: TextStyle(
-                                fontFamily: "boldfont",
-                                fontSize: 17,
+                                fontFamily: "lightfont",
+                                fontSize: 18.sp,
                                 color: kPrimaryColor,
                                 fontWeight: FontWeight.bold),
                           )),
@@ -350,12 +350,12 @@ class _MypageViewState extends State<MypageView> {
                             color: kPrimaryColor,
                           )),
                       Container(
-                          margin: EdgeInsets.only(left: 20.w, top: 5.h),
+                          margin: EdgeInsets.only(left: 13.w, top: 3.h),
                           child: Text(
                             "오헬몇 이란?",
                             style: TextStyle(
-                                fontFamily: "boldfont",
-                                fontSize: 17,
+                                fontFamily: "lightfont",
+                                fontSize: 18.sp,
                                 color: kPrimaryColor,
                                 fontWeight: FontWeight.bold),
                           )),

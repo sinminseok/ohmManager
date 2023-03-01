@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/View/account/trainer/signup_trainer2.dart';
 import 'package:page_transition/page_transition.dart';
@@ -19,6 +20,7 @@ class Signup_Trainer extends StatefulWidget {
 
 class _Signup_Trainer extends State<Signup_Trainer>
     with SingleTickerProviderStateMixin {
+  final TextEditingController _positionContrtoller = TextEditingController();
   final TextEditingController _userIDController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _checkpasswordController =
@@ -86,14 +88,85 @@ class _Signup_Trainer extends State<Signup_Trainer>
                     title: "비밀번호 확인",
                   ),
                   Container(
-                    child: RoundedInput(
-                      controller: _nicknameController,
-                      number_mode: false,
-                      title: "이름",
+                    width: 340.w,
+                    height: 40.h,
+                    margin: EdgeInsets.only(top: 20),
+
+
+
+
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: (){
+                            showAlertDialog(context, "알림", "회원들에게 노출될 닉네임입니다.\n실명또는 닉네임을 기재해주세요");
+                          },
+                          child: Row(
+                            children: [
+                              Text("닉네임",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor),),
+                              Container(
+                                  margin: EdgeInsets.only(left: 8,bottom: 3),
+                                  child: Icon(Icons.info,color: kPrimaryColor,))
+                            ],
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: kContainerColor,
+                              borderRadius: BorderRadius.circular(10)
+                          ),
+                          width: 200.w,
+                          child: TextFormField(
+                            controller: _nicknameController,
+                            textAlign: TextAlign.center,
+
+                            cursorColor: kPrimaryColor,
+                            decoration: InputDecoration(
+                              // contentPadding: EdgeInsets.,
+                                hintText: "-",
+                                border: InputBorder.none
+                            ),
+                          ),
+                        )
+
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 340.w,
+                    height: 40.h,
+                    margin: EdgeInsets.only(top: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "직책",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: kTextBlackColor),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: kContainerColor,
+                              borderRadius: BorderRadius.circular(10)),
+                          width: 200.w,
+                          child: TextFormField(
+                            controller: _positionContrtoller,
+                            textAlign: TextAlign.center,
+                            cursorColor: kPrimaryColor,
+                            decoration: InputDecoration(
+                              // contentPadding: EdgeInsets.,
+                                hintText: "ex)트레이너",
+                                border: InputBorder.none),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   SizedBox(
-                    height: size.height * 0.4,
+                    height: size.height * 0.34,
                   ),
                   InkWell(
                       onTap: () async {
@@ -110,7 +183,7 @@ class _Signup_Trainer extends State<Signup_Trainer>
                                     name: _userIDController.text,
                                     nickname: _nicknameController.text,
                                     password: _passwordController.text,
-                                    gymId: widget.gymId,
+                                    gymId: widget.gymId, position: _positionContrtoller.text,
                                   )));
                         }
                       },

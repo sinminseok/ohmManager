@@ -37,9 +37,6 @@ class _Post_Edit extends State<Post_Edit> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    // TextEditingController _titleController = TextEditingController(text: widget.postDto.title);
-    // TextEditingController _contentController = TextEditingController(text: widget.postDto.content);
-
 
     return Scaffold(
       backgroundColor: kBackgroundColor,

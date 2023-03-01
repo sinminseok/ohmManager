@@ -5,6 +5,7 @@ import 'package:ohmmanager/Controller/postApi.dart';
 import 'package:ohmmanager/Utils/toast.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:ohmmanager/View/post/detailview/post_edit.dart';
+import 'package:ohmmanager/View/post/popup/delete_popup.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../Model/postDto.dart';
@@ -40,19 +41,7 @@ class _Post_DetailState extends State<Post_Detail> {
               children: [
                 InkWell(
                     onTap: () async {
-                      var delete_post =
-                          await PostApi().delete_post(widget.postDto.id);
-                      if (delete_post == true) {
-                        Navigator.pop(context);
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                FrameView()), (route) => false);
-
-
-                      showtoast("게시물이 삭제되었습니다.");
-                      } else {
-                        showtoast("삭제중 오류가 발생했습니다");
-                      }
+                      DeletePost_Popup().showDialog(size, context, widget.postDto.id);
                     },
                     child: Container(
                         margin: EdgeInsets.only(right: 10),

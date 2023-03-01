@@ -55,7 +55,7 @@ class _TrainerViewState extends State<TrainerView> {
                   "트레이너",
                   style: TextStyle(fontSize: 21,
                       color: kTextColor,
-                    fontFamily: "boldfont",
+                    fontFamily: "lightfont",
                     fontWeight: FontWeight.bold
                       ),
                 ),
@@ -94,7 +94,16 @@ class _TrainerViewState extends State<TrainerView> {
                       ),
                     );
                   } else {
-                    return Container(
+                    return trainers.length == 0 ?Center(
+                      child: Container(
+                          margin: EdgeInsets.only(top: 220.h),
+                          child: Text(
+                            "헬스장을 먼저 등록해주세요!",
+                            style: TextStyle(
+                                fontFamily: "lightfont",
+                                fontSize: 18.sp),
+                          )),
+                    ):Container(
                       height: size.height * 1,
                       width: MediaQuery.of(context).size.width,
                       child: ListView.builder(

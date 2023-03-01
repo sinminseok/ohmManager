@@ -15,8 +15,9 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 class Signup_Ceo2 extends StatefulWidget {
   Signup_Ceo2(
-      {required this.name, required this.nickname, required this.password});
+      {required this.position,required this.name, required this.nickname, required this.password});
 
+  String position;
   String name;
   String password;
   String nickname;
@@ -149,7 +150,7 @@ class _Signup_Ceo2 extends State<Signup_Ceo2>
                       if(_introduceController.text =="" || _onlineController.text == ""){
                         showtoast("내용을 모두 입력해주세요");
                       }else{
-                        int? id = await AdminApi().register_ceo(widget.name,widget.password,widget.nickname,_onlineController.text,_introduceController.text);
+                        int? id = await AdminApi().register_ceo(widget.position,widget.name,widget.password,widget.nickname,_onlineController.text,_introduceController.text);
 
 
                         if(id == null){

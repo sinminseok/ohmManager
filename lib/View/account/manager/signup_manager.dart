@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Controller/adminApi.dart';
@@ -24,6 +25,7 @@ class _Signup_Manager extends State<Signup_Manager>
     with SingleTickerProviderStateMixin {
   final TextEditingController _userIDController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _positionController = TextEditingController();
   final TextEditingController _checkpasswordController =
       TextEditingController();
   final TextEditingController _nicknameController = TextEditingController();
@@ -83,22 +85,92 @@ class _Signup_Manager extends State<Signup_Manager>
                   controller: _checkpasswordController,
                   hint: 'check pw',title: "비밀번호 확인",),
                 Container(
+                  width: 340.w,
+                  height: 40.h,
+                  margin: EdgeInsets.only(top: 20),
 
-                  child: RoundedInput(
-                    controller: _nicknameController,
-                    number_mode: false,
-                    title: "이름",
+
+
+
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: (){
+                          showAlertDialog(context, "알림", "회원들에게 노출될 닉네임입니다.\n실명또는 닉네임을 기재해주세요");
+                        },
+                        child: Row(
+                          children: [
+                            Text("닉네임",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor),),
+                            Container(
+                                margin: EdgeInsets.only(left: 8,bottom: 3),
+                                child: Icon(Icons.info,color: kPrimaryColor,))
+                          ],
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: kContainerColor,
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        width: 200.w,
+                        child: TextFormField(
+                          controller: _nicknameController,
+                          textAlign: TextAlign.center,
+
+                          cursorColor: kPrimaryColor,
+                          decoration: InputDecoration(
+                            // contentPadding: EdgeInsets.,
+                              hintText: "-",
+                              border: InputBorder.none
+                          ),
+                        ),
+                      )
+
+                    ],
+                  ),
+                ),
+                Container(
+                  width: 340.w,
+                  height: 40.h,
+                  margin: EdgeInsets.only(top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "직책",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                            color: kTextBlackColor),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: kContainerColor,
+                            borderRadius: BorderRadius.circular(10)),
+                        width: 200.w,
+                        child: TextFormField(
+                          controller: _positionController,
+                          textAlign: TextAlign.center,
+                          cursorColor: kPrimaryColor,
+                          decoration: InputDecoration(
+                            // contentPadding: EdgeInsets.,
+                              hintText: "ex)인포 직원",
+                              border: InputBorder.none),
+                        ),
+                      )
+                    ],
                   ),
                 ),
 
 
                 SizedBox(
-                  height: size.height * 0.4,
+                  height: size.height * 0.33,
                 ),
 
                 InkWell(
                     onTap: () async {
-                      if(_userIDController.text == "" || _passwordController.text == "" || _nicknameController.text == ""){
+                      if(_positionController.text == ""||_userIDController.text == "" || _passwordController.text == "" || _nicknameController.text == ""){
                         return showtoast("정보를 모두 입력해주세요");
                       }else{
                         if(_passwordController.text != _checkpasswordController.text){
@@ -112,7 +184,7 @@ class _Signup_Manager extends State<Signup_Manager>
                                 context,
                                 PageTransition(
                                     type: PageTransitionType.fade,
-                                    child: SignupView2(name: _userIDController.text, nickname: _nicknameController.text, password: _passwordController.text,gymId: widget.gymId,)));
+                                    child: SignupView2(name: _userIDController.text, nickname: _nicknameController.text, password: _passwordController.text,gymId: widget.gymId, position: _positionController.text,)));
                           }
 
                         }

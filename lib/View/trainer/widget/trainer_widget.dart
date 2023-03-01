@@ -44,7 +44,7 @@ Widget Trainer_Widget(Size size,context,TrainerDto trainerDto) {
                 Container(
                   margin: EdgeInsets.only(left: 10.w, top: 20.h),
                   child: Text(
-                    "${trainerDto.nickname} 트레이너",
+                    "${trainerDto.nickname} ${trainerDto.position}",
                     style: TextStyle(fontSize: 18, fontFamily: "boldfont"),
                   ),
                 ),

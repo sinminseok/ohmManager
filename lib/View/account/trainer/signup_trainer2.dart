@@ -8,15 +8,14 @@ import 'package:ohmmanager/Controller/adminApi.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/Utils/toast.dart';
 import 'package:ohmmanager/View/account/login_view.dart';
-import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../../Utils/constants.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
 class Signup_Trainer2 extends StatefulWidget {
   Signup_Trainer2(
-      {required this.gymId,required this.name, required this.nickname, required this.password});
+      {required this.position,required this.gymId,required this.name, required this.nickname, required this.password});
 
+  String position;
   String gymId;
   String name;
   String password;
@@ -148,7 +147,7 @@ class _Signup_Trainer2 extends State<Signup_Trainer2>
                       if(_introduceController.text =="" || _onlineController.text == ""){
                         showtoast("내용을 모두 입력해주세요");
                       }else{
-                        int? id = await AdminApi().register_trainer(widget.name,_onlineController.text,_introduceController.text,widget.password,widget.nickname,widget.gymId);
+                        int? id = await AdminApi().register_trainer(widget.position,widget.name,_onlineController.text,_introduceController.text,widget.password,widget.nickname,widget.gymId);
 
 
                         if(id == null){

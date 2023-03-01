@@ -27,14 +27,13 @@ class _PostView extends State<PostView> {
     final prefs = await SharedPreferences.getInstance();
     results =
         await PostApi().findall_posts(prefs.getString("gymId").toString());
-    print(results);
-
     return results;
   }
 
   Future<bool> check_gym() async {
     final prefs = await SharedPreferences.getInstance();
     if (prefs.getString("gymId") == null) {
+
       return false;
     } else {
       return true;
@@ -69,7 +68,7 @@ class _PostView extends State<PostView> {
                 "게시물",
                 style: TextStyle(
                   fontSize: 21,
-                  fontFamily: "boldfont",
+                  fontFamily: "lightfont",
                   fontWeight: FontWeight.bold,
                   color: kTextColor,
                 ),
@@ -108,11 +107,11 @@ class _PostView extends State<PostView> {
                   //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.
                   if (snapshot.hasData == false) {
                     return Container(
-                      margin: EdgeInsets.only(top: 100.h),
+                      margin: EdgeInsets.only(top: 220.h),
                       child: Center(
                           child: Text(
-                        "",
-                        style: TextStyle(fontSize: 17, fontFamily: "lightfont"),
+                        "헬스장을 먼저 등록해주세요!",
+                        style: TextStyle(fontSize: 18.sp, fontFamily: "lightfont"),
                       )),
                     );
                   }
@@ -128,7 +127,14 @@ class _PostView extends State<PostView> {
                   }
                   // 데이터를 정상적으로 받아오게 되면 다음 부분을 실행하게 되는 것이다.
                   else {
-                    return Container(
+                    return results.length==0?Container(
+                      margin: EdgeInsets.only(top: 220.h),
+                      child: Center(
+                          child: Text(
+                            "게시물을 작성해보세요!",
+                            style: TextStyle(fontSize: 18.sp, fontFamily: "lightfont"),
+                          )),
+                    ):Container(
                         width: 360.w,
                         height: 600.h,
                         child: ListView.builder(

@@ -96,6 +96,7 @@ class AdminApi with ChangeNotifier {
 
 
 
+    print(res.body);
     if (res.statusCode == 200) {
 
       final decodeData = utf8.decode(res.bodyBytes);
@@ -192,7 +193,7 @@ class AdminApi with ChangeNotifier {
 
   //manager 회원가입
   Future<int?> register_ceo(
-      String id, String password, String nickname, String oneline_introduce,String introduce) async {
+      String position,String id, String password, String nickname, String oneline_introduce,String introduce) async {
 
     var res = await http.post(Uri.parse(AdminApi_Url().save_ceo),
         headers: {
@@ -200,6 +201,7 @@ class AdminApi with ChangeNotifier {
           'Accept': 'application/json'
         },
         body: json.encode({
+          'position' :position,
           'password': password,
           'nickname': nickname,
           'oneline_introduce':oneline_introduce,
@@ -222,7 +224,7 @@ class AdminApi with ChangeNotifier {
 
   //manager 회원가입
   Future<int?> register_manager(
-      String id, String password, String nickname, String oneline_introduce,String introduce,String gymId) async {
+      String position,String id, String password, String nickname, String oneline_introduce,String introduce,String gymId) async {
 
     print(gymId);
 
@@ -232,6 +234,7 @@ class AdminApi with ChangeNotifier {
           'Accept': 'application/json'
         },
         body: json.encode({
+          'position':position,
           'password': password,
           'nickname': nickname,
           'oneline_introduce':oneline_introduce,
@@ -258,7 +261,7 @@ class AdminApi with ChangeNotifier {
       String token,int? id,String nickname, String oneline_introduce,String introduce,String name) async {
 
 
-    var res = await http.patch(Uri.parse(AdminApi_Url().save_manager),
+    var res = await http.patch(Uri.parse(AdminApi_Url().update_info),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -273,6 +276,9 @@ class AdminApi with ChangeNotifier {
 
         }));
 
+    print(res.body);
+    print("resresresres");
+
     if (res.statusCode == 200) {
       return true;
     } else {
@@ -283,13 +289,14 @@ class AdminApi with ChangeNotifier {
 
   //trainer 회원가입
   Future<int?> register_trainer(
-      String id,String oneline_introduce,String introduce ,String password, String nickname,String gymId) async {
+      String position,String id,String oneline_introduce,String introduce ,String password, String nickname,String gymId) async {
     var res = await http.post(Uri.parse(AdminApi_Url().save_trainer+"$gymId"),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
         body: json.encode({
+          'position':position,
           'name': id,
           'password': password,
           'oneline_introduce':oneline_introduce,

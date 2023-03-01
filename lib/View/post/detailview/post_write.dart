@@ -122,9 +122,9 @@ class _PostWrite_View extends State<PostWrite_View> {
                       controller: _titleController,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(left: 20, top: 20),
-                        hintText: "글 제목",
+                        hintText: "제목",
                         hintStyle:
-                            TextStyle(fontFamily: "gilogfont", fontSize: 21),
+                            TextStyle(fontFamily: "lightfont", fontSize: 21),
                         border: InputBorder.none,
                         suffixIcon: Padding(
                           padding: const EdgeInsets.only(top: 10.0, right: 10),
@@ -138,9 +138,9 @@ class _PostWrite_View extends State<PostWrite_View> {
                       controller: _contentController,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(left: 20, top: 20),
-                        hintText: "내용...",
+                        hintText: "내용",
                         hintStyle:
-                            TextStyle(fontFamily: "gilogfont", fontSize: 21),
+                            TextStyle(fontFamily: "lightfont", fontSize: 21),
                         border: InputBorder.none,
                         suffixIcon: Padding(
                           padding: const EdgeInsets.only(top: 10.0, right: 10),

@@ -44,6 +44,8 @@ class PostApi with ChangeNotifier {
         body: json.encode({'id': postId, 'title': title, 'content': content}));
 
 
+    print(res.body);
+    print("dasdasdasdasd");
 
 
     if (res.statusCode == 200) {

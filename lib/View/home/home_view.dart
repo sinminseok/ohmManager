@@ -11,6 +11,7 @@ import 'package:ohmmanager/View/gym/detailview/gym_register.dart';
 import 'package:ohmmanager/View/gym/edit/gymEdit_view.dart';
 import 'package:ohmmanager/View/home/detailview/gymInfo_view.dart';
 import 'package:ohmmanager/View/home/popup/edit_popup.dart';
+import 'package:ohmmanager/View/home/popup/register_popup.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Controller/gymApi.dart';
@@ -178,11 +179,7 @@ class _HomeView extends State<HomeView> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      PageTransition(
-                                          type: PageTransitionType.fade,
-                                          child: GymRegisterView()));
+                                  Register_Popup().showDialog(context);
                                 },
                                 child: Center(
                                   child: Container(
@@ -226,9 +223,10 @@ class _HomeView extends State<HomeView> {
                               Container(
                                 width: 340.w,
                                 height: 450.h,
-                                decoration: BoxDecoration(color: kBoxColor,
-                                
-                                borderRadius: BorderRadius.all(Radius.circular(10))),
+                                decoration: BoxDecoration(
+                                    color: kBoxColor,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
                                 child: spinkit,
                               )
                             ],

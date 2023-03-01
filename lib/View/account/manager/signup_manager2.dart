@@ -15,8 +15,9 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 class SignupView2 extends StatefulWidget {
   SignupView2(
-      {required this.name, required this.nickname, required this.password,required this.gymId});
+      {required this.position,required this.name, required this.nickname, required this.password,required this.gymId});
 
+  String position;
   String gymId;
   String name;
   String password;
@@ -162,7 +163,7 @@ class _SignupView2 extends State<SignupView2>
                         showtoast("내용을 모두 입력해주세요");
                       }else{
 
-                        int? id = await AdminApi().register_manager(widget.name, widget.password, widget.nickname, _onlineController.text,_introduceController.text,widget.gymId);
+                        int? id = await AdminApi().register_manager(widget.position,widget.name, widget.password, widget.nickname, _onlineController.text,_introduceController.text,widget.gymId);
 
                         if(id == null){
                           return showtoast("이미 존재하는 아이디입니다.");
