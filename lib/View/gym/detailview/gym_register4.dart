@@ -94,7 +94,7 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
                     child: Container(
                       margin: EdgeInsets.only(bottom: 10),
                       width: size.width * 0.9,
-                      height: size.height * 0.15,
+                      height: 130.h,
                       decoration: BoxDecoration(
                           color: kContainerColor,
                           borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -176,14 +176,14 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
                                       textAlign: TextAlign.center,
                                       cursorColor: kContainerColor,
                                       decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.all(10),
+                                          contentPadding: EdgeInsets.only(bottom: 10.h),
                                           hintText: "원",
                                           border: InputBorder.none),
                                     ),
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(right: 10),
-                                    child: Text("원",style: TextStyle(fontSize: 18),),
+                                    child:  Text("원",style: TextStyle(fontSize: 18),),
                                   )
                                 ],
                               ),
@@ -240,16 +240,16 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
                   Container(
                     width: size.width*0.95,
                     margin: EdgeInsets.all(8),
-                    height: size.height*0.12,
+                    height: 80.h,
                     child: ListView.builder(reverse: true,
 
                         scrollDirection: Axis.horizontal,
                         itemCount: prices.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
-                            margin: EdgeInsets.all(8),
+                            margin: EdgeInsets.only(left: 10),
 
-                            height: size.height*0.03,
+
                             decoration: BoxDecoration(
                                 color: kContainerColor,
                                 borderRadius: BorderRadius.all(Radius.circular(10))
@@ -276,10 +276,10 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
                                 Row(
                                   children: [
                                     Container(
-                                        margin: EdgeInsets.only(left: 20.w,top: 10.h),
+                                        margin: EdgeInsets.only(left: 20.w,top: 0.h),
                                         child: Text("${prices[index].during}",style: TextStyle(color: kTextColor,fontSize: 20,fontWeight: FontWeight.bold),)),
                                     Container(
-                                        margin: EdgeInsets.only(left: 20.w,top: 10.h,right: 20.w),
+                                        margin: EdgeInsets.only(left: 20.w,top: 0.h,right: 20.w),
                                         child: Text("${prices[index].price}원",style: TextStyle(fontSize: 20),))
                                   ],
                                 ),
@@ -291,7 +291,7 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
                 ],
               ),
 
-              SizedBox(height: size.height*0.25,),
+              SizedBox(height: 135.h,),
 
               InkWell(
                 onTap: () async {

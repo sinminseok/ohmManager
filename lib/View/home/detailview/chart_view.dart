@@ -125,41 +125,39 @@ class _LineChart extends StatelessWidget {
         text = const Text('', style: style);
         break;
       case 1:
-        text = const Text('', style: style);
-        break;
-      case 2:
         text = const Text('1', style: style);
         break;
-      case 3:
+      case 2:
         text = const Text('2', style: style);
         break;
-      case 4:
+      case 3:
         text = const Text('3', style: style);
         break;
-      case 5:
+      case 4:
         text = const Text('4', style: style);
         break;
-      case 6:
+      case 5:
         text = const Text('5', style: style);
         break;
-      case 7:
+      case 6:
         text = const Text('6', style: style);
         break;
-      case 8:
+      case 7:
         text = const Text('7', style: style);
         break;
-      case 9:
+      case 8:
         text = const Text('8', style: style);
         break;
-      case 10:
+      case 9:
         text = const Text('9', style: style);
         break;
-      case 11:
+      case 10:
         text = const Text('10', style: style);
         break;
-      case 12:
+      case 11:
         text = const Text('11', style: style);
         break;
+
 
         break;
 
@@ -183,8 +181,11 @@ class _LineChart extends StatelessWidget {
     );
     Widget text;
     switch (value.toInt()) {
-      case 1:
+      case 0:
         text = const Text('', style: style);
+        break;
+      case 1:
+        text = const Text('12', style: style);
         break;
       case 2:
         text = const Text('13', style: style);
@@ -216,12 +217,10 @@ class _LineChart extends StatelessWidget {
       case 11:
         text = const Text('22', style: style);
         break;
-      case 12:
-        text = const Text('23', style: style);
-        break;
-      case 13:
-        text = const Text('24', style: style);
-        break;
+
+
+
+
 
       default:
         text = const Text('');
@@ -230,7 +229,7 @@ class _LineChart extends StatelessWidget {
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
-      space: 10,
+      space: 3.w,
       child: text,
     );
   }
@@ -271,17 +270,17 @@ class _LineChart extends StatelessWidget {
     dotData: FlDotData(show: false),
     belowBarData: BarAreaData(show: false),
     spots:  [
-      FlSpot(2, time_data[1]),
-      FlSpot(3, time_data[2]),
-      FlSpot(4, time_data[3]),
-      FlSpot(5, time_data[4]),
-      FlSpot(6, time_data[5]),
-      FlSpot(7, time_data[6]),
-      FlSpot(8, time_data[7]),
-      FlSpot(9, time_data[8]),
-      FlSpot(10, time_data[9]),
-      FlSpot(11, time_data[10]),
-      FlSpot(12, time_data[11]),
+      FlSpot(1, time_data[1]),
+      FlSpot(2, time_data[2]),
+      FlSpot(3, time_data[3]),
+      FlSpot(4, time_data[4]),
+      FlSpot(5, time_data[5]),
+      FlSpot(6, time_data[6]),
+      FlSpot(7, time_data[7]),
+      FlSpot(8, time_data[8]),
+      FlSpot(9 ,time_data[9]),
+      FlSpot(10, time_data[10]),
+      FlSpot(11, time_data[11]),
 
 
 
@@ -292,11 +291,13 @@ class _LineChart extends StatelessWidget {
   LineChartBarData get afternoon_value => LineChartBarData(
     isCurved: true,
     color: kPrimaryColor,
-    barWidth: 6,
+    barWidth: 4,
     isStrokeCapRound: true,
     dotData: FlDotData(show: false),
     belowBarData: BarAreaData(show: false),
     spots:  [
+      // FlSpot(0, time_data[11]),
+      FlSpot(1, time_data[12]),
       FlSpot(2, time_data[13]),
       FlSpot(3, time_data[14]),
       FlSpot(4, time_data[15]),
@@ -308,7 +309,7 @@ class _LineChart extends StatelessWidget {
       FlSpot(10, time_data[21]),
       FlSpot(11, time_data[22]),
       FlSpot(12, time_data[23]),
-      FlSpot(13, time_data[0]),
+
 
 
     ],
@@ -334,7 +335,7 @@ class LineChartSample1State extends State<LineChartSample1> {
 
   @override
   void initState() {
-    print("object");
+
     super.initState();
     isShowingMainData = true;
   }
@@ -345,19 +346,37 @@ class LineChartSample1State extends State<LineChartSample1> {
       children: [
         Row(
           children: [
+            // Container(
+            //   decoration: BoxDecoration(),
+            //   padding:
+            //   const EdgeInsets.only(left: 20.0, bottom: 10,top: 10),
+            //   child: isShowingMainData?
+            //   Text(
+            //     "오전 헬스장 인원수",
+            //     style:
+            //     TextStyle(fontFamily: "boldfont", fontSize: 18,fontWeight: FontWeight.bold),
+            //   ):InkWell(
+            //     onTap: (){
+            //       print(widget.time_data);
+            //     },
+            //     child: Text(
+            //       "오후 헬스장 인원수",
+            //       style:
+            //       TextStyle(fontFamily: "boldfont", fontSize: 18,fontWeight: FontWeight.bold),
+            //     ),
+            //   ),
+            // ),
             Container(
-              decoration: BoxDecoration(),
-              padding:
-              const EdgeInsets.only(left: 20.0, bottom: 10,top: 10),
-              child: isShowingMainData?
-              Text(
-                "오전 헬스장 인원수",
-                style:
-                TextStyle(fontFamily: "boldfont", fontSize: 18,fontWeight: FontWeight.bold),
-              ):Text(
-                "오후 헬스장 인원수",
-                style:
-                TextStyle(fontFamily: "boldfont", fontSize: 18,fontWeight: FontWeight.bold),
+              width: 100.w,
+              height: 40.h,
+              decoration: BoxDecoration(
+                color: kBoxColor,
+                borderRadius: BorderRadius.all(Radius.circular(10))
+              ),
+              child: Row(
+                children: [
+
+                ],
               ),
             ),
             IconButton(

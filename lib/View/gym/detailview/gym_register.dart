@@ -138,6 +138,7 @@ class _GymRegisterViewState extends State<GymRegisterView> {
                       child: TextFormField(
                         controller: _codeController,
                         textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
 
                         cursorColor: kPrimaryColor,
                         decoration: InputDecoration(

@@ -87,44 +87,41 @@ class _HomeView extends State<HomeView> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(38.h),
-          child: AppBar(
-            iconTheme: IconThemeData(
-              color: kIconColor, //change your color here
-            ),
-            automaticallyImplyLeading: false,
-            backgroundColor: kBottomColor,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Switch(
-                  activeColor: Colors.grey,
-                  value: select_mode,
-                  onChanged: (value) {
-                    setState(() {
-                      select_mode = value;
-                    });
-                  },
-                ),
-                InkWell(
-                    onTap: () {
-                      if (gymDto == null) {
-                        showtoast("헬스장을 먼저 등록해주세요");
-                      } else {
-                        Edit_Popup().showDialog(context, gymDto!);
-                      }
-                    },
-                    child: Icon(
-                      Icons.settings,
-                      color: kTextWhiteColor,
-                    )),
-              ],
-            ),
-            elevation: 0,
+        appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: kIconColor, //change your color here
           ),
+          automaticallyImplyLeading: false,
+          backgroundColor: kBottomColor,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Switch(
+                activeColor: Colors.grey,
+                value: select_mode,
+                onChanged: (value) {
+                  setState(() {
+                    select_mode = value;
+                  });
+                },
+              ),
+              InkWell(
+                  onTap: () {
+                    if (gymDto == null) {
+                      showtoast("헬스장을 먼저 등록해주세요");
+                    } else {
+                      Edit_Popup().showDialog(context, gymDto!);
+                    }
+                  },
+                  child: Icon(
+                    Icons.settings,
+                    color: kTextWhiteColor,
+                  )),
+            ],
+          ),
+          elevation: 0,
         ),
-        backgroundColor: Colors.grey.shade200,
+        backgroundColor: select_mode == true?kBottomColor:Colors.white,
         body: SingleChildScrollView(
             child: Column(
           children: [

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Model/countDto.dart';
 import 'package:ohmmanager/View/home/detailview/chart_view.dart';
+import 'package:ohmmanager/View/home/detailview/test_view.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Controller/gymApi.dart';
@@ -47,24 +49,21 @@ class _GymStatistics_View extends State<GymStatistics_View> {
 
   @override
   Widget build(BuildContext context) {
-    double max_value(List<double> data) {
-      var v = [...data];
-      v.sort();
-      double max = v.last;
-      return max;
-    }
+    // double max_value(List<double> data) {
+    //   var v = [...data];
+    //   v.sort();
+    //   double max = v.last;
+    //   return max;
+    // }
 
     return SingleChildScrollView(
       child: Column(
+
         children: [
           Container(
               width: 360.w,
               height: 120.h,
-              decoration: BoxDecoration(
-                  color: kBottomColor,
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(0),
-                      bottomLeft: Radius.circular(0))),
+
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -141,37 +140,10 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                       ),
                     ),
                   ])),
-          Stack(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 10.h),
-                child: Stack(
-                  children: [
-                    Center(
-                      child: Container(
-                        width: 350.w,
-                        height: 300.h,
-                        decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            //kBackgroundColor.withAlpha(50),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                                child: LineChartSample1(
-                              time_data: widget.time_avg,
-                              max_value: max_value(widget.time_avg),
-                            ))
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          Container(
+              width: 360.w,
+              height:350.h,
+              child: Dashboard(time_avg: widget.time_avg,))
         ],
       ),
     );

@@ -21,6 +21,7 @@ class QuestionApi with ChangeNotifier {
 
   //Gym에 종속된 Post 모두 조회
   Future<List<QuestionDto>> findall_question(String gymId) async {
+    print(gymId);
     var res = await http.get(
       Uri.parse(QuestionApi_Url().findall_question + "${gymId}"),
       headers: {
@@ -34,6 +35,8 @@ class QuestionApi with ChangeNotifier {
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
+      print(data);
+      print("datadatadatav");
 
       for (int i = 0; i < data.length; i++) {
 
