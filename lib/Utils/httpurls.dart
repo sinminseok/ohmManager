@@ -44,6 +44,8 @@ class GymApi_Url {
 
   String check_code = endpoint + "gym/code/";
 
+  String reset_count = endpoint +"gym/reset/";
+
   String register_gym = endpoint + "gym";
 
   String registerimg_gym = endpoint + "gym/image/";

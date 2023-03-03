@@ -32,10 +32,10 @@ class ChartDayLabels extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.only(left: 40, right:40),
+        padding: EdgeInsets.only(left: 30.w, right:45.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: ['1', '2', '3', '4', '5', '6', '7','8','9','10','11']
+          children: ['1', '2', '3', '4', '5', '6', '7','8','9','10','11','12']
               .asMap()
               .entries
               .map(

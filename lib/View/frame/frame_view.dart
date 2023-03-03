@@ -39,7 +39,6 @@ class _FrameView extends State<FrameView> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
 
-        // drawer: Drawer(),
 
         bottomNavigationBar: CustomBottomNavigationBar(
 

@@ -34,7 +34,9 @@ class _Profile_EditState extends State<Profile_Edit> {
     final TextEditingController _onlineController =
         TextEditingController(text: widget.user.oneline_introduce);
     final TextEditingController _introduceController =
-        TextEditingController(text: widget.user.introduce);
+    TextEditingController(text: widget.user.introduce);
+    final TextEditingController _positionController =
+    TextEditingController(text: widget.user.position);
 
     Future getImageFromGallery() async {
       // for gallery
@@ -139,6 +141,34 @@ class _Profile_EditState extends State<Profile_Edit> {
             Container(
               margin: EdgeInsets.only(left: 15.w, top: 20.h),
               child: Text(
+                "직책",
+                style: TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: 18.sp,
+                    fontFamily: "boldfont"),
+              ),
+            ),
+            Center(
+              child: Container(
+                margin: EdgeInsets.only(top: 10.h),
+                decoration: BoxDecoration(
+                    color: kContainerColor,
+                    borderRadius: BorderRadius.circular(10)),
+                width: 340.w,
+                child: TextFormField(
+                  controller: _positionController,
+                  textAlign: TextAlign.center,
+                  cursorColor: kPrimaryColor,
+                  decoration: InputDecoration(
+                    // contentPadding: EdgeInsets.,
+                      hintText: "한줄소개",
+                      border: InputBorder.none),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 15.w, top: 20.h),
+              child: Text(
                 "소개 정보",
                 style: TextStyle(
                     color: kPrimaryColor,
@@ -185,12 +215,13 @@ class _Profile_EditState extends State<Profile_Edit> {
               ),
             ),
             SizedBox(
-              height: 150.h,
+              height: 70.h,
             ),
             InkWell(
                 onTap: () async {
                   final prefs = await SharedPreferences.getInstance();
                   await AdminApi().update_admin(
+                      _positionController.text,
                       prefs.getString("token").toString(),
                       widget.user!.id,
                       _nickNameController.text,
@@ -201,9 +232,10 @@ class _Profile_EditState extends State<Profile_Edit> {
                     showtoast("프로필이 수정되었습니다.");
                     Navigator.pop(context, true);
                   } else {
-                    showtoast("프로필이 수정되었습니다.");
+
                     await AdminApi()
-                        .update_profile(_image!, widget.user.id.toString());
+                        .update_profile( prefs.getString("token").toString(),_image!, widget.user.id.toString());
+                    showtoast("프로필이 수정되었습니다.");
                     Navigator.pop(context, true);
                   }
                 },

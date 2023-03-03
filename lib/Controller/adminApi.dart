@@ -149,6 +149,7 @@ class AdminApi with ChangeNotifier {
     final baseOptions = BaseOptions(
       headers: {
         'Content-Type': 'multipart/form-data',
+
       },
     );
     Dio dio = Dio(baseOptions);
@@ -165,7 +166,7 @@ class AdminApi with ChangeNotifier {
   }
 
   //프사변경
-  Future<bool?> update_profile(PickedFile profile,String managerId) async{
+  Future<bool?> update_profile(String token,PickedFile profile,String managerId) async{
     FormData _formData;
 
 
@@ -175,6 +176,7 @@ class AdminApi with ChangeNotifier {
     final baseOptions = BaseOptions(
       headers: {
         'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer $token',
       },
     );
     Dio dio = Dio(baseOptions);
@@ -195,6 +197,8 @@ class AdminApi with ChangeNotifier {
   Future<int?> register_ceo(
       String position,String id, String password, String nickname, String oneline_introduce,String introduce) async {
 
+    print(position);
+    print("position");
     var res = await http.post(Uri.parse(AdminApi_Url().save_ceo),
         headers: {
           'Content-Type': 'application/json',
@@ -213,8 +217,8 @@ class AdminApi with ChangeNotifier {
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString("userId", data['id'].toString());
+      // final prefs = await SharedPreferences.getInstance();
+      // prefs.setString("userId", data['id'].toString());
       return data['id'];
     } else {
 
@@ -247,8 +251,8 @@ class AdminApi with ChangeNotifier {
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString("userId", data['id'].toString());
+      // final prefs = await SharedPreferences.getInstance();
+      // prefs.setString("userId", data['id'].toString());
       return data['id'];
     } else {
 
@@ -258,7 +262,7 @@ class AdminApi with ChangeNotifier {
 
   //manager 정보수정
   Future<bool?> update_admin(
-      String token,int? id,String nickname, String oneline_introduce,String introduce,String name) async {
+      String position,String token,int? id,String nickname, String oneline_introduce,String introduce,String name) async {
 
 
     var res = await http.patch(Uri.parse(AdminApi_Url().update_info),
@@ -269,6 +273,7 @@ class AdminApi with ChangeNotifier {
         },
         body: json.encode({
           'id':id,
+          'position':position,
           'name':name,
           'nickname': nickname,
           'oneline_introduce':oneline_introduce,
@@ -330,17 +335,18 @@ class AdminApi with ChangeNotifier {
 
         }));
 
-    print(res.body);
 
     if (res.statusCode == 200) {
       final prefs = await SharedPreferences.getInstance();
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
+      TrainerDto? trainerDto =await get_userinfo(data['token']);
       var userId = prefs.getString("userId");
 
       //초기 로그인시 userId(PK)저장
-      if(userId == null){
-        TrainerDto? trainerDto =await get_userinfo(data['token']);
+      if(userId != trainerDto!.id.toString() || userId == null){
+        print("set UserId");
+        print(trainerDto!.id.toString());
         prefs.setString("userId", trainerDto!.id.toString());
       }
 

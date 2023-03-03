@@ -1,432 +1,347 @@
-import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ohmmanager/Utils/constants.dart';
+import 'dart:ui' as ui;
+import '../../../Utils/charts/chart_labels.dart';
+import '../../../Utils/charts/laughing_data.dart';
+import '../../../Utils/charts/slide_selector.dart';
 
-import '../../../Utils/constants.dart';
-
-class _LineChart extends StatelessWidget {
-
-  //isShowingMainData true이면 시간 false이면 요일
-  final List<double> time_data;
-
-  final bool isShowingMainData;
-
-  final double max_value;
-
-
-  const _LineChart({required this.isShowingMainData,required this.time_data,required this.max_value});
-
-
+class Dashboard extends StatefulWidget {
+  List<double> time_avg;
+  Dashboard({required this.time_avg});
 
   @override
-  Widget build(BuildContext context) {
-    return LineChart(
-      isShowingMainData ? morning_chart : afternoon_chart,
-      swapAnimationDuration: const Duration(milliseconds: 250),
-    );
-  }
-
-  //오전시간별 데이터
-  LineChartData get morning_chart => LineChartData(
-    //라인터치
-    lineTouchData: lineTouchData1,
-    //실선
-    gridData: gridData,
-
-    titlesData: morning_side,
-
-    borderData: borderData,
-
-    lineBarsData: lineBarsData1,
-
-    minX: 0.0,
-    maxX: 12.h,
-    maxY: max_value+7.h,
-    minY: -4.h,
-  );
-
-  //오후시간별 데이터
-  LineChartData get afternoon_chart => LineChartData(
-    lineTouchData: lineTouchData2,
-    gridData: gridData,
-    titlesData: after_side,
-    borderData: borderData,
-    lineBarsData: lineBarsData2,
-    minX: 0,
-    maxX: 12.h,
-    maxY: max_value+7.h,
-    minY: -4.h,
-  );
-
-
-  LineTouchData get lineTouchData1 => LineTouchData(
-    handleBuiltInTouches: true,
-    touchTooltipData: LineTouchTooltipData(
-      tooltipBgColor: Colors.blueGrey.withOpacity(0.1),
-    ),
-  );
-
-  //x,y데이터
-  FlTitlesData get morning_side => FlTitlesData(
-    bottomTitles: AxisTitles(
-      sideTitles: bottomTitles,
-    ),
-    rightTitles: AxisTitles(
-      sideTitles: SideTitles(showTitles: false),
-    ),
-    topTitles: AxisTitles(
-      sideTitles: SideTitles(showTitles: false),
-    ),
-    leftTitles: AxisTitles(
-      sideTitles: SideTitles(showTitles: false),
-    ),
-  );
-
-  List<LineChartBarData> get lineBarsData1 => [
-    morning_value,
-  ];
-
-  LineTouchData get lineTouchData2 => LineTouchData(
-    handleBuiltInTouches: true,
-    touchTooltipData: LineTouchTooltipData(
-      tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
-    ),
-  );
-
-  FlTitlesData get after_side => FlTitlesData(
-    bottomTitles: AxisTitles(
-      sideTitles: bottomTitles_afternoon,
-    ),
-    rightTitles: AxisTitles(
-      sideTitles: SideTitles(showTitles: false),
-    ),
-    topTitles: AxisTitles(
-      sideTitles: SideTitles(showTitles: false),
-    ),
-    leftTitles: AxisTitles(
-      sideTitles: SideTitles(showTitles: false),
-    ),
-  );
-
-  List<LineChartBarData> get lineBarsData2 => [
-    afternoon_value,
-  ];
-
-
-
-  Widget bottomTitleWidgets_time(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 15,
-    );
-    Widget text;
-    switch (value.toInt()) {
-      case 0:
-        text = const Text('', style: style);
-        break;
-      case 1:
-        text = const Text('1', style: style);
-        break;
-      case 2:
-        text = const Text('2', style: style);
-        break;
-      case 3:
-        text = const Text('3', style: style);
-        break;
-      case 4:
-        text = const Text('4', style: style);
-        break;
-      case 5:
-        text = const Text('5', style: style);
-        break;
-      case 6:
-        text = const Text('6', style: style);
-        break;
-      case 7:
-        text = const Text('7', style: style);
-        break;
-      case 8:
-        text = const Text('8', style: style);
-        break;
-      case 9:
-        text = const Text('9', style: style);
-        break;
-      case 10:
-        text = const Text('10', style: style);
-        break;
-      case 11:
-        text = const Text('11', style: style);
-        break;
-
-
-        break;
-
-
-      default:
-        text = const Text('');
-        break;
-    }
-
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 10,
-      child: text,
-    );
-  }
-
-  Widget bottomTitleWidgets_date(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 15,
-    );
-    Widget text;
-    switch (value.toInt()) {
-      case 0:
-        text = const Text('', style: style);
-        break;
-      case 1:
-        text = const Text('12', style: style);
-        break;
-      case 2:
-        text = const Text('13', style: style);
-        break;
-      case 3:
-        text = const Text('14', style: style);
-        break;
-      case 4:
-        text = const Text('15', style: style);
-        break;
-      case 5:
-        text = const Text('16', style: style);
-        break;
-      case 6:
-        text = const Text('17', style: style);
-        break;
-      case 7:
-        text = const Text('18', style: style);
-        break;
-      case 8:
-        text = const Text('19', style: style);
-        break;
-      case 9:
-        text = const Text('20', style: style);
-        break;
-      case 10:
-        text = const Text('21', style: style);
-        break;
-      case 11:
-        text = const Text('22', style: style);
-        break;
-
-
-
-
-
-      default:
-        text = const Text('');
-        break;
-    }
-
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 3.w,
-      child: text,
-    );
-  }
-
-  SideTitles get bottomTitles => SideTitles(
-    showTitles: true,
-    reservedSize: 30,
-    interval: 1,
-    getTitlesWidget: bottomTitleWidgets_time,
-  );
-
-  SideTitles get bottomTitles_afternoon => SideTitles(
-    showTitles: true,
-    reservedSize: 30,
-    interval: 1,
-    getTitlesWidget: bottomTitleWidgets_date,
-  );
-
-  FlGridData get gridData => FlGridData(show: false);
-
-
-  FlBorderData get borderData => FlBorderData(
-    show: true,
-    border: Border(
-      bottom: BorderSide(color: kPrimaryColor, width: 0),
-      left: const BorderSide(color: Colors.transparent),
-      right: const BorderSide(color: Colors.transparent),
-      top: const BorderSide(color: Colors.transparent),
-    ),
-  );
-
-  //오전 데이터
-  LineChartBarData get morning_value => LineChartBarData(
-    isCurved: true,
-    color: kPrimaryColor,
-    barWidth: 6,
-    isStrokeCapRound: true,
-    dotData: FlDotData(show: false),
-    belowBarData: BarAreaData(show: false),
-    spots:  [
-      FlSpot(1, time_data[1]),
-      FlSpot(2, time_data[2]),
-      FlSpot(3, time_data[3]),
-      FlSpot(4, time_data[4]),
-      FlSpot(5, time_data[5]),
-      FlSpot(6, time_data[6]),
-      FlSpot(7, time_data[7]),
-      FlSpot(8, time_data[8]),
-      FlSpot(9 ,time_data[9]),
-      FlSpot(10, time_data[10]),
-      FlSpot(11, time_data[11]),
-
-
-
-    ],
-  );
-
-  //요일별 데이터
-  LineChartBarData get afternoon_value => LineChartBarData(
-    isCurved: true,
-    color: kPrimaryColor,
-    barWidth: 4,
-    isStrokeCapRound: true,
-    dotData: FlDotData(show: false),
-    belowBarData: BarAreaData(show: false),
-    spots:  [
-      // FlSpot(0, time_data[11]),
-      FlSpot(1, time_data[12]),
-      FlSpot(2, time_data[13]),
-      FlSpot(3, time_data[14]),
-      FlSpot(4, time_data[15]),
-      FlSpot(5, time_data[16]),
-      FlSpot(6, time_data[17]),
-      FlSpot(7, time_data[18]),
-      FlSpot(8, time_data[19]),
-      FlSpot(9, time_data[20]),
-      FlSpot(10, time_data[21]),
-      FlSpot(11, time_data[22]),
-      FlSpot(12, time_data[23]),
-
-
-
-    ],
-  );
+  _DashboardState createState() => _DashboardState();
 }
 
-//UI
-
-class LineChartSample1 extends StatefulWidget {
-  List<double> time_data;
-  double max_value;
-  LineChartSample1({required this.time_data,required this.max_value});
+class _DashboardState extends State<Dashboard>
+    with SingleTickerProviderStateMixin {
+  List<WeekData> hourData = [
 
 
-  @override
-  State<StatefulWidget> createState() => LineChartSample1State();
-}
+  ];
 
-class LineChartSample1State extends State<LineChartSample1> {
-  late bool isShowingMainData;
+  int activeWeek = 2;
+  static const leftPadding = 10.0;
+  static const rightPadding = 60.0;
 
 
+  double chartHeight = 240;
+  late List<ChartDataPoint> chartData;
 
   @override
   void initState() {
+    print(widget.time_avg);
+    hourData = [
+      //오전
+      WeekData(
+        days: [
+          DayData(
+            hour: 0,
+            laughs: 0,
+          ),
+          DayData(
+            hour: 1,
+            laughs: widget.time_avg[1],
+          ),
+          DayData(
+            hour: 2,
+            laughs: widget.time_avg[2],
+          ),
+          DayData(
+            hour: 3,
+            laughs: widget.time_avg[3],
+          ),
+          DayData(
+            hour: 4,
+            laughs: widget.time_avg[4],
+          ),
+          DayData(
+            hour: 5,
+            laughs: widget.time_avg[5],
+          ),
+          DayData(
+            hour: 6,
+            laughs: widget.time_avg[6],
+          ),
+          DayData(
+            hour: 7,
+            laughs: widget.time_avg[7],
+          ),
+          DayData(
+            hour: 8,
+            laughs: widget.time_avg[8],
+          ),
 
+          DayData(
+            hour: 9,
+            laughs: widget.time_avg[9],
+          ),
+          DayData(
+            hour: 10,
+            laughs: widget.time_avg[10],
+          ),
+          DayData(
+            hour: 11,
+            laughs: widget.time_avg[11],
+          ),
+          DayData(
+            hour: 12,
+            laughs: widget.time_avg[12],
+          ),
+          DayData(
+            hour: 13,
+            laughs: 0,
+          ),
+
+
+        ],
+      ),
+
+
+//오후
+      WeekData(
+        days: [
+//12시
+          DayData(
+            hour: 0,
+            laughs: 0,
+          ),
+          DayData(
+            hour: 1,
+            laughs: widget.time_avg[13],
+          ),
+          DayData(
+            hour: 2,
+            laughs: widget.time_avg[14],
+          ),
+          DayData(
+            hour: 3,
+            laughs: widget.time_avg[15],
+          ),
+          DayData(
+            hour: 4,
+            laughs: widget.time_avg[16],
+          ),
+          DayData(
+            hour: 5,
+            laughs: widget.time_avg[17],
+          ),
+          DayData(
+            hour: 6,
+            laughs: widget.time_avg[18],
+          ),
+          DayData(
+            hour: 7,
+            laughs: widget.time_avg[19],
+          ),
+          DayData(
+            hour: 8,
+            laughs: widget.time_avg[20],
+          ),
+          DayData(
+            hour: 9,
+            laughs: widget.time_avg[21],
+          ),
+          DayData(
+            hour: 10,
+            laughs: widget.time_avg[22],
+          ),
+          DayData(
+            hour: 11,
+            laughs: widget.time_avg[23],
+          ),
+          DayData(
+            hour: 12,
+            laughs: widget.time_avg[0],
+          ),
+          DayData(
+            hour: 13,
+            laughs: 0,
+          ),
+
+        ],
+      ),
+
+    ];
     super.initState();
-    isShowingMainData = true;
+    setState(() {
+      chartData = normalizeData(hourData[activeWeek - 2]);
+    });
+  }
+
+  List<ChartDataPoint> normalizeData(WeekData weekData) {
+    final maxDay = weekData.days.reduce((DayData dayA, DayData dayB) {
+      return dayA.laughs > dayB.laughs ? dayA : dayB;
+    });
+    final normalizedList = <ChartDataPoint>[];
+    weekData.days.forEach((element) {
+      normalizedList.add(ChartDataPoint(
+          value: maxDay.laughs == 0 ? 0 : element.laughs / maxDay.laughs));
+    });
+    return normalizedList;
+  }
+
+  void changeWeek(int week) {
+    setState(() {
+      activeWeek = week;
+      chartData = normalizeData(hourData[week - 1]);
+
+    });
+  }
+
+  Path drawPath(bool closePath) {
+    final width = MediaQuery.of(context).size.width;
+    final height = chartHeight;
+    final path = Path();
+    final segmentWidth =
+        (width - leftPadding - rightPadding) / ((chartData.length - 1) * 3);
+
+    path.moveTo(0, height - chartData[0].value * height);
+    path.lineTo(leftPadding, height - chartData[0].value * height);
+// curved line
+    for (var i = 1; i < chartData.length; i++) {
+      path.cubicTo(
+          (3 * (i - 1) + 1) * segmentWidth + leftPadding,
+          height - chartData[i - 1].value * height,
+          (3 * (i - 1) + 2) * segmentWidth + leftPadding,
+          height - chartData[i].value * height,
+          (3 * (i - 1) + 3) * segmentWidth + leftPadding,
+          height - chartData[i].value * height);
+    }
+    path.lineTo(width, height - chartData[chartData.length - 1].value * height);
+// for the gradient fill, we want to close the path
+    if (closePath) {
+      path.lineTo(width, height);
+      path.lineTo(0, height);
+    }
+
+    return path;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
-        Row(
-          children: [
-            // Container(
-            //   decoration: BoxDecoration(),
-            //   padding:
-            //   const EdgeInsets.only(left: 20.0, bottom: 10,top: 10),
-            //   child: isShowingMainData?
-            //   Text(
-            //     "오전 헬스장 인원수",
-            //     style:
-            //     TextStyle(fontFamily: "boldfont", fontSize: 18,fontWeight: FontWeight.bold),
-            //   ):InkWell(
-            //     onTap: (){
-            //       print(widget.time_data);
-            //     },
-            //     child: Text(
-            //       "오후 헬스장 인원수",
-            //       style:
-            //       TextStyle(fontFamily: "boldfont", fontSize: 18,fontWeight: FontWeight.bold),
-            //     ),
-            //   ),
-            // ),
-            Container(
-              width: 100.w,
-              height: 40.h,
-              decoration: BoxDecoration(
-                color: kBoxColor,
-                borderRadius: BorderRadius.all(Radius.circular(10))
-              ),
-              child: Row(
-                children: [
-
-                ],
-              ),
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.refresh,
-                color: kPrimaryColor,
-              ),
-              onPressed: () {
-                setState(() {
-                  isShowingMainData = !isShowingMainData;
-                });
-              },
-            )
-          ],
-        ),
+        const DashboardBackground(),
         Container(
           width: 350.w,
-          height: 180.h,
-          child: Stack(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
+          height: 340.h,
+          child: SingleChildScrollView(
+            child: Column(
 
+              children: [
 
+                Padding(
+                  padding: const EdgeInsets.only(left: 90,right:90,top: 3),
+                  child: SlideSelector(
+                    defaultSelectedIndex: activeWeek - 2,
+                    items: <SlideSelectorItem>[
+                      SlideSelectorItem(
+                        text: '오전',
 
-                  Expanded(
-
-                    child: Container(
-
-                      margin: EdgeInsets.only(left: 10.w,right: 10.w,),
-
-                      decoration: BoxDecoration(
-                          color: kBoxColor,
-                          borderRadius: BorderRadius.all(Radius.circular(10))
+                        onTap: () {
+                          changeWeek(1);
+                        },
+                      ),
+                      SlideSelectorItem(
+                        text: '오후',
+                        onTap: () {
+                          changeWeek(2);
+                        },
                       ),
 
-                      padding: const EdgeInsets.only(right: 16, left: 6,bottom: 10),
-                      child: _LineChart(isShowingMainData: isShowingMainData, time_data: widget.time_data, max_value: widget.max_value,),
-                    ),
+                    ],
                   ),
+                ),
 
-                ],
-              ),
+                Container(
+                  height: chartHeight + 83,
+                  color: kBottomColor,
+                  child: Stack(
+                    children: [
 
-            ],
+                      const Positioned(
+                        bottom:-12,
+                        left: 0,
+                        right: 0,
+                        child: ChartDayLabels(
+                          leftPadding: leftPadding,
+                          rightPadding: rightPadding,
+                        ),
+                      ),
+                      Positioned(
+                        top: 43.h,
+                        child: CustomPaint(
+                            size: Size(
+                                MediaQuery.of(context).size.width, chartHeight),
+                            painter: PathPainter(
+                              path: drawPath(false),
+                              fillPath: drawPath(true),
+                            )),
+                      )
+                    ],
+                  ),
+                ),
+
+              ],
+            ),
           ),
-
         ),
       ],
     );
   }
+}
+
+class DashboardBackground extends StatelessWidget {
+  const DashboardBackground({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          child: Container(
+            color: kBottomColor,
+          ),
+        ),
+
+      ],
+    );
+  }
+}
+
+class PathPainter extends CustomPainter {
+  Path path;
+  Path fillPath;
+  PathPainter({required this.path, required this.fillPath});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // paint the line
+    final paint = Paint()
+      ..color = kBoxColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.4;
+    canvas.drawPath(path, paint);
+    // paint the gradient fill
+    paint.style = PaintingStyle.fill;
+    paint.shader = ui.Gradient.linear(
+      Offset.zero,
+      Offset(0.0, size.height),
+      [
+        kBoxColor.withOpacity(0.2),
+        kBoxColor.withOpacity(0.85),
+      ],
+    );
+    canvas.drawPath(fillPath, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+class ChartDataPoint {
+  double value;
+  ChartDataPoint({required this.value});
 }

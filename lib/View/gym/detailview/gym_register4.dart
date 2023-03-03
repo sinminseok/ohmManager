@@ -276,10 +276,10 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
                                 Row(
                                   children: [
                                     Container(
-                                        margin: EdgeInsets.only(left: 20.w,top: 0.h),
+                                        margin: EdgeInsets.only(left: 20.w,top: 10.h),
                                         child: Text("${prices[index].during}",style: TextStyle(color: kTextColor,fontSize: 20,fontWeight: FontWeight.bold),)),
                                     Container(
-                                        margin: EdgeInsets.only(left: 20.w,top: 0.h,right: 20.w),
+                                        margin: EdgeInsets.only(left: 20.w,top: 10.h,right: 20.w),
                                         child: Text("${prices[index].price}원",style: TextStyle(fontSize: 20),))
                                   ],
                                 ),

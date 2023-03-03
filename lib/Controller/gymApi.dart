@@ -20,7 +20,7 @@ class GymApi with ChangeNotifier {
 
   String? get gym_name => _gym_name;
 
-  Future<String?> current_count(String gymId)async{
+  Future<String?> current_count(String gymId) async {
     var res = await http.get(
       Uri.parse(GymApi_Url().current_count + "${gymId}"),
       headers: {'Content-Type': 'application/json'},
@@ -29,15 +29,11 @@ class GymApi with ChangeNotifier {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
 
-
       return data.toString();
     } else {
-
       return null;
     }
-
   }
-
 
   Future<int?> check_code(String code) async {
     var res = await http.get(
@@ -57,23 +53,41 @@ class GymApi with ChangeNotifier {
   }
 
   Future<bool?> duplication_code(String code) async {
-    print("Dasdasd");
     final prfes = await SharedPreferences.getInstance();
     var res = await http.post(
       Uri.parse(GymApi_Url().check_code + "$code"),
-      headers: {'Content-Type': 'application/json','Authorization': 'Bearer ${prfes.getString("token")}'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prfes.getString("token")}'
+      },
     );
 
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
-      if(decodeData.toString() == "OK"){
+      if (decodeData.toString() == "OK") {
         return true;
-      }else{
+      } else {
         return false;
       }
-
     } else {
       return null;
+    }
+  }
+
+  Future<bool> reset_count() async {
+    final prfes = await SharedPreferences.getInstance();
+    var res = await http.patch(
+      Uri.parse(GymApi_Url().reset_count + "${prfes.getString("gymId")}"),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${prfes.getString("token")}'
+      },
+    );
+
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -131,7 +145,6 @@ class GymApi with ChangeNotifier {
 
       return result;
     } else {
-
       return null;
     }
   }
@@ -154,7 +167,6 @@ class GymApi with ChangeNotifier {
 
       return GymDto.fromJson(data, imgs);
     } else {
-
       return null;
     }
   }
@@ -184,7 +196,6 @@ class GymApi with ChangeNotifier {
       print(result);
       return result;
     } else {
-
       return gymDto;
     }
   }
@@ -208,13 +219,19 @@ class GymApi with ChangeNotifier {
     if (res.statusCode == 200) {
       return true;
     } else {
-
       return false;
     }
   }
 
-  Future<bool> update_time(int? gymTimeId,String? gymId, String? token, String? closeddays,
-      String sunday, String saturday, String weekday, String holiday) async {
+  Future<bool> update_time(
+      int? gymTimeId,
+      String? gymId,
+      String? token,
+      String? closeddays,
+      String sunday,
+      String saturday,
+      String weekday,
+      String holiday) async {
     var res = await http.patch(
         Uri.parse(GymApi_Url().register_time + "${gymId.toString()}"),
         headers: {
@@ -222,7 +239,7 @@ class GymApi with ChangeNotifier {
           'Authorization': 'Bearer $token',
         },
         body: json.encode(({
-          "id":gymTimeId,
+          "id": gymTimeId,
           "closeddays": closeddays,
           "sunday": sunday,
           "saturday": saturday,
@@ -233,57 +250,51 @@ class GymApi with ChangeNotifier {
     if (res.statusCode == 200) {
       return true;
     } else {
-
       return false;
     }
   }
 
-
-  Future<bool> register_price(String? gymId,String? token,List<GymPriceDto> prices) async {
-
+  Future<bool> register_price(
+      String? gymId, String? token, List<GymPriceDto> prices) async {
     var res;
-    for(int i=0;i<prices.length;i++){
+    for (int i = 0; i < prices.length; i++) {
       res = await http.post(
           Uri.parse(GymApi_Url().register_price + "${gymId.toString()}"),
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $token',
           },
-          body: json.encode(({
-            "during": prices[i].during,
-            "price": prices[i].price
-          })));
+          body: json.encode(
+              ({"during": prices[i].during, "price": prices[i].price})));
     }
     print(res.statusCode);
-    if(res.statusCode == 403){
+    if (res.statusCode == 403) {
       showtoast("권한이 없습니다.관리자에게 문의해주세요");
       return false;
     }
 
     return true;
-
   }
 
-  Future<bool> delete_price(String? gymId,String? token,List<int?> pricesIds) async {
-
+  Future<bool> delete_price(
+      String? gymId, String? token, List<int?> pricesIds) async {
     var res;
-    for(int i=0;i<pricesIds.length;i++){
-       res = await http.patch(
-          Uri.parse(GymApi_Url().register_price + "${gymId.toString()}?priceIds=${pricesIds.toString().substring(1,pricesIds.toString().length-1)}"),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer $token',
-          },
-        );
-
+    for (int i = 0; i < pricesIds.length; i++) {
+      res = await http.patch(
+        Uri.parse(GymApi_Url().register_price +
+            "${gymId.toString()}?priceIds=${pricesIds.toString().substring(1, pricesIds.toString().length - 1)}"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
     }
-    if(res.statusCode == 401){
+    if (res.statusCode == 401) {
       showtoast("권한이 없습니다.관리자에게 문의해주세요");
       return false;
     }
 
     return true;
-
   }
 
   Future<String?> register_gym(
@@ -295,7 +306,6 @@ class GymApi with ChangeNotifier {
     String code,
     String introduce,
     String area,
-
   ) async {
     var res = await http.post(Uri.parse(GymApi_Url().register_gym),
         headers: {
@@ -307,7 +317,7 @@ class GymApi with ChangeNotifier {
           "address": address,
           "count": count,
           "oneline_introduce": oneline_introduce,
-          "introduce":introduce,
+          "introduce": introduce,
           "code": code,
           "area": area,
         }));
@@ -321,15 +331,11 @@ class GymApi with ChangeNotifier {
 
       return data.toString();
     } else {
-
       return null;
     }
   }
 
-
-
-  Future<List<double>?> get_timeavg(String gymId)async{
-
+  Future<List<double>?> get_timeavg(String gymId) async {
     List<double> values = [];
     var res = await http.get(
       Uri.parse(GymApi_Url().time_avg + "${gymId}"),
@@ -338,95 +344,92 @@ class GymApi with ChangeNotifier {
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
-      for(int i = 0 ;i<data.length;i++){
+      for (int i = 0; i < data.length; i++) {
         values.add(double.parse(data[i]));
       }
 
       return values;
     } else {
-
       return null;
     }
-
   }
 
-  Future<bool> update_gymInfo(int? id,String? name,String? address,int? count,String? oneline_introduce,String? introduce,int? trainer_count,int? code)async{
+  Future<bool> update_gymInfo(
+      int? id,
+      String? name,
+      String? address,
+      int? count,
+      String? oneline_introduce,
+      String? introduce,
+      int? trainer_count,
+      int? code) async {
     final prfes = await SharedPreferences.getInstance();
     List<double> values = [];
-    var res = await http.patch(
-        Uri.parse(GymApi_Url().udpate_gymInfo),
+    var res = await http.patch(Uri.parse(GymApi_Url().udpate_gymInfo),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ${prfes.getString("token")}',
         },
         body: json.encode({
-          'id':id,
+          'id': id,
           "name": name,
           "address": address,
           "count": count,
           "oneline_introduce": oneline_introduce,
-          "introduce":introduce,
+          "introduce": introduce,
           "code": code,
           "trainer_count": trainer_count,
         }));
 
     if (res.statusCode == 200) {
-
-
-
       return true;
     } else {
-
       return false;
     }
   }
 
-  Future<bool?> update_gymImgs(int? gymId,List<String?> delete_imgs,List<XFile> imageFileList)async{
-
-    print(delete_imgs.toString().substring(1,delete_imgs.toString().length-1));
+  Future<bool?> update_gymImgs(
+      int? gymId, List<String?> delete_imgs, List<XFile> imageFileList) async {
+    print(
+        delete_imgs.toString().substring(1, delete_imgs.toString().length - 1));
     print("delete_imgs");
-    List<MultipartFile> _files=[];
+    List<MultipartFile> _files = [];
     final prfes = await SharedPreferences.getInstance();
     FormData _formData;
 
+    if (imageFileList.isNotEmpty) {
+      _files = imageFileList
+          .map((img) => MultipartFile.fromFileSync(img.path,
+              contentType: MediaType("image", "jpg")))
+          .toList();
+    }
 
-  if(imageFileList.isNotEmpty){
-    _files= imageFileList
-        .map((img) => MultipartFile.fromFileSync(img.path,
-        contentType: MediaType("image", "jpg")))
-        .toList();
+    final baseOptions = BaseOptions(
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer ${prfes.getString("token")}'
+      },
+    );
+    Dio dio = Dio(baseOptions);
+
+    _formData = FormData.fromMap({
+      "images": _files,
+    });
+
+    var res = await dio.post(
+        GymApi_Url().registerimg_gym +
+            "update/${gymId}" +
+            "?imgIds=${delete_imgs.toString().substring(1, delete_imgs.toString().length - 1)}",
+        data: _formData);
+    print(res);
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-
-
-      final baseOptions = BaseOptions(
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': 'Bearer ${prfes.getString("token")}'
-        },
-      );
-      Dio dio = Dio(baseOptions);
-
-      _formData = FormData.fromMap({
-        "images": _files,
-      });
-
-      var res = await dio.post(GymApi_Url().registerimg_gym + "update/${gymId}"+"?imgIds=${delete_imgs.toString().substring(1,delete_imgs.toString().length-1)}",
-          data: _formData);
-      print(res);
-      if (res.statusCode == 200) {
-        return true;
-      } else {
-
-        return false;
-      }
-
-
-  }
-
-
-  Future<List<GymPriceDto>?> getPrices(int? gymId)async{
-
+  Future<List<GymPriceDto>?> getPrices(int? gymId) async {
     List<GymPriceDto> prices = [];
 
     var res = await http.get(
@@ -438,20 +441,17 @@ class GymApi with ChangeNotifier {
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
-      for(int i = 0 ;i<data.length;i++){
+      for (int i = 0; i < data.length; i++) {
         prices.add(GymPriceDto.fromJson(data[i]));
       }
 
       return prices;
     } else {
-
       return null;
     }
   }
 
-
-  Future<GymTimeDto?> getTime(int? gymId)async{
-
+  Future<GymTimeDto?> getTime(int? gymId) async {
     List<GymPriceDto> prices = [];
 
     var res = await http.get(
@@ -463,11 +463,9 @@ class GymApi with ChangeNotifier {
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
-      var gymTimeDto =await GymTimeDto.fromJson(data);
+      var gymTimeDto = await GymTimeDto.fromJson(data);
       return gymTimeDto;
-
     } else {
-
       return null;
     }
   }

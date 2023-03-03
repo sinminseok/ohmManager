@@ -117,7 +117,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                     children: [
                       // Text("오 헬 몇?",style: TextStyle(fontFamily: "boldfont",fontSize: 50,fontWeight: FontWeight.bold),),
 
-                      SizedBox(height: 200.h),
+                      SizedBox(height: 160.h),
 
                       Container(
 
