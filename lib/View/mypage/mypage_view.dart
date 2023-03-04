@@ -134,7 +134,7 @@ class _MypageViewState extends State<MypageView> {
                       margin: EdgeInsets.only(top: 0.h, left: 0),
                       child: Row(
                         children: [
-                          Container(
+                         Container(
                             margin: EdgeInsets.only(top: 5, left: 23),
                             width: size.width * 0.16,
                             height: size.height * 0.08,
@@ -172,7 +172,16 @@ class _MypageViewState extends State<MypageView> {
                         margin: EdgeInsets.only(top: 0.h, left: 0),
                         child: Row(
                           children: [
-                            Container(
+                            user!.profile != null?Container(
+                        margin: EdgeInsets.only(top: 0, left: 23),
+                        width: size.width * 0.16,
+                        height: size.height * 0.08,
+                        child: CircleAvatar(
+                          backgroundColor: kContainerColor,
+                          backgroundImage: NetworkImage(
+                              awsimg_endpoint+user!.profile!),
+                        ),
+                      ): Container(
                               margin: EdgeInsets.only(top: 5, left: 23),
                               width: size.width * 0.16,
                               height: size.height * 0.08,
@@ -218,11 +227,7 @@ class _MypageViewState extends State<MypageView> {
                                     if(gymDto == null){
                                       showAlertDialog(context,"알림","헬스장을 먼저 등록하세요");
                                     }else{
-                                      // Navigator.push(
-                                      //     context,
-                                      //     PageTransition(
-                                      //         type: PageTransitionType.fade,
-                                      //         child: Profile_Edit(user: user!, gymDto: gymDto!,)));
+
                                       bool isBack = await Navigator.push(context,
                                           MaterialPageRoute(builder: (context) => Profile_Edit(user: user!, gymDto: gymDto!,)));
                                       if (isBack) {

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Controller/gymApi.dart';
 import 'package:ohmmanager/Utils/toast.dart';
@@ -64,7 +65,7 @@ class _GymRegisterView3 extends State<GymRegisterView3> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                margin: EdgeInsets.only(left: 20, bottom: 30),
+                margin: EdgeInsets.only(left: 20, bottom: 30,top: 10.h),
                 child: Text(
                   "헬스장 사진",
                   style: TextStyle(fontFamily: "boldfont",color: kTextColor, fontSize: 23,fontWeight: FontWeight.bold),

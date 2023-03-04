@@ -32,13 +32,25 @@ class _Trainer_Detail extends State<Trainer_Detail> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                height: 240.h,
+              widget.trainerDto.profile == null?
+          Container(
+            height: 290.h,
+            width: 360.w,
+            child:ClipRRect(
+                borderRadius: BorderRadius.circular(0.0),
+                child: Image.asset(
+                  "assets/images/user.jpg",
+                  fit: BoxFit.cover,
+                )
+            ),
+          )
+                  :Container(
+                height: 370.h,
                 width: 360.w,
                 child:ClipRRect(
                     borderRadius: BorderRadius.circular(0.0),
-                    child: Image.asset(
-                      "assets/images/teacher.jpeg",
+                    child: Image.network(
+                      awsimg_endpoint+widget.trainerDto.profile!,
                       fit: BoxFit.cover,
                     )
                 ),
@@ -53,12 +65,12 @@ class _Trainer_Detail extends State<Trainer_Detail> {
                     Container(
                         margin: EdgeInsets.only(left: 20,top: 10)
                         ,
-                        child: Text("${widget.trainerDto.nickname} 트레이너",style: TextStyle(fontSize: 27),)),
+                        child: Text("${widget.trainerDto.nickname} ${widget.trainerDto.position}",style: TextStyle(fontSize: 22.sp,fontFamily: "boldfont"),)),
 
                     Container(
-                      margin: EdgeInsets.only(left: 20,top: 20)
+                      margin: EdgeInsets.only(left: 20,top: 20,right: 20)
                       ,
-                      child: Text("${widget.trainerDto.introduce}",style: TextStyle(fontSize: 21),),
+                      child: Text("${widget.trainerDto.introduce}",style: TextStyle(fontSize: 18.sp,fontFamily: "lightfont",fontWeight: FontWeight.bold),),
                     )
                   ],
                 ),

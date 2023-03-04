@@ -57,7 +57,7 @@ class _PostWrite_View extends State<PostWrite_View> {
             color: kTextColor, //change your color here
           ),
           title: Text(
-            "글 작성",
+            "",
             style:
                 TextStyle(color: kTextBlackColor, fontWeight: FontWeight.bold),
           ),
@@ -108,7 +108,7 @@ class _PostWrite_View extends State<PostWrite_View> {
                                 height: size.height * 0.2,
                                 child: Image.file(
                                   File(image_picked[index].path),
-                                  fit: BoxFit.fitWidth,
+                                  fit: BoxFit.fill,
                                 ),
                               );
                             }),

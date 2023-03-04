@@ -390,9 +390,7 @@ class GymApi with ChangeNotifier {
 
   Future<bool?> update_gymImgs(
       int? gymId, List<String?> delete_imgs, List<XFile> imageFileList) async {
-    print(
-        delete_imgs.toString().substring(1, delete_imgs.toString().length - 1));
-    print("delete_imgs");
+
     List<MultipartFile> _files = [];
     final prfes = await SharedPreferences.getInstance();
     FormData _formData;

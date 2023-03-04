@@ -13,8 +13,6 @@ import '../../../Utils/constants.dart';
 
 class Post_Detail extends StatefulWidget {
   PostDto postDto;
-
-
   Post_Detail({required this.postDto});
 
   @override
@@ -41,7 +39,8 @@ class _Post_DetailState extends State<Post_Detail> {
               children: [
                 InkWell(
                     onTap: () async {
-                      DeletePost_Popup().showDialog(size, context, widget.postDto.id);
+                      DeletePost_Popup()
+                          .showDialog(size, context, widget.postDto.id);
                     },
                     child: Container(
                         margin: EdgeInsets.only(right: 10),
@@ -50,13 +49,14 @@ class _Post_DetailState extends State<Post_Detail> {
                           color: kPrimaryColor,
                         ))),
                 InkWell(
-                    onTap: () async{
-                      bool isBack = await Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Post_Edit( postDto: widget.postDto,)));
-                      if (isBack) {
-
-                      }
-
+                    onTap: () async {
+                      bool isBack = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Post_Edit(
+                                    postDto: widget.postDto, orign_imglength: widget.postDto.imgs.length,
+                                  )));
+                      if (isBack) {}
                     },
                     child: Icon(
                       Icons.edit,
@@ -70,16 +70,29 @@ class _Post_DetailState extends State<Post_Detail> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: 240.h,
+            widget.postDto.imgs.length == 0
+                ? Container()
+                : Container(
               width: 360.w,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(0.0),
-                  child: Image.asset(
-                    "assets/images/gym_img.png",
-                    fit: BoxFit.cover,
-                  )),
-            ),
+              height: 340.h,
+
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: widget.postDto.imgs.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      height: 340.h,
+                      width: 360.w,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(0.0),
+                          child: Image.network(
+                            awsimg_endpoint + widget.postDto.imgs[index].filePath,
+                            fit: BoxFit.fill
+                          )),
+                    );
+                  }),),
+
+
             Container(
               width: size.width,
               child: Column(

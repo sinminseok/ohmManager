@@ -160,6 +160,7 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
                                       ),
                                       gymImgs.length < index + 1
                                           ? Container(
+                                        margin: EdgeInsets.all(6),
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.all(
@@ -172,7 +173,7 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
                                                           gymImgs.length]
                                                       .path,
                                                 ),
-                                                fit: BoxFit.fitHeight,
+                                                fit: BoxFit.fitWidth,
                                               ),
                                             )
                                           : Container(
@@ -180,8 +181,8 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
                                               height: 140.h,
                                               margin: EdgeInsets.all(6),
                                               //추후 gym_img[index] 로변경
-                                              child: Image.asset(
-                                                "assets/images/gym_img.png",
+                                              child: Image.network(
+                                                awsimg_endpoint+gymImgs[index].filePath,
                                                 fit: BoxFit.fitWidth,
                                               ))
                                     ],
@@ -197,9 +198,9 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
                                             getImages();
                                           },
                                           child: Container(
-                                            margin: EdgeInsets.only(top: 10.h),
+                                            margin: EdgeInsets.only(left: 6,top: 8.h),
                                             width: 300.w,
-                                            height: 140.h,
+                                            height: 127.h,
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10)),

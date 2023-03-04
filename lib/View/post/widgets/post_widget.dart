@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ohmmanager/Utils/constants.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../Model/postDto.dart';
@@ -11,6 +13,7 @@ Widget Post_Widget(Size size,context,PostDto postDto) {
 
   return InkWell(
     onTap: ()async{
+      // print(postDto.imgs[0].filePath);
 
       Navigator.push(
           context,
@@ -20,39 +23,38 @@ Widget Post_Widget(Size size,context,PostDto postDto) {
 
     },
     child:Padding(
-      padding: const EdgeInsets.only(bottom: 30.0,top: 10),
+      padding: const EdgeInsets.only(bottom: 10.0,top: 10),
       child: Container(
-        height: size.height * 0.55,
         decoration: BoxDecoration(
             boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
-                spreadRadius: 3,
-                blurRadius: 3,
-                offset: Offset(1, 1), // changes position of shadow
-              ),
+
             ],
-            color: Colors.grey.shade200,
+            color: kContainerColor,
             borderRadius: BorderRadius.all(Radius.circular(1))),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             postDto.imgs.length == 0?Container():Container(
-              height: size.height * 0.4,
-              width: size.width * 1,
+              height: 340.h,
+              width: 360.w,
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(1.0),
-                  child: Image.asset(
-                    "assets/images/gym_img.png",
-                    fit: BoxFit.cover,
+                  child: Image.network(
+
+                    awsimg_endpoint+postDto.imgs[0].filePath,
+                    fit: BoxFit.fill,
                   )),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            Container(
+              width: 350.w,
+              margin: EdgeInsets.only(left: 20.w,top: 20.h,right: 20.w),
               child: Text("${postDto.title}",style: TextStyle(fontFamily: "boldfont",fontSize: 21),),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("..더보기",style: TextStyle(fontFamily: "lightfont",fontSize: 21),),
+            Container(
+              width: 350.w,
+              height: 20.h,
+              margin: EdgeInsets.only(left: 20.w,top: 10.h,right: 20.w,bottom: 30.h),
+              child: Text("더보기", overflow: TextOverflow.clip,style: TextStyle(fontFamily: "lightfont",fontSize: 21),),
             ),
           ],
         ),

@@ -34,9 +34,9 @@ class _Profile_EditState extends State<Profile_Edit> {
     final TextEditingController _onlineController =
         TextEditingController(text: widget.user.oneline_introduce);
     final TextEditingController _introduceController =
-    TextEditingController(text: widget.user.introduce);
+        TextEditingController(text: widget.user.introduce);
     final TextEditingController _positionController =
-    TextEditingController(text: widget.user.position);
+        TextEditingController(text: widget.user.position);
 
     Future getImageFromGallery() async {
       // for gallery
@@ -95,19 +95,33 @@ class _Profile_EditState extends State<Profile_Edit> {
                               radius: 43.0,
                             ),
                           )
-                        : Container(
-                            margin: EdgeInsets.only(left: 20.w),
-                            child: InkWell(
-                              onTap: () {
-                                getImageFromGallery();
-                              },
-                              child: CircleAvatar(
-                                radius: 43,
-                                backgroundImage:
-                                    AssetImage("assets/images/user.jpg"),
+                        : widget.user.profile != null
+                            ? Container(
+                                margin: EdgeInsets.only(left: 20.w),
+                                child: InkWell(
+                                  onTap: () {
+                                    getImageFromGallery();
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 43,
+                                    backgroundImage: NetworkImage(
+                                        awsimg_endpoint + widget.user.profile!),
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                margin: EdgeInsets.only(left: 20.w),
+                                child: InkWell(
+                                  onTap: () {
+                                    getImageFromGallery();
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 43,
+                                    backgroundImage:
+                                        AssetImage("assets/images/user.jpg"),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -160,7 +174,7 @@ class _Profile_EditState extends State<Profile_Edit> {
                   textAlign: TextAlign.center,
                   cursorColor: kPrimaryColor,
                   decoration: InputDecoration(
-                    // contentPadding: EdgeInsets.,
+                      // contentPadding: EdgeInsets.,
                       hintText: "한줄소개",
                       border: InputBorder.none),
                 ),
@@ -232,9 +246,10 @@ class _Profile_EditState extends State<Profile_Edit> {
                     showtoast("프로필이 수정되었습니다.");
                     Navigator.pop(context, true);
                   } else {
-
-                    await AdminApi()
-                        .update_profile( prefs.getString("token").toString(),_image!, widget.user.id.toString());
+                    await AdminApi().update_profile(
+                        prefs.getString("token").toString(),
+                        _image!,
+                        widget.user.id.toString());
                     showtoast("프로필이 수정되었습니다.");
                     Navigator.pop(context, true);
                   }

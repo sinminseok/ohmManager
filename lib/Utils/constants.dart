@@ -30,24 +30,8 @@ const kBoxColor = Color(0XFFd5d9f7);
 
 //버튼색
 const kButtonColor = Color(0XFF111112);
-//const kButtonColor = Color(0XFF2651f0);
 
 
 
-// const kPrimaryColor = Color(0xff5858e0);
-// const kTextColor = Color(0xff3131d6);
-// const kContainerColor = Color(0XFFbbbbfc);
-// const kBorderColor = Color(0xfff5e800);
-// const kBackgroundColor = Color(0XFFd5dae0);
-// const double kDefaultPadding = 20.0;
 
-
-
-// boxShadow: [
-// BoxShadow(
-// color: Colors.grey.withOpacity(0.2),
-// spreadRadius: 3,
-// blurRadius: 10,
-// offset: Offset(0, 5), // changes position of shadow
-// ),
-// ],
+const awsimg_endpoint = "https://d3mb3hod79zif1.cloudfront.net/";

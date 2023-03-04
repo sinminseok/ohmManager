@@ -12,6 +12,7 @@ Widget Trainer_Widget(Size size,context,TrainerDto trainerDto) {
   return InkWell(
 
     onTap: (){
+      // print(trainerDto.profile);
       Navigator.push(
           context,
           PageTransition(
@@ -29,13 +30,26 @@ Widget Trainer_Widget(Size size,context,TrainerDto trainerDto) {
           children: [
             //  assets/images/img1.jpeg
 
-            Container(
+            trainerDto.profile == null?
+        Container(
+          width: 120.w,
+          height: 120.h,
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(3.0),
+              child: Image.asset(
+                "assets/images/user.jpg",
+                fit: BoxFit.fitHeight,
+              )),
+        )
+                :Container(
+
               width: 120.w,
+              height: 120.h,
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(3.0),
-                  child: Image.asset(
-                    "assets/images/teacher.jpeg",
-                    fit: BoxFit.cover,
+                  child:  Image.network(
+                    awsimg_endpoint+trainerDto.profile!,
+                    fit: BoxFit.fitHeight,
                   )),
             ),
             Column(

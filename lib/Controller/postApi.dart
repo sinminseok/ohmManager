@@ -57,6 +57,45 @@ class PostApi with ChangeNotifier {
     }
   }
 
+  Future<bool?> update_postImgs(
+      int? postId, List<String?> delete_imgs, List<XFile> imageFileList) async {
+
+    List<MultipartFile> _files = [];
+    final prfes = await SharedPreferences.getInstance();
+    FormData _formData;
+
+    if (imageFileList.isNotEmpty) {
+      _files = imageFileList
+          .map((img) => MultipartFile.fromFileSync(img.path,
+          contentType: MediaType("image", "jpg")))
+          .toList();
+    }
+
+    final baseOptions = BaseOptions(
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer ${prfes.getString("token")}'
+      },
+    );
+    Dio dio = Dio(baseOptions);
+
+    _formData = FormData.fromMap({
+      "images": _files,
+    });
+
+    var res = await dio.post(
+        PostApi_Url().save_postimgs +
+            "update/${postId}" +
+            "?imgIds=${delete_imgs.toString().substring(1, delete_imgs.toString().length - 1)}",
+        data: _formData);
+
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<String?> save_post(
       String title, String content, String gymId, String token) async {
     var res = await http.post(
