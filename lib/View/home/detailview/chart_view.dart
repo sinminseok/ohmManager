@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ohmmanager/Model/statisticsDto.dart';
 import 'package:ohmmanager/Utils/constants.dart';
 import 'dart:ui' as ui;
 import '../../../Utils/charts/chart_labels.dart';
@@ -8,7 +9,7 @@ import '../../../Utils/charts/laughing_data.dart';
 import '../../../Utils/charts/slide_selector.dart';
 
 class Dashboard extends StatefulWidget {
-  List<double> time_avg;
+  StatisticsDto time_avg;
   Dashboard({required this.time_avg});
 
   @override
@@ -24,7 +25,7 @@ class _DashboardState extends State<Dashboard>
 
   int activeWeek = 2;
   static const leftPadding = 10.0;
-  static const rightPadding = 60.0;
+  static const rightPadding = 9.0;
 
 
   double chartHeight = 240;
@@ -32,67 +33,64 @@ class _DashboardState extends State<Dashboard>
 
   @override
   void initState() {
-    print(widget.time_avg);
+
     hourData = [
       //오전
       WeekData(
         days: [
-          DayData(
-            hour: 0,
-            laughs: 0,
-          ),
+
           DayData(
             hour: 1,
-            laughs: widget.time_avg[1],
+            laughs: widget.time_avg.one.toInt(),
           ),
           DayData(
             hour: 2,
-            laughs: widget.time_avg[2],
+            laughs: widget.time_avg.two.toInt()
           ),
           DayData(
             hour: 3,
-            laughs: widget.time_avg[3],
+            laughs: widget.time_avg.three.toInt(),
           ),
           DayData(
             hour: 4,
-            laughs: widget.time_avg[4],
+            laughs: widget.time_avg.four.toInt(),
           ),
           DayData(
             hour: 5,
-            laughs: widget.time_avg[5],
+            laughs: widget.time_avg.five.toInt(),
           ),
           DayData(
             hour: 6,
-            laughs: widget.time_avg[6],
+            laughs: widget.time_avg.six.toInt(),
           ),
           DayData(
             hour: 7,
-            laughs: widget.time_avg[7],
+            laughs: widget.time_avg.seven.toInt(),
           ),
           DayData(
             hour: 8,
-            laughs: widget.time_avg[8],
+            laughs: widget.time_avg.eight.toInt(),
           ),
 
           DayData(
             hour: 9,
-            laughs: widget.time_avg[9],
+            laughs: widget.time_avg.nine.toInt(),
           ),
           DayData(
             hour: 10,
-            laughs: widget.time_avg[10],
+            laughs: widget.time_avg.ten.toInt(),
           ),
           DayData(
             hour: 11,
-            laughs: widget.time_avg[11],
+            laughs: widget.time_avg.eleven.toInt(),
           ),
           DayData(
             hour: 12,
-            laughs: widget.time_avg[12],
+            laughs: widget.time_avg.twelve.toInt(),
           ),
           DayData(
             hour: 13,
-            laughs: 0,
+            laughs: widget.time_avg.twelve.toInt(),
           ),
 
 
@@ -106,59 +104,59 @@ class _DashboardState extends State<Dashboard>
 //12시
           DayData(
             hour: 0,
-            laughs: 0,
+            laughs: widget.time_avg.thirteen.floor(),
           ),
           DayData(
             hour: 1,
-            laughs: widget.time_avg[13],
+            laughs: widget.time_avg.thirteen.floor(),
           ),
           DayData(
             hour: 2,
-            laughs: widget.time_avg[14],
+            laughs: widget.time_avg.fourteen.floor(),
           ),
           DayData(
             hour: 3,
-            laughs: widget.time_avg[15],
+            laughs: widget.time_avg.fifteen.floor(),
           ),
           DayData(
             hour: 4,
-            laughs: widget.time_avg[16],
+            laughs: widget.time_avg.sixteen.floor(),
           ),
           DayData(
             hour: 5,
-            laughs: widget.time_avg[17],
+            laughs: widget.time_avg.seventeen.floor(),
           ),
           DayData(
             hour: 6,
-            laughs: widget.time_avg[18],
+            laughs: widget.time_avg.eighteen.floor(),
           ),
           DayData(
             hour: 7,
-            laughs: widget.time_avg[19],
+            laughs: widget.time_avg.nineteen.floor(),
           ),
           DayData(
             hour: 8,
-            laughs: widget.time_avg[20],
+            laughs: widget.time_avg.twenty.floor(),
           ),
           DayData(
             hour: 9,
-            laughs: widget.time_avg[21],
+            laughs: widget.time_avg.twenty_one.floor(),
           ),
           DayData(
             hour: 10,
-            laughs: widget.time_avg[22],
+            laughs: widget.time_avg.twenty_two.floor(),
           ),
           DayData(
             hour: 11,
-            laughs: widget.time_avg[23],
+            laughs: widget.time_avg.twenty_three.floor(),
           ),
           DayData(
             hour: 12,
-            laughs: widget.time_avg[0],
+            laughs: widget.time_avg.twenty_four.floor(),
           ),
           DayData(
             hour: 13,
-            laughs: 0,
+            laughs: widget.time_avg.twenty_four.floor(),
           ),
 
         ],
@@ -192,7 +190,7 @@ class _DashboardState extends State<Dashboard>
   }
 
   Path drawPath(bool closePath) {
-    final width = MediaQuery.of(context).size.width;
+    final width = 280.w;
     final height = chartHeight;
     final path = Path();
     final segmentWidth =
@@ -226,15 +224,16 @@ class _DashboardState extends State<Dashboard>
       children: [
         const DashboardBackground(),
         Container(
-          width: 350.w,
+          width: 360.w,
           height: 340.h,
           child: SingleChildScrollView(
             child: Column(
 
               children: [
 
+
                 Padding(
-                  padding: const EdgeInsets.only(left: 90,right:90,top: 3),
+                  padding: const EdgeInsets.only(left: 90,right:90,top: 15),
                   child: SlideSelector(
                     defaultSelectedIndex: activeWeek - 2,
                     items: <SlideSelectorItem>[
@@ -258,9 +257,16 @@ class _DashboardState extends State<Dashboard>
 
                 Container(
                   height: chartHeight + 83,
-                  color: kBottomColor,
+                  color: kBoxColor,
                   child: Stack(
                     children: [
+                      ChartLaughLabels(
+                        chartHeight: chartHeight,
+                        topPadding: 30.h,
+                        leftPadding: leftPadding,
+                        rightPadding: rightPadding,
+                        weekData: hourData[activeWeek -1],
+                      ),
 
                       const Positioned(
                         bottom:-12,
@@ -272,7 +278,9 @@ class _DashboardState extends State<Dashboard>
                         ),
                       ),
                       Positioned(
-                        top: 43.h,
+                        top: 33.h,
+                        left: 55.w,
+
                         child: CustomPaint(
                             size: Size(
                                 MediaQuery.of(context).size.width, chartHeight),
@@ -302,7 +310,11 @@ class DashboardBackground extends StatelessWidget {
       children: [
         Expanded(
           child: Container(
-            color: kBottomColor,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              color: kBoxColor,
+            ),
+
           ),
         ),
 
@@ -320,9 +332,9 @@ class PathPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // paint the line
     final paint = Paint()
-      ..color = kBoxColor
+      ..color = kPrimaryColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.4;
+      ..strokeWidth = 5;
     canvas.drawPath(path, paint);
     // paint the gradient fill
     paint.style = PaintingStyle.fill;
@@ -330,8 +342,8 @@ class PathPainter extends CustomPainter {
       Offset.zero,
       Offset(0.0, size.height),
       [
-        kBoxColor.withOpacity(0.2),
-        kBoxColor.withOpacity(0.85),
+        Colors.transparent,
+        Colors.transparent,
       ],
     );
     canvas.drawPath(fillPath, paint);

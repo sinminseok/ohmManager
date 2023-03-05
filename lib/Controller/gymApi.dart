@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Model/countDto.dart';
 import 'package:ohmmanager/Model/gymTimeDto.dart';
+import 'package:ohmmanager/Model/statisticsDto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
 import '../../../Model/gymDto.dart';
@@ -335,8 +336,7 @@ class GymApi with ChangeNotifier {
     }
   }
 
-  Future<List<double>?> get_timeavg(String gymId) async {
-    List<double> values = [];
+  Future<StatisticsDto?> get_timeavg(String gymId) async {
     var res = await http.get(
       Uri.parse(GymApi_Url().time_avg + "${gymId}"),
       headers: {'Content-Type': 'application/json'},
@@ -344,11 +344,9 @@ class GymApi with ChangeNotifier {
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
-      for (int i = 0; i < data.length; i++) {
-        values.add(double.parse(data[i]));
-      }
+      StatisticsDto statisticsDto = StatisticsDto.fromJson(data);
 
-      return values;
+      return statisticsDto;
     } else {
       return null;
     }

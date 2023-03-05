@@ -20,6 +20,8 @@ class Post_Detail extends StatefulWidget {
 }
 
 class _Post_DetailState extends State<Post_Detail> {
+
+  
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

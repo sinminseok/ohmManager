@@ -17,6 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../Controller/gymApi.dart';
 import '../../Controller/adminApi.dart';
 import '../../Model/gymDto.dart';
+import '../../Model/statisticsDto.dart';
 import '../../Utils/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -36,7 +37,7 @@ class _HomeView extends State<HomeView> {
   Future? myFuture;
   bool select_mode = false;
   var current_datetime;
-  List<double> time_avg = [];
+  StatisticsDto? time_avg;
 
   @override
   void initState() {
@@ -121,7 +122,7 @@ class _HomeView extends State<HomeView> {
           ),
           elevation: 0,
         ),
-        backgroundColor: select_mode == true?kBottomColor:Colors.white,
+        backgroundColor: select_mode == true?kBottomColor:kBackgroundColor,
         body: SingleChildScrollView(
             child: Column(
           children: [
@@ -232,7 +233,7 @@ class _HomeView extends State<HomeView> {
                             ? SingleChildScrollView(
                                 child: GymStatistics_View(
                                 current_datetime: current_datetime,
-                                time_avg: time_avg,
+                                time_avg: time_avg!,
                                 current_count: gymDto?.current_count.toString(),
                               ))
                             : GymInfo_View(gymDto: gymDto);

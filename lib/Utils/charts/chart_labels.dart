@@ -23,6 +23,7 @@ class ChartDayLabels extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 40,
+
       decoration: BoxDecoration(
         gradient: LinearGradient(
           stops: [0.0, 1.0],
@@ -32,7 +33,7 @@ class ChartDayLabels extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.only(left: 30.w, right:45.w),
+        padding: EdgeInsets.only(left: 60.w, right:45.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: ['1', '2', '3', '4', '5', '6', '7','8','9','10','11','12']
@@ -47,9 +48,9 @@ class ChartDayLabels extends StatelessWidget {
                   entry.value,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    color: kTextWhiteColor,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
+                    color: Colors.grey,
+                    fontSize: 13.5,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -92,7 +93,7 @@ class ChartLaughLabels extends StatelessWidget {
           (i * maxDay.laughs.toDouble() / (labelCount - 1)));
     }
 
-    Offset labelOffset(int length, double i) {
+    Offset labelOffset(int length, int i) {
       final segment = 1 / (length - 1);
       final offsetValue = (i - ((length - 1) / 2)) * segment;
       return Offset(0, offsetValue);
@@ -100,7 +101,7 @@ class ChartLaughLabels extends StatelessWidget {
 
     return Container(
       height: chartHeight + topPadding,
-      padding: EdgeInsets.only(top: topPadding),
+      padding: EdgeInsets.only(top: topPadding,left: 10.w,right: 0.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: labels
@@ -108,28 +109,27 @@ class ChartLaughLabels extends StatelessWidget {
             .entries
             .map(
               (entry) => FractionalTranslation(
-            translation: labelOffset(labelCount, entry.key.toDouble()),
+            translation: labelOffset(labelCount, entry.key),
             child: Container(
               height: rowHeight,
               alignment: Alignment.center,
               child: Row(
                 children: [
                   SizedBox(
-                    width: leftPadding,
-                    child: Text(
 
+                    width: 45.w,
+                    child: Text(
                       entry.value.toStringAsFixed(1),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: kTextWhiteColor),
+
                     ),
                   ),
                   Expanded(
                     child: Container(
                       height: 2,
-
+                      color: Colors.black.withOpacity(0.15),
                     ),
                   ),
-                  SizedBox(width: rightPadding),
+                  SizedBox(width: 30.w),
                 ],
               ),
             ),

@@ -9,5 +9,5 @@ class WeekData {
 class DayData {
   DayData({required this.hour, required this.laughs});
   double hour;
-  double laughs;
+  int laughs;
 }

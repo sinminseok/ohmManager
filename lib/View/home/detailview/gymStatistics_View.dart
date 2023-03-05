@@ -2,6 +2,7 @@ import 'package:animate_icons/animate_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ohmmanager/Model/statisticsDto.dart';
 import 'package:ohmmanager/Utils/toast.dart';
 import 'package:ohmmanager/View/home/popup/reset_popup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +12,8 @@ import '../detailview/chart_view.dart';
 import '../../../Utils/constants.dart';
 
 class GymStatistics_View extends StatefulWidget {
-  List<double> time_avg;
+  StatisticsDto time_avg;
+
   String? current_count;
   String current_datetime;
 
@@ -122,7 +124,7 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                                   child: Text(
                                     "현재 약",
                                     style: TextStyle(
-                                        fontSize: 18.sp,
+                                        fontSize: 20.sp,
                                         fontWeight: FontWeight.bold,
                                         fontFamily: "lightfont",
                                         color: kTextBlackColor),
@@ -154,10 +156,11 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                     ),
                   ])),
           Container(
-              margin: EdgeInsets.only(left: 20, right: 22, top: 27.h),
+              margin: EdgeInsets.only(left: 10, right: 10, top: 27.h),
               width: 360.w,
               height: 350.h,
               child: Container(
+
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
