@@ -58,6 +58,17 @@ class _HomeView extends State<HomeView> {
     },
   );
 
+  final spinkit2 = SpinKitWanderingCubes(
+    itemBuilder: (BuildContext context, int index) {
+      return DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(100)),
+          color: index.isEven ? kPrimaryColor : kBoxColor,
+        ),
+      );
+    },
+  );
+
   Future<bool> get_gyminfo() async {
     final prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userId");
@@ -122,7 +133,7 @@ class _HomeView extends State<HomeView> {
           ),
           elevation: 0,
         ),
-        backgroundColor: select_mode == true?kBottomColor:kBackgroundColor,
+        backgroundColor: select_mode == true?kBackgroundColor:kBackgroundColor,
         body: SingleChildScrollView(
             child: Column(
           children: [
@@ -141,21 +152,12 @@ class _HomeView extends State<HomeView> {
                                 bottomRight: Radius.circular(0.0),
                                 bottomLeft: Radius.circular(0.0)),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [Text("")],
-                          ),
+                          child: spinkit2
                         ),
                         Container(
                           height: 30.h,
                         ),
-                        Text(
-                          "인터넷 연결중 ., ",
-                          style: TextStyle(
-                              fontFamily: "boldfont",
-                              fontSize: 18,
-                              color: kPrimaryColor),
-                        )
+
                       ],
                     );
                   }
@@ -209,7 +211,7 @@ class _HomeView extends State<HomeView> {
                                           "헬스장 등록",
                                           style: TextStyle(
                                               fontSize: 21,
-                                              fontFamily: "boldfont",
+                                              fontFamily: "lightfont",
                                               fontWeight: FontWeight.bold,
                                               color: kTextColor),
                                         )
@@ -229,7 +231,7 @@ class _HomeView extends State<HomeView> {
                               )
                             ],
                           )
-                        : select_mode == true
+                        : select_mode != true
                             ? SingleChildScrollView(
                                 child: GymStatistics_View(
                                 current_datetime: current_datetime,

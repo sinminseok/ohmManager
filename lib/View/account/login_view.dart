@@ -22,6 +22,7 @@ class LoginView extends StatefulWidget {
 class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
   bool isLogin = true;
   bool ischeck = false;
+  bool goodToGo = true;
   String? colsedday;
   final TextEditingController _userIDController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -117,7 +118,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                     children: [
                       // Text("오 헬 몇?",style: TextStyle(fontFamily: "boldfont",fontSize: 50,fontWeight: FontWeight.bold),),
 
-                      SizedBox(height: 160.h),
+                      SizedBox(height: 220.h),
 
                       Container(
 
@@ -138,7 +139,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 20),
+                        margin: EdgeInsets.only(top: 13),
                         decoration: BoxDecoration(
                             color: kContainerColor,
                             borderRadius: BorderRadius.circular(10)),
@@ -158,7 +159,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
 
                       Center(
                         child: Container(
-                          margin: EdgeInsets.only(bottom: 10, top: 20),
+                          margin: EdgeInsets.only(bottom: 20, top: 10),
                           width: size.width * 0.4,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -167,6 +168,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                                 "자동로그인",
                                 style: TextStyle(
                                     fontSize: 15.sp,
+                                    fontFamily: "lightfont",
                                     fontWeight: FontWeight.bold,
                                     color: kTextWhiteColor),
                               ),
@@ -193,44 +195,51 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                       ),
                       InkWell(
                           onTap: () async {
-                            final prefs = await SharedPreferences.getInstance();
+                            if(!goodToGo){return;}
+                            if(goodToGo){debugPrint("Going to the moon!");}// do your thing
+                            goodToGo = false;
+                            Future.delayed(const Duration(milliseconds: 1000), () async{
+                              final prefs = await SharedPreferences.getInstance();
 
-                            var token = await AdminApi().login_manager(
-                                _userIDController.text, _passwordController.text);
-                            if (token == null) {
-                              return showtoast("아이디 혹은 비밀번호가 틀립니다.");
-                            } else {
-                              if (ischeck == true) {
-                                prefs.setString("loginId", _userIDController.text);
-                                prefs.setString(
-                                    "loginPw", _passwordController.text);
-                                if (prefs.getString("token") == null) {
-                                  prefs.setString("token", token.toString());
-                                } else {
-                                  prefs.remove("token");
-                                  prefs.setString("token", token.toString());
-                                }
-
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        type: PageTransitionType.fade,
-                                        child: FrameView()));
+                              var token = await AdminApi().login_manager(
+                                  _userIDController.text, _passwordController.text);
+                              if (token == null) {
+                                return showtoast("아이디 혹은 비밀번호가 틀립니다.");
                               } else {
-                                if (prefs.getString("token") == null) {
-                                  prefs.setString("token", token.toString());
-                                } else {
-                                  prefs.remove("token");
-                                  prefs.setString("token", token.toString());
-                                }
+                                if (ischeck == true) {
+                                  prefs.setString("loginId", _userIDController.text);
+                                  prefs.setString(
+                                      "loginPw", _passwordController.text);
+                                  if (prefs.getString("token") == null) {
+                                    prefs.setString("token", token.toString());
+                                  } else {
+                                    prefs.remove("token");
+                                    prefs.setString("token", token.toString());
+                                  }
 
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        type: PageTransitionType.fade,
-                                        child: FrameView()));
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.fade,
+                                          child: FrameView()));
+                                } else {
+                                  if (prefs.getString("token") == null) {
+                                    prefs.setString("token", token.toString());
+                                  } else {
+                                    prefs.remove("token");
+                                    prefs.setString("token", token.toString());
+                                  }
+
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.fade,
+                                          child: FrameView()));
+                                }
                               }
-                            }
+                              goodToGo = true;
+                            });
+
                           },
                           child: Container(
                             width: 250.w,
@@ -244,8 +253,9 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                               "로그인",
                               style: TextStyle(
                                   color: kTextWhiteColor,
+                                  fontFamily: "lightfont",
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 18),
+                                  fontSize: 16.sp),
                             ),
                           )),
                       SizedBox(
@@ -263,7 +273,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                           },
                           child: Text(
                             "회원가입 하러가기",
-                            style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 16),
+                            style: TextStyle(fontFamily: "boldfont",color: Colors.black,fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                         ),
                       )

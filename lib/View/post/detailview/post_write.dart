@@ -2,9 +2,11 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/Utils/toast.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../Utils/constants.dart';
 import '../../../../Utils/permission.dart';
@@ -23,7 +25,7 @@ class _PostWrite_View extends State<PostWrite_View> {
   TextEditingController _contentController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
   List<XFile> image_picked = [];
-
+  bool goodToGo = true;
   PickedFile? _image;
   var imim;
   List<File> imageFileList = [];
@@ -31,11 +33,59 @@ class _PostWrite_View extends State<PostWrite_View> {
   Future<void> getImages() async {
     ImagePicker imagePicker = ImagePicker();
 
-    List<XFile> images = await imagePicker.pickMultiImage();
+    List<XFile> images = await imagePicker.pickMultiImage( imageQuality: 50);
 
     setState(() {
       image_picked = images;
     });
+  }
+
+  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
+
+  void _doSomething() async {
+
+    if(_titleController.text == "" || _contentController.text ==""){
+      _btnController.stop();
+      showtoast("제목,내용은 필수 항목입니다");
+
+    }else{
+      if(!goodToGo){return;}
+      if(goodToGo){debugPrint("Going to the moon!");}// do your thing
+      goodToGo = false;
+
+      Future.delayed(const Duration(milliseconds: 5000), () async{
+        goodToGo = true;
+        final prefs = await SharedPreferences.getInstance();
+        var save_post = await PostApi().save_post(
+            _titleController.text,
+            _contentController.text,
+            prefs.getString("gymId").toString(),
+            prefs.getString("token").toString());
+        var save_postimg = await PostApi().save_postimg(
+            save_post.toString(),
+            image_picked,
+            prefs.getString("token").toString());
+
+        if (save_post == null) {
+          _btnController.stop();
+          return showtoast("서버가 원활하지 않습니다");
+        } else {
+          _btnController.success();
+          showtoast("글이 등록었습니다!");
+
+          Navigator.pop(context);
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => FrameView()),
+                  (route) => false);
+        }
+      });
+
+    }
+
+
+
   }
 
   //이미지 Uint8 변환 함수
@@ -131,7 +181,7 @@ class _PostWrite_View extends State<PostWrite_View> {
                         ),
                       ))),
               Container(
-                  height: size.height * 0.24,
+                  height: 200.h,
                   child: TextField(
                       maxLines: 10,
                       textInputAction: TextInputAction.done,
@@ -148,36 +198,41 @@ class _PostWrite_View extends State<PostWrite_View> {
                       ))),
               InkWell(
                   onTap: () async {
-                    if(_titleController.text == "" || _contentController.text ==""){
-                      showtoast("제목,내용은 필수 항목입니다");
 
-                    }else{
-                      final prefs = await SharedPreferences.getInstance();
-                      var save_post = await PostApi().save_post(
-                          _titleController.text,
-                          _contentController.text,
-                          prefs.getString("gymId").toString(),
-                          prefs.getString("token").toString());
-                      var save_postimg = await PostApi().save_postimg(
-                          save_post.toString(),
-                          image_picked,
-                          prefs.getString("token").toString());
 
-                      if (save_post == null) {
-                        return showtoast("서버가 원활하지 않습니다");
-                      } else {
-                        showtoast("글이 등록었습니다!");
-                        Navigator.pop(context);
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) => FrameView()),
-                                (route) => false);
-                      }   
-                    }
-                   
                   },
-                  child: Button("게시"))
+                  borderRadius: BorderRadius.circular(10),
+                  child: RoundedLoadingButton(
+                    controller: _btnController,
+                    successColor: kTextBlackColor,
+                    color: kTextBlackColor,
+                    onPressed: _doSomething,
+                    child: Container(
+                      width: 330.w,
+                      height: 47.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: kButtonColor,
+                      ),
+
+
+                      alignment: Alignment.center,
+                      child: Text(
+                        "다음",
+                        style: TextStyle(
+                            fontFamily: "lightfont",
+                            color: kTextWhiteColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp
+                        ),
+                      ),
+                    ),
+                  )
+              ),
+
+
+
+
             ],
           ),
         ));

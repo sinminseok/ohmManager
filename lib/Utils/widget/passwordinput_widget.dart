@@ -26,7 +26,7 @@ class RoundedPasswordInput extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor),),
+          Text(title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor,fontFamily: "lightfont"),),
           Container(
             decoration: BoxDecoration(
 

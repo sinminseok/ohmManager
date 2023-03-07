@@ -104,7 +104,7 @@ class _Signup_Trainer extends State<Signup_Trainer>
                           },
                           child: Row(
                             children: [
-                              Text("닉네임",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor),),
+                              Text("닉네임",style: TextStyle(fontFamily: "lightfont",fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor),),
                               Container(
                                   margin: EdgeInsets.only(left: 8,bottom: 3),
                                   child: Icon(Icons.info,color: kPrimaryColor,))
@@ -143,6 +143,7 @@ class _Signup_Trainer extends State<Signup_Trainer>
                         Text(
                           "직책",
                           style: TextStyle(
+                              fontFamily: "lightfont",
                               fontWeight: FontWeight.bold,
                               fontSize: 17,
                               color: kTextBlackColor),

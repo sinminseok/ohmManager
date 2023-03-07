@@ -8,6 +8,7 @@ import 'package:ohmmanager/Model/questionDto.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/Utils/constants.dart';
 import 'package:ohmmanager/Utils/toast.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class Answer_BottomSheet extends StatefulWidget {
   QuestionDto questionDto;
@@ -22,6 +23,24 @@ class Answer_BottomSheet extends StatefulWidget {
 
 class _Answer_BottomSheetState extends State<Answer_BottomSheet> {
   TextEditingController _answerController = TextEditingController();
+  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
+
+  void _doSomething() async {
+    var register_answer =await QuestionApi().register_answer(widget.questionDto.id, _answerController.text);
+    if(register_answer == true){
+      _btnController.success();
+      widget.setter!((){
+
+      });
+
+
+      showtoast("답변이 등록되었습니다");
+      Navigator.pop(context);
+    }else{
+      _btnController.stop();
+      showtoast("네트워크를 확인해주세요");
+    }
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -65,25 +84,37 @@ class _Answer_BottomSheetState extends State<Answer_BottomSheet> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 40.h),
-                child: InkWell(
-
-                    onTap: ()async{
-                      var register_answer =await QuestionApi().register_answer(widget.questionDto.id, _answerController.text);
-                      if(register_answer == true){
-                        widget.setter!((){
-
-                        });
+                margin: EdgeInsets.only(top: 70.h),
 
 
-                        showtoast("답변이 등록되었습니다");
-                        Navigator.pop(context);
-                      }else{
-                        showtoast("네트워크를 확인해주세요");
-                      }
-                    },
-                    child: Button("답변 등록")),
-              )
+                  child: RoundedLoadingButton(
+                    controller: _btnController,
+                    successColor: kTextBlackColor,
+                    color: kTextBlackColor,
+                    onPressed: _doSomething,
+                    child: Container(
+                      width: 330.w,
+                      height: 47.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: kButtonColor,
+                      ),
+
+
+                      alignment: Alignment.center,
+                      child: Text(
+                        "답변등록",
+                        style: TextStyle(
+                            fontFamily: "lightfont",
+                            color: kTextWhiteColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp
+                        ),
+                      ),
+                    ),
+                  )
+              ),
+
             ],
           ),
         ));

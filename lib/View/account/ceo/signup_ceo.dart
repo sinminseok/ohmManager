@@ -109,7 +109,7 @@ class _Signup_Ceo extends State<Signup_Ceo>
                     },
                     child: Row(
                       children: [
-                        Text("닉네임",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor),),
+                        Text("닉네임",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor,fontFamily: "lightfont"),),
                         Container(
                             margin: EdgeInsets.only(left: 8,bottom: 3),
                             child: Icon(Icons.info,color: kPrimaryColor,))
@@ -150,7 +150,7 @@ class _Signup_Ceo extends State<Signup_Ceo>
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 17,
-                              color: kTextBlackColor),
+                              color: kTextBlackColor,fontFamily: "lightfont"),
                         ),
                         Container(
                           decoration: BoxDecoration(

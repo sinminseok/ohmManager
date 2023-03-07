@@ -1,5 +1,7 @@
 
 
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +16,7 @@ import '../../../Utils/gyminput.dart';
 import '../../../Utils/widget/rouninput_widget.dart';
 import 'gym_register2.dart';
 import 'gym_register3.dart';
-
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 class GymRegisterView extends StatefulWidget {
   const GymRegisterView({Key? key}) : super(key: key);
 
@@ -28,7 +30,7 @@ class _GymRegisterViewState extends State<GymRegisterView> {
   var _selectedValue = '없음';
   bool check_code = false;
   bool holyday = false;
-
+  bool goodToGo = true;
   TextEditingController _nameController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
   TextEditingController _areaController = TextEditingController();
@@ -38,7 +40,45 @@ class _GymRegisterViewState extends State<GymRegisterView> {
 
   TextEditingController _onelineController = TextEditingController();
   TextEditingController _introduceController = TextEditingController();
+  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
 
+  void _doSomething() async {
+    if(_nameController.text == "" || _addressController.text =="" ||_areaController.text =="" ||_countController.text ==""|| _codeController.text==""){
+      _btnController.stop();
+      return showtoast("정보를 모두 입력해주세요");
+    }else{
+      if(check_code == false){
+        _btnController.stop();
+        return showAlertDialog(context, "알림", "가입코드 중복체크를 먼저 진행해주세요!");
+      }else{
+
+        if(!goodToGo){return;}
+        if(goodToGo){debugPrint("Going to the moon!");}// do your thing
+        goodToGo = false;
+        Future.delayed(const Duration(milliseconds: 1000), () async{
+          goodToGo = true;
+          final prefs = await SharedPreferences.getInstance();
+          var token = prefs.getString("token");
+          var register_gym =await GymApi().register_gym(token.toString(), _nameController.text, _addressController.text, int.parse(_countController.text), _onelineController.text, _codeController.text, _introduceController.text, _areaController.text);
+
+          if(register_gym == null){
+            _btnController.stop();
+            return showtoast("헬스장 등록 실패");
+          }else{
+            _btnController.success();
+            Navigator.push(
+                context,
+                PageTransition(
+                    type: PageTransitionType.fade,
+                    child: GymRegisterView2(closedday: _selectedValue, holyday_bool: holyday,)));
+          }
+        });
+
+
+      }
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +103,10 @@ class _GymRegisterViewState extends State<GymRegisterView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+
             Container(
                 margin: EdgeInsets.only(left: 15,top: 20,bottom: 10),
-                child: Text("헬스장 소개",style: TextStyle(fontFamily: "boldfont",fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),)),
+                child: Text("헬스장 소개",style: TextStyle(fontFamily: "lightfont",fontSize: 18.sp,fontWeight: FontWeight.bold,color: kTextColor),)),
             Center(
               child: Container(
                 margin: EdgeInsets.only(top: 10),
@@ -81,6 +122,7 @@ class _GymRegisterViewState extends State<GymRegisterView> {
                   decoration: InputDecoration(
                     // contentPadding: EdgeInsets.,
                       hintText: "한줄소개",
+
                       border: InputBorder.none
                   ),
                 ),
@@ -126,7 +168,7 @@ class _GymRegisterViewState extends State<GymRegisterView> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("가입코드",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor),),
+                Text("가입코드",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16.sp,fontFamily: "lightfont",color: kTextBlackColor),),
                 Row(
                   children: [
                     Container(
@@ -196,7 +238,7 @@ class _GymRegisterViewState extends State<GymRegisterView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("휴관일",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor),),
+                    Text("휴관일",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16.sp,fontFamily : "lightfont",color: kTextBlackColor),),
                     Padding(
                       padding: const EdgeInsets.all(0.0),
                       child: Container(
@@ -242,7 +284,7 @@ class _GymRegisterViewState extends State<GymRegisterView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("공휴일 휴무 여부",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor),),
+                    Text("공휴일 휴무 여부",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16.sp,fontFamily: "lightfont",color: kTextBlackColor),),
                     Checkbox(
                         focusColor: kPrimaryColor,
                         checkColor: kPrimaryColor,
@@ -268,35 +310,40 @@ class _GymRegisterViewState extends State<GymRegisterView> {
             SizedBox(height: size.height*0.07,),
 
 
+
             InkWell(
-                onTap: ()async{
-                  if(_nameController.text == "" || _addressController.text =="" ||_areaController.text =="" ||_countController.text ==""|| _codeController.text==""){
-                    return showtoast("정보를 모두 입력해주세요");
-                  }else{
-                    if(check_code == false){
-                      return showAlertDialog(context, "알림", "가입코드 중복체크를 먼저 진행해주세요!");
-                    }else{
-                      final prefs = await SharedPreferences.getInstance();
-                      var token = prefs.getString("token");
-                      var register_gym =await GymApi().register_gym(token.toString(), _nameController.text, _addressController.text, int.parse(_countController.text), _onelineController.text, _codeController.text, _introduceController.text, _areaController.text);
+                onTap: () async {
 
-                      if(register_gym == null){
-                        return showtoast("헬스장 등록 실패");
-                      }else{
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: GymRegisterView2(closedday: _selectedValue, holyday_bool: holyday,)));
-                      }
-
-                    }
-                  }
 
                 },
-                child: Center(
-                    child: Button("다음")
-                )),
+                borderRadius: BorderRadius.circular(10),
+                child: RoundedLoadingButton(
+                  controller: _btnController,
+                  successColor: kTextBlackColor,
+                  color: kTextBlackColor,
+                  onPressed: _doSomething,
+                  child: Container(
+                    width: 330.w,
+                    height: 47.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: kButtonColor,
+                    ),
+
+
+                    alignment: Alignment.center,
+                    child: Text(
+                      "다음",
+                      style: TextStyle(
+                          fontFamily: "lightfont",
+                          color: kTextWhiteColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.sp
+                      ),
+                    ),
+                  ),
+                )
+            ),
             SizedBox(height: 30),
           ],
         ),

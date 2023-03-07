@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../../Utils/constants.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 class Signup_Ceo2 extends StatefulWidget {
   Signup_Ceo2(
       {required this.position,required this.name, required this.nickname, required this.password});
@@ -30,10 +31,53 @@ class _Signup_Ceo2 extends State<Signup_Ceo2>
     with SingleTickerProviderStateMixin {
   final TextEditingController _onlineController = TextEditingController();
   final TextEditingController _introduceController = TextEditingController();
-
+  bool? onTapPressed = false;
   PickedFile? _image;
   var image_picked;
+  bool goodToGo = true;
 
+  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
+
+  void _doSomething() async {
+
+    if(_introduceController.text =="" || _onlineController.text == ""){
+      showtoast("내용을 모두 입력해주세요");
+      _btnController.stop();
+    }else{
+      int? id = await AdminApi().register_ceo(widget.position,widget.name,widget.password,widget.nickname,_onlineController.text,_introduceController.text);
+
+      if(id == null){
+        _btnController.stop();
+        return showtoast("이미 존재하는 아이디입니다.");
+      }else{
+        _btnController.success();
+        if(_image == null){
+          showtoast("회원가입 완료 로그인을 진행해주세요");
+          Navigator.push(
+              context,
+              PageTransition(
+                  type: PageTransitionType.fade,
+                  child: LoginView()));
+        }else{
+          showtoast("회원가입 완료 로그인을 진행해주세요");
+          AdminApi().register_profile(_image!,id.toString());
+          Navigator.push(
+              context,
+              PageTransition(
+                  type: PageTransitionType.fade,
+                  child: LoginView()));
+        }
+
+
+      }
+
+    }
+
+
+
+
+
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -43,7 +87,7 @@ class _Signup_Ceo2 extends State<Signup_Ceo2>
     Future getImageFromGallery() async {
       // for gallery
       image_picked =
-      await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+      await ImagePicker.platform.pickImage(source: ImageSource.gallery,imageQuality: 40);
       print(image_picked);
       if (mounted) {
         setState(() {
@@ -147,38 +191,35 @@ class _Signup_Ceo2 extends State<Signup_Ceo2>
                 InkWell(
                     onTap: () async {
 
-                      if(_introduceController.text =="" || _onlineController.text == ""){
-                        showtoast("내용을 모두 입력해주세요");
-                      }else{
-                        int? id = await AdminApi().register_ceo(widget.position,widget.name,widget.password,widget.nickname,_onlineController.text,_introduceController.text);
 
-
-                        if(id == null){
-                          return showtoast("이미 존재하는 아이디입니다.");
-                        }else{
-                          if(_image == null){
-                            showtoast("회원가입 완료 로그인을 진행해주세요");
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.fade,
-                                    child: LoginView()));
-                          }else{
-                            showtoast("회원가입 완료 로그인을 진행해주세요");
-                            AdminApi().register_profile(_image!,id.toString());
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.fade,
-                                    child: LoginView()));
-                          }
-
-
-                        }
-                      }
                     },
                     borderRadius: BorderRadius.circular(10),
-                    child: Button("다음")
+                    child: RoundedLoadingButton(
+                      controller: _btnController,
+                      successColor: kTextBlackColor,
+                      color: kTextBlackColor,
+                      onPressed: _doSomething,
+                      child: Container(
+                        width: 330.w,
+                        height: 47.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: kButtonColor,
+                        ),
+
+
+                        alignment: Alignment.center,
+                        child: Text(
+                          "다음",
+                          style: TextStyle(
+                              fontFamily: "lightfont",
+                              color: kTextWhiteColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.sp
+                          ),
+                        ),
+                      ),
+                    )
                 ),
                 SizedBox(height: 30),
               ],

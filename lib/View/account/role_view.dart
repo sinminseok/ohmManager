@@ -25,7 +25,7 @@ class _Role_View extends State<Role_View> with SingleTickerProviderStateMixin {
             color: kTextBlackColor, //change your color here
           ),
           title: Text(
-            "관리자 정보",
+            "",
             style:
                 TextStyle(fontWeight: FontWeight.bold, color: kTextBlackColor,fontFamily: "boldfont"),
           ),

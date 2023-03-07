@@ -161,13 +161,13 @@ class PostApi with ChangeNotifier {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
 
-      for (int i = 0; i < data.length; i++) {
+      for (int i = 0; i < data['content'].length; i++) {
         List<PostImgDto> imgs = [];
 
-        for (int j = 0; j < data[i]['imgs'].length; j++) {
-          imgs.add(PostImgDto.fromJson(data[i]['imgs'][j]));
+        for (int j = 0; j < data['content'][i]['imgs'].length; j++) {
+          imgs.add(PostImgDto.fromJson(data['content'][i]['imgs'][j]));
         }
-        posts.add(PostDto.fromJson(data[i], imgs));
+        posts.add(PostDto.fromJson(data['content'][i], imgs));
       }
 
       return posts;

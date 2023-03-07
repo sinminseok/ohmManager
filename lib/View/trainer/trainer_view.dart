@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ohmmanager/Controller/adminApi.dart';
 import 'package:ohmmanager/Model/trainerDto.dart';
 import 'package:ohmmanager/View/trainer/widget/trainer_widget.dart';
@@ -25,7 +26,16 @@ class _TrainerViewState extends State<TrainerView> {
     myfuture = get_trainers();
     super.initState();
   }
-
+  final spinkit2 = SpinKitWanderingCubes(
+    itemBuilder: (BuildContext context, int index) {
+      return DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(100)),
+          color: index.isEven ? kPrimaryColor : kBoxColor,
+        ),
+      );
+    },
+  );
   get_trainers() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -75,12 +85,9 @@ class _TrainerViewState extends State<TrainerView> {
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData == false) {
                     return Container(
-                      margin: EdgeInsets.only(top: 100.h),
+                      margin: EdgeInsets.only(top: 220.h),
                       child: Center(
-                          child: Text(
-                            "",
-                            style: TextStyle(fontSize: 17,fontFamily: "lightfont"),
-                          )),
+                          child: spinkit2),
                     );
                   }
 

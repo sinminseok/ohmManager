@@ -23,6 +23,7 @@ class Signup_Manager extends StatefulWidget {
 
 class _Signup_Manager extends State<Signup_Manager>
     with SingleTickerProviderStateMixin {
+  bool goodToGo = true;
   final TextEditingController _userIDController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _positionController = TextEditingController();
@@ -40,7 +41,7 @@ class _Signup_Manager extends State<Signup_Manager>
         iconTheme: IconThemeData(
           color: kTextBlackColor, //change your color here
         ),
-        title: Text("정보입력",style: TextStyle(fontFamily: "boldfont",fontWeight: FontWeight.bold,color: kTextBlackColor),),
+        title: Text("",style: TextStyle(fontFamily: "boldfont",fontWeight: FontWeight.bold,color: kTextBlackColor),),
         backgroundColor:  Color(0xff2651f0).withAlpha(20),
         elevation: 0,
       ),
@@ -101,7 +102,7 @@ class _Signup_Manager extends State<Signup_Manager>
                         },
                         child: Row(
                           children: [
-                            Text("닉네임",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor),),
+                            Text("닉네임",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16.sp,fontFamily: "lightfont",color: kTextBlackColor),),
                             Container(
                                 margin: EdgeInsets.only(left: 8,bottom: 3),
                                 child: Icon(Icons.info,color: kPrimaryColor,))
@@ -142,6 +143,7 @@ class _Signup_Manager extends State<Signup_Manager>
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 17,
+                            fontFamily: "lightfont",
                             color: kTextBlackColor),
                       ),
                       Container(

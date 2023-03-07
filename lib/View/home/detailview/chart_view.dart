@@ -224,8 +224,9 @@ class _DashboardState extends State<Dashboard>
       children: [
         const DashboardBackground(),
         Container(
-          width: 360.w,
-          height: 340.h,
+          margin: EdgeInsets.only(left: 1.w,right: 1.w),
+          width: 350.w,
+          height: 350.h,
           child: SingleChildScrollView(
             child: Column(
 
@@ -233,7 +234,7 @@ class _DashboardState extends State<Dashboard>
 
 
                 Padding(
-                  padding: const EdgeInsets.only(left: 90,right:90,top: 15),
+                  padding: const EdgeInsets.only(left: 90,right:90,top: 15,bottom: 20),
                   child: SlideSelector(
                     defaultSelectedIndex: activeWeek - 2,
                     items: <SlideSelectorItem>[
@@ -257,7 +258,7 @@ class _DashboardState extends State<Dashboard>
 
                 Container(
                   height: chartHeight + 83,
-                  color: kBoxColor,
+                  color: kBackgroundColor,
                   child: Stack(
                     children: [
                       ChartLaughLabels(
@@ -297,6 +298,7 @@ class _DashboardState extends State<Dashboard>
             ),
           ),
         ),
+
       ],
     );
   }
@@ -310,9 +312,11 @@ class DashboardBackground extends StatelessWidget {
       children: [
         Expanded(
           child: Container(
+
             decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey,width: 0.6),
               borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: kBoxColor,
+              color: kBackgroundColor,
             ),
 
           ),

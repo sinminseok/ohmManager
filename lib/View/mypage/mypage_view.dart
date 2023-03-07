@@ -29,21 +29,21 @@ class _MypageViewState extends State<MypageView> {
   Future? myFuture;
   TrainerDto? user;
   GymDto? gymDto;
-
-  _callNumber() async{
-    const number = '01083131764'; //set the number here
-    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
-  }
-  final spinkit = SpinKitDoubleBounce(
+  final spinkit2 = SpinKitWanderingCubes(
     itemBuilder: (BuildContext context, int index) {
       return DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(100)),
-          color: index.isEven ? kPrimaryColor : Colors.black26,
+          color: index.isEven ? kPrimaryColor : kBoxColor,
         ),
       );
     },
   );
+  _callNumber() async{
+    const number = '01083131764'; //set the number here
+    bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+  }
+
 
   Future<bool> get_gyminfo() async {
     final prefs = await SharedPreferences.getInstance();
@@ -132,23 +132,7 @@ class _MypageViewState extends State<MypageView> {
                           color: kContainerColor,
                           borderRadius: BorderRadius.all(Radius.circular(0))),
                       margin: EdgeInsets.only(top: 0.h, left: 0),
-                      child: Row(
-                        children: [
-                         Container(
-                            margin: EdgeInsets.only(top: 5, left: 23),
-                            width: size.width * 0.16,
-                            height: size.height * 0.08,
-                            child: CircleAvatar(
-                              backgroundColor: kContainerColor,
-                              backgroundImage: NetworkImage(
-                                  "https://cdn.icon-icons.com/icons2/2506/PNG/512/user_icon_150670.png"),
-                            ),
-                          ),
-                          Container(
-                            child: Text(""),
-                          )
-                        ],
-                      ),
+                      child: spinkit2
                     );
                   }
 

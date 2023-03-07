@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -58,13 +59,13 @@ class _GymSave_Finish extends State<GymSave_Finish>  with TickerProviderStateMix
             children: [
               SizedBox(height: size.height*0.3,),
               Center(
-                child: Text("헬스장 등록 완료",style: TextStyle(fontFamily: "gilogfont",fontSize: 32,color: Colors.white),),
+                child: Text("헬스장 등록 완료",style: TextStyle(fontFamily: "boldfont",fontSize: 32,color: Colors.white),),
               ),
               Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text("화면을 터치하면 메인페이지로 이동합니다.",style: TextStyle(fontSize: 20,color: Colors.white),),
+                padding: const EdgeInsets.only(top: 30.0),
+                child: Text("화면을 터치하면 메인페이지로 이동합니다.",style: TextStyle(fontSize: 17.sp,color: Colors.white,fontFamily: "lightfont"),),
               ),
-              SizedBox(height: size.height*0.03,),
+              SizedBox(height: size.height*0.09,),
               ScaleTransition(
                 scale: scaleAnimation,
                 child: Container(

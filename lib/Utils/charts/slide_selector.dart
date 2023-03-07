@@ -64,7 +64,7 @@ class _SlideSelectorState extends State<SlideSelector> {
             height: 50,
 
             decoration: BoxDecoration(
-              color: kBoxColor,
+              color: kBackgroundColor,
               borderRadius: BorderRadius.circular(5),
             ),
             child: Stack(
@@ -78,7 +78,7 @@ class _SlideSelectorState extends State<SlideSelector> {
                     width: buttonWidth,
                     height: 52,
                     decoration: BoxDecoration(
-                      color: kBoxColor,
+                      color: kBackgroundColor,
 
                       border: Border(
 

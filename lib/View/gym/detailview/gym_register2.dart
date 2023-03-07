@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/gymApi.dart';
 import 'package:ohmmanager/Model/gymPriceDto.dart';
 import 'package:ohmmanager/Utils/constants.dart';
+import 'package:ohmmanager/Utils/toast.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Utils/buttom_container.dart';
@@ -22,7 +27,7 @@ class GymRegisterView2 extends StatefulWidget {
 
 class _GymRegisterView2 extends State<GymRegisterView2> {
   List<GymPriceDto> prices = [];
-
+  bool goodToGo = true;
   String sunday_start = "00:00";
   String saturday_start = "00:00";
   String weekday_start = "00:00";
@@ -36,6 +41,41 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
   @override
   void initState() {
     super.initState();
+  }
+  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
+
+  void _doSomething() async {
+
+    final prefs = await SharedPreferences.getInstance();
+
+    if(!goodToGo){return;}
+    if(goodToGo){debugPrint("Going to the moon!");}// do your thing
+    goodToGo = false;
+
+    Future.delayed(const Duration(milliseconds: 1), () async{
+      goodToGo = true;
+      var register_time = await GymApi().register_time(
+          prefs.getString("gymId"),
+          prefs.getString("token"),
+          widget.closedday,
+          sunday_start + " ~ " + sunday_end,
+          saturday_start + " ~ " + saturday_end,
+          weekday_start + " ~ " + weekday_end,
+          holiday_start + " ~ " + holiday_end);
+
+      if (register_time == true) {
+        _btnController.success();
+        Navigator.push(
+            context,
+            PageTransition(
+                type: PageTransitionType.fade,
+                child: GymRegisterView3()));
+      } else {
+        return;
+      }
+
+    });
+
   }
 
   @override
@@ -62,203 +102,214 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
         backgroundColor: Colors.grey.shade200,
         body: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
+
             children: [
               //평일
-              Container(
-                  margin: EdgeInsets.only(left: 20,bottom: 10,top: 30),
-                  child: InkWell(
-                      onTap: (){
-                        //  showDialog_weekdaystart(size, context, "title");
-                      },
-                      child: Text("평일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      margin: EdgeInsets.only(left: 20,bottom: 10,top: 30),
+                      child: InkWell(
+                          onTap: (){
+                            //  showDialog_weekdaystart(size, context, "title");
+                          },
+                          child: Text("평일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
+                  Center(
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: kContainerColor,
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        width: size.width*0.9,
+                        height: size.height*0.13,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+
+                            Container(
+                              margin: EdgeInsets.only(top: 0,left: 10),
+                              child: InkWell(
+                                  onTap: (){
+                                    showDialog_weekdaystart(size, context, "title");
+                                  },
+                                  child: Text("시작 시간 : ${weekday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 10,left: 10),
+                              child: InkWell(
+                                  onTap: (){
+                                    showDialog_weekdayend(size, context, "title");
+                                  },
+                                  child: Text("종료 시간 : ${weekday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
+                            ),
+                          ],
+                        )
+                    ),
+                  ),
+
+                  //토요일
+                  widget.closedday=="토요일"?Container(): Container(
+                      margin: EdgeInsets.only(left: 20,bottom: 10,top: 30),
+                      child: InkWell(
+                          onTap: (){
+
+                          },
+                          child: Text("토요일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
+                  widget.closedday=="토요일"?Container(): Center(
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: kContainerColor,
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        width: size.width*0.9,
+                        height: size.height*0.13,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+
+                            Container(
+                              margin: EdgeInsets.only(top: 0,left: 10),
+                              child: InkWell(
+                                  onTap: (){
+                                    showDialog_staurdaystart(size, context, "title");
+                                  },
+                                  child: Text("시작 시간 : ${saturday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 10,left: 10),
+                              child: InkWell(
+                                  onTap: (){
+                                    showDialog_staurdayend(size, context, "title");
+                                  },
+                                  child: Text("종료 시간 : ${saturday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
+                            ),
+                          ],
+                        )
+                    ),
+                  ),
+
+                  //일요일
+                  widget.closedday=="일요일"?Container():  Container(
+                      margin: EdgeInsets.only(left: 20,bottom: 10,top: 30),
+                      child: InkWell(
+                          onTap: (){
+                            //  showDialog_weekdaystart(size, context, "title");
+                          },
+                          child: Text("일요일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
+                  widget.closedday=="일요일"?Container(): Center(
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: kContainerColor,
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        width: size.width*0.9,
+                        height: size.height*0.13,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+
+                            Container(
+                              margin: EdgeInsets.only(top: 0,left: 10),
+                              child: InkWell(
+                                  onTap: (){
+                                    showDialog_sundaystart(size, context, "title");
+                                  },
+                                  child: Text("시작 시간 : ${sunday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 10,left: 10),
+                              child: InkWell(
+                                  onTap: (){
+                                    showDialog_sundayend(size, context, "title");
+                                  },
+                                  child: Text("종료 시간 : ${sunday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
+                            ),
+                          ],
+                        )
+                    ),
+                  ),
+
+                  //공휴일
+                  widget.holyday_bool==true?Container():Container(
+                      margin: EdgeInsets.only(left: 20,bottom: 10,top: 30),
+                      child: InkWell(
+                          onTap: (){
+                            //  showDialog_weekdaystart(size, context, "title");
+                          },
+                          child: Text("공휴일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
+                  widget.holyday_bool==true?Container():Center(
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: kContainerColor,
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        width: size.width*0.9,
+                        height: size.height*0.12,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+
+
+                            Container(
+                              margin: EdgeInsets.only(top: 0,left: 10),
+                              child: InkWell(
+                                  onTap: (){
+                                    showDialog_holydaystart(size, context, "title");
+                                  },
+                                  child: Text("시작 시간 : ${holiday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 10,left: 10),
+                              child: InkWell(
+                                  onTap: (){
+                                    showDialog_holydayend(size, context, "title");
+                                  },
+                                  child: Text("종료 시간 : ${holiday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
+                            ),
+                          ],
+                        )
+                    ),
+                  ),
+                ],
+              ),
+
+
+              SizedBox(height: 150.h,),
               Center(
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: kContainerColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10))
+                  child: RoundedLoadingButton(
+                    color: kTextBlackColor,
+                    successColor: kTextBlackColor,
+                    controller: _btnController,
+                    onPressed: () {
+                      _doSomething();
+                    },
+                    child: Container(
+                      width: 330.w,
+                      height: 47.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: kButtonColor,
+                      ),
+
+
+                      alignment: Alignment.center,
+                      child: Text(
+                        "다음",
+                        style: TextStyle(
+                            fontFamily: "lightfont",
+                            color: kTextWhiteColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp
+                        ),
+                      ),
                     ),
-                    width: size.width*0.9,
-                    height: size.height*0.13,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                        Container(
-                          margin: EdgeInsets.only(top: 0,left: 10),
-                          child: InkWell(
-                              onTap: (){
-                                showDialog_weekdaystart(size, context, "title");
-                              },
-                              child: Text("시작 시간 : ${weekday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 10,left: 10),
-                          child: InkWell(
-                              onTap: (){
-                                showDialog_weekdayend(size, context, "title");
-                              },
-                              child: Text("종료 시간 : ${weekday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
-                        ),
-                      ],
-                    )
-                ),
-              ),
-
-              //토요일
-              widget.closedday=="토요일"?Container(): Container(
-                  margin: EdgeInsets.only(left: 20,bottom: 10,top: 30),
-                  child: InkWell(
-                      onTap: (){
-
-                      },
-                      child: Text("토요일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
-              widget.closedday=="토요일"?Container(): Center(
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: kContainerColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10))
-                    ),
-                    width: size.width*0.9,
-                    height: size.height*0.13,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                        Container(
-                          margin: EdgeInsets.only(top: 0,left: 10),
-                          child: InkWell(
-                              onTap: (){
-                                showDialog_staurdaystart(size, context, "title");
-                              },
-                              child: Text("시작 시간 : ${saturday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 10,left: 10),
-                          child: InkWell(
-                              onTap: (){
-                                showDialog_staurdayend(size, context, "title");
-                              },
-                              child: Text("종료 시간 : ${saturday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
-                        ),
-                      ],
-                    )
-                ),
-              ),
-
-              //일요일
-              widget.closedday=="일요일"?Container():  Container(
-                  margin: EdgeInsets.only(left: 20,bottom: 10,top: 30),
-                  child: InkWell(
-                      onTap: (){
-                        //  showDialog_weekdaystart(size, context, "title");
-                      },
-                      child: Text("일요일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
-              widget.closedday=="일요일"?Container(): Center(
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: kContainerColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10))
-                    ),
-                    width: size.width*0.9,
-                    height: size.height*0.13,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                        Container(
-                          margin: EdgeInsets.only(top: 0,left: 10),
-                          child: InkWell(
-                              onTap: (){
-                                showDialog_sundaystart(size, context, "title");
-                              },
-                              child: Text("시작 시간 : ${sunday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 10,left: 10),
-                          child: InkWell(
-                              onTap: (){
-                                showDialog_sundayend(size, context, "title");
-                              },
-                              child: Text("종료 시간 : ${sunday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
-                        ),
-                      ],
-                    )
-                ),
-              ),
-
-              //공휴일
-              widget.holyday_bool==true?Container():Container(
-                  margin: EdgeInsets.only(left: 20,bottom: 10,top: 30),
-                  child: InkWell(
-                      onTap: (){
-                        //  showDialog_weekdaystart(size, context, "title");
-                      },
-                      child: Text("공휴일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
-              widget.holyday_bool==true?Container():Center(
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: kContainerColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10))
-                    ),
-                    width: size.width*0.9,
-                    height: size.height*0.12,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-
-                        Container(
-                          margin: EdgeInsets.only(top: 0,left: 10),
-                          child: InkWell(
-                              onTap: (){
-                                showDialog_holydaystart(size, context, "title");
-                              },
-                              child: Text("시작 시간 : ${holiday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 10,left: 10),
-                          child: InkWell(
-                              onTap: (){
-                                showDialog_holydayend(size, context, "title");
-                              },
-                              child: Text("종료 시간 : ${holiday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
-                        ),
-                      ],
-                    )
-                ),
-              ),
-              SizedBox(height: 50),
-              Center(
-                child: InkWell(
-                  onTap: () async {
-                    final prefs = await SharedPreferences.getInstance();
-                    var register_time = await GymApi().register_time(
-                        prefs.getString("gymId"),
-                        prefs.getString("token"),
-                        widget.closedday,
-                        sunday_start + " ~ " + sunday_end,
-                        saturday_start + " ~ " + saturday_end,
-                        weekday_start + " ~ " + weekday_end,
-                        holiday_start + " ~ " + holiday_end);
-
-                    if (register_time == true) {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.fade,
-                              child: GymRegisterView3()));
-                    } else {
-                      return;
-                    }
-                  },
-                  child: Button("다음")
-                ),
+                  )
               ),
               SizedBox(height: 30),
             ],

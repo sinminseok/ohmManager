@@ -38,7 +38,7 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
     ImagePicker imagePicker = ImagePicker();
 
     List<XFile> images = await imagePicker.pickMultiImage(
-        maxWidth: 640, maxHeight: 280, imageQuality: 100);
+        maxWidth: 640, maxHeight: 280, imageQuality: 70);
 
     for (int i = 0; i < images.length; i++) {
       setState(() {

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ohmmanager/Utils/toast.dart';
 import 'package:ohmmanager/View/post/detailview/post_write.dart';
 import 'package:ohmmanager/View/post/widgets/post_widget.dart';
@@ -29,7 +30,16 @@ class _PostView extends State<PostView> {
         await PostApi().findall_posts(prefs.getString("gymId").toString());
     return results;
   }
-
+  final spinkit2 = SpinKitWanderingCubes(
+    itemBuilder: (BuildContext context, int index) {
+      return DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(100)),
+          color: index.isEven ? kPrimaryColor : kBoxColor,
+        ),
+      );
+    },
+  );
   Future<bool> check_gym() async {
     final prefs = await SharedPreferences.getInstance();
     if (prefs.getString("gymId") == null) {
@@ -109,10 +119,7 @@ class _PostView extends State<PostView> {
                     return Container(
                       margin: EdgeInsets.only(top: 220.h),
                       child: Center(
-                          child: Text(
-                        "헬스장을 먼저 등록해주세요!",
-                        style: TextStyle(fontSize: 18.sp, fontFamily: "lightfont"),
-                      )),
+                          child: spinkit2),
                     );
                   }
                   //error가 발생하게 될 경우 반환하게 되는 부분

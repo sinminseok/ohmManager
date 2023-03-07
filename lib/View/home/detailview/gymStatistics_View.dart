@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Controller/gymApi.dart';
 import '../detailview/chart_view.dart';
 import '../../../Utils/constants.dart';
-
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 class GymStatistics_View extends StatefulWidget {
   StatisticsDto time_avg;
 
@@ -29,7 +29,8 @@ class GymStatistics_View extends StatefulWidget {
 class _GymStatistics_View extends State<GymStatistics_View> {
   AnimateIconController controller = AnimateIconController();
   String? current_count;
-
+  RefreshController _refreshController =
+  RefreshController(initialRefresh: false);
   refresh() async {
     final prefs = await SharedPreferences.getInstance();
     var gymId = prefs.getString("gymId");
@@ -52,10 +53,10 @@ class _GymStatistics_View extends State<GymStatistics_View> {
       child: Column(
         children: [
           Container(
-              width: 340.w,
+              width: 360.w,
               height: 120.h,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: kBoxColor),
+                  borderRadius: BorderRadius.circular(0), color: kBottomColor),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -73,7 +74,7 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                             children: [
                               InkWell(
                                 child: Container(
-                                  margin: EdgeInsets.only(left: 0.w),
+                                  margin: EdgeInsets.only(left: 10.w),
                                   child: AnimateIcons(
                                     startIcon: Icons.refresh,
                                     endIcon: Icons.refresh,
@@ -107,7 +108,7 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                                 },
                                 child: Container(
                                     margin: EdgeInsets.only(
-                                        right: 10.w, bottom: 10),
+                                        right: 15.w, bottom: 10),
                                     child: Icon(
                                       Icons.power_settings_new,
                                       size: 30,
@@ -120,14 +121,14 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(left: 70.h),
+                                  margin: EdgeInsets.only(left: 75.h),
                                   child: Text(
                                     "현재 약",
                                     style: TextStyle(
                                         fontSize: 20.sp,
                                         fontWeight: FontWeight.bold,
                                         fontFamily: "lightfont",
-                                        color: kTextBlackColor),
+                                        color: kTextWhiteColor),
                                   ),
                                 ),
                                 Container(
@@ -137,7 +138,7 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                                     style: TextStyle(
                                         fontSize: 32.sp,
                                         fontFamily: "boldfont",
-                                        color: kPrimaryColor),
+                                        color: kTextWhiteColor),
                                   ),
                                 ),
                                 Container(
@@ -147,7 +148,7 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                                     style: TextStyle(
                                         fontSize: 24.sp,
                                         fontFamily: "boldfont",
-                                        color: kTextBlackColor),
+                                        color: kTextWhiteColor),
                                   ),
                                 )
                               ])
@@ -156,9 +157,9 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                     ),
                   ])),
           Container(
-              margin: EdgeInsets.only(left: 10, right: 10, top: 27.h),
+              margin: EdgeInsets.only(left: 10, right: 10, top: 15.h),
               width: 360.w,
-              height: 350.h,
+              height: 370.h,
               child: Container(
 
                   decoration: BoxDecoration(

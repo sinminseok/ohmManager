@@ -12,6 +12,7 @@ import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:ohmmanager/View/gym/detailview/finish_view.dart';
 import 'package:ohmmanager/View/gym/popup/check_price.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Utils/constants.dart';
@@ -28,7 +29,12 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
   List<GymPriceDto> prices = [];
 
   TextEditingController _priceController = TextEditingController();
+  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
 
+  void _doSomething() async {
+
+
+  }
   final _valueList = [
     '1일',
     '1개월',
@@ -84,10 +90,10 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left: 25, bottom: 15,top: 10),
+                    margin: EdgeInsets.only(left: 25, bottom: 15,top: 20.h),
                     child: Text(
                       "이용 가격",
-                      style: TextStyle(color: kTextColor, fontSize: 23,fontFamily: "boldfont",fontWeight: FontWeight.bold),
+                      style: TextStyle(color: kTextColor, fontSize: 23,fontFamily: "lightfont",fontWeight: FontWeight.bold),
                     ),
                   ),
                   Center(
@@ -109,8 +115,9 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
                                   child: Text(
                                     "이용기간",
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 16.sp,
                                         fontWeight: FontWeight.bold,
+                                        fontFamily: "lightfont",
                                         color: kTextColor),
                                   )),
                               Container(
@@ -156,7 +163,8 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
                                   child: Text(
                                     "가격",
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 16.sp,
+                                        fontFamily: "lightfont",
                                         fontWeight: FontWeight.bold,
                                         color: kTextColor),
                                   )),
@@ -277,10 +285,10 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
                                   children: [
                                     Container(
                                         margin: EdgeInsets.only(left: 20.w,top: 10.h),
-                                        child: Text("${prices[index].during}",style: TextStyle(color: kTextColor,fontSize: 20,fontWeight: FontWeight.bold),)),
+                                        child: Text("${prices[index].during}",style: TextStyle(color: kTextColor,fontSize: 18.sp,fontFamily: "lightfont",fontWeight: FontWeight.bold),)),
                                     Container(
                                         margin: EdgeInsets.only(left: 20.w,top: 10.h,right: 20.w),
-                                        child: Text("${prices[index].price}원",style: TextStyle(fontSize: 20),))
+                                        child: Text("${prices[index].price}원",style: TextStyle(fontSize: 18.sp,fontFamily: "lightfont",fontWeight: FontWeight.bold ),))
                                   ],
                                 ),
                               ],
@@ -292,6 +300,7 @@ class _GymRegisterView4 extends State<GymRegisterView4> {
               ),
 
               SizedBox(height: 135.h,),
+
 
               InkWell(
                 onTap: () async {

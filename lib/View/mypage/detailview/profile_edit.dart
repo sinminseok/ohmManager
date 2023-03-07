@@ -41,8 +41,7 @@ class _Profile_EditState extends State<Profile_Edit> {
     Future getImageFromGallery() async {
       // for gallery
       image_picked =
-          await ImagePicker.platform.pickImage(source: ImageSource.gallery);
-      print(image_picked);
+          await ImagePicker.platform.pickImage(source: ImageSource.gallery,imageQuality: 80);
       if (mounted) {
         setState(() {
           _image = image_picked!;

@@ -71,17 +71,22 @@ class CheckPrice_Popup {
                                     ))),
                             InkWell(
                                 onTap: ()async{
-                                  final prefs = await SharedPreferences.getInstance();
-                                  var bool = await GymApi().register_price(prefs.getString("gymId"), prefs.getString("token"), prices);
-                                  if(bool == null){
-                                    return showtoast("서버오류");
-                                  }else{
-                                    Navigator.push(
-                                        context,
-                                        PageTransition(
-                                            type: PageTransitionType.fade,
-                                            child: GymSave_Finish()));
-                                  }
+                                  showtoast("잠시만 기다려주세요!");
+                                  Future.delayed(const Duration(milliseconds: 1000), () async{
+
+                                    final prefs = await SharedPreferences.getInstance();
+                                    var bool = await GymApi().register_price(prefs.getString("gymId"), prefs.getString("token"), prices);
+                                    if(bool == null){
+                                      return showtoast("서버오류");
+                                    }else{
+                                      Navigator.push(
+                                          context,
+                                          PageTransition(
+                                              type: PageTransitionType.fade,
+                                              child: GymSave_Finish()));
+                                    }
+                                  });
+
                                 },
                                 child: Container(
                                     margin: EdgeInsets.only(bottom: 20.h,left: 0.h,right: 0.h),

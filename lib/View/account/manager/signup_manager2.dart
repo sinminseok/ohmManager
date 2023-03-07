@@ -10,6 +10,7 @@ import 'package:ohmmanager/Utils/toast.dart';
 import 'package:ohmmanager/View/account/login_view.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import '../../../Utils/constants.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -31,9 +32,59 @@ class _SignupView2 extends State<SignupView2>
     with SingleTickerProviderStateMixin {
   final TextEditingController _onlineController = TextEditingController();
   final TextEditingController _introduceController = TextEditingController();
-
+  bool goodToGo = true;
   PickedFile? _image;
   var image_picked;
+
+  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
+
+  void _doSomething() async {
+
+    if(_introduceController.text =="" || _onlineController.text == ""){
+      showtoast("내용을 모두 입력해주세요");
+      _btnController.stop();
+    }else{
+      if(!goodToGo){return;}
+      if(goodToGo){debugPrint("Going to the moon!");}// do your thing
+      goodToGo = false;
+
+      Future.delayed(const Duration(milliseconds: 300), () async{
+        goodToGo = true;
+
+        int? id = await AdminApi().register_manager(widget.position,widget.name, widget.password, widget.nickname, _onlineController.text,_introduceController.text,widget.gymId);
+
+        if(id == null){
+          return showtoast("이미 존재하는 아이디입니다.");
+        }else{
+
+          if(_image == null){
+            _btnController.success();
+            showtoast("회원가입이 완료되었습니다.");
+            Navigator.push(
+                context,
+                PageTransition(
+                    type: PageTransitionType.fade,
+                    child: LoginView()));
+          }else{
+
+            showtoast("회원가입이 완료되었습니다.");
+            AdminApi().register_profile(_image!,id.toString());
+            _btnController.success();
+            Navigator.push(
+                context,
+                PageTransition(
+                    type: PageTransitionType.fade,
+                    child: LoginView()));
+          }
+
+
+        }
+      });
+
+    }
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +96,7 @@ class _SignupView2 extends State<SignupView2>
       image_picked = null;
       // for gallery
       image_picked =
-          await ImagePicker.platform.pickImage(source: ImageSource.gallery);
-      print(image_picked);
+          await ImagePicker.platform.pickImage(source: ImageSource.gallery,imageQuality: 80);
       if (mounted) {
         setState(() {
           _image = image_picked!;
@@ -159,40 +209,35 @@ class _SignupView2 extends State<SignupView2>
                 InkWell(
                     onTap: () async {
 
-                      if(_introduceController.text =="" || _onlineController.text == ""){
-                        showtoast("내용을 모두 입력해주세요");
-                      }else{
-
-                        int? id = await AdminApi().register_manager(widget.position,widget.name, widget.password, widget.nickname, _onlineController.text,_introduceController.text,widget.gymId);
-
-                        if(id == null){
-                          return showtoast("이미 존재하는 아이디입니다.");
-                        }else{
-                          if(_image == null){
-                            showtoast("회원가입이 완료되었습니다.");
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.fade,
-                                    child: LoginView()));
-                          }else{
-                            showtoast("회원가입이 완료되었습니다.");
-                            AdminApi().register_profile(_image!,id.toString());
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.fade,
-                                    child: LoginView()));
-                          }
-
-
-                        }
-                      }
-
 
                     },
                     borderRadius: BorderRadius.circular(10),
-                    child: Button("다음")
+                    child: RoundedLoadingButton(
+                      controller: _btnController,
+                      successColor: kTextBlackColor,
+                      color: kTextBlackColor,
+                      onPressed: _doSomething,
+                      child: Container(
+                        width: 330.w,
+                        height: 47.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: kButtonColor,
+                        ),
+
+
+                        alignment: Alignment.center,
+                        child: Text(
+                          "다음",
+                          style: TextStyle(
+                              fontFamily: "lightfont",
+                              color: kTextWhiteColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.sp
+                          ),
+                        ),
+                      ),
+                    )
                 ),
                 SizedBox(height: 30),
               ],

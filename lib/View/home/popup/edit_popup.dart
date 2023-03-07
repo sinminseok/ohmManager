@@ -35,7 +35,7 @@ class Edit_Popup {
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: 20.h,bottom: 10.h),
-                        child: Text("헬스장 정보 수정",style: TextStyle(color: kPrimaryColor,fontWeight: FontWeight.bold,fontSize: 17.sp,fontFamily: "boldfont"),),
+                        child: Text("헬스장 정보 수정",style: TextStyle(color: kPrimaryColor,fontSize: 18.sp,fontFamily: "boldfont"),),
                       ),
                       InkWell(
                         onTap: (){
@@ -46,7 +46,7 @@ class Edit_Popup {
                                   child: GymEdit_View(gymDto: gymDto, orign_imglength: gymDto.imgs.length,)));
                         },
                         child: Container(
-                          margin: EdgeInsets.only(top: 20, left: 20, right: 20),
+                          margin: EdgeInsets.only(top: 15, left: 20, right: 20),
                           width: 320.w,
                           height: 50.h,
                           decoration: BoxDecoration(
@@ -59,7 +59,7 @@ class Edit_Popup {
                                   margin: EdgeInsets.only(left: 20,right: 15),
                                   child: Icon(Icons.fitness_center,color: kPrimaryColor,size: 25,)),
                               Container(
-                                child: Text("헬스장 정보수정",style: TextStyle(color: kPrimaryColor,fontFamily: "boldfont",fontSize: 17,fontWeight: FontWeight.bold),),
+                                child: Text("헬스장 정보수정",style: TextStyle(color: kPrimaryColor,fontFamily: "lightfont",fontSize: 16,fontWeight: FontWeight.bold),),
                               )
                             ],
                           ),
@@ -87,7 +87,7 @@ class Edit_Popup {
                                   margin: EdgeInsets.only(left: 20,right: 15),
                                   child: Icon(Icons.monetization_on_outlined,color: kPrimaryColor,size: 25,)),
                               Container(
-                                child: Text("헬스장 가격수정",style: TextStyle(color: kPrimaryColor,fontFamily: "boldfont",fontSize: 17,fontWeight: FontWeight.bold),),
+                                child: Text("헬스장 가격수정",style: TextStyle(color: kPrimaryColor,fontFamily: "lightfont",fontSize: 16,fontWeight: FontWeight.bold),),
                               )
                             ],
                           ),
@@ -115,7 +115,7 @@ class Edit_Popup {
                                   margin: EdgeInsets.only(left: 20,right: 15),
                                   child: Icon(Icons.alarm,color: kPrimaryColor,size: 25,)),
                               Container(
-                                child: Text("헬스장 시간수정",style: TextStyle(color: kPrimaryColor,fontFamily: "boldfont",fontSize: 17,fontWeight: FontWeight.bold),),
+                                child: Text("헬스장 시간수정",style: TextStyle(color: kPrimaryColor,fontFamily: "lightfont",fontSize: 16,fontWeight: FontWeight.bold),),
                               )
                             ],
                           ),
