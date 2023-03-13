@@ -44,7 +44,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     return Container(
       decoration: BoxDecoration(
 
-        color: kBackgroundColor,
+        color: Colors.grey.shade300,
       ),
 
       child: Row(
@@ -67,7 +67,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         width: MediaQuery.of(context).size.width / _iconList.length,
         decoration: index == _selectedIndex
             ? BoxDecoration(
-          color: kBackgroundColor
+          color: Colors.grey.shade300
         )
             : BoxDecoration(),
         child: Icon(

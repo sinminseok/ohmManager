@@ -73,7 +73,6 @@ class AdminApi with ChangeNotifier {
         'Authorization': 'Bearer $token',
 
       },);
-    print(res.body);
 
 
     if(res.statusCode == 200){
@@ -96,7 +95,6 @@ class AdminApi with ChangeNotifier {
 
 
 
-    print(res.body);
     if (res.statusCode == 200) {
 
       final decodeData = utf8.decode(res.bodyBytes);
@@ -197,8 +195,7 @@ class AdminApi with ChangeNotifier {
   Future<int?> register_ceo(
       String position,String id, String password, String nickname, String oneline_introduce,String introduce) async {
 
-    print(position);
-    print("position");
+
     var res = await http.post(Uri.parse(AdminApi_Url().save_ceo),
         headers: {
           'Content-Type': 'application/json',
@@ -208,7 +205,7 @@ class AdminApi with ChangeNotifier {
           'position' :position,
           'password': password,
           'nickname': nickname,
-          'oneline_introduce':oneline_introduce,
+          'onelineIntroduce':oneline_introduce,
           'introduce':introduce,
           'name': id,
         }));
@@ -230,7 +227,7 @@ class AdminApi with ChangeNotifier {
   Future<int?> register_manager(
       String position,String id, String password, String nickname, String oneline_introduce,String introduce,String gymId) async {
 
-    print(gymId);
+
 
     var res = await http.post(Uri.parse(AdminApi_Url().save_manager+"$gymId"),
         headers: {
@@ -241,13 +238,13 @@ class AdminApi with ChangeNotifier {
           'position':position,
           'password': password,
           'nickname': nickname,
-          'oneline_introduce':oneline_introduce,
+          'onelineIntroduce':oneline_introduce,
           'introduce':introduce,
           'name': id,
         }));
 
 
-    print(res.body);
+
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
@@ -276,13 +273,12 @@ class AdminApi with ChangeNotifier {
           'position':position,
           'name':name,
           'nickname': nickname,
-          'oneline_introduce':oneline_introduce,
+          'onelineIntroduce':oneline_introduce,
           'introduce':introduce,
 
         }));
 
-    print(res.body);
-    print("resresresres");
+
 
     if (res.statusCode == 200) {
       return true;
@@ -304,7 +300,7 @@ class AdminApi with ChangeNotifier {
           'position':position,
           'name': id,
           'password': password,
-          'oneline_introduce':oneline_introduce,
+          'onelineIntroduce':oneline_introduce,
           'introduce':introduce,
           'nickname': nickname,
         }));
@@ -345,8 +341,7 @@ class AdminApi with ChangeNotifier {
 
       //초기 로그인시 userId(PK)저장
       if(userId != trainerDto!.id.toString() || userId == null){
-        print("set UserId");
-        print(trainerDto!.id.toString());
+
         prefs.setString("userId", trainerDto!.id.toString());
       }
 

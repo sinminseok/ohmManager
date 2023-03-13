@@ -37,12 +37,20 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
 
   String? sunday_start;
   String? saturday_start;
-  String? weekday_start;
   String? holiday_start;
+  String? monday_start;
+  String? tuesday_start;
+  String? wednesday_start;
+  String? thursday_start;
+  String? friday_start;
 
   String? sunday_end;
   String? saturday_end;
-  String? weekday_end;
+  String? monday_end;
+  String? tuesday_end;
+  String? wednesday_end;
+  String? thursday_end;
+  String? friday_end;
   String? holiday_end;
 
   get_time()async{
@@ -53,8 +61,20 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
     sunday_start = gymTimeDto.sunday?.substring(0,5);
     sunday_end = gymTimeDto.sunday?.substring(8);
 
-    weekday_start = gymTimeDto.weekday?.substring(0,5);
-    weekday_end = gymTimeDto.weekday?.substring(8);
+    monday_start = gymTimeDto.monday?.substring(0,5);
+    monday_end = gymTimeDto.monday?.substring(8);
+
+    tuesday_start = gymTimeDto.tuesday?.substring(0,5);
+    tuesday_end = gymTimeDto.tuesday?.substring(8);
+
+    wednesday_start = gymTimeDto.wednesday?.substring(0,5);
+    wednesday_end = gymTimeDto.wednesday?.substring(8);
+
+    thursday_start = gymTimeDto.thursday?.substring(0,5);
+    thursday_end = gymTimeDto.thursday?.substring(8);
+
+    friday_start = gymTimeDto.friday?.substring(0,5);
+    friday_end = gymTimeDto.friday?.substring(8);
 
     saturday_start = gymTimeDto.saturday?.substring(0,5);
     saturday_end = gymTimeDto.saturday?.substring(8);
@@ -126,7 +146,7 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
                             onTap: (){
                               //  showDialog_weekdaystart(size, context, "title");
                             },
-                            child: Text("평일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
+                            child: Text("월요일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
                     Center(
                       child: Container(
                           decoration: BoxDecoration(
@@ -144,23 +164,182 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
                                 margin: EdgeInsets.only(top: 0,left: 10),
                                 child: InkWell(
                                     onTap: (){
-                                      showDialog_weekdaystart(size, context, "title");
+                                      showDialog_mondaystart(size, context, "title");
                                     },
-                                    child: Text("시작 시간 : ${weekday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
+                                    child: Text("시작 시간 : ${monday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
                               ),
                               Container(
                                 margin: EdgeInsets.only(top: 10,left: 10),
                                 child: InkWell(
                                     onTap: (){
-                                      showDialog_weekdayend(size, context, "title");
+                                      showDialog_mondayend(size, context, "title");
                                     },
-                                    child: Text("종료 시간 : ${weekday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
+                                    child: Text("종료 시간 : ${monday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
                               ),
                             ],
                           )
                       ),
                     ),
+                    Container(
+                        margin: EdgeInsets.only(left: 20,bottom: 10,top: 30),
+                        child: InkWell(
+                            onTap: (){
+                              //  showDialog_weekdaystart(size, context, "title");
+                            },
+                            child: Text("화요일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
+                    Center(
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: kContainerColor,
+                              borderRadius: BorderRadius.all(Radius.circular(10))
+                          ),
+                          width: size.width*0.9,
+                          height: size.height*0.13,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
 
+                              Container(
+                                margin: EdgeInsets.only(top: 0,left: 10),
+                                child: InkWell(
+                                    onTap: (){
+                                      showDialog_tusdaystart(size, context, "title");
+                                    },
+                                    child: Text("시작 시간 : ${thursday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 10,left: 10),
+                                child: InkWell(
+                                    onTap: (){
+                                      showDialog_tuesdayend(size, context, "title");
+                                    },
+                                    child: Text("종료 시간 : ${thursday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
+                              ),
+                            ],
+                          )
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(left: 20,bottom: 10,top: 30),
+                        child: InkWell(
+                            onTap: (){
+                              //  showDialog_weekdaystart(size, context, "title");
+                            },
+                            child: Text("수일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
+                    Center(
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: kContainerColor,
+                              borderRadius: BorderRadius.all(Radius.circular(10))
+                          ),
+                          width: size.width*0.9,
+                          height: size.height*0.13,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+
+                              Container(
+                                margin: EdgeInsets.only(top: 0,left: 10),
+                                child: InkWell(
+                                    onTap: (){
+                                      showDialog_wednesdaystart(size, context, "title");
+                                    },
+                                    child: Text("시작 시간 : ${wednesday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 10,left: 10),
+                                child: InkWell(
+                                    onTap: (){
+                                      showDialog_wednesdayend(size, context, "title");
+                                    },
+                                    child: Text("종료 시간 : ${wednesday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
+                              ),
+                            ],
+                          )
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(left: 20,bottom: 10,top: 30),
+                        child: InkWell(
+                            onTap: (){
+                              //  showDialog_weekdaystart(size, context, "title");
+                            },
+                            child: Text("목일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
+                    Center(
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: kContainerColor,
+                              borderRadius: BorderRadius.all(Radius.circular(10))
+                          ),
+                          width: size.width*0.9,
+                          height: size.height*0.13,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+
+                              Container(
+                                margin: EdgeInsets.only(top: 0,left: 10),
+                                child: InkWell(
+                                    onTap: (){
+                                      showDialog_thursdaystart(size, context, "title");
+                                    },
+                                    child: Text("시작 시간 : ${thursday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 10,left: 10),
+                                child: InkWell(
+                                    onTap: (){
+                                      showDialog_thursdayend(size, context, "title");
+                                    },
+                                    child: Text("종료 시간 : ${thursday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
+                              ),
+                            ],
+                          )
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(left: 20,bottom: 10,top: 30),
+                        child: InkWell(
+                            onTap: (){
+                              //  showDialog_weekdaystart(size, context, "title");
+                            },
+                            child: Text("금요일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
+                    Center(
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: kContainerColor,
+                              borderRadius: BorderRadius.all(Radius.circular(10))
+                          ),
+                          width: size.width*0.9,
+                          height: size.height*0.13,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+
+                              Container(
+                                margin: EdgeInsets.only(top: 0,left: 10),
+                                child: InkWell(
+                                    onTap: (){
+                                      showDialog_fridaystart(size, context, "title");
+                                    },
+                                    child: Text("시작 시간 : ${friday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 10,left: 10),
+                                child: InkWell(
+                                    onTap: (){
+                                      showDialog_fridayend(size, context, "title");
+                                    },
+                                    child: Text("종료 시간 : ${friday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
+                              ),
+                            ],
+                          )
+                      ),
+                    ),
                     //토요일
                     gymTimeDto.closeddays=="토요일"?Container(): Container(
                         margin: EdgeInsets.only(left: 20,bottom: 10,top: 30),
@@ -294,13 +473,18 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
                             print(gymTimeDto.id);
                             final prefs = await SharedPreferences.getInstance();
                             var register_time = await GymApi().update_time(
+                                monday_start! + " ~ " + monday_end!,
+                                tuesday_start! + " ~ " + tuesday_end!,
+                                wednesday_start! + " ~ " + wednesday_end!,
+                                thursday_start! + " ~ " + thursday_end!,
+                                friday_start! + " ~ " + friday_end!,
                               gymTimeDto.id,
                                 prefs.getString("gymId"),
                                 prefs.getString("token"),
                                 gymTimeDto.closeddays,
                                 sunday_start! + " ~ " + sunday_end!,
                                 saturday_start! + " ~ " + saturday_end!,
-                                weekday_start! + " ~ " + weekday_end!,
+
                                 holiday_start! + " ~ " + holiday_end!);
 
                             if (register_time == true) {
@@ -314,7 +498,7 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
                               return;
                             }
                           },
-                          child: Button("다음")
+                          child: Button("수정")
                       ),
                     ),
                     SizedBox(height: 30),
@@ -327,7 +511,7 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
   }
 
 
-  void showDialog_weekdaystart(Size size, BuildContext context, String title) {
+  void showDialog_mondaystart(Size size, BuildContext context, String title) {
     showGeneralDialog(
         context: context,
         barrierDismissible: true,
@@ -356,18 +540,18 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
                               setState(() {
                                 if (value.hour.toString().length == 1) {
                                   if (value.minute.toString().length == 1) {
-                                    weekday_start =
+                                    monday_start =
                                         "0${value.hour}" + ":" + "0${value.minute}";
                                   } else {
-                                    weekday_start =
+                                    monday_start =
                                         "0${value.hour}" + ":" + "${value.minute}";
                                   }
                                 } else {
                                   if (value.minute.toString().length == 1) {
-                                    weekday_start =
+                                    monday_start =
                                         "${value.hour}" + ":" + "0${value.minute}";
                                   } else {
-                                    weekday_start =
+                                    monday_start =
                                         "${value.hour}" + ":" + "${value.minute}";
                                   }
                                 }
@@ -391,7 +575,7 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
         });
   }
 
-  void showDialog_weekdayend(Size size, BuildContext context, String title) {
+  void showDialog_mondayend(Size size, BuildContext context, String title) {
     showGeneralDialog(
         context: context,
         barrierDismissible: true,
@@ -422,13 +606,13 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
                                   {
                                     if (value.minute.toString().length == 1)
                                       {
-                                        weekday_end = "0${value.hour}" +
+                                        monday_end = "0${value.hour}" +
                                             ":" +
                                             "0${value.minute}"
                                       }
                                     else
                                       {
-                                        weekday_end = "0${value.hour}" +
+                                        monday_end = "0${value.hour}" +
                                             ":" +
                                             "${value.minute}"
                                       }
@@ -437,13 +621,577 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
                                   {
                                     if (value.minute.toString().length == 1)
                                       {
-                                        weekday_end = "${value.hour}" +
+                                        monday_end = "${value.hour}" +
                                             ":" +
                                             "0${value.minute}"
                                       }
                                     else
                                       {
-                                        weekday_end = "${value.hour}" +
+                                        monday_end = "${value.hour}" +
+                                            ":" +
+                                            "${value.minute}"
+                                      }
+                                  }
+                              });
+                            },
+                            initialDateTime: DateTime.now(),
+                          ),
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                                margin: EdgeInsets.all(20),
+                                child: Button("완료")))
+                      ],
+                    )),
+              ),
+            );
+          });
+        });
+  }
+
+  void showDialog_tusdaystart(Size size, BuildContext context, String title) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors.black45,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return StatefulBuilder(builder: (context, set) {
+            return AlertDialog(
+              contentPadding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              content: DefaultTextStyle(
+                style: TextStyle(fontSize: 16, color: Colors.black),
+                child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: size.height * 0.55,
+                          width: size.width * 0.85,
+                          child: CupertinoDatePicker(
+                            mode: CupertinoDatePickerMode.time,
+                            onDateTimeChanged: (value) {
+                              setState(() {
+                                if (value.hour.toString().length == 1) {
+                                  if (value.minute.toString().length == 1) {
+                                    tuesday_start =
+                                        "0${value.hour}" + ":" + "0${value.minute}";
+                                  } else {
+                                    tuesday_start =
+                                        "0${value.hour}" + ":" + "${value.minute}";
+                                  }
+                                } else {
+                                  if (value.minute.toString().length == 1) {
+                                    tuesday_start =
+                                        "${value.hour}" + ":" + "0${value.minute}";
+                                  } else {
+                                    tuesday_start =
+                                        "${value.hour}" + ":" + "${value.minute}";
+                                  }
+                                }
+                              });
+                            },
+                            initialDateTime: DateTime.now(),
+                          ),
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                                margin: EdgeInsets.all(20),
+                                child: Button("완료")))
+                      ],
+                    )),
+              ),
+            );
+          });
+        });
+  }
+
+  void showDialog_tuesdayend(Size size, BuildContext context, String title) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors.black45,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return StatefulBuilder(builder: (context, StateSetter set) {
+            return AlertDialog(
+              contentPadding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              content: DefaultTextStyle(
+                style: TextStyle(fontSize: 16, color: Colors.black),
+                child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: size.height * 0.55,
+                          width: size.width * 0.85,
+                          child: CupertinoDatePicker(
+                            mode: CupertinoDatePickerMode.time,
+                            onDateTimeChanged: (value) {
+                              setState(() => {
+                                if (value.hour.toString().length == 1)
+                                  {
+                                    if (value.minute.toString().length == 1)
+                                      {
+                                        tuesday_end = "0${value.hour}" +
+                                            ":" +
+                                            "0${value.minute}"
+                                      }
+                                    else
+                                      {
+                                        tuesday_end = "0${value.hour}" +
+                                            ":" +
+                                            "${value.minute}"
+                                      }
+                                  }
+                                else
+                                  {
+                                    if (value.minute.toString().length == 1)
+                                      {
+                                        tuesday_end = "${value.hour}" +
+                                            ":" +
+                                            "0${value.minute}"
+                                      }
+                                    else
+                                      {
+                                        tuesday_end = "${value.hour}" +
+                                            ":" +
+                                            "${value.minute}"
+                                      }
+                                  }
+                              });
+                            },
+                            initialDateTime: DateTime.now(),
+                          ),
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                                margin: EdgeInsets.all(20),
+                                child: Button("완료")))
+                      ],
+                    )),
+              ),
+            );
+          });
+        });
+  }
+
+  void showDialog_wednesdaystart(Size size, BuildContext context, String title) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors.black45,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return StatefulBuilder(builder: (context, set) {
+            return AlertDialog(
+              contentPadding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              content: DefaultTextStyle(
+                style: TextStyle(fontSize: 16, color: Colors.black),
+                child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: size.height * 0.55,
+                          width: size.width * 0.85,
+                          child: CupertinoDatePicker(
+                            mode: CupertinoDatePickerMode.time,
+                            onDateTimeChanged: (value) {
+                              setState(() {
+                                if (value.hour.toString().length == 1) {
+                                  if (value.minute.toString().length == 1) {
+                                    wednesday_start =
+                                        "0${value.hour}" + ":" + "0${value.minute}";
+                                  } else {
+                                    wednesday_start =
+                                        "0${value.hour}" + ":" + "${value.minute}";
+                                  }
+                                } else {
+                                  if (value.minute.toString().length == 1) {
+                                    wednesday_start =
+                                        "${value.hour}" + ":" + "0${value.minute}";
+                                  } else {
+                                    wednesday_start =
+                                        "${value.hour}" + ":" + "${value.minute}";
+                                  }
+                                }
+                              });
+                            },
+                            initialDateTime: DateTime.now(),
+                          ),
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                                margin: EdgeInsets.all(20),
+                                child: Button("완료")))
+                      ],
+                    )),
+              ),
+            );
+          });
+        });
+  }
+
+  void showDialog_wednesdayend(Size size, BuildContext context, String title) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors.black45,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return StatefulBuilder(builder: (context, StateSetter set) {
+            return AlertDialog(
+              contentPadding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              content: DefaultTextStyle(
+                style: TextStyle(fontSize: 16, color: Colors.black),
+                child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: size.height * 0.55,
+                          width: size.width * 0.85,
+                          child: CupertinoDatePicker(
+                            mode: CupertinoDatePickerMode.time,
+                            onDateTimeChanged: (value) {
+                              setState(() => {
+                                if (value.hour.toString().length == 1)
+                                  {
+                                    if (value.minute.toString().length == 1)
+                                      {
+                                        wednesday_end = "0${value.hour}" +
+                                            ":" +
+                                            "0${value.minute}"
+                                      }
+                                    else
+                                      {
+                                        wednesday_end = "0${value.hour}" +
+                                            ":" +
+                                            "${value.minute}"
+                                      }
+                                  }
+                                else
+                                  {
+                                    if (value.minute.toString().length == 1)
+                                      {
+                                        wednesday_end = "${value.hour}" +
+                                            ":" +
+                                            "0${value.minute}"
+                                      }
+                                    else
+                                      {
+                                        wednesday_end = "${value.hour}" +
+                                            ":" +
+                                            "${value.minute}"
+                                      }
+                                  }
+                              });
+                            },
+                            initialDateTime: DateTime.now(),
+                          ),
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                                margin: EdgeInsets.all(20),
+                                child: Button("완료")))
+                      ],
+                    )),
+              ),
+            );
+          });
+        });
+  }
+
+  void showDialog_thursdaystart(Size size, BuildContext context, String title) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors.black45,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return StatefulBuilder(builder: (context, set) {
+            return AlertDialog(
+              contentPadding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              content: DefaultTextStyle(
+                style: TextStyle(fontSize: 16, color: Colors.black),
+                child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: size.height * 0.55,
+                          width: size.width * 0.85,
+                          child: CupertinoDatePicker(
+                            mode: CupertinoDatePickerMode.time,
+                            onDateTimeChanged: (value) {
+                              setState(() {
+                                if (value.hour.toString().length == 1) {
+                                  if (value.minute.toString().length == 1) {
+                                    thursday_start =
+                                        "0${value.hour}" + ":" + "0${value.minute}";
+                                  } else {
+                                    thursday_start =
+                                        "0${value.hour}" + ":" + "${value.minute}";
+                                  }
+                                } else {
+                                  if (value.minute.toString().length == 1) {
+                                    thursday_start =
+                                        "${value.hour}" + ":" + "0${value.minute}";
+                                  } else {
+                                    thursday_start =
+                                        "${value.hour}" + ":" + "${value.minute}";
+                                  }
+                                }
+                              });
+                            },
+                            initialDateTime: DateTime.now(),
+                          ),
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                                margin: EdgeInsets.all(20),
+                                child: Button("완료")))
+                      ],
+                    )),
+              ),
+            );
+          });
+        });
+  }
+
+  void showDialog_thursdayend(Size size, BuildContext context, String title) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors.black45,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return StatefulBuilder(builder: (context, StateSetter set) {
+            return AlertDialog(
+              contentPadding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              content: DefaultTextStyle(
+                style: TextStyle(fontSize: 16, color: Colors.black),
+                child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: size.height * 0.55,
+                          width: size.width * 0.85,
+                          child: CupertinoDatePicker(
+                            mode: CupertinoDatePickerMode.time,
+                            onDateTimeChanged: (value) {
+                              setState(() => {
+                                if (value.hour.toString().length == 1)
+                                  {
+                                    if (value.minute.toString().length == 1)
+                                      {
+                                        thursday_end = "0${value.hour}" +
+                                            ":" +
+                                            "0${value.minute}"
+                                      }
+                                    else
+                                      {
+                                        thursday_end = "0${value.hour}" +
+                                            ":" +
+                                            "${value.minute}"
+                                      }
+                                  }
+                                else
+                                  {
+                                    if (value.minute.toString().length == 1)
+                                      {
+                                        thursday_end = "${value.hour}" +
+                                            ":" +
+                                            "0${value.minute}"
+                                      }
+                                    else
+                                      {
+                                        thursday_end = "${value.hour}" +
+                                            ":" +
+                                            "${value.minute}"
+                                      }
+                                  }
+                              });
+                            },
+                            initialDateTime: DateTime.now(),
+                          ),
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                                margin: EdgeInsets.all(20),
+                                child: Button("완료")))
+                      ],
+                    )),
+              ),
+            );
+          });
+        });
+  }
+
+  void showDialog_fridaystart(Size size, BuildContext context, String title) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors.black45,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return StatefulBuilder(builder: (context, set) {
+            return AlertDialog(
+              contentPadding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              content: DefaultTextStyle(
+                style: TextStyle(fontSize: 16, color: Colors.black),
+                child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: size.height * 0.55,
+                          width: size.width * 0.85,
+                          child: CupertinoDatePicker(
+                            mode: CupertinoDatePickerMode.time,
+                            onDateTimeChanged: (value) {
+                              setState(() {
+                                if (value.hour.toString().length == 1) {
+                                  if (value.minute.toString().length == 1) {
+                                    friday_start =
+                                        "0${value.hour}" + ":" + "0${value.minute}";
+                                  } else {
+                                    friday_start =
+                                        "0${value.hour}" + ":" + "${value.minute}";
+                                  }
+                                } else {
+                                  if (value.minute.toString().length == 1) {
+                                    friday_start =
+                                        "${value.hour}" + ":" + "0${value.minute}";
+                                  } else {
+                                    friday_start =
+                                        "${value.hour}" + ":" + "${value.minute}";
+                                  }
+                                }
+                              });
+                            },
+                            initialDateTime: DateTime.now(),
+                          ),
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                                margin: EdgeInsets.all(20),
+                                child: Button("완료")))
+                      ],
+                    )),
+              ),
+            );
+          });
+        });
+  }
+
+  void showDialog_fridayend(Size size, BuildContext context, String title) {
+    showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel:
+        MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors.black45,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext, Animation animation,
+            Animation secondaryAnimation) {
+          return StatefulBuilder(builder: (context, StateSetter set) {
+            return AlertDialog(
+              contentPadding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              content: DefaultTextStyle(
+                style: TextStyle(fontSize: 16, color: Colors.black),
+                child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: size.height * 0.55,
+                          width: size.width * 0.85,
+                          child: CupertinoDatePicker(
+                            mode: CupertinoDatePickerMode.time,
+                            onDateTimeChanged: (value) {
+                              setState(() => {
+                                if (value.hour.toString().length == 1)
+                                  {
+                                    if (value.minute.toString().length == 1)
+                                      {
+                                        friday_end = "0${value.hour}" +
+                                            ":" +
+                                            "0${value.minute}"
+                                      }
+                                    else
+                                      {
+                                        friday_end = "0${value.hour}" +
+                                            ":" +
+                                            "${value.minute}"
+                                      }
+                                  }
+                                else
+                                  {
+                                    if (value.minute.toString().length == 1)
+                                      {
+                                        friday_end = "${value.hour}" +
+                                            ":" +
+                                            "0${value.minute}"
+                                      }
+                                    else
+                                      {
+                                        friday_end = "${value.hour}" +
                                             ":" +
                                             "${value.minute}"
                                       }

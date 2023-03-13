@@ -9,7 +9,7 @@ import 'package:ohmmanager/View/gym/edit/gymTimeEdit_view.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../Utils/constants.dart';
-import '../../gym/detailview/gym_register.dart';
+import '../../gym/register/gym_register.dart';
 import '../../gym/edit/gymEdit_view.dart';
 
 class Register_Popup {

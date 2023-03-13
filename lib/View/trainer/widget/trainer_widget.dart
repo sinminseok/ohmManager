@@ -38,7 +38,7 @@ Widget Trainer_Widget(Size size,context,TrainerDto trainerDto) {
               borderRadius: BorderRadius.circular(3.0),
               child: Image.asset(
                 "assets/images/user.jpg",
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.fill,
               )),
         )
                 :Container(
@@ -49,7 +49,7 @@ Widget Trainer_Widget(Size size,context,TrainerDto trainerDto) {
                   borderRadius: BorderRadius.circular(3.0),
                   child:  Image.network(
                     awsimg_endpoint+trainerDto.profile!,
-                    fit: BoxFit.fitHeight,
+                    fit: BoxFit.fill,
                   )),
             ),
             Column(

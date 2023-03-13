@@ -7,6 +7,7 @@ import 'package:ohmmanager/Model/gymDto.dart';
 import 'package:ohmmanager/Model/trainerDto.dart';
 import 'package:ohmmanager/Utils/constants.dart';
 import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/View/home/detailview/gymInfo_view.dart';
 import 'package:ohmmanager/View/mypage/detailview/profile_edit.dart';
 import 'package:ohmmanager/View/mypage/detailview/question_view.dart';
 import 'package:ohmmanager/View/mypage/popup/bottm_sheet.dart';
@@ -14,6 +15,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk_talk.dart';
+import 'detailview/gyminfo_view.dart';
 import 'detailview/ohm_introduce.dart';
 
 
@@ -125,14 +127,16 @@ class _MypageViewState extends State<MypageView> {
                 future: myFuture,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData == false) {
-                    return Container(
-                      width: 350.w,
-                      height: 120.h,
-                      decoration: BoxDecoration(
-                          color: kContainerColor,
-                          borderRadius: BorderRadius.all(Radius.circular(0))),
-                      margin: EdgeInsets.only(top: 0.h, left: 0),
-                      child: spinkit2
+                    return Center(
+                      child: Container(
+                        width: 350.w,
+                        height: 140.h,
+                        decoration: BoxDecoration(
+                            color: kContainerColor,
+                            borderRadius: BorderRadius.all(Radius.circular(0))),
+                        margin: EdgeInsets.only(top: 0.h, left: 0),
+                        child: spinkit2
+                      ),
                     );
                   }
 
@@ -149,7 +153,7 @@ class _MypageViewState extends State<MypageView> {
                     return Center(
                       child: Container(
                         width: 350.w,
-                        height: 120.h,
+                        height: 130.h,
                         decoration: BoxDecoration(
                             color: kContainerColor,
                             borderRadius: BorderRadius.all(Radius.circular(0))),
@@ -246,7 +250,44 @@ class _MypageViewState extends State<MypageView> {
             Container(
                 margin: EdgeInsets.only(top: 30),
                 width: 330.w,
-                height: 50.h,
+                height: 60.h,
+                decoration: BoxDecoration(
+                    color: kBoxColor,
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: Row(
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(left: 20.w, top: 3.h),
+                        child: Icon(
+                          Icons.fitness_center,
+                          size: 30,
+                          color: kPrimaryColor,
+                        )),
+                    InkWell(
+                      onTap: ()async{
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.fade,
+                                child: GymDetail_View(gymDto:gymDto!,)));
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(left: 15.w, top: 0.h),
+                          child: Text(
+                            "헬스장 정보",
+                            style: TextStyle(
+                                fontFamily: "lightfont",
+                                fontSize: 18.sp,
+                                color: kPrimaryColor,
+                                fontWeight: FontWeight.bold),
+                          )),
+                    ),
+                  ],
+                )),
+            Container(
+                margin: EdgeInsets.only(top: 10),
+                width: 330.w,
+                height: 60.h,
                 decoration: BoxDecoration(
                     color: kBoxColor,
                     borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -261,11 +302,10 @@ class _MypageViewState extends State<MypageView> {
                         )),
                     InkWell(
                       onTap: ()async{
-                        const number = '01083131764'; //set the number here
-                        bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+                        _callNumber();
                       },
                       child: Container(
-                          margin: EdgeInsets.only(left: 15.w, top: 5.h),
+                          margin: EdgeInsets.only(left: 15.w, top: 0.h),
                           child: Text(
                             "고객센터",
                             style: TextStyle(
@@ -277,127 +317,7 @@ class _MypageViewState extends State<MypageView> {
                     ),
                   ],
                 )),
-            InkWell(
-              onTap: (){
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.fade,
-                        child: Question_View()));
-              },
-              child: Container(
-                  margin: EdgeInsets.only(top: 10),
-                  width: 330.w,
-                  height: 50.h,
-                  decoration: BoxDecoration(
-                      color: kBoxColor,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Row(
-                    children: [
-                      Container(
-                          margin: EdgeInsets.only(left: 20.w, top: 2.h),
-                          child: Icon(
-                            Icons.question_mark,
-                            size: 30,
-                            color: kPrimaryColor,
-                          )),
-                      Container(
-                          margin: EdgeInsets.only(left: 10.w, top: 3.h),
-                          child: Text(
-                            "자주 묻는 질문",
-                            style: TextStyle(
-                                fontFamily: "lightfont",
-                                fontSize: 18.sp,
-                                color: kPrimaryColor,
-                                fontWeight: FontWeight.bold),
-                          )),
-                    ],
-                  )),
-            ),
-            InkWell(
-              onTap: (){
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.fade,
-                        child: Introduce_View()));
-              },
-              child: Container(
-                  margin: EdgeInsets.only(top: 10),
-                  width: 330.w,
-                  height: 50.h,
-                  decoration: BoxDecoration(
-                      color: kBoxColor,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Row(
-                    children: [
-                      Container(
-                          margin: EdgeInsets.only(left: 20.w, top: 3.h),
-                          child: Icon(
-                            Icons.alarm,
-                            size: 30,
-                            color: kPrimaryColor,
-                          )),
-                      Container(
-                          margin: EdgeInsets.only(left: 13.w, top: 3.h),
-                          child: Text(
-                            "오헬몇 이란?",
-                            style: TextStyle(
-                                fontFamily: "lightfont",
-                                fontSize: 18.sp,
-                                color: kPrimaryColor,
-                                fontWeight: FontWeight.bold),
-                          )),
-                    ],
-                  )),
-            ),
-            Center(
-              child: InkWell(
-                onTap: ()async{
-                  showtoast("서비스 준비중입니다");
-                  // 연결 페이지 URL 구하기
-//                   Uri url = await TalkApi.instance.addChannelUrl('_WTJexj');
-//                   print(url);
-//
-// // 연결 페이지 URL을 브라우저에서 열기
-//                   try {
-//                     await launchBrowserTab(url);
-//                   } catch (error) {
-//                     print('카카오톡 채널 추가 실패 $error');
-//                   }
-                },
-                child: Container(
-                    margin: EdgeInsets.only(top: 30),
-                    width: 330.w,
-                    height: 70.h,
-                    decoration: BoxDecoration(
-                        color: kPrimaryColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(left: 20.w, top: 15.h),
-                            child: Text(
-                              "카카오톡으로 문의하기",
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  color: kTextWhiteColor,
-                                  fontWeight: FontWeight.bold),
-                            )),
-                        Container(
-                            margin: EdgeInsets.only(left: 20.w, top: 5.h),
-                            child: Text(
-                              "소중한 피드백을 보내주세요.",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: kTextWhiteColor,
-                                  fontWeight: FontWeight.bold),
-                            )),
-                      ],
-                    )),
-              ),
-            ),
+
             Column(
               children: [
                 SizedBox(

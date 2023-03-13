@@ -1,18 +1,9 @@
 import 'dart:ui';
-
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Utils/date.dart';
-import 'package:ohmmanager/Utils/toast.dart';
-import 'package:ohmmanager/View/gym/detailview/gym_register.dart';
-import 'package:ohmmanager/View/gym/edit/gymEdit_view.dart';
-import 'package:ohmmanager/View/home/detailview/gymInfo_view.dart';
-import 'package:ohmmanager/View/home/popup/edit_popup.dart';
 import 'package:ohmmanager/View/home/popup/register_popup.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Controller/gymApi.dart';
 import '../../Controller/adminApi.dart';
@@ -20,7 +11,6 @@ import '../../Model/gymDto.dart';
 import '../../Model/statisticsDto.dart';
 import '../../Utils/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'detailview/gymStatistics_View.dart';
 
@@ -33,9 +23,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeView extends State<HomeView> {
   GymDto? gymDto;
-  var result;
   Future? myFuture;
-  bool select_mode = false;
   var current_datetime;
   StatisticsDto? time_avg;
 
@@ -47,29 +35,8 @@ class _HomeView extends State<HomeView> {
     super.initState();
   }
 
-  final spinkit = SpinKitDoubleBounce(
-    itemBuilder: (BuildContext context, int index) {
-      return DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(100)),
-          color: index.isEven ? kPrimaryColor : Colors.black26,
-        ),
-      );
-    },
-  );
-
-  final spinkit2 = SpinKitWanderingCubes(
-    itemBuilder: (BuildContext context, int index) {
-      return DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(100)),
-          color: index.isEven ? kPrimaryColor : kBoxColor,
-        ),
-      );
-    },
-  );
-
   Future<bool> get_gyminfo() async {
+    //메모리에 저장된 userId조회
     final prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userId");
 
@@ -108,32 +75,12 @@ class _HomeView extends State<HomeView> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Switch(
-                activeColor: Colors.grey,
-                value: select_mode,
-                onChanged: (value) {
-                  setState(() {
-                    select_mode = value;
-                  });
-                },
-              ),
-              InkWell(
-                  onTap: () {
-                    if (gymDto == null) {
-                      showtoast("헬스장을 먼저 등록해주세요");
-                    } else {
-                      Edit_Popup().showDialog(context, gymDto!);
-                    }
-                  },
-                  child: Icon(
-                    Icons.settings,
-                    color: kTextWhiteColor,
-                  )),
+
             ],
           ),
           elevation: 0,
         ),
-        backgroundColor: select_mode == true?kBackgroundColor:kBackgroundColor,
+        backgroundColor: kBackgroundColor,
         body: SingleChildScrollView(
             child: Column(
           children: [
@@ -231,17 +178,38 @@ class _HomeView extends State<HomeView> {
                               )
                             ],
                           )
-                        : select_mode != true
-                            ? SingleChildScrollView(
-                                child: GymStatistics_View(
-                                current_datetime: current_datetime,
-                                time_avg: time_avg!,
-                                current_count: gymDto?.current_count.toString(),
-                              ))
-                            : GymInfo_View(gymDto: gymDto);
+                        : SingleChildScrollView(
+                        child: GymStatistics_View(
+                          current_datetime: current_datetime,
+                          time_avg: time_avg!,
+                          current_count: gymDto?.current_count.toString(),
+                        ));
                   }
                 })
           ],
         )));
   }
+
+
+  final spinkit = SpinKitDoubleBounce(
+    itemBuilder: (BuildContext context, int index) {
+      return DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(100)),
+          color: index.isEven ? kPrimaryColor : Colors.black26,
+        ),
+      );
+    },
+  );
+
+  final spinkit2 = SpinKitWanderingCubes(
+    itemBuilder: (BuildContext context, int index) {
+      return DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(100)),
+          color: index.isEven ? kPrimaryColor : kBoxColor,
+        ),
+      );
+    },
+  );
 }

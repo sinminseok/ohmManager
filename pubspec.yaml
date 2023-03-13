@@ -51,6 +51,7 @@ dependencies:
   multi_image_picker: ^4.8.1
   google_maps_flutter: ^2.1.10
   blinking_text: ^1.0.2
+  chart_sparkline: ^1.0.13
   permission_handler: ^10.0.0
   intl: ^0.17.0
   file_picker: ^5.2.5
@@ -128,13 +129,21 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
+    - family: lightfont2
+      fonts:
+        - asset: assets/fonts/lightfont2.ttf
+          weight: 200
+    - family: boldfont2
+      fonts:
+        - asset: assets/fonts/boldfont2.ttf
+          weight: 200
     - family: lightfont
       fonts:
-        - asset: assets/fonts/lightfont.ttf
+        - asset: assets/fonts/lightfont.otf
           weight: 200
     - family: boldfont
       fonts:
-        - asset: assets/fonts/boldfont.ttf
+        - asset: assets/fonts/boldfont.otf
           weight: 200
 
   #

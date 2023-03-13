@@ -41,7 +41,7 @@ class GymApi with ChangeNotifier {
       Uri.parse(GymApi_Url().check_code + "$code"),
       headers: {'Content-Type': 'application/json'},
     );
-    print(res.body);
+
 
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
@@ -77,13 +77,15 @@ class GymApi with ChangeNotifier {
 
   Future<bool> reset_count() async {
     final prfes = await SharedPreferences.getInstance();
-    var res = await http.patch(
+
+    var res = await http.post(
       Uri.parse(GymApi_Url().reset_count + "${prfes.getString("gymId")}"),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${prfes.getString("token")}'
       },
     );
+
 
     if (res.statusCode == 200) {
       return true;
@@ -178,7 +180,7 @@ class GymApi with ChangeNotifier {
       Uri.parse(GymApi_Url().find_byName + "${gym_name}"),
       headers: {'Content-Type': 'application/json'},
     );
-    print(res.statusCode);
+
 
     List<GymDto> result = [];
 
@@ -194,7 +196,7 @@ class GymApi with ChangeNotifier {
         }
         result.add(GymDto.fromJson(data[i], imgs));
       }
-      print(result);
+
       return result;
     } else {
       return gymDto;
@@ -202,7 +204,7 @@ class GymApi with ChangeNotifier {
   }
 
   Future<bool> register_time(String? gymId, String? token, String? closeddays,
-      String sunday, String saturday, String weekday, String holiday) async {
+      String monday, String tuesday, String wednesday, String thursday, String friday,String sunday, String saturday, String holiday) async {
     var res = await http.post(
         Uri.parse(GymApi_Url().register_time + "${gymId.toString()}"),
         headers: {
@@ -213,7 +215,11 @@ class GymApi with ChangeNotifier {
           "closeddays": closeddays,
           "sunday": sunday,
           "saturday": saturday,
-          "weekday": weekday,
+          "monday": monday,
+          "tuesday": tuesday,
+          "wednesday": wednesday,
+          "thursday": thursday,
+          "friday": friday,
           "holiday": holiday
         })));
 
@@ -225,13 +231,17 @@ class GymApi with ChangeNotifier {
   }
 
   Future<bool> update_time(
+      String? monday,
+      String? tuesday,
+      String? wednesday,
+      String? thursday,
+      String? friday,
       int? gymTimeId,
       String? gymId,
       String? token,
       String? closeddays,
       String sunday,
       String saturday,
-      String weekday,
       String holiday) async {
     var res = await http.patch(
         Uri.parse(GymApi_Url().register_time + "${gymId.toString()}"),
@@ -244,7 +254,11 @@ class GymApi with ChangeNotifier {
           "closeddays": closeddays,
           "sunday": sunday,
           "saturday": saturday,
-          "weekday": weekday,
+          "monday": monday,
+          "tuesday": tuesday,
+          "wednesday": wednesday,
+          "thursday": thursday,
+          "friday": friday,
           "holiday": holiday
         })));
 
@@ -268,7 +282,7 @@ class GymApi with ChangeNotifier {
           body: json.encode(
               ({"during": prices[i].during, "price": prices[i].price})));
     }
-    print(res.statusCode);
+
     if (res.statusCode == 403) {
       showtoast("권한이 없습니다.관리자에게 문의해주세요");
       return false;
@@ -417,7 +431,8 @@ class GymApi with ChangeNotifier {
             "update/${gymId}" +
             "?imgIds=${delete_imgs.toString().substring(1, delete_imgs.toString().length - 1)}",
         data: _formData);
-    print(res);
+
+
     if (res.statusCode == 200) {
       return true;
     } else {
@@ -433,7 +448,7 @@ class GymApi with ChangeNotifier {
       headers: {'Content-Type': 'application/json'},
     );
 
-    print(res);
+
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
@@ -455,7 +470,7 @@ class GymApi with ChangeNotifier {
       headers: {'Content-Type': 'application/json'},
     );
 
-    print(res);
+
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);

@@ -53,7 +53,7 @@ class _PostWrite_View extends State<PostWrite_View> {
       if(goodToGo){debugPrint("Going to the moon!");}// do your thing
       goodToGo = false;
 
-      Future.delayed(const Duration(milliseconds: 5000), () async{
+      Future.delayed(const Duration(milliseconds: 0), () async{
         goodToGo = true;
         final prefs = await SharedPreferences.getInstance();
         var save_post = await PostApi().save_post(

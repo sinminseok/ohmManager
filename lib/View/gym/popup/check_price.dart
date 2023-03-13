@@ -11,7 +11,7 @@ import '../../../Controller/gymApi.dart';
 import '../../../Model/gymPriceDto.dart';
 import '../../../Utils/constants.dart';
 import '../../../Utils/toast.dart';
-import '../detailview/finish_view.dart';
+import '../register/finish_view.dart';
 
 class CheckPrice_Popup {
   void showDialog(Size size, BuildContext context,List<GymPriceDto> prices) {
