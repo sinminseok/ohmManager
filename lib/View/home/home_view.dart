@@ -82,6 +82,7 @@ class _HomeView extends State<HomeView> {
       }
     }
 
+
   }
 
   get_avg() async {
