@@ -1,7 +1,9 @@
-String endpoint = "http://192.168.0.101:8080/api/";
+String endpoint = "http://192.168.0.102:8080/api/";
 
 class AdminApi_Url {
   String save_ceo = endpoint+"ceo";
+
+  String gyms_byceo = endpoint+"ceo/gyms/";
 
   String checkCode_ceo = endpoint+"ceo/code/"; //+{code}
 
@@ -46,7 +48,7 @@ class GymApi_Url {
 
   String reset_count = endpoint +"gym/reset/";
 
-  String register_gym = endpoint + "gym";
+  String register_gym = endpoint + "gym/";
 
   String registerimg_gym = endpoint + "gym/image/";
 

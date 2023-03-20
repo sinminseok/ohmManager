@@ -8,6 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ohmmanager/Model/authorityDto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
@@ -16,8 +17,8 @@ import 'package:ohmmanager/Model/trainerDto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/gymDto.dart';
+import '../Model/gymImgDto.dart';
 import '../Utils/httpurls.dart';
-import '../Utils/toast.dart';
 import 'gymApi.dart';
 
 
@@ -37,14 +38,13 @@ class AdminApi with ChangeNotifier {
     }
   }
 
-// Future<List<TrainerDto>>
+  //헬스장에 종속된 모든 관리자 정보 조회
   Future<List<TrainerDto>> findall_admin(String gymId)async{
     List<TrainerDto> trainers = [];
     var res = await http.get(Uri.parse(AdminApi_Url().findall_admin + "${gymId}"),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-
       },);
 
 
@@ -83,6 +83,41 @@ class AdminApi with ChangeNotifier {
     }
   }
 
+  Future<List<GymDto>?> findgyms_byceo(String? id,String? token)async{
+
+
+    List<GymDto> gyms = [];
+    var res = await http.get(Uri.parse(AdminApi_Url().gyms_byceo + "${int.parse(id!)}"),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },);
+
+
+    if (res.statusCode == 200) {
+
+      final decodeData = utf8.decode(res.bodyBytes);
+      final data = jsonDecode(decodeData);
+      for(int i = 0 ;i<data.length;i++){
+        print(data[i]);
+        List<GymImgDto> imgs = [];
+        for(int j = 0;j<data[i]["imgs"].length;j++){
+          imgs.add(GymImgDto.fromJson(data[i]['imgs'][j]));
+        }
+        gyms.add(GymDto.fromJson(data[i], imgs));
+      }
+
+
+
+      return gyms;
+    }else{
+
+      return null;
+    }
+
+  }
+
   Future<GymDto?> gyminfo_byManager(String? id,String? token)async{
 
 
@@ -94,19 +129,18 @@ class AdminApi with ChangeNotifier {
       },);
 
 
-
     if (res.statusCode == 200) {
 
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
 
-      GymDto? search_byId =await GymApi().search_byId(data['gymDto']['id']);
+      GymDto? searchById =await GymApi().search_byId(data['gymDto']['id']);
       final prefs = await SharedPreferences.getInstance();
       if(prefs.getString("gymId") == null){
-        prefs.setString("gymId", search_byId!.id.toString());
+        prefs.setString("gymId", searchById!.id.toString());
       }
 
-      return search_byId;
+      return searchById;
     }else{
 
       return null;
@@ -122,14 +156,21 @@ class AdminApi with ChangeNotifier {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },);
+    
+    print(res);
+    print(res.body);
+    print("d");
 
 
     if (res.statusCode == 200) {
 
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
+      // AuthorityDto authorityDto = AuthorityDto.fromJson(data['authorities'][0]);
 
       TrainerDto trainerDto = TrainerDto.fromJson(data);
+      print("trainerDtotrainerDto");
+      print(trainerDto.role);
       return trainerDto;
     }else{
       return null;
@@ -193,7 +234,7 @@ class AdminApi with ChangeNotifier {
 
   //manager 회원가입
   Future<int?> register_ceo(
-      String position,String id, String password, String nickname, String oneline_introduce,String introduce) async {
+      String position,String id, String password, String nickname, String onelineIntroduce,String introduce) async {
 
 
     var res = await http.post(Uri.parse(AdminApi_Url().save_ceo),
@@ -205,9 +246,9 @@ class AdminApi with ChangeNotifier {
           'position' :position,
           'password': password,
           'nickname': nickname,
-          'onelineIntroduce':oneline_introduce,
+          'onelineIntroduce':onelineIntroduce,
           'introduce':introduce,
-          'name': id,
+          'username': id,
         }));
 
 
@@ -225,7 +266,7 @@ class AdminApi with ChangeNotifier {
 
   //manager 회원가입
   Future<int?> register_manager(
-      String position,String id, String password, String nickname, String oneline_introduce,String introduce,String gymId) async {
+      String position,String id, String password, String nickname, String onelineIntroduce,String introduce,String gymId) async {
 
 
 
@@ -238,9 +279,9 @@ class AdminApi with ChangeNotifier {
           'position':position,
           'password': password,
           'nickname': nickname,
-          'onelineIntroduce':oneline_introduce,
+          'onelineIntroduce':onelineIntroduce,
           'introduce':introduce,
-          'name': id,
+          'username': id,
         }));
 
 
@@ -259,7 +300,7 @@ class AdminApi with ChangeNotifier {
 
   //manager 정보수정
   Future<bool?> update_admin(
-      String position,String token,int? id,String nickname, String oneline_introduce,String introduce,String name) async {
+      String position,String token,int? id,String nickname, String onelineIntroduce,String introduce,String name) async {
 
 
     var res = await http.patch(Uri.parse(AdminApi_Url().update_info),
@@ -271,9 +312,9 @@ class AdminApi with ChangeNotifier {
         body: json.encode({
           'id':id,
           'position':position,
-          'name':name,
+          'username':name,
           'nickname': nickname,
-          'onelineIntroduce':oneline_introduce,
+          'onelineIntroduce':onelineIntroduce,
           'introduce':introduce,
 
         }));
@@ -290,7 +331,7 @@ class AdminApi with ChangeNotifier {
 
   //trainer 회원가입
   Future<int?> register_trainer(
-      String position,String id,String oneline_introduce,String introduce ,String password, String nickname,String gymId) async {
+      String position,String id,String onelineIntroduce,String introduce ,String password, String nickname,String gymId) async {
     var res = await http.post(Uri.parse(AdminApi_Url().save_trainer+"$gymId"),
         headers: {
           'Content-Type': 'application/json',
@@ -298,9 +339,9 @@ class AdminApi with ChangeNotifier {
         },
         body: json.encode({
           'position':position,
-          'name': id,
+          'username': id,
           'password': password,
-          'onelineIntroduce':oneline_introduce,
+          'onelineIntroduce':onelineIntroduce,
           'introduce':introduce,
           'nickname': nickname,
         }));

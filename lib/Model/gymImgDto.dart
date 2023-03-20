@@ -4,7 +4,7 @@ import 'dart:ffi';
 class GymImgDto{
 
   late int id;
-  late String origFileName;
+  late String? origFileName;
   late String filePath;
 
   GymImgDto(

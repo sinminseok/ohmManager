@@ -3,14 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/adminApi.dart';
-import 'package:ohmmanager/View/account/manager/manager_code.dart';
 import 'package:ohmmanager/View/account/role_view.dart';
 import 'package:ohmmanager/View/account/widget/loading_widget.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../Utils/buttom_container.dart';
 import '../../Utils/constants.dart';
 import '../../Utils/toast.dart';
 
@@ -40,6 +38,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
       _btnController.stop();
       return showtoast("아이디 혹은 비밀번호가 틀립니다.");
     } else {
+      //자동 로그인 체크시 실행
       if (ischeck == true) {
         prefs.setString("loginId", _userIDController.text);
         prefs.setString(
@@ -261,46 +260,38 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                                   ),
                                 ),
                               ),
-                              InkWell(
-                                  onTap: () async {
+                              RoundedLoadingButton(
+                                width: 100.w,
+                                height: 40.h,
+                                controller: _btnController,
+                                successColor: kTextBlackColor,
+                                color: kTextBlackColor,
+                                onPressed: _doSomething,
+                                child: Container(
+                                  width: 260.w,
+                                  height: 47.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: kButtonColor,
+                                  ),
 
 
-                                  },
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: RoundedLoadingButton(
-                                    width: 100.w,
-                                    height: 40.h,
-                                    controller: _btnController,
-                                    successColor: kTextBlackColor,
-                                    color: kTextBlackColor,
-                                    onPressed: _doSomething,
-                                    child: Container(
-                                      width: 260.w,
-                                      height: 47.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: kButtonColor,
-                                      ),
-
-
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "로그인",
-                                        style: TextStyle(
-                                            fontFamily: "lightfont",
-                                            color: kTextWhiteColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16.sp
-                                        ),
-                                      ),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "로그인",
+                                    style: TextStyle(
+                                        fontFamily: "lightfont",
+                                        color: kTextWhiteColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.sp
                                     ),
-                                  )
+                                  ),
+                                ),
                               ),
-                              SizedBox(
-                                height: 30.h,
-                              ),
+
 
                               Container(
+                                margin: EdgeInsets.only(top: 15.h),
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.push(

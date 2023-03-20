@@ -15,7 +15,6 @@ class GymDto {
   int? trainer_count;
   int? code;
 
-  //server == count
   int? count;
   List<GymImgDto> imgs;
 
@@ -40,7 +39,7 @@ class GymDto {
         current_count: json['current_count'],
         count: json['count'],
         introduce: json['introduce'],
-        oneline_introduce: json['oneline_introduce'],
+        oneline_introduce: json['onelineIntroduce'],
         imgs: imgs,
         code: json['code'],
         trainer_count: json['trainer_count']);

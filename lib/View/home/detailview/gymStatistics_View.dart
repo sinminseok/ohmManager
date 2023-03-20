@@ -5,6 +5,7 @@ import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ohmmanager/Model/gymDto.dart';
 import 'package:ohmmanager/Model/statisticsDto.dart';
 import 'package:ohmmanager/Utils/toast.dart';
 import 'package:ohmmanager/View/home/popup/reset_popup.dart';
@@ -18,12 +19,14 @@ import '../widget/chart_bottom.dart';
 
 class GymStatistics_View extends StatefulWidget {
   StatisticsDto time_avg;
-
+  GymDto? gymDto;
   String? current_count;
   String current_datetime;
 
   GymStatistics_View(
-      {required this.time_avg,
+      {
+        required this.gymDto,
+        required this.time_avg,
       required this.current_datetime,
       required this.current_count});
 
@@ -84,6 +87,7 @@ class _GymStatistics_View extends State<GymStatistics_View> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
           Container(
               width: 360.w,
               height: 100.h,
@@ -92,60 +96,69 @@ class _GymStatistics_View extends State<GymStatistics_View> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
                     Container(
                       width: 360.w,
-                      height: 100.h,
+                      height: 80.h,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            height: 3.h,
-                          ),
 
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(left: 75.h),
-                                  child: Text(
-                                    "현재 약",
-                                    style: TextStyle(
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: "lightfont",
-                                        color: kTextWhiteColor),
+
+
+                          Container(
+                            margin: EdgeInsets.only(top: 10.h,right: 15.w),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+
+                                    child: Text(
+                                      "현재 약",
+                                      style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: "lightfont",
+                                          color: kTextWhiteColor),
+                                    ),
                                   ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 27.h),
-                                  child: Text(
-                                    "${widget.current_count}",
-                                    style: TextStyle(
-                                        fontSize: 37.sp,
-                                        fontFamily: "boldfont2",
-                                        color: kTextWhiteColor),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 15.h),
+                                    child: Text(
+                                      "${widget.current_count}",
+                                      style: TextStyle(
+                                          fontSize: 37.sp,
+                                          fontFamily: "boldfont2",
+                                          color: kTextWhiteColor),
+                                    ),
                                   ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 30.h,bottom: 5.h),
-                                  child: Text(
-                                    "명",
-                                    style: TextStyle(
-                                        fontSize: 24.sp,
-                                        fontFamily: "boldfont",
-                                        color: kTextWhiteColor),
-                                  ),
-                                )
-                              ])
+                                  Container(
+                                    margin: EdgeInsets.only(left: 15.h,bottom: 5.h),
+                                    child: Text(
+                                      "명",
+                                      style: TextStyle(
+                                          fontSize: 24.sp,
+                                          fontFamily: "boldfont",
+                                          color: kTextWhiteColor),
+                                    ),
+                                  )
+                                ]),
+                          )
                         ],
                       ),
                     ),
                   ])),
+          // Container(
+          //     margin: EdgeInsets.only(left: 13.w, top: 15.h),
+          //     child: Text(
+          //       "${widget.gymDto?.name}",
+          //       style: TextStyle(fontSize: 17.sp, fontFamily: "boldfont"),
+          //     )),
           Container(
               margin: EdgeInsets.only(left: 13.w, top: 15.h),
               child: Text(
                 "시간별 평균 인원 ",
-                style: TextStyle(fontSize: 19.sp, fontFamily: "boldfont"),
+                style: TextStyle(fontSize: 17.sp, fontFamily: "boldfont"),
               )),
           Container(
             width: 360.w,

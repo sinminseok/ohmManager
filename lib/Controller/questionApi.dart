@@ -1,20 +1,10 @@
 import 'dart:convert';
-import 'dart:ffi';
-import 'dart:io';
-import 'package:http_parser/http_parser.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Model/answerDto.dart';
 import 'package:ohmmanager/Model/questionDto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../Model/postDto.dart';
-import '../Model/postImgDto.dart';
 import '../Utils/httpurls.dart';
-import '../Utils/toast.dart';
 
 class QuestionApi with ChangeNotifier {
 

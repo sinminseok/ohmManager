@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ohmmanager/Controller/adminApi.dart';
+import 'package:ohmmanager/Controller/gymApi.dart';
 import 'package:ohmmanager/Model/gymDto.dart';
 import 'package:ohmmanager/Model/trainerDto.dart';
 import 'package:ohmmanager/Utils/constants.dart';
@@ -47,7 +49,7 @@ class _MypageViewState extends State<MypageView> {
   }
 
 
-  Future<bool> get_gyminfo() async {
+  Future<bool> get_gyminfo_byuserId() async {
     final prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userId");
 
@@ -64,6 +66,32 @@ class _MypageViewState extends State<MypageView> {
       return true;
     }
   }
+
+  //ceo가 사용
+  Future<bool> get_gyminfo_bygymId() async {
+    final prefs = await SharedPreferences.getInstance();
+    var gymId = prefs.getString("gymId");
+    if(gymId == null){
+      return false;
+
+    }else{
+
+      var gym =
+      await GymApi().search_byId(int.parse(gymId!));
+      if (gym == null) {
+        return false;
+      } else {
+        setState(() {
+          gymDto = gym;
+        });
+
+        return true;
+      }
+    }
+
+
+
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -73,9 +101,18 @@ class _MypageViewState extends State<MypageView> {
   }
 
   Future<bool> get_userinfo() async {
+    print("calll");
     final prefs = await SharedPreferences.getInstance();
     user = await AdminApi().get_userinfo(prefs.getString("token"));
-    var gymDto = await get_gyminfo();
+    print(user?.role);
+    print("ddasdasdasd");
+
+
+    if(user?.role == "ROLE_CEO"){
+      await get_gyminfo_bygymId();
+    }else{
+      await get_gyminfo_byuserId();
+    }
     if(user == null){
       return false;
     }else{
@@ -99,10 +136,15 @@ class _MypageViewState extends State<MypageView> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "내 정보",
+                InkWell(
+                  onTap: (){
+                    print(user);
+                  },
+                  child: Text(
+                    "내 정보",
 
-                  style: TextStyle(fontWeight: FontWeight.bold,fontFamily: "lightfont",color: kTextColor, fontSize: 21),
+                    style: TextStyle(fontWeight: FontWeight.bold,fontFamily: "lightfont",color: kTextColor, fontSize: 21),
+                  ),
                 ),
                 InkWell(
                     onTap: () {
@@ -158,7 +200,9 @@ class _MypageViewState extends State<MypageView> {
                             color: kContainerColor,
                             borderRadius: BorderRadius.all(Radius.circular(0))),
                         margin: EdgeInsets.only(top: 0.h, left: 0),
-                        child: Row(
+                        child: user?.role == "ROLE_CEO"?Container(
+                          child: Center(child: Text("사장님정보는 회원들에게 노출되지 않습니다.\n트레이너 또는 직원 계정을 만들수있습니다!")),
+                        ):Row(
                           children: [
                             user!.profile != null?Container(
                         margin: EdgeInsets.only(top: 0, left: 23),
@@ -265,11 +309,16 @@ class _MypageViewState extends State<MypageView> {
                         )),
                     InkWell(
                       onTap: ()async{
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: GymDetail_View(gymDto:gymDto!,)));
+                        if(gymDto == null){
+                          showtoast("메인화면에서 헬스장을 선택해주세요!");
+                        }else{
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: GymDetail_View(gymDto:gymDto!,)));
+                        }
+
                       },
                       child: Container(
                           margin: EdgeInsets.only(left: 15.w, top: 0.h),

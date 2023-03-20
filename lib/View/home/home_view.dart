@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Utils/date.dart';
 import 'package:ohmmanager/View/home/popup/register_popup.dart';
+import 'package:ohmmanager/View/home/widget/gym_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Controller/gymApi.dart';
 import '../../Controller/adminApi.dart';
@@ -11,7 +12,6 @@ import '../../Model/gymDto.dart';
 import '../../Model/statisticsDto.dart';
 import '../../Utils/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
 import 'detailview/gymStatistics_View.dart';
 
 class HomeView extends StatefulWidget {
@@ -26,11 +26,14 @@ class _HomeView extends State<HomeView> {
   Future? myFuture;
   var current_datetime;
   StatisticsDto? time_avg;
-
+  bool role_ceo = false;
+  List<GymDto>? gyms= [];
   @override
   void initState() {
     // TODO: implement initState
+    //현재 시간을 가져옴
     current_datetime = fillter(DateTime.now().toString());
+    //로그인된 admin정보를 가져옴
     myFuture = get_gyminfo();
     super.initState();
   }
@@ -40,27 +43,94 @@ class _HomeView extends State<HomeView> {
     final prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userId");
 
-    var gym =
-        await AdminApi().gyminfo_byManager(userId, prefs.getString("token"));
-
-    if (gym == null) {
-      gymDto = null;
-      return false;
-    } else {
+    var trainerDto = await AdminApi().get_userinfo(prefs.getString("token"));
+    if (trainerDto?.role == "ROLE_CEO") {
       setState(() {
-        gymDto = gym;
+        role_ceo = true;
       });
-      await get_avg();
-      return true;
+
+      final prefs = await SharedPreferences.getInstance();
+      var gynId =await prefs.getString("gymId");
+      if(gynId == null){
+        gyms  =await AdminApi().findgyms_byceo(prefs.getString("userId"), prefs.getString("token"));
+        return true;
+      }else{
+        var gg = await GymApi().search_byId(int.parse(gynId));
+        setState(() {
+          gymDto = gg;
+        });
+        await get_avg();
+        return true;
+      }
+
+
+    }else{
+      //일반 admin이 gyminfo를 가져옴 (단일 조회)
+      var gym =
+      await AdminApi().gyminfo_byManager(userId, prefs.getString("token"));
+
+      //gym 정보가 아직 등록되지 않았을때
+      if (gym == null) {
+        gymDto = null;
+        return false;
+      } else {
+        setState(() {
+          gymDto = gym;
+        });
+        await get_avg();
+        return true;
+      }
     }
+
   }
 
   get_avg() async {
     final prefs = await SharedPreferences.getInstance();
-    time_avg =
+    var ti =
         (await GymApi().get_timeavg(prefs.getString("gymId").toString()))!;
+    setState(() {
+      time_avg = ti;
+    });
     return time_avg;
   }
+
+  set_gym_ceo(String gymIdd)async{
+    final prefs = await SharedPreferences.getInstance();
+    var gymId = prefs.getString("gymId");
+    if(gymId == null){
+      prefs.setString("gymId", gymIdd);
+
+      GymDto? searchgym =await GymApi().search_byId(int.parse(gymIdd));
+      await get_avg();
+      setState(() {
+        gymDto = searchgym;
+      });
+    }else{
+      prefs.remove("gymId");
+      prefs.setString("gymId", gymIdd);
+      GymDto? searchgym =await GymApi().search_byId(int.parse(gymIdd));
+      await get_avg();
+      setState(() {
+        gymDto = searchgym;
+      });
+    }
+  }
+
+  reset_gym()async{
+    setState(() {
+      gymDto = null;
+      gyms = null;
+      time_avg = null;
+    });
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove("gymId");
+    var ddd  =await AdminApi().findgyms_byceo(prefs.getString("userId"), prefs.getString("token"));
+    setState(() {
+      gyms = ddd;
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +145,18 @@ class _HomeView extends State<HomeView> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              role_ceo!=true?Container():InkWell(
+                  onTap: (){
+                    reset_gym();
+                  },
+                  child: Icon(Icons.arrow_back)),
+              gymDto == null?Container():Container(
+                margin: EdgeInsets.only(right: 27.w),
+                child: Text("${gymDto?.name}",style: TextStyle(fontSize: 17.sp),),
+              ),
+              Container(
+
+              )
 
             ],
           ),
@@ -91,20 +173,18 @@ class _HomeView extends State<HomeView> {
                     return Column(
                       children: [
                         Container(
-                          width: 360.w,
-                          height: 120.h,
-                          decoration: BoxDecoration(
-                            color: kBottomColor,
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(0.0),
-                                bottomLeft: Radius.circular(0.0)),
-                          ),
-                          child: spinkit2
-                        ),
+                            width: 360.w,
+                            height: 120.h,
+                            decoration: BoxDecoration(
+                              color: kBottomColor,
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(0.0),
+                                  bottomLeft: Radius.circular(0.0)),
+                            ),
+                            child: spinkit2),
                         Container(
                           height: 30.h,
                         ),
-
                       ],
                     );
                   }
@@ -167,23 +247,34 @@ class _HomeView extends State<HomeView> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                width: 340.w,
+                              gyms == null?Container():Container(
+                                width: 350.w,
                                 height: 450.h,
-                                decoration: BoxDecoration(
-                                    color: kBoxColor,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
-                                child: spinkit,
+                                child: ListView.builder(
+                                    itemCount: gyms?.length,
+                                    itemBuilder: (BuildContext ctx, int idx) {
+                                      return InkWell(
+                                        onTap: (){
+                                          set_gym_ceo(gyms![idx].id.toString());
+
+                                        },
+                                        child: Container(
+
+                                        child: Gym_Container(size: size,gymDto: gyms![idx],),
+                                        ),
+                                      );
+                                    }
+                                )
                               )
+                       
                             ],
                           )
-                        : SingleChildScrollView(
-                        child: GymStatistics_View(
-                          current_datetime: current_datetime,
-                          time_avg: time_avg!,
-                          current_count: gymDto?.current_count.toString(),
-                        ));
+                        : GymStatistics_View(
+                      gymDto: gymDto,
+                      current_datetime: current_datetime,
+                      time_avg: time_avg!,
+                      current_count: gymDto?.current_count.toString(),
+                    );
                   }
                 })
           ],
@@ -191,16 +282,6 @@ class _HomeView extends State<HomeView> {
   }
 
 
-  final spinkit = SpinKitDoubleBounce(
-    itemBuilder: (BuildContext context, int index) {
-      return DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(100)),
-          color: index.isEven ? kPrimaryColor : Colors.black26,
-        ),
-      );
-    },
-  );
 
   final spinkit2 = SpinKitWanderingCubes(
     itemBuilder: (BuildContext context, int index) {

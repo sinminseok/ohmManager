@@ -43,11 +43,11 @@ class _FrameView extends State<FrameView> {
         bottomNavigationBar: CustomBottomNavigationBar(
 
           iconList: [
-            Icons.home,
+            Icons.fitness_center,
             Icons.speaker_notes_outlined,
             Icons.question_answer,
-            Icons.group_outlined,
-            Icons.person_outlined,
+            Icons.group,
+            Icons.person,
           ],
           onChange: (val) {
             setState(() {

@@ -1,24 +1,15 @@
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:ohmmanager/Controller/gymApi.dart';
 import 'package:ohmmanager/Model/gymPriceDto.dart';
 import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/Utils/toast.dart';
-import 'package:ohmmanager/View/frame/frame_view.dart';
-import 'package:ohmmanager/View/gym/register/finish_view.dart';
 import 'package:ohmmanager/View/gym/popup/check_price.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Utils/constants.dart';
-import '../../../Utils/gyminput.dart';
-import '../../../Utils/permission.dart';
-import '../../../Utils/widget/rouninput_widget.dart';
 
 class GymRegisterView4 extends StatefulWidget {
   @override

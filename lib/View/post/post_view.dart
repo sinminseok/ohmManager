@@ -26,20 +26,20 @@ class _PostView extends State<PostView> {
   Future<List<PostDto>?> load_posts() async {
     results = [];
     final prefs = await SharedPreferences.getInstance();
-    results =
-        await PostApi().findall_posts(prefs.getString("gymId").toString());
+
+    if(prefs.get("gymId") == null){
+
+    }else{
+      results =
+      await PostApi().findall_posts(prefs.getString("gymId").toString());
+    }
+    print(results);
+    print("resultsresults");
+
+
     return results;
   }
-  final spinkit2 = SpinKitWanderingCubes(
-    itemBuilder: (BuildContext context, int index) {
-      return DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(100)),
-          color: index.isEven ? kPrimaryColor : kBoxColor,
-        ),
-      );
-    },
-  );
+
   Future<bool> check_gym() async {
     final prefs = await SharedPreferences.getInstance();
     if (prefs.getString("gymId") == null) {
@@ -118,8 +118,7 @@ class _PostView extends State<PostView> {
                   if (snapshot.hasData == false) {
                     return Container(
                       margin: EdgeInsets.only(top: 220.h),
-                      child: Center(
-                          child: spinkit2),
+                      child: spinkit2
                     );
                   }
                   //error가 발생하게 될 경우 반환하게 되는 부분
@@ -156,4 +155,15 @@ class _PostView extends State<PostView> {
       ),
     );
   }
+
+  final spinkit2 = SpinKitWanderingCubes(
+    itemBuilder: (BuildContext context, int index) {
+      return DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(100)),
+          color: index.isEven ? kPrimaryColor : kBoxColor,
+        ),
+      );
+    },
+  );
 }

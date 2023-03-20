@@ -62,7 +62,7 @@ class _TrainerViewState extends State<TrainerView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "트레이너",
+                  "직원",
                   style: TextStyle(fontSize: 21,
                       color: kTextColor,
                     fontFamily: "lightfont",
@@ -105,7 +105,7 @@ class _TrainerViewState extends State<TrainerView> {
                       child: Container(
                           margin: EdgeInsets.only(top: 220.h),
                           child: Text(
-                            "헬스장을 먼저 등록해주세요!",
+                            "아직 가입한 직원이 없습니다.",
                             style: TextStyle(
                                 fontFamily: "lightfont",
                                 fontSize: 18.sp),

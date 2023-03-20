@@ -82,7 +82,6 @@ class StatisticsDto {
         twenty_two:json['twenty_two'],
         twenty_three:json['twenty_three'],
         twenty_four:json['twenty_four'],
-
     );
   }
 }

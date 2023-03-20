@@ -379,7 +379,7 @@ class _QuestionView extends State<QuestionView> {
                                                   await DeleteQuestion_Popup()
                                                       .showDialog(
                                                       context,
-                                                      not_answers[
+                                                      ok_answers[
                                                       idx]);
 
                                                   setState(() {

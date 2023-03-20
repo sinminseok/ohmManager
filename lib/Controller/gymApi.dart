@@ -313,6 +313,7 @@ class GymApi with ChangeNotifier {
   }
 
   Future<String?> register_gym(
+
     String token,
     String name,
     String address,
@@ -322,7 +323,8 @@ class GymApi with ChangeNotifier {
     String introduce,
     String area,
   ) async {
-    var res = await http.post(Uri.parse(GymApi_Url().register_gym),
+    final prefs = await SharedPreferences.getInstance();
+    var res = await http.post(Uri.parse(GymApi_Url().register_gym+prefs.getString("userId").toString()),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -331,7 +333,7 @@ class GymApi with ChangeNotifier {
           "name": name,
           "address": address,
           "count": count,
-          "oneline_introduce": oneline_introduce,
+          "onelineIntroduce": oneline_introduce,
           "introduce": introduce,
           "code": code,
           "area": area,
@@ -387,7 +389,7 @@ class GymApi with ChangeNotifier {
           "name": name,
           "address": address,
           "count": count,
-          "oneline_introduce": oneline_introduce,
+          "onelineIntroduce": oneline_introduce,
           "introduce": introduce,
           "code": code,
           "trainer_count": trainer_count,
