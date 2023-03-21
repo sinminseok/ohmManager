@@ -188,7 +188,7 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                                   onTap: (){
                                     showDialog_tusdaystart(size, context, "title");
                                   },
-                                  child: Text("시작 시간 : ${thursday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
+                                  child: Text("시작 시간 : ${tuesday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
                             ),
                             Container(
                               margin: EdgeInsets.only(top: 10,left: 10),
@@ -196,7 +196,7 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                                   onTap: (){
                                     showDialog_tuesdayend(size, context, "title");
                                   },
-                                  child: Text("종료 시간 : ${thursday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
+                                  child: Text("종료 시간 : ${tuesday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
                             ),
                           ],
                         )
@@ -208,7 +208,7 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                           onTap: (){
                             //  showDialog_weekdaystart(size, context, "title");
                           },
-                          child: Text("수일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
+                          child: Text("수요일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
                   Center(
                     child: Container(
                         decoration: BoxDecoration(
@@ -248,7 +248,7 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                           onTap: (){
                             //  showDialog_weekdaystart(size, context, "title");
                           },
-                          child: Text("목일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
+                          child: Text("목요일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
                   Center(
                     child: Container(
                         decoration: BoxDecoration(

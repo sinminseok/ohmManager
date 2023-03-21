@@ -13,8 +13,6 @@ import '../../../Utils/constants.dart';
 import '../../home/popup/edit_popup.dart';
 import '../widget/gymPrice_widget.dart';
 
-
-
 class GymDetail_View extends StatefulWidget {
   GymDto gymDto;
 
@@ -36,10 +34,12 @@ class _GymDetail_View extends State<GymDetail_View> {
     myfuture = get_gymInfo();
     super.initState();
   }
+  List closedday = [];
 
-  get_gymInfo() async{
-    gymTime =await GymApi().getTime(widget.gymDto.id);
-    prices =(await GymApi().getPrices(widget.gymDto.id))!;
+
+  get_gymInfo() async {
+    gymTime = await GymApi().getTime(widget.gymDto.id);
+    prices = (await GymApi().getPrices(widget.gymDto.id))!;
     return prices;
   }
 
@@ -66,7 +66,6 @@ class _GymDetail_View extends State<GymDetail_View> {
                   Icons.settings,
                   color: kTextBlackColor,
                 )),
-
           ],
         ),
       ),
@@ -74,7 +73,6 @@ class _GymDetail_View extends State<GymDetail_View> {
       body: FutureBuilder(
           future: myfuture,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-
             if (snapshot.connectionState == false) {
               return Center(child: CircularProgressIndicator());
             }
@@ -94,34 +92,36 @@ class _GymDetail_View extends State<GymDetail_View> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin:EdgeInsets.only(top: 10),
-                      child:  Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: Container(
                         width: 360.w,
                         height: 200.h,
-                        decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20))),
-
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: widget.gymDto.imgs.length,
                             //widget.gymDto.imgs.length
                             itemBuilder: (BuildContext context, int index) {
                               return Container(
-                                margin: EdgeInsets.only(left: 15.w,right: 15.w),
+                                margin:
+                                    EdgeInsets.only(left: 15.w, right: 15.w),
                                 height: 200.h,
                                 width: 330.w,
-                                decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20))),
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20))),
                                 child: ClipRRect(
                                     borderRadius: BorderRadius.circular(10.0),
                                     child: Image.network(
-                                        awsimg_endpoint + widget.gymDto.imgs[index].filePath,
-                                        fit: BoxFit.fill
-                                    )),
+                                        awsimg_endpoint +
+                                            widget.gymDto.imgs[index].filePath,
+                                        fit: BoxFit.fill)),
                               );
-                            }),),
+                            }),
+                      ),
                     ),
-
-
-
                     Container(
                       margin: EdgeInsets.only(left: 20.w, top: 30.h),
                       child: Row(
@@ -129,28 +129,26 @@ class _GymDetail_View extends State<GymDetail_View> {
                         children: [
                           Text(
                             "${widget.gymDto.name}",
-                            style: TextStyle(fontSize: 23.sp, fontFamily: "boldfont"),
+                            style: TextStyle(
+                                fontSize: 23.sp, fontFamily: "boldfont"),
                           ),
-
                         ],
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 20.w, top: 10.h,bottom: 10),
+                      margin:
+                          EdgeInsets.only(left: 20.w, top: 10.h, bottom: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             "${widget.gymDto.address}",
-                            style: TextStyle(fontSize: 16.sp, fontFamily: "boldfont"),
+                            style: TextStyle(
+                                fontSize: 16.sp, fontFamily: "boldfont"),
                           ),
-
                         ],
                       ),
                     ),
-
-
-
                     Container(
                         margin: EdgeInsets.only(top: 10.h),
                         width: 360.w,
@@ -164,7 +162,9 @@ class _GymDetail_View extends State<GymDetail_View> {
                               child: Text(
                                 "센터 이용료",
                                 style: TextStyle(
-                                    fontSize: 17.sp, fontFamily: "boldfont",fontWeight: FontWeight.bold),
+                                    fontSize: 17.sp,
+                                    fontFamily: "boldfont",
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                             Container(
@@ -173,15 +173,19 @@ class _GymDetail_View extends State<GymDetail_View> {
                               child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemCount: prices.length,
-                                  itemBuilder: (BuildContext context, int index) {
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
                                     return Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         GestureDetector(
                                           onTap: () {},
                                           child: Container(
                                               margin: EdgeInsets.all(10),
-                                              child: GymPrice_Widget("${prices[index].during}", "${prices[index].price}")),
+                                              child: GymPrice_Widget(
+                                                  "${prices[index].during}",
+                                                  "${prices[index].price}")),
                                         )
                                       ],
                                     );
@@ -202,7 +206,9 @@ class _GymDetail_View extends State<GymDetail_View> {
                               child: Text(
                                 "센터 운영시간",
                                 style: TextStyle(
-                                    fontSize: 17.sp, fontFamily: "boldfont",fontWeight: FontWeight.bold),
+                                    fontSize: 17.sp,
+                                    fontFamily: "boldfont",
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                             Container(
@@ -210,41 +216,79 @@ class _GymDetail_View extends State<GymDetail_View> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    gymTime?.monday == "00:00 ~ 00:00"?Container(): Container(
-                                        margin: EdgeInsets.only(bottom: 5.h),
-                                        child: Text("월요일 : ${gymTime?.monday}")),
-                                    gymTime?.tuesday == "00:00 ~ 00:00"?Container(): Container(
-                                        margin: EdgeInsets.only(bottom: 5.h),
-                                        child: Text("화요일 : ${gymTime?.tuesday}")),
-                                    gymTime?.wednesday == "00:00 ~ 00:00"?Container(): Container(
-                                        margin: EdgeInsets.only(bottom: 5.h),
-                                        child: Text("수요일 : ${gymTime?.wednesday}")),
-                                    gymTime?.thursday == "00:00 ~ 00:00"?Container(): Container(
-                                        margin: EdgeInsets.only(bottom: 5.h),
-                                        child: Text("목요일 : ${gymTime?.thursday}")),
-                                    gymTime?.friday == "00:00 ~ 00:00"?Container(): Container(
-                                        margin: EdgeInsets.only(bottom: 5.h),
-                                        child: Text("금요일 : ${gymTime?.friday}")),
-                                    gymTime?.saturday == "00:00 ~ 00:00"?Container(): Container(
-                                        margin: EdgeInsets.only(bottom: 5.h),child: Text("토요일 : ${gymTime?.saturday}")),
-                                    gymTime?.sunday == "00:00 ~ 00:00"?Container(): Container(
-                                        margin: EdgeInsets.only(bottom: 5.h),
-                                        child: Text("일요일 : ${gymTime?.sunday}")),
-                                    gymTime?.holiday == "00:00 ~ 00:00"?Container():Container(
-                                        margin: EdgeInsets.only(bottom: 5.h),
-                                        child: Text("공휴일 : ${gymTime?.holiday}")),
-                                    gymTime?.closeddays == null?Container():Container(
-                                        margin: EdgeInsets.only(bottom: 5.h),
-                                        child: Text("휴관일 : ${gymTime?.closeddays}")),
+                                    gymTime?.monday == "00:00 ~ 00:00"
+                                        ? Container()
+                                        : Container(
+                                            margin:
+                                                EdgeInsets.only(bottom: 5.h),
+                                            child: Text(
+                                                "월요일 : ${gymTime?.monday}")),
+                                    gymTime?.tuesday == "00:00 ~ 00:00"
+                                        ? Container()
+                                        : Container(
+                                            margin:
+                                                EdgeInsets.only(bottom: 5.h),
+                                            child: Text(
+                                                "화요일 : ${gymTime?.tuesday}")),
+                                    gymTime?.wednesday == "00:00 ~ 00:00"
+                                        ? Container()
+                                        : Container(
+                                            margin:
+                                                EdgeInsets.only(bottom: 5.h),
+                                            child: Text(
+                                                "수요일 : ${gymTime?.wednesday}")),
+                                    gymTime?.thursday == "00:00 ~ 00:00"
+                                        ? Container()
+                                        : Container(
+                                            margin:
+                                                EdgeInsets.only(bottom: 5.h),
+                                            child: Text(
+                                                "목요일 : ${gymTime?.thursday}")),
+                                    gymTime?.friday == "00:00 ~ 00:00"
+                                        ? Container()
+                                        : Container(
+                                            margin:
+                                                EdgeInsets.only(bottom: 5.h),
+                                            child: Text(
+                                                "금요일 : ${gymTime?.friday}")),
+                                    gymTime?.saturday == "00:00 ~ 00:00"
+                                        ? Container()
+                                        : Container(
+                                            margin:
+                                                EdgeInsets.only(bottom: 5.h),
+                                            child: Text(
+                                                "토요일 : ${gymTime?.saturday}")),
+                                    gymTime?.sunday == "00:00 ~ 00:00"
+                                        ? Container()
+                                        : Container(
+                                            margin:
+                                                EdgeInsets.only(bottom: 5.h),
+                                            child: Text(
+                                                "일요일 : ${gymTime?.sunday}")),
+                                    gymTime?.holiday == "00:00 ~ 00:00"
+                                        ? Container(
+                                            margin:
+                                                EdgeInsets.only(bottom: 5.h),
+                                            child: Text("공휴일 : 휴무"))
+                                        : Container(
+                                            margin:
+                                                EdgeInsets.only(bottom: 5.h),
+                                            child: Text(
+                                                "공휴일 : ${gymTime?.holiday}")),
+                                    gymTime?.closeDay == "없음"
+                                        ? Container()
+                                        : Container(
+                                            margin:
+                                                EdgeInsets.only(bottom: 5.h),
+                                            child: Text(
+                                                "휴관일 : ${gymTime?.closeDay}")),
                                   ],
                                 ))
                           ],
                         )),
-
                     Container(
-
                         width: 360.w,
-                        margin: EdgeInsets.only(top: 10.h,bottom: 20.h),
+                        margin: EdgeInsets.only(top: 10.h, bottom: 20.h),
                         decoration: BoxDecoration(color: kContainerColor),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,16 +298,20 @@ class _GymDetail_View extends State<GymDetail_View> {
                               child: Text(
                                 "센터 소개",
                                 style: TextStyle(
-                                    fontSize: 17.sp, fontFamily: "boldfont",fontWeight: FontWeight.bold),
+                                    fontSize: 17.sp,
+                                    fontFamily: "boldfont",
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                             Container(
-                                margin: EdgeInsets.only(top: 20, left: 20,right: 20,bottom: 20),
+                                margin: EdgeInsets.only(
+                                    top: 20, left: 20, right: 20, bottom: 20),
                                 child: Text("${widget.gymDto.introduce}"))
                           ],
                         )),
-
-                    SizedBox(height: 30,)
+                    SizedBox(
+                      height: 30,
+                    )
                   ],
                 ),
               );

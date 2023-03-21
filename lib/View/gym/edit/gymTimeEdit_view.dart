@@ -266,7 +266,7 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
                             onTap: (){
                               //  showDialog_weekdaystart(size, context, "title");
                             },
-                            child: Text("목일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
+                            child: Text("목요일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
                     Center(
                       child: Container(
                           decoration: BoxDecoration(
@@ -341,14 +341,14 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
                       ),
                     ),
                     //토요일
-                    gymTimeDto.closeddays=="토요일"?Container(): Container(
+                    gymTimeDto.closeDay=="토요일"?Container(): Container(
                         margin: EdgeInsets.only(left: 20,bottom: 10,top: 30),
                         child: InkWell(
                             onTap: (){
 
                             },
                             child: Text("토요일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
-                    gymTimeDto.closeddays=="토요일"?Container(): Center(
+                    gymTimeDto.closeDay=="토요일"?Container(): Center(
                       child: Container(
                           decoration: BoxDecoration(
                               color: kContainerColor,
@@ -383,14 +383,14 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
                     ),
 
                     //일요일
-                    gymTimeDto.closeddays=="일요일"?Container():  Container(
+                    gymTimeDto.closeDay=="일요일"?Container():  Container(
                         margin: EdgeInsets.only(left: 20,bottom: 10,top: 30),
                         child: InkWell(
                             onTap: (){
                               //  showDialog_weekdaystart(size, context, "title");
                             },
                             child: Text("일요일 운영 시간",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: kTextColor),))),
-                    gymTimeDto.closeddays=="일요일"?Container(): Center(
+                    gymTimeDto.closeDay=="일요일"?Container(): Center(
                       child: Container(
                           decoration: BoxDecoration(
                               color: kContainerColor,
@@ -480,7 +480,7 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
                               gymTimeDto.id,
                                 prefs.getString("gymId"),
                                 prefs.getString("token"),
-                                gymTimeDto.closeddays,
+                                gymTimeDto.closeDay,
                                 sunday_start! + " ~ " + sunday_end!,
                                 saturday_start! + " ~ " + saturday_end!,
 

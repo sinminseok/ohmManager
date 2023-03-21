@@ -2,7 +2,7 @@ class GymTimeDto {
   int? id;
 
   //휴관일
-  String? closeddays;
+  String? closeDay;
 
   String? sunday;
 
@@ -24,7 +24,7 @@ class GymTimeDto {
 
   GymTimeDto(
       {required this.id,
-      required this.closeddays,
+      required this.closeDay,
       required this.sunday,
       required this.saturday,
       required this.holiday,
@@ -37,7 +37,7 @@ class GymTimeDto {
   factory GymTimeDto.fromJson(Map<String, dynamic> json) {
     return GymTimeDto(
       id: json['id'],
-      closeddays: json['closeddays'],
+      closeDay: json['closeDay'],
       sunday: json['sunday'],
       saturday: json['saturday'],
       monday: json['monday'],

@@ -19,6 +19,23 @@ class _TrainerViewState extends State<TrainerView> {
   Future? myfuture;
   List<TrainerDto> trainers = [];
   bool delete = false;
+  bool gymcheck = false;
+
+  Future<bool> check_gym() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("gymId") == null) {
+      setState(() {
+        gymcheck =false;
+      });
+
+      return false;
+    } else {
+      setState(() {
+        gymcheck =true;
+      });
+      return true;
+    }
+  }
 
   @override
   void initState() {
@@ -37,6 +54,7 @@ class _TrainerViewState extends State<TrainerView> {
     },
   );
   get_trainers() async {
+    await check_gym();
     final prefs = await SharedPreferences.getInstance();
 
     trainers = await AdminApi().findall_admin(prefs.get("gymId").toString());
@@ -77,7 +95,11 @@ class _TrainerViewState extends State<TrainerView> {
         ),
         backgroundColor: kBackgroundColor,
         body: SingleChildScrollView(
-            child: Column(
+            child: gymcheck == false?Center(
+              child: Container(
+                  margin: EdgeInsets.only(top: 180.h),
+                  child: Text("헬스장을 먼저 선택해주세요",style:  TextStyle(fontSize: 19.sp,fontFamily: "lightfont"),)),
+            ):Column(
           children: [
 
             FutureBuilder(

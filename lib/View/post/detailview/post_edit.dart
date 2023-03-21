@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -15,12 +13,11 @@ import '../../../Utils/constants.dart';
 import '../../../Utils/permission.dart';
 import '../../frame/frame_view.dart';
 
-
 class Post_Edit extends StatefulWidget {
   int orign_imglength;
   PostDto postDto;
 
-  Post_Edit({required this.postDto,required this.orign_imglength});
+  Post_Edit({required this.postDto, required this.orign_imglength});
 
   @override
   _Post_Edit createState() => _Post_Edit();
@@ -56,7 +53,6 @@ class _Post_Edit extends State<Post_Edit> {
     super.dispose();
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -64,11 +60,11 @@ class _Post_Edit extends State<Post_Edit> {
     _contentController = TextEditingController(text: widget.postDto.content);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     List<PostImgDto>? postImgs = widget.postDto?.imgs;
     Size size = MediaQuery.of(context).size;
-
 
     return Scaffold(
       backgroundColor: kBackgroundColor,
@@ -84,206 +80,225 @@ class _Post_Edit extends State<Post_Edit> {
             Container(),
             Row(
               children: [
-
-                Container(width: 100.w,height: 30.h,decoration: BoxDecoration(
-                  color: kPrimaryColor,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-
-                ),
+                Container(
+                  width: 100.w,
+                  height: 30.h,
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor,
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
                   child: InkWell(
-
-                      onTap: ()async{
-                        // print(widget.postDto.imgs.length);
-                        // print(delete_imgs.length);
-                        // print(image_picked.length);
-                        if (widget.orign_imglength -
-                            delete_imgs.length +
-                            image_picked.length ==
-                            0) {
-                          showtoast("최소 한장 이상의 사진을 등록해야합니다.");
-                        }else{
-                          await PostApi().update_post(widget.postDto.id,_titleController!.text, _contentController!.text);
-                          await PostApi().update_postImgs(
-                              widget.postDto?.id, delete_imgs, image_picked);
-                          showtoast("수정되었습니다");
-                          Navigator.pop(context);
-                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  FrameView()), (route) => false);
+                      onTap: () async {
+                        if (_contentController?.text == "" ||
+                            _titleController?.text == "") {
+                          showtoast("제목,내용을 모두 입력해야합니다.");
+                        } else {
+                          if (widget.orign_imglength -
+                                  delete_imgs.length +
+                                  image_picked.length ==
+                              0) {
+                            showtoast("최소 한장 이상의 사진을 등록해야합니다.");
+                          } else {
+                            await PostApi().update_post(
+                                widget.postDto.id,
+                                _titleController!.text,
+                                _contentController!.text);
+                            await PostApi().update_postImgs(
+                                widget.postDto?.id, delete_imgs, image_picked);
+                            showtoast("수정되었습니다");
+                            Navigator.pop(context);
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        FrameView()),
+                                (route) => false);
+                          }
                         }
-
-
-
                       },
-                      child: Center(child: Text("수정하기",style: TextStyle(fontSize: 18),))),)
+                      child: Center(
+                          child: Text(
+                        "수정하기",
+                        style: TextStyle(fontSize: 18),
+                      ))),
+                )
               ],
             )
           ],
         ),
       ),
-      body:SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             postImgs?.length == 0 && image_picked.length == 0
                 ? Container(
-              width: 330.w,
-              height: 170.h,
-              child: InkWell(
-                onTap: () {
-                  Permission_handler().requestCameraPermission(context);
-                  getImages();
-                },
-                child: Container(
-                  margin: EdgeInsets.only(top: 10.h),
-                  width: 300.w,
-                  height: 140.h,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: kContainerColor),
-                  child: Center(
-                    child: Icon(
-                      Icons.add_circle_outline,
-                      color: Colors.grey.shade500,
+                    width: 330.w,
+                    height: 170.h,
+                    child: InkWell(
+                      onTap: () {
+                        Permission_handler().requestCameraPermission(context);
+                        getImages();
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10.h),
+                        width: 300.w,
+                        height: 140.h,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: kContainerColor),
+                        child: Center(
+                          child: Icon(
+                            Icons.add_circle_outline,
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-            )
+                  )
                 : Row(
-              children: [
-                Container(
-                  width: 360.w,
-                  height: 180.h,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: postImgs!.length + image_picked.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 300.w,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        // print(gymImgs.length);
-                                        // print(index+1);
+                    children: [
+                      Container(
+                        width: 360.w,
+                        height: 180.h,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: postImgs!.length + image_picked.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: 300.w,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              // print(gymImgs.length);
+                                              // print(index+1);
 
-                                        if (postImgs.length >= index + 1) {
-                                          delete_imgs?.add(postImgs![index]
-                                              .id
-                                              .toString());
-                                          setState(() {
-                                            postImgs
-                                                ?.remove(postImgs[index]);
-                                          });
-                                        } else {
-                                          // print(index+1 - gymImgs.length);
-                                          // print(image_picked[index - gymImgs.length]);
-                                          setState(() {
-                                            image_picked.remove(
-                                                image_picked[index -
-                                                    postImgs.length]);
-                                          });
-                                        }
-                                      },
-                                      child: Container(
-                                          margin: EdgeInsets.all(0),
-                                          child: Icon(Icons.cancel)),
-                                    )
-                                  ],
-                                ),
-                                postImgs.length < index + 1
-                                    ? Container(
-                                  margin: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius.all(
-                                          Radius.circular(10))),
-                                  width: 300.w,
-                                  height: 140.h,
-                                  child: Image.file(
-                                    File(
-                                      image_picked[index -
-                                          postImgs.length]
-                                          .path,
-                                    ),
-                                    fit: BoxFit.fitWidth,
+                                              if (postImgs.length >=
+                                                  index + 1) {
+                                                delete_imgs?.add(
+                                                    postImgs![index]
+                                                        .id
+                                                        .toString());
+                                                setState(() {
+                                                  postImgs
+                                                      ?.remove(postImgs[index]);
+                                                });
+                                              } else {
+                                                // print(index+1 - gymImgs.length);
+                                                // print(image_picked[index - gymImgs.length]);
+                                                setState(() {
+                                                  image_picked.remove(
+                                                      image_picked[index -
+                                                          postImgs.length]);
+                                                });
+                                              }
+                                            },
+                                            child: Container(
+                                                margin: EdgeInsets.all(0),
+                                                child: Icon(Icons.cancel)),
+                                          )
+                                        ],
+                                      ),
+                                      postImgs.length < index + 1
+                                          ? Container(
+                                              margin: EdgeInsets.all(6),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(10))),
+                                              width: 300.w,
+                                              height: 140.h,
+                                              child: Image.file(
+                                                File(
+                                                  image_picked[index -
+                                                          postImgs.length]
+                                                      .path,
+                                                ),
+                                                fit: BoxFit.fitWidth,
+                                              ),
+                                            )
+                                          : Container(
+                                              width: 300.w,
+                                              height: 140.h,
+                                              margin: EdgeInsets.all(6),
+                                              //추후 gym_img[index] 로변경
+                                              child: Image.network(
+                                                awsimg_endpoint +
+                                                    postImgs[index].filePath,
+                                                fit: BoxFit.fitWidth,
+                                              ))
+                                    ],
                                   ),
-                                )
-                                    : Container(
-                                    width: 300.w,
-                                    height: 140.h,
-                                    margin: EdgeInsets.all(6),
-                                    //추후 gym_img[index] 로변경
-                                    child: Image.network(
-                                      awsimg_endpoint+postImgs[index].filePath,
-                                      fit: BoxFit.fitWidth,
-                                    ))
-                              ],
-                            ),
-                            index + 1 !=
-                                postImgs!.length + image_picked.length
-                                ? Container()
-                                : InkWell(
-                              onTap: () {
-                                Permission_handler()
-                                    .requestCameraPermission(
-                                    context);
-                                getImages();
-                              },
-                              child: Container(
-                                margin: EdgeInsets.only(left: 6,top: 8.h),
-                                width: 300.w,
-                                height: 127.h,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10)),
-                                    color: kContainerColor),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.add_circle_outline,
-                                    color: Colors.grey.shade500,
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        );
-                      }),
-                ),
-              ],
-            ),
+                                  index + 1 !=
+                                          postImgs!.length + image_picked.length
+                                      ? Container()
+                                      : InkWell(
+                                          onTap: () {
+                                            Permission_handler()
+                                                .requestCameraPermission(
+                                                    context);
+                                            getImages();
+                                          },
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                                left: 6, top: 8.h),
+                                            width: 300.w,
+                                            height: 127.h,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                                color: kContainerColor),
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.add_circle_outline,
+                                                color: Colors.grey.shade500,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                ],
+                              );
+                            }),
+                      ),
+                    ],
+                  ),
             Container(
               width: size.width,
-
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                      margin: EdgeInsets.only(left: 20,right: 20,top: 10),
-                      child: TextField(
+                    margin: EdgeInsets.only(left: 10),
+                    child: Text("글제목",style: TextStyle(fontFamily: "lightfont",fontSize: 16.sp,fontWeight: FontWeight.bold),),
+                  ),
+                  Container(
 
-
-                        controller: _titleController,
-                        decoration: InputDecoration(
-
-                          border: InputBorder.none
+                      margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                     color: kContainerColor
+                      ),
+                      child: Container(
+                        margin: EdgeInsets.only(left: 10,right: 10),
+                        child: TextField(
+                          controller: _titleController,
+                          decoration: InputDecoration(border: InputBorder.none),
                         ),
                       )),
+
                   Container(
-                      margin: EdgeInsets.only(left: 20,right: 20,top: 30,bottom: 50),
+                      margin: EdgeInsets.only(
+                          left: 20, right: 20, top: 10, bottom: 50),
                       child: TextField(
                         controller: _contentController,
-                        decoration: InputDecoration(
-
-                            border: InputBorder.none
-                        ),
+                        decoration: InputDecoration(border: InputBorder.none),
                       )),
                 ],
               ),
@@ -291,8 +306,6 @@ class _Post_Edit extends State<Post_Edit> {
           ],
         ),
       ),
-
-
     );
   }
 }

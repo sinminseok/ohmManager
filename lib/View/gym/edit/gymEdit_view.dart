@@ -267,9 +267,7 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
                 "회원수", widget.gymDto?.count.toString(), _countController, true),
             InkWell(
                 onTap: () {
-                  if (_codeController.text != 6) {
-                    showtoast("가입코드는6자리로 설정해주세요!");
-                  }
+
 
                   if (widget.orign_imglength -
                           delete_imgs.length +
