@@ -470,7 +470,6 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
                     Center(
                       child: InkWell(
                           onTap: () async {
-                            print(gymTimeDto.id);
                             final prefs = await SharedPreferences.getInstance();
                             var register_time = await GymApi().update_time(
                                 monday_start! + " ~ " + monday_end!,

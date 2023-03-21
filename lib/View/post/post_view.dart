@@ -22,8 +22,10 @@ class PostView extends StatefulWidget {
 class _PostView extends State<PostView> {
   var results;
   Future? myfuture;
+  bool gymcheck = false;
 
   Future<List<PostDto>?> load_posts() async {
+    await check_gym();
     results = [];
     final prefs = await SharedPreferences.getInstance();
 
@@ -33,8 +35,6 @@ class _PostView extends State<PostView> {
       results =
       await PostApi().findall_posts(prefs.getString("gymId").toString());
     }
-    print(results);
-    print("resultsresults");
 
 
     return results;
@@ -43,9 +43,15 @@ class _PostView extends State<PostView> {
   Future<bool> check_gym() async {
     final prefs = await SharedPreferences.getInstance();
     if (prefs.getString("gymId") == null) {
+      setState(() {
+        gymcheck =false;
+      });
 
       return false;
     } else {
+      setState(() {
+        gymcheck =true;
+      });
       return true;
     }
   }
@@ -111,7 +117,11 @@ class _PostView extends State<PostView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            FutureBuilder(
+            gymcheck == false?Center(
+              child: Container(
+                  margin: EdgeInsets.only(top: 180.h),
+                  child: Text("헬스장을 먼저 선택해주세요",style:  TextStyle(fontSize: 19.sp,fontFamily: "lightfont"),)),
+            ):FutureBuilder(
                 future: myfuture,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   //해당 부분은 data를 아직 받아 오지 못했을때 실행되는 부분을 의미한다.

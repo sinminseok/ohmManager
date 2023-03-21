@@ -136,150 +136,156 @@ class _HomeView extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: kIconColor, //change your color here
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+          appBar: AppBar(
+            iconTheme: IconThemeData(
+              color: kIconColor, //change your color here
+            ),
+            automaticallyImplyLeading: false,
+            backgroundColor: kBottomColor,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                role_ceo!=true?Container():InkWell(
+                    onTap: (){
+                      reset_gym();
+                    },
+                    child: Icon(Icons.arrow_back)),
+                gymDto == null?Container():role_ceo!=true?Container(
+                  margin: EdgeInsets.only(left: 0),
+                  child: Text("${gymDto?.name}",style: TextStyle(fontSize: 16.sp),),
+                ):Container(
+                  margin: EdgeInsets.only(right: 27.w),
+                  child: Text("${gymDto?.name}",style: TextStyle(fontSize: 16.sp),),
+                ),
+                Container(
+
+                )
+
+              ],
+            ),
+            elevation: 0,
           ),
-          automaticallyImplyLeading: false,
-          backgroundColor: kBottomColor,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          backgroundColor: kBackgroundColor,
+          body: SingleChildScrollView(
+              child: Column(
             children: [
-              role_ceo!=true?Container():InkWell(
-                  onTap: (){
-                    reset_gym();
-                  },
-                  child: Icon(Icons.arrow_back)),
-              gymDto == null?Container():Container(
-                margin: EdgeInsets.only(right: 27.w),
-                child: Text("${gymDto?.name}",style: TextStyle(fontSize: 17.sp),),
-              ),
-              Container(
-
-              )
-
-            ],
-          ),
-          elevation: 0,
-        ),
-        backgroundColor: kBackgroundColor,
-        body: SingleChildScrollView(
-            child: Column(
-          children: [
-            FutureBuilder(
-                future: myFuture,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.data == null) {
-                    return Column(
-                      children: [
-                        Container(
-                            width: 360.w,
-                            height: 120.h,
-                            decoration: BoxDecoration(
-                              color: kBottomColor,
-                              borderRadius: BorderRadius.only(
-                                  bottomRight: Radius.circular(0.0),
-                                  bottomLeft: Radius.circular(0.0)),
-                            ),
-                            child: spinkit2),
-                        Container(
-                          height: 30.h,
+              FutureBuilder(
+                  future: myFuture,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null) {
+                      return Column(
+                        children: [
+                          Container(
+                              width: 360.w,
+                              height: 120.h,
+                              decoration: BoxDecoration(
+                                color: kBottomColor,
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(0.0),
+                                    bottomLeft: Radius.circular(0.0)),
+                              ),
+                              child: spinkit2),
+                          Container(
+                            height: 30.h,
+                          ),
+                        ],
+                      );
+                    }
+                    if (snapshot.hasData == false) {
+                      return Text("${snapshot.data}");
+                    }
+                    //error가 발생하게 될 경우 반환하게 되는 부분
+                    else if (snapshot.hasError) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Error: ${snapshot.error}',
+                          style: TextStyle(fontSize: 15),
                         ),
-                      ],
-                    );
-                  }
-                  if (snapshot.hasData == false) {
-                    return Text("${snapshot.data}");
-                  }
-                  //error가 발생하게 될 경우 반환하게 되는 부분
-                  else if (snapshot.hasError) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Error: ${snapshot.error}',
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    );
-                  } else {
-                    return gymDto == null
-                        ? Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Register_Popup().showDialog(context);
-                                },
-                                child: Center(
-                                  child: Container(
-                                    width: size.width * 1,
-                                    height: size.height * 0.1,
-                                    decoration: BoxDecoration(
-                                        color: kContainerColor,
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    margin: EdgeInsets.all(10),
-                                    child: Center(
-                                        child: Row(
-                                      children: [
-                                        Container(
-                                          width: 40,
-                                          height: 40,
-                                          margin: EdgeInsets.only(
-                                              left: 25.0, right: 25),
-                                          decoration: BoxDecoration(
-                                              color: kBoxColor,
-                                              shape: BoxShape.circle),
-                                          child: Icon(
-                                            Icons.add,
-                                            color: kTextColor,
+                      );
+                    } else {
+                      return gymDto == null
+                          ? Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Register_Popup().showDialog(context);
+                                  },
+                                  child: Center(
+                                    child: Container(
+                                      width: size.width * 1,
+                                      height: size.height * 0.1,
+                                      decoration: BoxDecoration(
+                                          color: kContainerColor,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      margin: EdgeInsets.all(10),
+                                      child: Center(
+                                          child: Row(
+                                        children: [
+                                          Container(
+                                            width: 40,
+                                            height: 40,
+                                            margin: EdgeInsets.only(
+                                                left: 25.0, right: 25),
+                                            decoration: BoxDecoration(
+                                                color: kBoxColor,
+                                                shape: BoxShape.circle),
+                                            child: Icon(
+                                              Icons.add,
+                                              color: kTextColor,
+                                            ),
                                           ),
-                                        ),
-                                        // Icon(Icons.turned_in_not,),
-                                        Text(
-                                          "헬스장 등록",
-                                          style: TextStyle(
-                                              fontSize: 21,
-                                              fontFamily: "lightfont",
-                                              fontWeight: FontWeight.bold,
-                                              color: kTextColor),
-                                        )
-                                      ],
-                                    )),
+                                          // Icon(Icons.turned_in_not,),
+                                          Text(
+                                            "헬스장 등록",
+                                            style: TextStyle(
+                                                fontSize: 21,
+                                                fontFamily: "lightfont",
+                                                fontWeight: FontWeight.bold,
+                                                color: kTextColor),
+                                          )
+                                        ],
+                                      )),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              gyms == null?Container():Container(
-                                width: 350.w,
-                                height: 450.h,
-                                child: ListView.builder(
-                                    itemCount: gyms?.length,
-                                    itemBuilder: (BuildContext ctx, int idx) {
-                                      return InkWell(
-                                        onTap: (){
-                                          set_gym_ceo(gyms![idx].id.toString());
+                                gyms == null?Container():Container(
+                                  width: 350.w,
+                                  height: 450.h,
+                                  child: ListView.builder(
+                                      itemCount: gyms?.length,
+                                      itemBuilder: (BuildContext ctx, int idx) {
+                                        return InkWell(
+                                          onTap: (){
+                                            set_gym_ceo(gyms![idx].id.toString());
 
-                                        },
-                                        child: Container(
+                                          },
+                                          child: Container(
 
-                                        child: Gym_Container(size: size,gymDto: gyms![idx],),
-                                        ),
-                                      );
-                                    }
+                                          child: Gym_Container(size: size,gymDto: gyms![idx],),
+                                          ),
+                                        );
+                                      }
+                                  )
                                 )
-                              )
-                       
-                            ],
-                          )
-                        : GymStatistics_View(
-                      gymDto: gymDto,
-                      current_datetime: current_datetime,
-                      time_avg: time_avg!,
-                      current_count: gymDto?.current_count.toString(),
-                    );
-                  }
-                })
-          ],
-        )));
+
+                              ],
+                            )
+                          : GymStatistics_View(
+                        gymDto: gymDto,
+                        current_datetime: current_datetime,
+                        time_avg: time_avg!,
+                        current_count: gymDto?.current_count.toString(),
+                      );
+                    }
+                  })
+            ],
+          ))),
+    );
   }
 
 

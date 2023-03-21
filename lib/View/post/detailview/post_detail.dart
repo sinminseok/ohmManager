@@ -52,13 +52,12 @@ class _Post_DetailState extends State<Post_Detail> {
                         ))),
                 InkWell(
                     onTap: () async {
-                      bool isBack = await Navigator.push(
+                      await Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => Post_Edit(
-                                    postDto: widget.postDto, orign_imglength: widget.postDto.imgs.length,
-                                  )));
-                      if (isBack) {}
+                                postDto: widget.postDto, orign_imglength: widget.postDto.imgs.length,
+                              )));
                     },
                     child: Icon(
                       Icons.edit,

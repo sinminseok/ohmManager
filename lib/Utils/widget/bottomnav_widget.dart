@@ -43,7 +43,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
 
     return Container(
       decoration: BoxDecoration(
-
+        border: Border(
+          top: BorderSide(width: 0.4, color: Colors.grey),
+        ),
         color: Colors.grey.shade300,
       ),
 

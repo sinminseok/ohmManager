@@ -8,11 +8,13 @@ import 'package:ohmmanager/Utils/buttom_container.dart';
 import 'package:ohmmanager/View/account/ceo/signup_ceo2.dart';
 import 'package:ohmmanager/View/account/manager/signup_manager2.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Utils/constants.dart';
 import '../../../Utils/toast.dart';
 import '../../../Utils/widget/passwordinput_widget.dart';
 import '../../../Utils/widget/rouninput_widget.dart';
+import '../login_view.dart';
 
 class Signup_Ceo extends StatefulWidget {
   const Signup_Ceo({Key? key}) : super(key: key);
@@ -29,6 +31,37 @@ class _Signup_Ceo extends State<Signup_Ceo>
   final TextEditingController _checkpasswordController =
       TextEditingController();
   final TextEditingController _nicknameController = TextEditingController();
+  bool goodToGo = true;
+
+  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
+
+  void _doSomething() async {
+
+
+      int? id = await AdminApi().register_ceo(_positionContrtoller.text,_userIDController.text,_passwordController.text,_nicknameController.text);
+
+      if(id == null){
+        _btnController.stop();
+        return showtoast("이미 존재하는 아이디입니다.");
+      }else{
+        _btnController.success();
+        showtoast("회원가입 완료 로그인을 진행해주세요");
+        Navigator.push(
+            context,
+            PageTransition(
+                type: PageTransitionType.fade,
+                child: LoginView()));
+
+
+
+
+    }
+
+
+
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,36 +206,40 @@ class _Signup_Ceo extends State<Signup_Ceo>
                   SizedBox(
                     height: size.height * 0.345,
                   ),
+
                   InkWell(
                       onTap: () async {
-                        if (
-                        _positionContrtoller.text == "" ||
-                        _userIDController.text == "" ||
-                            _passwordController.text == "" ||
-                            _nicknameController.text == ""|| _positionContrtoller.text == "") {
-                          return showtoast("정보를 모두 입력해주세요");
-                        } else {
-                          if (_passwordController.text !=
-                              _checkpasswordController.text) {
-                            showtoast("비밀번호가 일치하지 않습니다.");
-                          } else {
-                            if (_passwordController.text.length < 6) {
-                              return showtoast("비밀번호는 6자리 이상으로 설정해주세요");
-                            } else {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.fade,
-                                      child: Signup_Ceo2(
-                                          name: _userIDController.text,
-                                          nickname: _nicknameController.text,
-                                          password: _passwordController.text, position: _positionContrtoller.text,)));
-                            }
-                          }
-                        }
+
+
                       },
                       borderRadius: BorderRadius.circular(10),
-                      child: Button("다음")),
+                      child: RoundedLoadingButton(
+                        controller: _btnController,
+                        successColor: kTextBlackColor,
+                        color: kTextBlackColor,
+                        onPressed: _doSomething,
+                        child: Container(
+                          width: 330.w,
+                          height: 47.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: kButtonColor,
+                          ),
+
+
+                          alignment: Alignment.center,
+                          child: Text(
+                            "다음",
+                            style: TextStyle(
+                                fontFamily: "lightfont",
+                                color: kTextWhiteColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.sp
+                            ),
+                          ),
+                        ),
+                      )
+                  ),
                   SizedBox(height: 30),
                 ],
               ),

@@ -66,7 +66,7 @@ class AdminApi with ChangeNotifier {
   }
 
   Future<bool> delete_account(String managerId,String token)async{
-    var res = await http.delete(Uri.parse(AdminApi_Url().delete_account + "${managerId}"),
+    var res = await http.delete(Uri.parse(AdminApi_Url().delete_account),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -100,7 +100,6 @@ class AdminApi with ChangeNotifier {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
       for(int i = 0 ;i<data.length;i++){
-        print(data[i]);
         List<GymImgDto> imgs = [];
         for(int j = 0;j<data[i]["imgs"].length;j++){
           imgs.add(GymImgDto.fromJson(data[i]['imgs'][j]));
@@ -156,11 +155,6 @@ class AdminApi with ChangeNotifier {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },);
-    
-    print(res);
-    print(res.body);
-    print("d");
-
 
     if (res.statusCode == 200) {
 
@@ -169,8 +163,7 @@ class AdminApi with ChangeNotifier {
       // AuthorityDto authorityDto = AuthorityDto.fromJson(data['authorities'][0]);
 
       TrainerDto trainerDto = TrainerDto.fromJson(data);
-      print("trainerDtotrainerDto");
-      print(trainerDto.role);
+     
       return trainerDto;
     }else{
       return null;
@@ -234,7 +227,7 @@ class AdminApi with ChangeNotifier {
 
   //manager 회원가입
   Future<int?> register_ceo(
-      String position,String id, String password, String nickname, String onelineIntroduce,String introduce) async {
+String position,String id, String password, String nickname) async {
 
 
     var res = await http.post(Uri.parse(AdminApi_Url().save_ceo),
@@ -246,8 +239,8 @@ class AdminApi with ChangeNotifier {
           'position' :position,
           'password': password,
           'nickname': nickname,
-          'onelineIntroduce':onelineIntroduce,
-          'introduce':introduce,
+
+
           'username': id,
         }));
 

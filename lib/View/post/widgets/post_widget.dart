@@ -26,9 +26,15 @@ Widget Post_Widget(Size size,context,PostDto postDto) {
       padding: const EdgeInsets.only(bottom: 10.0,top: 10),
       child: Container(
         decoration: BoxDecoration(
-            boxShadow: [
-
-            ],
+            border: Border.all(color: Colors.grey,width: 0.5),
+            // boxShadow: [
+            //   BoxShadow(
+            //     color: Colors.grey.withOpacity(0.5),
+            //     spreadRadius: 5,
+            //     blurRadius: 7,
+            //     offset: Offset(0, 3), // changes position of shadow
+            //   ),
+            // ],
             color: kContainerColor,
             borderRadius: BorderRadius.all(Radius.circular(1))),
         child: Column(

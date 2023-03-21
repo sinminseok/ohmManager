@@ -153,10 +153,7 @@ class PostApi with ChangeNotifier {
         'Accept': 'application/json'
       },
     );
-
-    print(gymId);
     List<PostDto> posts = [];
-    print(res.body);
 
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);

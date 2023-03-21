@@ -16,11 +16,7 @@ import 'package:ohmmanager/View/mypage/popup/bottm_sheet.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk_talk.dart';
 import 'detailview/gyminfo_view.dart';
-import 'detailview/ohm_introduce.dart';
-
-
 
 class MypageView extends StatefulWidget {
   const MypageView({Key? key}) : super(key: key);
@@ -43,18 +39,18 @@ class _MypageViewState extends State<MypageView> {
       );
     },
   );
-  _callNumber() async{
+
+  _callNumber() async {
     const number = '01083131764'; //set the number here
     bool? res = await FlutterPhoneDirectCaller.callNumber(number);
   }
-
 
   Future<bool> get_gyminfo_byuserId() async {
     final prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userId");
 
     var gym =
-    await AdminApi().gyminfo_byManager(userId, prefs.getString("token"));
+        await AdminApi().gyminfo_byManager(userId, prefs.getString("token"));
 
     if (gym == null) {
       return false;
@@ -71,13 +67,10 @@ class _MypageViewState extends State<MypageView> {
   Future<bool> get_gyminfo_bygymId() async {
     final prefs = await SharedPreferences.getInstance();
     var gymId = prefs.getString("gymId");
-    if(gymId == null){
+    if (gymId == null) {
       return false;
-
-    }else{
-
-      var gym =
-      await GymApi().search_byId(int.parse(gymId!));
+    } else {
+      var gym = await GymApi().search_byId(int.parse(gymId!));
       if (gym == null) {
         return false;
       } else {
@@ -88,10 +81,8 @@ class _MypageViewState extends State<MypageView> {
         return true;
       }
     }
-
-
-
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -101,21 +92,17 @@ class _MypageViewState extends State<MypageView> {
   }
 
   Future<bool> get_userinfo() async {
-    print("calll");
     final prefs = await SharedPreferences.getInstance();
     user = await AdminApi().get_userinfo(prefs.getString("token"));
-    print(user?.role);
-    print("ddasdasdasd");
 
-
-    if(user?.role == "ROLE_CEO"){
+    if (user?.role == "ROLE_CEO") {
       await get_gyminfo_bygymId();
-    }else{
+    } else {
       await get_gyminfo_byuserId();
     }
-    if(user == null){
+    if (user == null) {
       return false;
-    }else{
+    } else {
       return true;
     }
   }
@@ -137,13 +124,16 @@ class _MypageViewState extends State<MypageView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     print(user);
                   },
                   child: Text(
                     "내 정보",
-
-                    style: TextStyle(fontWeight: FontWeight.bold,fontFamily: "lightfont",color: kTextColor, fontSize: 21),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "lightfont",
+                        color: kTextColor,
+                        fontSize: 21),
                   ),
                 ),
                 InkWell(
@@ -171,14 +161,14 @@ class _MypageViewState extends State<MypageView> {
                   if (snapshot.hasData == false) {
                     return Center(
                       child: Container(
-                        width: 350.w,
-                        height: 140.h,
-                        decoration: BoxDecoration(
-                            color: kContainerColor,
-                            borderRadius: BorderRadius.all(Radius.circular(0))),
-                        margin: EdgeInsets.only(top: 0.h, left: 0),
-                        child: spinkit2
-                      ),
+                          width: 350.w,
+                          height: 140.h,
+                          decoration: BoxDecoration(
+                              color: kContainerColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(0))),
+                          margin: EdgeInsets.only(top: 0.h, left: 0),
+                          child: spinkit2),
                     );
                   }
 
@@ -200,93 +190,116 @@ class _MypageViewState extends State<MypageView> {
                             color: kContainerColor,
                             borderRadius: BorderRadius.all(Radius.circular(0))),
                         margin: EdgeInsets.only(top: 0.h, left: 0),
-                        child: user?.role == "ROLE_CEO"?Container(
-                          child: Center(child: Text("사장님정보는 회원들에게 노출되지 않습니다.\n트레이너 또는 직원 계정을 만들수있습니다!")),
-                        ):Row(
-                          children: [
-                            user!.profile != null?Container(
-                        margin: EdgeInsets.only(top: 0, left: 23),
-                        width: size.width * 0.16,
-                        height: size.height * 0.08,
-                        child: CircleAvatar(
-                          backgroundColor: kContainerColor,
-                          backgroundImage: NetworkImage(
-                              awsimg_endpoint+user!.profile!),
-                        ),
-                      ): Container(
-                              margin: EdgeInsets.only(top: 5, left: 23),
-                              width: size.width * 0.16,
-                              height: size.height * 0.08,
-                              child: CircleAvatar(
-                                backgroundColor: kContainerColor,
-                                backgroundImage: NetworkImage(
-                                    "https://cdn.icon-icons.com/icons2/2506/PNG/512/user_icon_150670.png"),
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                    margin:
-                                    EdgeInsets.only(top: 23.h, left: 20),
+                        child: user?.role == "ROLE_CEO"
+                            ? Container(
+                                child: Center(
                                     child: Text(
-                                      "${user?.nickname}",
-                                      style: TextStyle(
-                                        fontFamily: "boldfont",
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                gymDto?.name == null?
-                                Container(
-                                margin:
-                                EdgeInsets.only(top: 6.h, left: 20,bottom: 10),
-                                child: Text(
-                                "등록된 헬스장이 없습니다.",
-                                style: TextStyle(
-                                fontSize: 16,
-                                ),
-                                )):Container(
-                                    margin:
-                                    EdgeInsets.only(top: 6.h, left: 20,bottom: 10),
-                                    child: Text(
-                                      "${gymDto?.name}",
-                                      style: TextStyle(
-                                          fontSize: 18,
+                                        "사장님정보는 회원들에게 노출되지 않습니다.\n트레이너 또는 직원 계정을 만들수있습니다!")),
+                              )
+                            : Row(
+                                children: [
+                                  user!.profile != null
+                                      ? Container(
+                                          margin:
+                                              EdgeInsets.only(top: 0, left: 23),
+                                          width: size.width * 0.16,
+                                          height: size.height * 0.08,
+                                          child: CircleAvatar(
+                                            backgroundColor: kContainerColor,
+                                            backgroundImage: NetworkImage(
+                                                awsimg_endpoint +
+                                                    user!.profile!),
                                           ),
-                                    )),
-                                InkWell(
-                                  onTap: ()async{
-                                    if(gymDto == null){
-                                      showAlertDialog(context,"알림","헬스장을 먼저 등록하세요");
-                                    }else{
-
-                                      bool isBack = await Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) => Profile_Edit(user: user!, gymDto: gymDto!,)));
-                                      if (isBack) {
-                                        setState(() {
-                                          get_userinfo();
-
-                                        });
-                                      }
-                                    }
-
-                                  },
-                                  child: Container(
-                                    margin: EdgeInsets.only(left: 15.w, top: 5.h),
-                                    width: 200.w,
-                                    height: 25.h,
+                                        )
+                                      : Container(
+                                    margin: EdgeInsets.only(bottom: 30.h,left: 25.w),
+                                    width: 60.w,
+                                    height: 60.h,
                                     decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey),
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(10),
-                                        )),
-                                    child: Center(child: Text("프로필 관리")),
+                                      color: Colors.grey.shade400,
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                          image: AssetImage("assets/images/basic_user.png"),
+                                          fit: BoxFit.fitWidth
+                                      ),
+                                    ),
                                   ),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                          margin: EdgeInsets.only(
+                                              top: 23.h, left: 20),
+                                          child: Text(
+                                            "${user?.nickname}",
+                                            style: TextStyle(
+                                                fontFamily: "boldfont",
+                                                fontSize: 16.sp,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                      gymDto?.name == null
+                                          ? Container(
+                                              margin: EdgeInsets.only(
+                                                  top: 6.h,
+                                                  left: 20,
+                                                  bottom: 10),
+                                              child: Text(
+                                                "등록된 헬스장이 없습니다.",
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                              ))
+                                          : Container(
+                                              margin: EdgeInsets.only(
+                                                  top: 6.h,
+                                                  left: 20,
+                                                  bottom: 10),
+                                              child: Text(
+                                                "${gymDto?.name}",
+                                                style: TextStyle(
+                                                  fontSize: 15.sp,
+                                                ),
+                                              )),
+                                      InkWell(
+                                        onTap: () async {
+                                          if (gymDto == null) {
+                                            showAlertDialog(
+                                                context, "알림", "헬스장을 먼저 등록하세요");
+                                          } else {
+                                            bool isBack = await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Profile_Edit(
+                                                          user: user!,
+                                                          gymDto: gymDto!,
+                                                        )));
+                                            if (isBack) {
+                                              setState(() {
+                                                get_userinfo();
+                                              });
+                                            }
+                                          }
+                                        },
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                              left: 15.w, top: 5.h),
+                                          width: 200.w,
+                                          height: 25.h,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.grey),
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(10),
+                                              )),
+                                          child: Center(child: Text("프로필 관리")),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                       ),
                     );
                   }
@@ -308,17 +321,18 @@ class _MypageViewState extends State<MypageView> {
                           color: kPrimaryColor,
                         )),
                     InkWell(
-                      onTap: ()async{
-                        if(gymDto == null){
+                      onTap: () async {
+                        if (gymDto == null) {
                           showtoast("메인화면에서 헬스장을 선택해주세요!");
-                        }else{
+                        } else {
                           Navigator.push(
                               context,
                               PageTransition(
                                   type: PageTransitionType.fade,
-                                  child: GymDetail_View(gymDto:gymDto!,)));
+                                  child: GymDetail_View(
+                                    gymDto: gymDto!,
+                                  )));
                         }
-
                       },
                       child: Container(
                           margin: EdgeInsets.only(left: 15.w, top: 0.h),
@@ -350,7 +364,7 @@ class _MypageViewState extends State<MypageView> {
                           color: kPrimaryColor,
                         )),
                     InkWell(
-                      onTap: ()async{
+                      onTap: () async {
                         _callNumber();
                       },
                       child: Container(
@@ -366,7 +380,6 @@ class _MypageViewState extends State<MypageView> {
                     ),
                   ],
                 )),
-
             Column(
               children: [
                 SizedBox(

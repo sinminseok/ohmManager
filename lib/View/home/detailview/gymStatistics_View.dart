@@ -107,7 +107,7 @@ class _GymStatistics_View extends State<GymStatistics_View> {
 
 
                           Container(
-                            margin: EdgeInsets.only(top: 10.h,right: 15.w),
+                            margin: EdgeInsets.only(top: 15.h,right: 15.w),
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -116,7 +116,7 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                                     child: Text(
                                       "현재 약",
                                       style: TextStyle(
-                                          fontSize: 14.sp,
+                                          fontSize: 15.sp,
                                           fontWeight: FontWeight.bold,
                                           fontFamily: "lightfont",
                                           color: kTextWhiteColor),
@@ -127,18 +127,19 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                                     child: Text(
                                       "${widget.current_count}",
                                       style: TextStyle(
-                                          fontSize: 37.sp,
+                                          fontSize: 33.sp,
                                           fontFamily: "boldfont2",
                                           color: kTextWhiteColor),
                                     ),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(left: 15.h,bottom: 5.h),
+                                    margin: EdgeInsets.only(left: 15.h,bottom: 5.h,top: 5.h),
                                     child: Text(
                                       "명",
                                       style: TextStyle(
-                                          fontSize: 24.sp,
-                                          fontFamily: "boldfont",
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: "lightfont",
                                           color: kTextWhiteColor),
                                     ),
                                   )
@@ -175,9 +176,9 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("${data.reduce(max)}"),
-                      Text("${(data.reduce(max) + data.reduce(min)) / 2}"),
-                      Text("${data.reduce(min)}"),
+                      Text("${data.reduce(max).ceil()} 명",style: TextStyle(fontSize: 13.sp)),
+                      Text("${((data.reduce(max) + data.reduce(min)) / 2).ceil()} 명",style: TextStyle(fontSize: 13.sp)),
+                      Text("${data.reduce(min).ceil()} 명",style: TextStyle(fontSize: 13.sp),),
                     ],
                   ),
                 ),

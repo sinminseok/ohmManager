@@ -24,6 +24,7 @@ Widget Trainer_Widget(Size size,context,TrainerDto trainerDto) {
       child: Container(
         height: 120.h,
         decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey,width: 0.5),
             color: kContainerColor,
             borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Row(
@@ -34,24 +35,33 @@ Widget Trainer_Widget(Size size,context,TrainerDto trainerDto) {
         Container(
           width: 120.w,
           height: 120.h,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey,width: 0.5),
+              color: Colors.grey.shade300,
+            borderRadius: BorderRadius.circular(10.0)
+          ),
+
           child: ClipRRect(
-              borderRadius: BorderRadius.circular(3.0),
+
+              borderRadius: BorderRadius.circular(10.0),
               child: Image.asset(
-                "assets/images/user.jpg",
-                fit: BoxFit.fill,
+
+
+                "assets/images/basic_user.png",
+                fit: BoxFit.fitWidth,
+
               )),
         )
                 :Container(
 
-              width: 120.w,
-              height: 120.h,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(3.0),
-                  child:  Image.network(
-                    awsimg_endpoint+trainerDto.profile!,
-                    fit: BoxFit.fill,
-                  )),
-            ),
+        width: 120.w,
+        height: 120.h,
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child:  Image.network(
+              awsimg_endpoint+trainerDto.profile!,
+              fit: BoxFit.fill,
+            ))),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

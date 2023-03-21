@@ -160,7 +160,7 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
                                       ),
                                       gymImgs.length < index + 1
                                           ? Container(
-                                        margin: EdgeInsets.all(6),
+                                              margin: EdgeInsets.all(6),
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.all(
@@ -182,7 +182,8 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
                                               margin: EdgeInsets.all(6),
                                               //추후 gym_img[index] 로변경
                                               child: Image.network(
-                                                awsimg_endpoint+gymImgs[index].filePath,
+                                                awsimg_endpoint +
+                                                    gymImgs[index].filePath,
                                                 fit: BoxFit.fitWidth,
                                               ))
                                     ],
@@ -198,7 +199,8 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
                                             getImages();
                                           },
                                           child: Container(
-                                            margin: EdgeInsets.only(left: 6,top: 8.h),
+                                            margin: EdgeInsets.only(
+                                                left: 6, top: 8.h),
                                             width: 300.w,
                                             height: 127.h,
                                             decoration: BoxDecoration(
@@ -227,14 +229,48 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
                 "헬스장 한줄소개", widget.gymDto?.name, _onelineController, false),
             GymEdit_Widget(
                 "헬스장 소개", widget.gymDto?.name, _introduceController, false),
-            GymEdit_Widget("트레이너 가입코드", widget.gymDto?.code.toString(),
-                _codeController, true),
-            GymEdit_Widget("트레이너 인원", widget.gymDto?.count.toString(),
-                _trainerCountController, true),
+            InkWell(
+              onTap: (){
+                showtoast("가입코드는 수정할 수 없습니다.\n고객센터에 문의해주세요");
+              },
+              child: Container(
+                width: 360.w,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(left: 20, bottom: 15, top: 20),
+                        child: Text(
+                          "가입코드",
+                          style: TextStyle(
+                              fontSize: 19,
+                              color: kPrimaryColor,
+                              fontWeight: FontWeight.bold),
+                        )),
+                    Container(
+                      width: 360.w,
+                      height: 70.h,
+                      margin: EdgeInsets.only(left: 20, right: 20),
+                      decoration: BoxDecoration(
+                          color: kContainerColor,
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Container(
+                          margin: EdgeInsets.only(
+                              top: 25.h, bottom: 20, left: 20, right: 20),
+                          child: Text("${widget.gymDto?.code}")),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             GymEdit_Widget(
                 "회원수", widget.gymDto?.count.toString(), _countController, true),
             InkWell(
                 onTap: () {
+                  if (_codeController.text != 6) {
+                    showtoast("가입코드는6자리로 설정해주세요!");
+                  }
+
                   if (widget.orign_imglength -
                           delete_imgs.length +
                           image_picked.length ==

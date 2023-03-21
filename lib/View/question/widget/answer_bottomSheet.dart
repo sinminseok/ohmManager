@@ -45,7 +45,7 @@ class _Answer_BottomSheetState extends State<Answer_BottomSheet> {
   Widget build(BuildContext context) {
 
     return Container(
-        height: 400.h,
+        height: 420.h,
         color: kBackgroundColor,
         child: SingleChildScrollView(
           child: Column(
@@ -71,7 +71,7 @@ class _Answer_BottomSheetState extends State<Answer_BottomSheet> {
                     borderRadius: BorderRadius.circular(10)
                 ),
                 width: 340.w,
-                height: 170.h,
+                height: 250.h,
                 child: TextFormField(
                   controller: _answerController,
                   textAlign: TextAlign.start,
@@ -84,7 +84,7 @@ class _Answer_BottomSheetState extends State<Answer_BottomSheet> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 70.h),
+                margin: EdgeInsets.only(top: 30.h),
 
 
                   child: RoundedLoadingButton(

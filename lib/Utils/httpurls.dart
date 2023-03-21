@@ -1,4 +1,4 @@
-String endpoint = "http://192.168.0.102:8080/api/";
+String endpoint = "http://172.20.10.2:8080/api/";
 
 class AdminApi_Url {
   String save_ceo = endpoint+"ceo";

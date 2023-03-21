@@ -103,6 +103,8 @@ flutter:
     - assets/images/facebook.png
     - assets/images/user.jpg
     - assets/images/splash.png
+    - assets/images/basic_user.png
+    - assets/images/user_basic.png
 
     - assets/images/refresh.png
     - assets/images/mark.png

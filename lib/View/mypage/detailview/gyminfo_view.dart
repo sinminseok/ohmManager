@@ -210,30 +210,30 @@ class _GymDetail_View extends State<GymDetail_View> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
+                                    gymTime?.monday == "00:00 ~ 00:00"?Container(): Container(
                                         margin: EdgeInsets.only(bottom: 5.h),
                                         child: Text("월요일 : ${gymTime?.monday}")),
-                                    Container(
+                                    gymTime?.tuesday == "00:00 ~ 00:00"?Container(): Container(
                                         margin: EdgeInsets.only(bottom: 5.h),
                                         child: Text("화요일 : ${gymTime?.tuesday}")),
-                                    Container(
+                                    gymTime?.wednesday == "00:00 ~ 00:00"?Container(): Container(
                                         margin: EdgeInsets.only(bottom: 5.h),
                                         child: Text("수요일 : ${gymTime?.wednesday}")),
-                                    Container(
+                                    gymTime?.thursday == "00:00 ~ 00:00"?Container(): Container(
                                         margin: EdgeInsets.only(bottom: 5.h),
                                         child: Text("목요일 : ${gymTime?.thursday}")),
-                                    Container(
+                                    gymTime?.friday == "00:00 ~ 00:00"?Container(): Container(
                                         margin: EdgeInsets.only(bottom: 5.h),
                                         child: Text("금요일 : ${gymTime?.friday}")),
-                                    gymTime?.closeddays =="토요일"?Container():Container(
+                                    gymTime?.saturday == "00:00 ~ 00:00"?Container(): Container(
                                         margin: EdgeInsets.only(bottom: 5.h),child: Text("토요일 : ${gymTime?.saturday}")),
-                                    gymTime?.closeddays =="일요일"?Container(): Container(
+                                    gymTime?.sunday == "00:00 ~ 00:00"?Container(): Container(
                                         margin: EdgeInsets.only(bottom: 5.h),
                                         child: Text("일요일 : ${gymTime?.sunday}")),
-                                    Container(
+                                    gymTime?.holiday == "00:00 ~ 00:00"?Container():Container(
                                         margin: EdgeInsets.only(bottom: 5.h),
                                         child: Text("공휴일 : ${gymTime?.holiday}")),
-                                    Container(
+                                    gymTime?.closeddays == null?Container():Container(
                                         margin: EdgeInsets.only(bottom: 5.h),
                                         child: Text("휴관일 : ${gymTime?.closeddays}")),
                                   ],
