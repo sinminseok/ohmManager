@@ -27,6 +27,7 @@ class _HomeView extends State<HomeView> {
   var current_datetime;
   StatisticsDto? time_avg;
   bool role_ceo = false;
+  bool gym_null = false;
   List<GymDto>? gyms= [];
   @override
   void initState() {
@@ -56,10 +57,18 @@ class _HomeView extends State<HomeView> {
         return true;
       }else{
         var gg = await GymApi().search_byId(int.parse(gynId));
-        setState(() {
-          gymDto = gg;
-        });
-        await get_avg();
+        if(gg == null){
+          setState(() {
+            gym_null = true;
+          });
+
+        }else{
+          setState(() {
+            gymDto = gg;
+          });
+          await get_avg();
+        }
+
         return true;
       }
 
@@ -96,16 +105,19 @@ class _HomeView extends State<HomeView> {
   }
 
   set_gym_ceo(String gymIdd)async{
+
     final prefs = await SharedPreferences.getInstance();
+
     var gymId = prefs.getString("gymId");
+
     if(gymId == null){
       prefs.setString("gymId", gymIdd);
-
       GymDto? searchgym =await GymApi().search_byId(int.parse(gymIdd));
       await get_avg();
       setState(() {
         gymDto = searchgym;
       });
+
     }else{
       prefs.remove("gymId");
       prefs.setString("gymId", gymIdd);
@@ -118,6 +130,8 @@ class _HomeView extends State<HomeView> {
   }
 
   reset_gym()async{
+
+
     setState(() {
       gymDto = null;
       gyms = null;
@@ -130,7 +144,6 @@ class _HomeView extends State<HomeView> {
       gyms = ddd;
     });
   }
-
 
 
   @override
@@ -261,11 +274,10 @@ class _HomeView extends State<HomeView> {
                                       itemBuilder: (BuildContext ctx, int idx) {
                                         return InkWell(
                                           onTap: (){
-                                            set_gym_ceo(gyms![idx].id.toString());
 
+                                            set_gym_ceo(gyms![idx].id.toString());
                                           },
                                           child: Container(
-
                                           child: Gym_Container(size: size,gymDto: gyms![idx],),
                                           ),
                                         );

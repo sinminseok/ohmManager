@@ -45,6 +45,8 @@ class Profile_BottomSheet extends StatelessWidget {
                   onTap: () async{
                     final prefs = await SharedPreferences.getInstance();
                     prefs.remove("token");
+                    prefs.remove("userId");
+                    prefs.remove("gymId");
                     prefs.remove("loginId");
                     prefs.remove("loginPw");
                     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(

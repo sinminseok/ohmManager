@@ -31,7 +31,7 @@ class _Post_Edit extends State<Post_Edit> {
   //삭제할 사진
   List<String?> delete_imgs = [];
 
-  //이미지 추가
+
   Future<void> getImages() async {
     ImagePicker imagePicker = ImagePicker();
 
@@ -93,10 +93,7 @@ class _Post_Edit extends State<Post_Edit> {
                             _titleController?.text == "") {
                           showtoast("제목,내용을 모두 입력해야합니다.");
                         } else {
-                          if (widget.orign_imglength -
-                                  delete_imgs.length +
-                                  image_picked.length ==
-                              0) {
+                          if (false) {
                             showtoast("최소 한장 이상의 사진을 등록해야합니다.");
                           } else {
                             await PostApi().update_post(
@@ -275,15 +272,15 @@ class _Post_Edit extends State<Post_Edit> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left: 10),
+                    margin: EdgeInsets.only(left: 15.w,top: 20.h),
                     child: Text("글제목",style: TextStyle(fontFamily: "lightfont",fontSize: 16.sp,fontWeight: FontWeight.bold),),
                   ),
                   Container(
 
-                      margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+                      margin: EdgeInsets.only(left: 10, right: 10, top: 5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
-                     color: kContainerColor
+
                       ),
                       child: Container(
                         margin: EdgeInsets.only(left: 10,right: 10),

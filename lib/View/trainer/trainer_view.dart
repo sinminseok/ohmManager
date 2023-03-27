@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ohmmanager/Controller/adminApi.dart';
 import 'package:ohmmanager/Model/trainerDto.dart';
+import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/View/trainer/popup/role_select.dart';
 import 'package:ohmmanager/View/trainer/widget/trainer_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,6 +22,7 @@ class _TrainerViewState extends State<TrainerView> {
   List<TrainerDto> trainers = [];
   bool delete = false;
   bool gymcheck = false;
+  bool? role = false;
 
   Future<bool> check_gym() async {
     final prefs = await SharedPreferences.getInstance();
@@ -53,7 +56,18 @@ class _TrainerViewState extends State<TrainerView> {
       );
     },
   );
+  get_role()async{
+    final prefs = await SharedPreferences.getInstance();
+    var trainerDto = await AdminApi().get_userinfo(prefs.getString("token"));
+    if (trainerDto?.role == "ROLE_CEO" || trainerDto?.role == "ROLE_MANAGER") {
+      setState(() {
+        role = true;
+      });
+    }
+  }
+  
   get_trainers() async {
+    await get_role();
     await check_gym();
     final prefs = await SharedPreferences.getInstance();
 
@@ -87,6 +101,17 @@ class _TrainerViewState extends State<TrainerView> {
                     fontWeight: FontWeight.bold
                       ),
                 ),
+                role == true?InkWell(
+                    onTap: (){
+                      if(gymcheck == false){
+                        showtoast("헬스장을 먼저 선택해주세요");
+                      }else{
+                        RoleSelect_Popup().showDialog(size, context);
+                      }
+
+
+                    },
+                    child: Icon(Icons.add)):Container()
 
               ],
             ),
@@ -138,7 +163,7 @@ class _TrainerViewState extends State<TrainerView> {
                       child: ListView.builder(
                           itemCount: trainers.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return Trainer_Widget(size, context,trainers[index]);
+                            return Trainer_Widget(size, context,trainers[index],role);
                           }),
                     );
                   }

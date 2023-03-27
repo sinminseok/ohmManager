@@ -26,6 +26,20 @@ class Profile_Edit extends StatefulWidget {
 class _Profile_EditState extends State<Profile_Edit> {
   PickedFile? _image;
   var image_picked;
+  bool? showProfile;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    if(widget.user.showProfile == true){
+      showProfile = true;
+    }else{
+      showProfile = false;
+    }
+
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -151,6 +165,41 @@ class _Profile_EditState extends State<Profile_Edit> {
                 ),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  onTap: (){
+                    print(widget.user.showProfile);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(left: 15.w, top: 20.h),
+                    child: Text(
+                      "프로필 노출여부",
+                      style: TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 18.sp,
+                          fontFamily: "boldfont"),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20.h,right: 20.w),
+                  child: Switch(
+                    hoverColor: kPrimaryColor,
+                    activeColor: kPrimaryColor,
+                    value: showProfile!,
+                    onChanged: (value) {
+                      setState(() {
+                        showProfile = !showProfile!;
+                      });
+                    },
+                  ),
+                )
+              ],
+            ),
+
+
             Container(
               margin: EdgeInsets.only(left: 15.w, top: 20.h),
               child: Text(
@@ -228,11 +277,15 @@ class _Profile_EditState extends State<Profile_Edit> {
               ),
             ),
             SizedBox(
-              height: 70.h,
+              height: 30.h,
             ),
             InkWell(
                 onTap: () async {
                   final prefs = await SharedPreferences.getInstance();
+                  if(widget.user.showProfile != showProfile){
+                    await AdminApi().change_showProfile(widget.user.id.toString());
+                  }
+
                   await AdminApi().update_admin(
                       _positionController.text,
                       prefs.getString("token").toString(),
@@ -253,7 +306,10 @@ class _Profile_EditState extends State<Profile_Edit> {
                     Navigator.pop(context, true);
                   }
                 },
-                child: Center(child: Button("수정")))
+                child: Center(child: Button("수정"))),
+            SizedBox(
+              height: 30.h,
+            ),
           ],
         ),
       ),

@@ -48,6 +48,8 @@ class _MypageViewState extends State<MypageView> {
   Future<bool> get_gyminfo_byuserId() async {
     final prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userId");
+    print("userIduserId");
+    print(userId);
 
     var gym =
         await AdminApi().gyminfo_byManager(userId, prefs.getString("token"));
@@ -144,7 +146,7 @@ class _MypageViewState extends State<MypageView> {
                             return Profile_BottomSheet();
                           });
                     },
-                    child: Icon(Icons.settings))
+                    child: Icon(Icons.settings,color: Colors.black,))
               ],
             ),
             shape: Border(bottom: BorderSide(color: Colors.grey, width: 0.3)),

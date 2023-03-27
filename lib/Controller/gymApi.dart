@@ -203,7 +203,7 @@ class GymApi with ChangeNotifier {
     }
   }
 
-  Future<bool> register_time(String? gymId, String? token, String? closeddays,
+  Future<bool> register_time(String? gymId, String? token, String? closeDay,
       String monday, String tuesday, String wednesday, String thursday, String friday,String sunday, String saturday, String holiday) async {
     var res = await http.post(
         Uri.parse(GymApi_Url().register_time + "${gymId.toString()}"),
@@ -212,7 +212,7 @@ class GymApi with ChangeNotifier {
           'Authorization': 'Bearer $token',
         },
         body: json.encode(({
-          "closeddays": closeddays,
+          "closeDay": closeDay,
           "sunday": sunday,
           "saturday": saturday,
           "monday": monday,
@@ -357,6 +357,8 @@ class GymApi with ChangeNotifier {
       Uri.parse(GymApi_Url().time_avg + "${gymId}"),
       headers: {'Content-Type': 'application/json'},
     );
+    print(res.body);
+    print("dsadasd");
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);

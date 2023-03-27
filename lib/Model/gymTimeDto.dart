@@ -36,6 +36,7 @@ class GymTimeDto {
 
   factory GymTimeDto.fromJson(Map<String, dynamic> json) {
     return GymTimeDto(
+
       id: json['id'],
       closeDay: json['closeDay'],
       sunday: json['sunday'],
@@ -46,6 +47,7 @@ class GymTimeDto {
       wednesday: json['wednesday'],
       thursday: json['thursday'],
       holiday: json['holiday'],
+
     );
   }
 }

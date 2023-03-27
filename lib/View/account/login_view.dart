@@ -11,6 +11,7 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Utils/constants.dart';
 import '../../Utils/toast.dart';
+import 'ceo/ceo_code.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -298,7 +299,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                                         context,
                                         PageTransition(
                                             type: PageTransitionType.fade,
-                                            child: Role_View()));
+                                            child: CEO_CodeView()));
                                   },
                                   child: Text(
                                     "회원가입 하러가기",

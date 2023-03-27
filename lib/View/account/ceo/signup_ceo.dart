@@ -33,34 +33,41 @@ class _Signup_Ceo extends State<Signup_Ceo>
   final TextEditingController _nicknameController = TextEditingController();
   bool goodToGo = true;
 
-  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
+  final RoundedLoadingButtonController _btnController =
+      RoundedLoadingButtonController();
 
   void _doSomething() async {
-
-
-      int? id = await AdminApi().register_ceo(_positionContrtoller.text,_userIDController.text,_passwordController.text,_nicknameController.text);
-
-      if(id == null){
+    if (_userIDController.text == "" ||
+        _passwordController.text == "" ||
+        _positionContrtoller.text == "" ||
+        _checkpasswordController.text == "" ||
+        _nicknameController.text == "") {
+      _btnController.stop();
+      showtoast("모든 정보를 입력해주세요");
+    } else {
+      if (_passwordController.text != _checkpasswordController.text) {
+        showtoast("비밀번호가 일치하지 않습니다.");
         _btnController.stop();
-        return showtoast("이미 존재하는 아이디입니다.");
-      }else{
-        _btnController.success();
-        showtoast("회원가입 완료 로그인을 진행해주세요");
-        Navigator.push(
-            context,
-            PageTransition(
-                type: PageTransitionType.fade,
-                child: LoginView()));
+      } else {
+        int? id = await AdminApi().register_ceo(
+            _positionContrtoller.text,
+            _userIDController.text,
+            _passwordController.text,
+            _nicknameController.text);
 
-
-
-
+        if (id == null) {
+          _btnController.stop();
+          return showtoast("이미 존재하는 아이디입니다.");
+        } else {
+          _btnController.success();
+          showtoast("회원가입 완료 로그인을 진행해주세요");
+          Navigator.push(
+              context,
+              PageTransition(
+                  type: PageTransitionType.fade, child: LoginView()));
+        }
+      }
     }
-
-
-
-
-
   }
 
   @override
@@ -114,7 +121,6 @@ class _Signup_Ceo extends State<Signup_Ceo>
                       number_mode: false,
                     ),
                   ),
-
                   RoundedPasswordInput(
                     controller: _passwordController,
                     hint: 'Password',
@@ -125,52 +131,55 @@ class _Signup_Ceo extends State<Signup_Ceo>
                     hint: 'check pw',
                     title: "비밀번호 확인",
                   ),
-            Container(
-              width: 340.w,
-              height: 40.h,
-              margin: EdgeInsets.only(top: 20),
-
-
-
-
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: (){
-                      showAlertDialog(context, "알림", "회원들에게 노출될 닉네임입니다.\n실명또는 닉네임을 기재해주세요");
-                    },
+                  Container(
+                    width: 340.w,
+                    height: 40.h,
+                    margin: EdgeInsets.only(top: 20),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("닉네임",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: kTextBlackColor,fontFamily: "lightfont"),),
+                        InkWell(
+                          onTap: () {
+                            showAlertDialog(context, "알림",
+                                "회원들에게 노출될 닉네임입니다.\n실명또는 닉네임을 기재해주세요");
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                "닉네임",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                    color: kTextBlackColor,
+                                    fontFamily: "lightfont"),
+                              ),
+                              Container(
+                                  margin: EdgeInsets.only(left: 8, bottom: 3),
+                                  child: Icon(
+                                    Icons.info,
+                                    color: kPrimaryColor,
+                                  ))
+                            ],
+                          ),
+                        ),
                         Container(
-                            margin: EdgeInsets.only(left: 8,bottom: 3),
-                            child: Icon(Icons.info,color: kPrimaryColor,))
+                          decoration: BoxDecoration(
+                              color: kContainerColor,
+                              borderRadius: BorderRadius.circular(10)),
+                          width: 200.w,
+                          child: TextFormField(
+                            controller: _nicknameController,
+                            textAlign: TextAlign.center,
+                            cursorColor: kPrimaryColor,
+                            decoration: InputDecoration(
+                                // contentPadding: EdgeInsets.,
+                                hintText: "-",
+                                border: InputBorder.none),
+                          ),
+                        )
                       ],
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: kContainerColor,
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    width: 200.w,
-                    child: TextFormField(
-                      controller: _nicknameController,
-                      textAlign: TextAlign.center,
-
-                      cursorColor: kPrimaryColor,
-                      decoration: InputDecoration(
-                        // contentPadding: EdgeInsets.,
-                          hintText: "-",
-                          border: InputBorder.none
-                      ),
-                    ),
-                  )
-
-                ],
-              ),
-            ),
                   Container(
                     width: 340.w,
                     height: 40.h,
@@ -183,7 +192,8 @@ class _Signup_Ceo extends State<Signup_Ceo>
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 17,
-                              color: kTextBlackColor,fontFamily: "lightfont"),
+                              color: kTextBlackColor,
+                              fontFamily: "lightfont"),
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -195,7 +205,7 @@ class _Signup_Ceo extends State<Signup_Ceo>
                             textAlign: TextAlign.center,
                             cursorColor: kPrimaryColor,
                             decoration: InputDecoration(
-                              // contentPadding: EdgeInsets.,
+                                // contentPadding: EdgeInsets.,
                                 hintText: "ex)지점장",
                                 border: InputBorder.none),
                           ),
@@ -206,12 +216,8 @@ class _Signup_Ceo extends State<Signup_Ceo>
                   SizedBox(
                     height: size.height * 0.345,
                   ),
-
                   InkWell(
-                      onTap: () async {
-
-
-                      },
+                      onTap: () async {},
                       borderRadius: BorderRadius.circular(10),
                       child: RoundedLoadingButton(
                         controller: _btnController,
@@ -225,8 +231,6 @@ class _Signup_Ceo extends State<Signup_Ceo>
                             borderRadius: BorderRadius.circular(10),
                             color: kButtonColor,
                           ),
-
-
                           alignment: Alignment.center,
                           child: Text(
                             "다음",
@@ -234,12 +238,10 @@ class _Signup_Ceo extends State<Signup_Ceo>
                                 fontFamily: "lightfont",
                                 color: kTextWhiteColor,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16.sp
-                            ),
+                                fontSize: 16.sp),
                           ),
                         ),
-                      )
-                  ),
+                      )),
                   SizedBox(height: 30),
                 ],
               ),

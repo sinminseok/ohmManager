@@ -19,6 +19,8 @@ class TrainerDto {
   //자기소개
    String? introduce;
 
+   bool? showProfile;
+
    String? nickname;
 
    int? age;
@@ -26,11 +28,12 @@ class TrainerDto {
    String? role;
 
 
-  TrainerDto({required this.role,required this.position,required this.id,required this.name,required this.profile,required this.oneline_introduce,required this.introduce,required this.nickname,required this.age});
+  TrainerDto({required this.showProfile,required this.role,required this.position,required this.id,required this.name,required this.profile,required this.oneline_introduce,required this.introduce,required this.nickname,required this.age});
 
   factory TrainerDto.fromJson(Map<String, dynamic> json) {
     return TrainerDto(
       id: json['id'],
+        showProfile:json['showProfile'],
       position:json['position'],
       name: json['username'],
       profile: json['profile'],

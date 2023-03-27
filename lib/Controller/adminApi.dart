@@ -24,6 +24,24 @@ import 'gymApi.dart';
 
 class AdminApi with ChangeNotifier {
 
+  Future<bool?> change_showProfile(String managerId)async{
+    final prefs = await SharedPreferences.getInstance();
+    var res = await http.post(Uri.parse(AdminApi_Url().showProfile+managerId),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${prefs.getString("token")}',
+
+      },);
+
+    print(res);
+    if(res.statusCode == 200){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   Future<bool?> check_code(String code)async{
     var res = await http.post(Uri.parse(AdminApi_Url().checkCode_ceo + "${code}"),
         headers: {
@@ -66,7 +84,7 @@ class AdminApi with ChangeNotifier {
   }
 
   Future<bool> delete_account(String managerId,String token)async{
-    var res = await http.delete(Uri.parse(AdminApi_Url().delete_account),
+    var res = await http.delete(Uri.parse(AdminApi_Url().delete_account+managerId),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -86,6 +104,7 @@ class AdminApi with ChangeNotifier {
   Future<List<GymDto>?> findgyms_byceo(String? id,String? token)async{
 
 
+    print("findbygym");
     List<GymDto> gyms = [];
     var res = await http.get(Uri.parse(AdminApi_Url().gyms_byceo + "${int.parse(id!)}"),
       headers: {
@@ -93,6 +112,8 @@ class AdminApi with ChangeNotifier {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
       },);
+
+    print(res.body);
 
 
     if (res.statusCode == 200) {
@@ -162,6 +183,7 @@ class AdminApi with ChangeNotifier {
       final data = jsonDecode(decodeData);
       // AuthorityDto authorityDto = AuthorityDto.fromJson(data['authorities'][0]);
 
+      print(data);
       TrainerDto trainerDto = TrainerDto.fromJson(data);
      
       return trainerDto;
@@ -259,21 +281,21 @@ String position,String id, String password, String nickname) async {
 
   //manager 회원가입
   Future<int?> register_manager(
-      String position,String id, String password, String nickname, String onelineIntroduce,String introduce,String gymId) async {
-
+      String position,String id, String password, String nickname,String gymId) async {
+    final prfes = await SharedPreferences.getInstance();
 
 
     var res = await http.post(Uri.parse(AdminApi_Url().save_manager+"$gymId"),
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${prfes.getString("token")}',
         },
         body: json.encode({
           'position':position,
           'password': password,
           'nickname': nickname,
-          'onelineIntroduce':onelineIntroduce,
-          'introduce':introduce,
+
           'username': id,
         }));
 
@@ -324,18 +346,20 @@ String position,String id, String password, String nickname) async {
 
   //trainer 회원가입
   Future<int?> register_trainer(
-      String position,String id,String onelineIntroduce,String introduce ,String password, String nickname,String gymId) async {
+      String position,String id ,String password, String nickname,String gymId) async {
+    final prfes = await SharedPreferences.getInstance();
+
     var res = await http.post(Uri.parse(AdminApi_Url().save_trainer+"$gymId"),
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${prfes.getString("token")}',
         },
         body: json.encode({
           'position':position,
           'username': id,
           'password': password,
-          'onelineIntroduce':onelineIntroduce,
-          'introduce':introduce,
+
           'nickname': nickname,
         }));
 
@@ -371,14 +395,17 @@ String position,String id, String password, String nickname) async {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
       TrainerDto? trainerDto =await get_userinfo(data['token']);
-      var userId = prefs.getString("userId");
+      // var userId = prefs.getString("userId");
 
       //초기 로그인시 userId(PK)저장
-      if(userId != trainerDto!.id.toString() || userId == null){
-
-        prefs.setString("userId", trainerDto!.id.toString());
-      }
-
+      // if(userId != trainerDto!.id.toString() || userId == null){
+      //
+      //   prefs.setString("userId", trainerDto!.id.toString());
+      // }
+      await prefs.remove("gymId");
+      await prefs.setString("userId", trainerDto!.id.toString());
+      print(prefs.getString("userId"));
+      print("setUserId");
       return data['token'];
     } else {
 

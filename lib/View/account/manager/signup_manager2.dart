@@ -40,50 +40,6 @@ class _SignupView2 extends State<SignupView2>
 
   void _doSomething() async {
 
-    if(_introduceController.text =="" || _onlineController.text == ""){
-      showtoast("내용을 모두 입력해주세요");
-      _btnController.stop();
-    }else{
-      if(!goodToGo){return;}
-      if(goodToGo){debugPrint("Going to the moon!");}// do your thing
-      goodToGo = false;
-
-      Future.delayed(const Duration(milliseconds: 300), () async{
-        goodToGo = true;
-
-        int? id = await AdminApi().register_manager(widget.position,widget.name, widget.password, widget.nickname, _onlineController.text,_introduceController.text,widget.gymId);
-
-        if(id == null){
-          return showtoast("이미 존재하는 아이디입니다.");
-        }else{
-
-          if(_image == null){
-            _btnController.success();
-            showtoast("회원가입이 완료되었습니다.");
-            Navigator.push(
-                context,
-                PageTransition(
-                    type: PageTransitionType.fade,
-                    child: LoginView()));
-          }else{
-
-            showtoast("회원가입이 완료되었습니다.");
-            AdminApi().register_profile(_image!,id.toString());
-            _btnController.success();
-            Navigator.push(
-                context,
-                PageTransition(
-                    type: PageTransitionType.fade,
-                    child: LoginView()));
-          }
-
-
-        }
-      });
-
-    }
-
-
   }
 
   @override

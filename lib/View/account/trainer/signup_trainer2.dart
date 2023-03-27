@@ -39,58 +39,6 @@ class _Signup_Trainer2 extends State<Signup_Trainer2>
 
   void _doSomething() async {
 
-    if (_introduceController.text == "" ||
-        _onlineController.text == "") {
-      showtoast("내용을 모두 입력해주세요");
-
-      _btnController.stop();
-    } else {
-      if (!goodToGo) {
-        return;
-      }
-      if (goodToGo) {
-        debugPrint("Going to the moon!");
-      } // do your thing
-      goodToGo = false;
-      Future.delayed(const Duration(milliseconds: 100),
-              () async {
-            goodToGo = true;
-            int? id = await AdminApi().register_trainer(
-                widget.position,
-                widget.name,
-                _onlineController.text,
-                _introduceController.text,
-                widget.password,
-                widget.nickname,
-                widget.gymId);
-
-            if (id == null) {
-              _btnController.stop();
-              return showtoast("이미 존재하는 아이디입니다.");
-            } else {
-              if (_image == null) {
-                _btnController.success();
-                showtoast("회원가입 완료 로그인을 진행해주세요");
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.fade,
-                        child: LoginView()));
-              } else {
-                _btnController.success();
-                showtoast("회원가입 완료 로그인을 진행해주세요");
-                AdminApi()
-                    .register_profile(_image!, id.toString());
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.fade,
-                        child: LoginView()));
-              }
-            }
-          });
-    }
-
   }
   PickedFile? _image;
   var image_picked;

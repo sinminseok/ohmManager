@@ -25,6 +25,7 @@ class CheckPrice_Popup {
         pageBuilder: (BuildContext buildContext, Animation animation,
             Animation secondaryAnimation) {
           return StatefulBuilder(builder: (context, setState) {
+
             return AlertDialog(
               contentPadding: EdgeInsets.zero,
               shape: RoundedRectangleBorder(

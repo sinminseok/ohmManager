@@ -111,6 +111,8 @@ class _QuestionView extends State<QuestionView> {
                     fontWeight: FontWeight.bold),
               ),
               Container(
+                margin: EdgeInsets.only(top: 0,bottom: 0),
+                height: 40.h,
                 width: 100.w,
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey, width: 0.3),

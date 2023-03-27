@@ -77,7 +77,7 @@ class _Delete_ViewState extends State<Delete_View> {
                   }else{
                     final prefs = await SharedPreferences.getInstance();
                     var userId = prefs.getString("userId");
-                    print(userId);
+
                    bool check = await AdminApi().delete_account(userId.toString(),prefs.getString("token").toString());
                    if(check ==true){
                      showtoast("계정이 삭제되었습니다.");
@@ -87,7 +87,7 @@ class _Delete_ViewState extends State<Delete_View> {
 
 
                   }else{
-                     showtoast("서버가 오류. 관리자에게 문의하세요");
+                     showtoast("서버 오류. 관리자에게 문의하세요");
 
                    }
                   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:ohmmanager/Provider/gymProvider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Controller/adminApi.dart';
 import 'View/account/login_view.dart';
@@ -14,9 +16,12 @@ void main() {
     javaScriptAppKey: '64b5f35391bcd94fefe94a04752b4f99',
   );
 
-  runApp(
-    MyApp(),
-  );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => GymProvider()),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -29,13 +34,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   var authority;
 
-
-
   @override
   void initState() {
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {

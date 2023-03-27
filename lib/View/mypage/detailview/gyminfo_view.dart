@@ -275,7 +275,7 @@ class _GymDetail_View extends State<GymDetail_View> {
                                                 EdgeInsets.only(bottom: 5.h),
                                             child: Text(
                                                 "공휴일 : ${gymTime?.holiday}")),
-                                    gymTime?.closeDay == "없음"
+                                    gymTime?.closeDay == null
                                         ? Container()
                                         : Container(
                                             margin:
