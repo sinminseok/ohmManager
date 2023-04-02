@@ -9,10 +9,10 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Model/postDto.dart';
-import '../Model/postImgDto.dart';
-import '../Utils/httpurls.dart';
-import '../Utils/toast.dart';
+import '../Model/post/postDto.dart';
+import '../Model/post/postImgDto.dart';
+import '../Utils/sundry/httpurls.dart';
+import '../Utils/sundry/toast.dart';
 
 class PostApi with ChangeNotifier {
   Future<bool?> delete_post(int postId) async {

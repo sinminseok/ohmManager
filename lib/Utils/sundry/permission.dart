@@ -6,6 +6,7 @@ class Permission_handler{
   Future<bool> requestCameraPermission(BuildContext context) async {
 
     PermissionStatus status = await Permission.photos.request();
+    print(status.isGranted);
     if(status.isGranted) { // 허용이 안된 경우
       showDialog(
           context: context,

@@ -3,7 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../Utils/constants.dart';
+import '../../../Utils/sundry/constants.dart';
 
 Widget GymEdit_Widget(String? title,String? content,TextEditingController _controller,bool numberstate){
   return Column(

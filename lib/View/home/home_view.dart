@@ -2,15 +2,15 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ohmmanager/Utils/date.dart';
+import 'package:ohmmanager/Utils/sundry/date.dart';
 import 'package:ohmmanager/View/home/popup/register_popup.dart';
 import 'package:ohmmanager/View/home/widget/gym_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Controller/gymApi.dart';
 import '../../Controller/adminApi.dart';
-import '../../Model/gymDto.dart';
-import '../../Model/statisticsDto.dart';
-import '../../Utils/constants.dart';
+import '../../Model/gym/gymDto.dart';
+import '../../Model/statistics/statisticsDto.dart';
+import '../../Utils/sundry/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'detailview/gymStatistics_View.dart';
 
@@ -25,9 +25,12 @@ class _HomeView extends State<HomeView> {
   GymDto? gymDto;
   Future? myFuture;
   var current_datetime;
+  //gym의 statistics 테이블 조회
   StatisticsDto? time_avg;
+  //로그인된 계정이 ceo인지 manager인지 구분
   bool role_ceo = false;
   bool gym_null = false;
+  //ceo 계정이 담을 gyms 리스트
   List<GymDto>? gyms= [];
   @override
   void initState() {
@@ -40,11 +43,10 @@ class _HomeView extends State<HomeView> {
   }
 
   Future<bool> get_gyminfo() async {
-    //메모리에 저장된 userId조회
     final prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userId");
-
     var trainerDto = await AdminApi().get_userinfo(prefs.getString("token"));
+
     if (trainerDto?.role == "ROLE_CEO") {
       setState(() {
         role_ceo = true;

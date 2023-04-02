@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ohmmanager/Model/gymDto.dart';
-import 'package:ohmmanager/Model/gymTimeDto.dart';
-import 'package:ohmmanager/Utils/buttom_container.dart';
+import 'package:ohmmanager/Model/gym/gymDto.dart';
+import 'package:ohmmanager/Utils/widget/buttom_container.dart';
 import 'package:ohmmanager/View/gym/edit/gymPriceEdit_view.dart';
 import 'package:ohmmanager/View/gym/edit/gymTimeEdit_view.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../Utils/constants.dart';
+import '../../../Utils/sundry/constants.dart';
 import '../../gym/register/gym_register.dart';
 import '../../gym/edit/gymEdit_view.dart';
 

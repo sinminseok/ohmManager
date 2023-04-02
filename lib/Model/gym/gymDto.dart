@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'gymImgDto.dart';
 
+
 class GymDto {
   int? id;
   String? name;

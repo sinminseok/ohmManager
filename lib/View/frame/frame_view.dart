@@ -34,12 +34,9 @@ class _FrameView extends State<FrameView> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
-
-
         bottomNavigationBar: CustomBottomNavigationBar(
 
           iconList: [

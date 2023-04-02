@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../Utils/constants.dart';
+import '../../../Utils/sundry/constants.dart';
 
 class DeleteManager_Finish extends StatefulWidget {
   const DeleteManager_Finish({Key? key}) : super(key: key);

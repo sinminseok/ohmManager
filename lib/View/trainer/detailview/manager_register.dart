@@ -7,9 +7,9 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Controller/adminApi.dart';
-import '../../../Utils/buttom_container.dart';
-import '../../../Utils/constants.dart';
-import '../../../Utils/toast.dart';
+import '../../../Utils/widget/buttom_container.dart';
+import '../../../Utils/sundry/constants.dart';
+import '../../../Utils/sundry/toast.dart';
 import '../../../Utils/widget/passwordinput_widget.dart';
 import '../../../Utils/widget/rouninput_widget.dart';
 
@@ -240,7 +240,7 @@ class _Manager_RegisterState extends State<Manager_Register> {
                         onPressed: _doSomething,
                         child: Container(
                           width: 330.w,
-                          height: 47.h,
+                          height: 55.h,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: kButtonColor,

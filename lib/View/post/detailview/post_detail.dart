@@ -2,17 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/postApi.dart';
-import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/Utils/sundry/toast.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:ohmmanager/View/post/detailview/post_edit.dart';
 import 'package:ohmmanager/View/post/popup/delete_popup.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../Model/postDto.dart';
-import '../../../Utils/constants.dart';
+import '../../../Model/post/postDto.dart';
+import '../../../Utils/sundry/constants.dart';
 
 class Post_Detail extends StatefulWidget {
   PostDto postDto;
+
   Post_Detail({required this.postDto});
 
   @override
@@ -20,8 +21,6 @@ class Post_Detail extends StatefulWidget {
 }
 
 class _Post_DetailState extends State<Post_Detail> {
-
-  
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -56,8 +55,9 @@ class _Post_DetailState extends State<Post_Detail> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => Post_Edit(
-                                postDto: widget.postDto, orign_imglength: widget.postDto.imgs.length,
-                              )));
+                                    postDto: widget.postDto,
+                                    orign_imglength: widget.postDto.imgs.length,
+                                  )));
                     },
                     child: Icon(
                       Icons.edit,
@@ -74,26 +74,24 @@ class _Post_DetailState extends State<Post_Detail> {
             widget.postDto.imgs.length == 0
                 ? Container()
                 : Container(
-              width: 360.w,
-              height: 340.h,
-
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: widget.postDto.imgs.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      height: 340.h,
-                      width: 360.w,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(0.0),
-                          child: Image.network(
-                            awsimg_endpoint + widget.postDto.imgs[index].filePath,
-                            fit: BoxFit.fill
-                          )),
-                    );
-                  }),),
-
-
+                    width: 360.w,
+                    height: 340.h,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: widget.postDto.imgs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            height: 340.h,
+                            width: 360.w,
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(0.0),
+                                child: Image.network(
+                                    awsimg_endpoint +
+                                        widget.postDto.imgs[index].filePath,
+                                    fit: BoxFit.fill)),
+                          );
+                        }),
+                  ),
             Container(
               width: size.width,
               child: Column(

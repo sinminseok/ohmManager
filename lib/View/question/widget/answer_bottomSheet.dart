@@ -1,21 +1,19 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/questionApi.dart';
-import 'package:ohmmanager/Model/questionDto.dart';
-import 'package:ohmmanager/Utils/buttom_container.dart';
-import 'package:ohmmanager/Utils/constants.dart';
-import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/Utils/sundry/constants.dart';
+import 'package:ohmmanager/Utils/sundry/toast.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+
+import '../../../Model/message/questionDto.dart';
 
 class Answer_BottomSheet extends StatefulWidget {
   QuestionDto questionDto;
   StateSetter? setter;
 
   // Future<dynamic>? fun;
-  Answer_BottomSheet({required this.questionDto,required this.setter});
+  Answer_BottomSheet({required this.questionDto, required this.setter});
 
   @override
   State<Answer_BottomSheet> createState() => _Answer_BottomSheetState();
@@ -23,27 +21,25 @@ class Answer_BottomSheet extends StatefulWidget {
 
 class _Answer_BottomSheetState extends State<Answer_BottomSheet> {
   TextEditingController _answerController = TextEditingController();
-  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
+  final RoundedLoadingButtonController _btnController =
+      RoundedLoadingButtonController();
 
   void _doSomething() async {
-    var register_answer =await QuestionApi().register_answer(widget.questionDto.id, _answerController.text);
-    if(register_answer == true){
+    var register_answer = await QuestionApi()
+        .register_answer(widget.questionDto.id, _answerController.text);
+    Navigator.pop(context);
+    if (register_answer == true) {
       _btnController.success();
-      widget.setter!((){
-
-      });
-
-
+      widget.setter!(() {});
       showtoast("답변이 등록되었습니다");
-      Navigator.pop(context);
-    }else{
+    } else {
       _btnController.stop();
       showtoast("네트워크를 확인해주세요");
     }
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Container(
         height: 420.h,
         color: kBackgroundColor,
@@ -51,25 +47,25 @@ class _Answer_BottomSheetState extends State<Answer_BottomSheet> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-
-             Container(
+              Container(
                 width: 340.w,
                 margin: EdgeInsets.only(top: 15.h),
                 decoration: BoxDecoration(
-                  color: kBoxColor,
-                  borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
+                    color: kBoxColor,
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Container(
-                  margin: EdgeInsets.only(top: 10.h,bottom: 10.h,left: 10.w),
-                  child: Text("${widget.questionDto.content}",style: TextStyle(fontSize: 18),),
+                  margin: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 10.w),
+                  child: Text(
+                    "${widget.questionDto.content}",
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
               ),
               Container(
                 margin: EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
                     color: kContainerColor,
-                    borderRadius: BorderRadius.circular(10)
-                ),
+                    borderRadius: BorderRadius.circular(10)),
                 width: 340.w,
                 height: 250.h,
                 child: TextFormField(
@@ -77,16 +73,13 @@ class _Answer_BottomSheetState extends State<Answer_BottomSheet> {
                   textAlign: TextAlign.start,
                   cursorColor: kContainerColor,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(left: 10),
+                      contentPadding: EdgeInsets.only(left: 10),
                       hintText: "답변",
-                      border: InputBorder.none
-                  ),
+                      border: InputBorder.none),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 30.h),
-
-
+                  margin: EdgeInsets.only(top: 30.h),
                   child: RoundedLoadingButton(
                     controller: _btnController,
                     successColor: kTextBlackColor,
@@ -99,8 +92,6 @@ class _Answer_BottomSheetState extends State<Answer_BottomSheet> {
                         borderRadius: BorderRadius.circular(10),
                         color: kButtonColor,
                       ),
-
-
                       alignment: Alignment.center,
                       child: Text(
                         "답변등록",
@@ -108,13 +99,10 @@ class _Answer_BottomSheetState extends State<Answer_BottomSheet> {
                             fontFamily: "lightfont",
                             color: kTextWhiteColor,
                             fontWeight: FontWeight.bold,
-                            fontSize: 16.sp
-                        ),
+                            fontSize: 16.sp),
                       ),
                     ),
-                  )
-              ),
-
+                  )),
             ],
           ),
         ));

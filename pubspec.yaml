@@ -106,6 +106,7 @@ flutter:
     - assets/images/basic_user.png
     - assets/images/user_basic.png
 
+
     - assets/images/refresh.png
     - assets/images/mark.png
 
@@ -118,6 +119,7 @@ flutter:
 
     - assets/images/freeimg.jpg
     - assets/images/managerlogo.png
+    - assets/icon/ohmicon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

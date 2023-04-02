@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../Model/gymPriceDto.dart';
+import '../Model/gym/gymPriceDto.dart';
+
 
 class GymProvider with ChangeNotifier {
   String? _gymName;

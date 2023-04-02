@@ -4,12 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/questionApi.dart';
-import 'package:ohmmanager/Model/questionDto.dart';
-import 'package:ohmmanager/Utils/buttom_container.dart';
-import 'package:ohmmanager/Utils/constants.dart';
-import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/Utils/widget/buttom_container.dart';
+import 'package:ohmmanager/Utils/sundry/constants.dart';
+import 'package:ohmmanager/Utils/sundry/toast.dart';
 import 'package:ohmmanager/View/mypage/detailview/question_view.dart';
 import 'package:ohmmanager/View/question/question_view.dart';
+
+import '../../../Model/message/questionDto.dart';
 
 class AnswerEdit_BottomSheet extends StatefulWidget {
   QuestionDto questionDto;

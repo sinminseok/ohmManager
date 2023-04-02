@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:ohmmanager/Utils/constants.dart';
+import 'package:ohmmanager/Utils/sundry/constants.dart';
 
 void showtoast(String message) async {
   Fluttertoast.showToast(

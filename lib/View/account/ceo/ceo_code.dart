@@ -3,21 +3,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Controller/adminApi.dart';
-import 'package:ohmmanager/Utils/buttom_container.dart';
+import 'package:ohmmanager/Utils/widget/buttom_container.dart';
 import 'package:ohmmanager/View/account/ceo/signup_ceo.dart';
-import 'package:ohmmanager/View/account/manager/signup_manager.dart';
-import 'package:ohmmanager/View/account/role_view.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../Utils/constants.dart';
-import '../../../../Utils/toast.dart';
-import '../../../../Utils/widget/passwordinput_widget.dart';
-import '../../../../Utils/widget/rouninput_widget.dart';
+import '../../../Utils/sundry/constants.dart';
+import '../../../Utils/sundry/toast.dart';
 
 class CEO_CodeView extends StatefulWidget {
   const CEO_CodeView({Key? key}) : super(key: key);
@@ -28,8 +20,6 @@ class CEO_CodeView extends StatefulWidget {
 
 class _CEO_CodeView extends State<CEO_CodeView>
     with SingleTickerProviderStateMixin {
-  final TextEditingController _onlineController = TextEditingController();
-  final TextEditingController _introduceController = TextEditingController();
   String? code;
 
   @override
@@ -83,12 +73,14 @@ class _CEO_CodeView extends State<CEO_CodeView>
                   backgroundColor: Colors.transparent,
                   length: 4,
                   obscureText: false,
+                  keyboardType: TextInputType.number,
                   animationType: AnimationType.fade,
                   pinTheme: PinTheme(
                     activeColor: Colors.transparent,
                     inactiveColor: Colors.transparent,
                     disabledColor: kBackgroundColor,
                     selectedColor: Colors.transparent,
+
                     inactiveFillColor: kBoxColor,
                     selectedFillColor: kBoxColor,
                     shape: PinCodeFieldShape.box,
@@ -101,7 +93,6 @@ class _CEO_CodeView extends State<CEO_CodeView>
                   enableActiveFill: true,
                   controller: _codeController,
                   onCompleted: (v) {
-                    print("Completed");
                   },
                   onChanged: (value) {
 

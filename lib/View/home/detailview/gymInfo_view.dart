@@ -3,9 +3,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ohmmanager/Model/gymDto.dart';
+import 'package:ohmmanager/Model/gym/gymDto.dart';
 
-import '../../../Utils/constants.dart';
+import '../../../Utils/sundry/constants.dart';
 import '../widget/gymInfo_widget.dart';
 
 class GymInfo_View extends StatefulWidget {

@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Controller/adminApi.dart';
-import 'package:ohmmanager/Model/gymDto.dart';
-import 'package:ohmmanager/Model/trainerDto.dart';
-import 'package:ohmmanager/Utils/buttom_container.dart';
-import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/Model/gym/gymDto.dart';
+import 'package:ohmmanager/Model/account/managerDto.dart';
+import 'package:ohmmanager/Utils/widget/buttom_container.dart';
+import 'package:ohmmanager/Utils/sundry/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../Utils/constants.dart';
+import '../../../Utils/sundry/constants.dart';
 
 class Profile_Edit extends StatefulWidget {
   TrainerDto user;

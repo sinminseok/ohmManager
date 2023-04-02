@@ -39,25 +39,25 @@ Widget Chart_Bottom(){
           width: 30.0.w,
           child: Text("11")),
       Container(
-          width: 30.0.w,
+          width: 31.0.w,
           child: Text("12")),
       Container(
-          width: 30.0.w,
+          width: 32.0.w,
           child: Text("13")),
       Container(
-          width: 30.0.w,
+          width: 31.0.w,
           child: Text("14")),
       Container(
-          width: 30.0.w,
+          width: 31.0.w,
           child: Text("15")),
       Container(
-          width: 30.0.w,
+          width: 31.0.w,
           child: Text("16")),
       Container(
-          width: 30.0.w,
+          width: 31.0.w,
           child: Text("17")),
       Container(
-          width: 30.2.w,
+          width: 31.2.w,
           child: Text("18")),
       Container(
           width: 30.2.w,
@@ -72,7 +72,7 @@ Widget Chart_Bottom(){
           width: 30.2.w,
           child: Text("22")),
       Container(
-          width: 30.2.w,
+          width: 30.w,
           child: Text("23")),
 
 

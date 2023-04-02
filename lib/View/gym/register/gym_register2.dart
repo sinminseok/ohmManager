@@ -1,20 +1,16 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ohmmanager/Controller/gymApi.dart';
-import 'package:ohmmanager/Model/gymPriceDto.dart';
-import 'package:ohmmanager/Utils/constants.dart';
-import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/Utils/sundry/constants.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../Model/gym/gymPriceDto.dart';
 import '../../../Provider/gymProvider.dart';
-import '../../../Utils/buttom_container.dart';
+import '../../../Utils/widget/buttom_container.dart';
 import 'gym_register3.dart';
 
 class GymRegisterView2 extends StatefulWidget {
@@ -530,7 +526,7 @@ class _GymRegisterView2 extends State<GymRegisterView2> {
                   },
                   child: Container(
                     width: 330.w,
-                    height: 47.h,
+                    height: 55.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: kButtonColor,

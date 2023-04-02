@@ -2,15 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/Utils/sundry/toast.dart';
 import 'package:ohmmanager/View/post/detailview/post_write.dart';
 import 'package:ohmmanager/View/post/widgets/post_widget.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../Model/postDto.dart';
+import '../../Model/post/postDto.dart';
 import '../../Controller/postApi.dart';
-import '../../Utils/constants.dart';
+import '../../Utils/sundry/constants.dart';
 
 class PostView extends StatefulWidget {
   const PostView({Key? key}) : super(key: key);

@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/questionApi.dart';
-import 'package:ohmmanager/Model/questionDto.dart';
-import 'package:ohmmanager/Utils/buttom_container.dart';
-import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/Utils/widget/buttom_container.dart';
+import 'package:ohmmanager/Utils/sundry/toast.dart';
 
-import '../../../Utils/constants.dart';
+import '../../../Model/message/questionDto.dart';
+import '../../../Utils/sundry/constants.dart';
 
 class DeleteQuestion_Popup {
   Future<bool?> showDialog( BuildContext context,QuestionDto questionDto) async{

@@ -3,14 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Controller/adminApi.dart';
-import 'package:ohmmanager/View/account/role_view.dart';
 import 'package:ohmmanager/View/account/widget/loading_widget.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../Utils/constants.dart';
-import '../../Utils/toast.dart';
+import '../../Utils/sundry/constants.dart';
+import '../../Utils/sundry/toast.dart';
 import 'ceo/ceo_code.dart';
 
 class LoginView extends StatefulWidget {
@@ -21,7 +20,6 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
-  bool isLogin = true;
   bool ischeck = false;
   bool goodToGo = true;
   String? colsedday;
@@ -35,6 +33,10 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
 
     var token = await AdminApi().login_manager(
         _userIDController.text, _passwordController.text);
+    if(token == "false!"){
+      _btnController.stop();
+      return;
+    }
     if (token == null) {
       _btnController.stop();
       return showtoast("아이디 혹은 비밀번호가 틀립니다.");
@@ -75,7 +77,6 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
   }
   @override
   void initState() {
-   // get_logininfo();
     myfuture = get_logininfo();
     super.initState();
   }
@@ -88,17 +89,20 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
       return false;
     } else {
       var token = await AdminApi().login_manager(disk_id!, disk_pw!);
+      if(token =="false!"){
+        return false;
+      }
       if (prefs.getString("token") == null) {
         prefs.setString("token", token.toString());
+        return true;
       } else {
         prefs.remove("token");
         prefs.setString("token", token.toString());
+        return true;
       }
 
       return true;
 
-      // Navigator.push(context,
-      //     PageTransition(type: PageTransitionType.fade, child: FrameView()));
     }
   }
 
@@ -128,6 +132,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
             }
             // 데이터를 정상적으로 받아오게 되면 다음 부분을 실행하게 되는 것이다.
             else {
+              //FrameView()
               return snapshot.data == true?FrameView(): Center(
                 child: Container(
                   height: size.height*1,

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ohmmanager/Model/trainerDto.dart';
-import 'package:ohmmanager/Utils/constants.dart';
-import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/Model/account/managerDto.dart';
+import 'package:ohmmanager/Utils/sundry/constants.dart';
+import 'package:ohmmanager/Utils/sundry/toast.dart';
 import 'package:ohmmanager/View/trainer/detailview/trainer_detail.dart';
 import 'package:ohmmanager/View/trainer/popup/delete_manager.dart';
 import 'package:page_transition/page_transition.dart';

@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ohmmanager/Utils/buttom_container.dart';
-import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/Utils/widget/buttom_container.dart';
+import 'package:ohmmanager/Utils/sundry/toast.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../Utils/constants.dart';
-import '../../../../Utils/permission.dart';
+import '../../../Utils/sundry/constants.dart';
+import '../../../Utils/sundry/permission.dart';
 import '../../../Controller/postApi.dart';
 import '../../frame/frame_view.dart';
 
@@ -33,7 +33,7 @@ class _PostWrite_View extends State<PostWrite_View> {
   Future<void> getImages() async {
     ImagePicker imagePicker = ImagePicker();
 
-    List<XFile> images = await imagePicker.pickMultiImage( imageQuality: 50);
+    List<XFile> images = await imagePicker.pickMultiImage( imageQuality: 85);
 
     setState(() {
       image_picked = images;
@@ -209,7 +209,7 @@ class _PostWrite_View extends State<PostWrite_View> {
                     onPressed: _doSomething,
                     child: Container(
                       width: 330.w,
-                      height: 47.h,
+                      height: 55.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: kButtonColor,

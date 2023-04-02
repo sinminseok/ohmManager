@@ -3,21 +3,15 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Controller/gymApi.dart';
-import 'package:ohmmanager/Model/gymDto.dart';
-import 'package:ohmmanager/Model/gymImgDto.dart';
-import 'package:ohmmanager/Model/gymPriceDto.dart';
-import 'package:ohmmanager/Utils/buttom_container.dart';
-import 'package:ohmmanager/Utils/constants.dart';
-import 'package:ohmmanager/View/home/widget/gymInfo_widget.dart';
+import 'package:ohmmanager/Model/gym/gymDto.dart';
+import 'package:ohmmanager/Utils/widget/buttom_container.dart';
+import 'package:ohmmanager/Utils/sundry/constants.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../Utils/permission.dart';
-import '../../../Utils/toast.dart';
+import '../../../Model/gym/gymPriceDto.dart';
+import '../../../Utils/sundry/toast.dart';
 import '../../frame/frame_view.dart';
-import '../widget/gymEdit_widget.dart';
 
 class GymPriceEdit_View extends StatefulWidget {
   GymDto? gymDto;
@@ -65,7 +59,6 @@ class _GymPriceEdit_View extends State<GymPriceEdit_View> {
     final prefs = await SharedPreferences.getInstance();
     String? gymId = await prefs.getString("gymId");
     prices = (await GymApi().getPrices(int.parse(gymId!)))!;
-    print(prices);
     return prices;
   }
 
@@ -298,7 +291,7 @@ class _GymPriceEdit_View extends State<GymPriceEdit_View> {
                             Container(
                               width: 340.w,
                               margin: EdgeInsets.all(8),
-                              height: 110.h,
+                              height: 120.h,
                               child: ListView.builder(reverse: true,
 
                                   scrollDirection: Axis.horizontal,
@@ -323,7 +316,7 @@ class _GymPriceEdit_View extends State<GymPriceEdit_View> {
                                         Container(
                                           margin: EdgeInsets.all(8),
 
-                                          height: 50.h,
+                                          height: 70.h,
                                           decoration: BoxDecoration(
                                               color: kContainerColor,
                                               borderRadius: BorderRadius.all(
@@ -356,7 +349,7 @@ class _GymPriceEdit_View extends State<GymPriceEdit_View> {
                           ],
                         ),
 
-                        SizedBox(height: 130.h),
+                        SizedBox(height: 110.h),
 
                         InkWell(
                             onTap: () async{

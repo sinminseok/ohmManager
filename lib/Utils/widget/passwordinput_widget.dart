@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../constants.dart';
-import 'input_widget.dart';
+import '../sundry/constants.dart';
 
 class RoundedPasswordInput extends StatelessWidget {
   const RoundedPasswordInput({

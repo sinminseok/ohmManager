@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Controller/postApi.dart';
-import 'package:ohmmanager/Model/postImgDto.dart';
-import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/Utils/sundry/toast.dart';
 
-import '../../../Model/postDto.dart';
-import '../../../Utils/constants.dart';
-import '../../../Utils/permission.dart';
+import '../../../Model/post/postDto.dart';
+import '../../../Model/post/postImgDto.dart';
+import '../../../Utils/sundry/constants.dart';
+import '../../../Utils/sundry/permission.dart';
 import '../../frame/frame_view.dart';
 
 class Post_Edit extends StatefulWidget {
@@ -30,7 +30,6 @@ class _Post_Edit extends State<Post_Edit> {
 
   //삭제할 사진
   List<String?> delete_imgs = [];
-
 
   Future<void> getImages() async {
     ImagePicker imagePicker = ImagePicker();
@@ -272,24 +271,27 @@ class _Post_Edit extends State<Post_Edit> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left: 15.w,top: 20.h),
-                    child: Text("글제목",style: TextStyle(fontFamily: "lightfont",fontSize: 16.sp,fontWeight: FontWeight.bold),),
+                    margin: EdgeInsets.only(left: 15.w, top: 20.h),
+                    child: Text(
+                      "글제목",
+                      style: TextStyle(
+                          fontFamily: "lightfont",
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                   Container(
-
                       margin: EdgeInsets.only(left: 10, right: 10, top: 5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
-
                       ),
                       child: Container(
-                        margin: EdgeInsets.only(left: 10,right: 10),
+                        margin: EdgeInsets.only(left: 10, right: 10),
                         child: TextField(
                           controller: _titleController,
                           decoration: InputDecoration(border: InputBorder.none),
                         ),
                       )),
-
                   Container(
                       margin: EdgeInsets.only(
                           left: 20, right: 20, top: 10, bottom: 50),

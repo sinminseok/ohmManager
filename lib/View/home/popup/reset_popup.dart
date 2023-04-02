@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ohmmanager/Model/gymDto.dart';
-import 'package:ohmmanager/Model/gymTimeDto.dart';
-import 'package:ohmmanager/Utils/buttom_container.dart';
+import 'package:ohmmanager/Model/gym/gymDto.dart';
+import 'package:ohmmanager/Utils/widget/buttom_container.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:ohmmanager/View/gym/edit/gymPriceEdit_view.dart';
 import 'package:ohmmanager/View/gym/edit/gymTimeEdit_view.dart';
@@ -11,8 +10,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Controller/gymApi.dart';
-import '../../../Utils/constants.dart';
-import '../../../Utils/toast.dart';
+import '../../../Utils/sundry/constants.dart';
+import '../../../Utils/sundry/toast.dart';
 import '../../gym/edit/gymEdit_view.dart';
 
 class Reset_Popup {

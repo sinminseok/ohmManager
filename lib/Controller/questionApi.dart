@@ -1,17 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:ohmmanager/Model/answerDto.dart';
-import 'package:ohmmanager/Model/questionDto.dart';
+import 'package:ohmmanager/Model/message/answerDto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Utils/httpurls.dart';
+import '../Model/message/questionDto.dart';
+import '../Utils/sundry/httpurls.dart';
 
 class QuestionApi with ChangeNotifier {
-
-
   //Gym에 종속된 Post 모두 조회
   Future<List<QuestionDto>> findall_question(String gymId) async {
-
     var res = await http.get(
       Uri.parse(QuestionApi_Url().findall_question + "${gymId}"),
       headers: {
@@ -26,12 +23,13 @@ class QuestionApi with ChangeNotifier {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
 
-
       for (int i = 0; i < data.length; i++) {
-
-        questions.add(QuestionDto.fromJson(data[i],data[i]['answer'] == null?null:AnswerDto.fromJson(data[i]['answer'])));
+        questions.add(QuestionDto.fromJson(
+            data[i],
+            data[i]['answer'] == null
+                ? null
+                : AnswerDto.fromJson(data[i]['answer'])));
       }
-
 
       return questions;
     } else {
@@ -39,7 +37,7 @@ class QuestionApi with ChangeNotifier {
     }
   }
 
-  Future<bool> delete_question(int questionId)async{
+  Future<bool> delete_question(int questionId) async {
     final prefs = await SharedPreferences.getInstance();
 
     var res = await http.delete(
@@ -51,16 +49,14 @@ class QuestionApi with ChangeNotifier {
       },
     );
 
-
     if (res.statusCode == 200) {
-
       return true;
     } else {
       return false;
     }
   }
 
-  Future<bool> register_answer(int questionId,String content)async{
+  Future<bool> register_answer(int questionId, String content) async {
     final prefs = await SharedPreferences.getInstance();
 
     var res = await http.post(
@@ -74,17 +70,14 @@ class QuestionApi with ChangeNotifier {
           "content": content,
         })));
 
-
-
     if (res.statusCode == 200) {
-
       return true;
     } else {
       return false;
     }
   }
 
-  Future<bool> edit_answer(int answerId,String content)async{
+  Future<bool> edit_answer(int answerId, String content) async {
     final prefs = await SharedPreferences.getInstance();
 
     var res = await http.patch(
@@ -98,11 +91,8 @@ class QuestionApi with ChangeNotifier {
           "content": content,
         })));
 
-
     if (res.statusCode == 200) {
-
       return true;
-
     } else {
       return false;
     }

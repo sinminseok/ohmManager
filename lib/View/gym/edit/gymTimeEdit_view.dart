@@ -6,17 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Controller/gymApi.dart';
-import 'package:ohmmanager/Model/gymDto.dart';
-import 'package:ohmmanager/Model/gymImgDto.dart';
-import 'package:ohmmanager/Model/gymTimeDto.dart';
-import 'package:ohmmanager/Utils/buttom_container.dart';
-import 'package:ohmmanager/Utils/constants.dart';
-import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/Model/gym/gymDto.dart';
+import 'package:ohmmanager/Utils/widget/buttom_container.dart';
+import 'package:ohmmanager/Utils/sundry/constants.dart';
+import 'package:ohmmanager/Utils/sundry/toast.dart';
 import 'package:ohmmanager/View/home/widget/gymInfo_widget.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../Utils/permission.dart';
+import '../../../Model/gym/gymTimeDto.dart';
+import '../../../Utils/sundry/permission.dart';
 import '../../frame/frame_view.dart';
 import '../widget/gymEdit_widget.dart';
 
@@ -206,7 +205,7 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
                                     onTap: (){
                                       showDialog_tusdaystart(size, context, "title");
                                     },
-                                    child: Text("시작 시간 : ${thursday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
+                                    child: Text("시작 시간 : ${tuesday_start}",style: TextStyle(fontSize: 20,color: kTextColor))),
                               ),
                               Container(
                                 margin: EdgeInsets.only(top: 10,left: 10),
@@ -214,7 +213,7 @@ class _GymTimeEdit_View extends State<GymTimeEdit_View> {
                                     onTap: (){
                                       showDialog_tuesdayend(size, context, "title");
                                     },
-                                    child: Text("종료 시간 : ${thursday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
+                                    child: Text("종료 시간 : ${tuesday_end}",style: TextStyle(fontSize: 20,color: kTextColor),)),
                               ),
                             ],
                           )

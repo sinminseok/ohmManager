@@ -3,15 +3,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ohmmanager/Utils/buttom_container.dart';
+import 'package:ohmmanager/Utils/widget/buttom_container.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Controller/gymApi.dart';
 import '../../../Controller/postApi.dart';
-import '../../../Model/gymPriceDto.dart';
-import '../../../Utils/constants.dart';
-import '../../../Utils/toast.dart';
+import '../../../Utils/sundry/constants.dart';
+import '../../../Utils/sundry/toast.dart';
 import '../../frame/frame_view.dart';
 
 class DeletePost_Popup {

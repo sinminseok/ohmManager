@@ -4,17 +4,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ohmmanager/Model/countDto.dart';
-import 'package:ohmmanager/Model/gymTimeDto.dart';
-import 'package:ohmmanager/Model/statisticsDto.dart';
+import 'package:ohmmanager/Model/statistics/statisticsDto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
-import '../../../Model/gymDto.dart';
-import '../../../Model/gymImgDto.dart';
+import '../Model/gym/gymDto.dart';
 import 'package:http/http.dart' as http;
-import '../Model/gymPriceDto.dart';
-import '../Utils/httpurls.dart';
-import '../Utils/toast.dart';
+import '../Model/gym/gymImgDto.dart';
+import '../Model/gym/gymPriceDto.dart';
+import '../Model/gym/gymTimeDto.dart';
+import '../Utils/sundry/httpurls.dart';
+import '../Utils/sundry/toast.dart';
 
 class GymApi with ChangeNotifier {
   String? _gym_name;
@@ -53,27 +52,7 @@ class GymApi with ChangeNotifier {
     }
   }
 
-  Future<bool?> duplication_code(String code) async {
-    final prfes = await SharedPreferences.getInstance();
-    var res = await http.post(
-      Uri.parse(GymApi_Url().check_code + "$code"),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${prfes.getString("token")}'
-      },
-    );
 
-    if (res.statusCode == 200) {
-      final decodeData = utf8.decode(res.bodyBytes);
-      if (decodeData.toString() == "OK") {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return null;
-    }
-  }
 
   Future<bool> reset_count() async {
     final prfes = await SharedPreferences.getInstance();
@@ -262,6 +241,7 @@ class GymApi with ChangeNotifier {
           "holiday": holiday
         })));
 
+
     if (res.statusCode == 200) {
       return true;
     } else {
@@ -281,7 +261,10 @@ class GymApi with ChangeNotifier {
           },
           body: json.encode(
               ({"during": prices[i].during, "price": prices[i].price})));
+      print(res.body);
     }
+
+
 
     if (res.statusCode == 403) {
       showtoast("권한이 없습니다.관리자에게 문의해주세요");
@@ -377,8 +360,8 @@ class GymApi with ChangeNotifier {
       int? count,
       String? oneline_introduce,
       String? introduce,
-      int? trainer_count,
-      int? code) async {
+
+     ) async {
     final prfes = await SharedPreferences.getInstance();
     List<double> values = [];
     var res = await http.patch(Uri.parse(GymApi_Url().udpate_gymInfo),
@@ -393,8 +376,8 @@ class GymApi with ChangeNotifier {
           "count": count,
           "onelineIntroduce": oneline_introduce,
           "introduce": introduce,
-          "code": code,
-          "trainer_count": trainer_count,
+
+
         }));
 
     if (res.statusCode == 200) {

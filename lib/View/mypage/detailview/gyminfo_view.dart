@@ -6,10 +6,10 @@ import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Controller/gymApi.dart';
-import '../../../Model/gymDto.dart';
-import '../../../Model/gymPriceDto.dart';
-import '../../../Model/gymTimeDto.dart';
-import '../../../Utils/constants.dart';
+import '../../../Model/gym/gymDto.dart';
+import '../../../Model/gym/gymPriceDto.dart';
+import '../../../Model/gym/gymTimeDto.dart';
+import '../../../Utils/sundry/constants.dart';
 import '../../home/popup/edit_popup.dart';
 import '../widget/gymPrice_widget.dart';
 

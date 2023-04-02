@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ohmmanager/Controller/adminApi.dart';
-import 'package:ohmmanager/Model/trainerDto.dart';
-import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/Model/account/managerDto.dart';
+import 'package:ohmmanager/Utils/sundry/toast.dart';
 import 'package:ohmmanager/View/trainer/popup/role_select.dart';
 import 'package:ohmmanager/View/trainer/widget/trainer_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../Utils/constants.dart';
+import '../../Utils/sundry/constants.dart';
 
 class TrainerView extends StatefulWidget {
   const TrainerView({Key? key}) : super(key: key);

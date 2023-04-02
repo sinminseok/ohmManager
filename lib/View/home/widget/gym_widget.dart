@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../Model/gymDto.dart';
-import '../../../Utils/constants.dart';
+import '../../../Model/gym/gymDto.dart';
+import '../../../Utils/sundry/constants.dart';
 
 
 

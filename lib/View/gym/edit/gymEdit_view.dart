@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Controller/gymApi.dart';
-import 'package:ohmmanager/Model/gymDto.dart';
-import 'package:ohmmanager/Model/gymImgDto.dart';
-import 'package:ohmmanager/Utils/buttom_container.dart';
-import 'package:ohmmanager/Utils/constants.dart';
-import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/Model/gym/gymDto.dart';
+import 'package:ohmmanager/Utils/widget/buttom_container.dart';
+import 'package:ohmmanager/Utils/sundry/constants.dart';
+import 'package:ohmmanager/Utils/sundry/toast.dart';
 import 'package:ohmmanager/View/frame/frame_view.dart';
 import 'package:ohmmanager/View/home/widget/gymInfo_widget.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../Utils/permission.dart';
+import '../../../Model/gym/gymImgDto.dart';
+import '../../../Utils/sundry/permission.dart';
 import '../widget/gymEdit_widget.dart';
 
 class GymEdit_View extends StatefulWidget {
@@ -38,7 +38,7 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
     ImagePicker imagePicker = ImagePicker();
 
     List<XFile> images = await imagePicker.pickMultiImage(
-        maxWidth: 640, maxHeight: 280, imageQuality: 70);
+        maxWidth: 640, maxHeight: 280, imageQuality: 85);
 
     for (int i = 0; i < images.length; i++) {
       setState(() {
@@ -229,42 +229,9 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
                 "헬스장 한줄소개", widget.gymDto?.name, _onelineController, false),
             GymEdit_Widget(
                 "헬스장 소개", widget.gymDto?.name, _introduceController, false),
-            InkWell(
-              onTap: (){
-                showtoast("가입코드는 수정할 수 없습니다.\n고객센터에 문의해주세요");
-              },
-              child: Container(
-                width: 360.w,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(left: 20, bottom: 15, top: 20),
-                        child: Text(
-                          "가입코드",
-                          style: TextStyle(
-                              fontSize: 19,
-                              color: kPrimaryColor,
-                              fontWeight: FontWeight.bold),
-                        )),
-                    Container(
-                      width: 360.w,
-                      height: 70.h,
-                      margin: EdgeInsets.only(left: 20, right: 20),
-                      decoration: BoxDecoration(
-                          color: kContainerColor,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 25.h, bottom: 20, left: 20, right: 20),
-                          child: Text("${widget.gymDto?.code}")),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            GymEdit_Widget(
-                "회원수", widget.gymDto?.count.toString(), _countController, true),
+
+            // GymEdit_Widget(
+            //     "회원수", widget.gymDto?.count.toString(), _countController, true),
             InkWell(
                 onTap: () {
 
@@ -282,8 +249,8 @@ class _GymEdit_ViewState extends State<GymEdit_View> {
                         int.parse(_countController.text),
                         _onelineController.text,
                         _introduceController.text,
-                        int.parse(_trainerCountController.text),
-                        int.parse(_codeController.text));
+
+                   );
 
                     GymApi().update_gymImgs(
                         widget.gymDto?.id, delete_imgs, image_picked);

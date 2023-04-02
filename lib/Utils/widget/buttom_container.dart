@@ -3,7 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'constants.dart';
+import '../sundry/constants.dart';
 
 Widget Button(String title){
   return Container(

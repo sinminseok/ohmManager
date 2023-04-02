@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ohmmanager/Model/answerDto.dart';
+import 'package:ohmmanager/Model/message/answerDto.dart';
 
-import 'postImgDto.dart';
 
 class QuestionDto {
   late int id;

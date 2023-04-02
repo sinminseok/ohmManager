@@ -5,14 +5,14 @@ import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ohmmanager/Model/gymDto.dart';
-import 'package:ohmmanager/Model/statisticsDto.dart';
-import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/Model/gym/gymDto.dart';
+import 'package:ohmmanager/Model/statistics/statisticsDto.dart';
+import 'package:ohmmanager/Utils/sundry/toast.dart';
 import 'package:ohmmanager/View/home/popup/reset_popup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Controller/gymApi.dart';
-import '../../../Utils/constants.dart';
+import '../../../Utils/sundry/constants.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../widget/chart_bottom.dart';
@@ -132,15 +132,19 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                                           color: kTextWhiteColor),
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 15.h,bottom: 5.h,top: 5.h),
-                                    child: Text(
-                                      "명",
-                                      style: TextStyle(
-                                          fontSize: 18.sp,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: "lightfont",
-                                          color: kTextWhiteColor),
+                                  InkWell(
+                                    onTap: (){
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(left: 15.h,bottom: 5.h,top: 5.h),
+                                      child: Text(
+                                        "명",
+                                        style: TextStyle(
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "lightfont",
+                                            color: kTextWhiteColor),
+                                      ),
                                     ),
                                   )
                                 ]),
@@ -196,7 +200,7 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                                     left: 10.w, right: 10.w, bottom: 20.h),
                                 child: Sparkline(
                                   enableGridLines: true,
-                                  max: data.reduce(max) + 2,
+                                  max: data.reduce(max)+12,
                                   pointsMode: PointsMode.all,
                                   pointSize: 8.0,
                                   fallbackHeight: 200.h,

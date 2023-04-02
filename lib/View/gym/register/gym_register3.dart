@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ohmmanager/Controller/gymApi.dart';
-import 'package:ohmmanager/Utils/toast.dart';
+import 'package:ohmmanager/Utils/sundry/toast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Provider/gymProvider.dart';
-import '../../../Utils/constants.dart';
-import '../../../Utils/permission.dart';
+import '../../../Utils/sundry/constants.dart';
+import '../../../Utils/sundry/permission.dart';
 import 'gym_register4.dart';
 
 class GymRegisterView3 extends StatefulWidget {
@@ -32,7 +32,7 @@ class _GymRegisterView3 extends State<GymRegisterView3> {
     ImagePicker imagePicker = ImagePicker();
 
     List<XFile> images = await imagePicker.pickMultiImage(
-        maxWidth: 640, maxHeight: 280, imageQuality: 70);
+        maxWidth: 640, maxHeight: 280, imageQuality: 85);
 
     setState(() {
       image_picked = images;
@@ -150,7 +150,7 @@ class _GymRegisterView3 extends State<GymRegisterView3> {
                   onPressed: _doSomething,
                   child: Container(
                     width: 330.w,
-                    height: 47.h,
+                    height: 55.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: kButtonColor,

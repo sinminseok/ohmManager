@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ohmmanager/Utils/constants.dart';
+import 'package:ohmmanager/Utils/sundry/constants.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../Model/postDto.dart';
+import '../../../Model/post/postDto.dart';
 import '../detailview/post_detail.dart';
 
 
@@ -27,14 +27,7 @@ Widget Post_Widget(Size size,context,PostDto postDto) {
       child: Container(
         decoration: BoxDecoration(
             border: Border.all(color: Colors.grey,width: 0.5),
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Colors.grey.withOpacity(0.5),
-            //     spreadRadius: 5,
-            //     blurRadius: 7,
-            //     offset: Offset(0, 3), // changes position of shadow
-            //   ),
-            // ],
+
             color: kContainerColor,
             borderRadius: BorderRadius.all(Radius.circular(1))),
         child: Column(
@@ -58,8 +51,8 @@ Widget Post_Widget(Size size,context,PostDto postDto) {
             ),
             Container(
               width: 350.w,
-              height: 20.h,
-              margin: EdgeInsets.only(left: 20.w,top: 10.h,right: 20.w,bottom: 30.h),
+
+              margin: EdgeInsets.only(left: 20.w,top: 10.h,right: 20.w,bottom: 20.h),
               child: Text("더보기", overflow: TextOverflow.clip,style: TextStyle(fontFamily: "lightfont",fontSize: 21),),
             ),
           ],
