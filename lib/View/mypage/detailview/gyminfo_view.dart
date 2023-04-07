@@ -162,7 +162,7 @@ class _GymDetail_View extends State<GymDetail_View> {
                               child: Text(
                                 "센터 이용료",
                                 style: TextStyle(
-                                    fontSize: 17.sp,
+                                    fontSize: 16.sp,
                                     fontFamily: "boldfont",
                                     fontWeight: FontWeight.bold),
                               ),
@@ -194,9 +194,9 @@ class _GymDetail_View extends State<GymDetail_View> {
                           ],
                         )),
                     Container(
-                        margin: EdgeInsets.only(top: 10.h),
+                        margin: EdgeInsets.only(top: 10.h,bottom: 10.h),
                         width: 360.w,
-                        height: 240.h,
+
                         decoration: BoxDecoration(color: kContainerColor),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,13 +206,13 @@ class _GymDetail_View extends State<GymDetail_View> {
                               child: Text(
                                 "센터 운영시간",
                                 style: TextStyle(
-                                    fontSize: 17.sp,
+                                    fontSize: 16.sp,
                                     fontFamily: "boldfont",
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
                             Container(
-                                margin: EdgeInsets.only(top: 20, left: 20),
+                                margin: EdgeInsets.only(top: 10, left: 20),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -279,7 +279,7 @@ class _GymDetail_View extends State<GymDetail_View> {
                                         ? Container()
                                         : Container(
                                             margin:
-                                                EdgeInsets.only(bottom: 5.h),
+                                                EdgeInsets.only(bottom: 10.h),
                                             child: Text(
                                                 "휴관일 : ${gymTime?.closeDay}")),
                                   ],
@@ -298,7 +298,7 @@ class _GymDetail_View extends State<GymDetail_View> {
                               child: Text(
                                 "센터 소개",
                                 style: TextStyle(
-                                    fontSize: 17.sp,
+                                    fontSize: 16.sp,
                                     fontFamily: "boldfont",
                                     fontWeight: FontWeight.bold),
                               ),

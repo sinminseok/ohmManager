@@ -125,14 +125,14 @@ class _GymPriceEdit_View extends State<GymPriceEdit_View> {
                               child: Text(
                                 "이용 가격",
                                 style: TextStyle(
-                                    color: kTextColor, fontSize: 23),
+                                    color: kTextColor, fontSize: 19.sp),
                               ),
                             ),
                             Center(
                               child: Container(
                                 margin: EdgeInsets.only(bottom: 10),
                                 width: size.width * 0.9,
-                                height: size.height * 0.15,
+
                                 decoration: BoxDecoration(
                                     color: kContainerColor,
                                     borderRadius: BorderRadius.all(
@@ -150,7 +150,7 @@ class _GymPriceEdit_View extends State<GymPriceEdit_View> {
                                             child: Text(
                                               "이용기간",
                                               style: TextStyle(
-                                                  fontSize: 18,
+                                                  fontSize: 16.sp,
                                                   fontWeight: FontWeight.bold,
                                                   color: kTextColor),
                                             )),
@@ -199,11 +199,11 @@ class _GymPriceEdit_View extends State<GymPriceEdit_View> {
                                       children: [
                                         Container(
                                             margin: EdgeInsets.only(
-                                                left: 15, top: 0, bottom: 10),
+                                                left: 15, top: 0, bottom: 20.h),
                                             child: Text(
                                               "가격",
                                               style: TextStyle(
-                                                  fontSize: 18,
+                                                  fontSize: 16.sp,
                                                   fontWeight: FontWeight.bold,
                                                   color: kTextColor),
                                             )),
@@ -211,9 +211,9 @@ class _GymPriceEdit_View extends State<GymPriceEdit_View> {
                                           children: [
                                             Container(
                                               margin: EdgeInsets.only(
-                                                  bottom: 10, right: 10),
+                                                  bottom: 20, right: 10,),
                                               width: size.width * 0.25,
-                                              height: size.height * 0.04,
+                                              height: 30.h,
                                               decoration: BoxDecoration(
                                                   color: kBoxColor,
                                                   borderRadius:
@@ -222,19 +222,19 @@ class _GymPriceEdit_View extends State<GymPriceEdit_View> {
                                               child: TextFormField(
                                                 controller: _priceController,
                                                 textAlign: TextAlign.center,
-                                                cursorColor: kContainerColor,
+                                                keyboardType: TextInputType.number,
+                                                cursorColor: kTextBlackColor,
                                                 decoration: InputDecoration(
-                                                    contentPadding: EdgeInsets
-                                                        .all(10),
-                                                    hintText: "원",
+                                                    contentPadding: EdgeInsets.only(bottom: 10.h),
+                                                    hintText: "-",
                                                     border: InputBorder.none),
                                               ),
                                             ),
                                             Container(
                                               margin: EdgeInsets.only(
-                                                  right: 10),
+                                                  right: 10,bottom: 20.h),
                                               child: Text("원", style: TextStyle(
-                                                  fontSize: 18),),
+                                                  fontSize: 16.sp),),
                                             )
                                           ],
                                         ),

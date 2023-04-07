@@ -24,9 +24,8 @@ class GymStatistics_View extends StatefulWidget {
   String current_datetime;
 
   GymStatistics_View(
-      {
-        required this.gymDto,
-        required this.time_avg,
+      {required this.gymDto,
+      required this.time_avg,
       required this.current_datetime,
       required this.current_count});
 
@@ -37,7 +36,6 @@ class GymStatistics_View extends StatefulWidget {
 class _GymStatistics_View extends State<GymStatistics_View> {
   AnimateIconController controller = AnimateIconController();
   String? current_count;
-
 
   refresh() async {
     final prefs = await SharedPreferences.getInstance();
@@ -87,7 +85,6 @@ class _GymStatistics_View extends State<GymStatistics_View> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           Container(
               width: 360.w,
               height: 100.h,
@@ -96,23 +93,18 @@ class _GymStatistics_View extends State<GymStatistics_View> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     Container(
                       width: 360.w,
                       height: 80.h,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
-
-
                           Container(
-                            margin: EdgeInsets.only(top: 15.h,right: 15.w),
+                            margin: EdgeInsets.only(top: 15.h, right: 15.w),
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
-
                                     child: Text(
                                       "현재 약",
                                       style: TextStyle(
@@ -133,10 +125,10 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                                     ),
                                   ),
                                   InkWell(
-                                    onTap: (){
-                                    },
+                                    onTap: () {},
                                     child: Container(
-                                      margin: EdgeInsets.only(left: 15.h,bottom: 5.h,top: 5.h),
+                                      margin: EdgeInsets.only(
+                                          left: 15.h, bottom: 5.h, top: 5.h),
                                       child: Text(
                                         "명",
                                         style: TextStyle(
@@ -153,12 +145,6 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                       ),
                     ),
                   ])),
-          // Container(
-          //     margin: EdgeInsets.only(left: 13.w, top: 15.h),
-          //     child: Text(
-          //       "${widget.gymDto?.name}",
-          //       style: TextStyle(fontSize: 17.sp, fontFamily: "boldfont"),
-          //     )),
           Container(
               margin: EdgeInsets.only(left: 13.w, top: 15.h),
               child: Text(
@@ -180,9 +166,15 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("${data.reduce(max).ceil()} 명",style: TextStyle(fontSize: 13.sp)),
-                      Text("${((data.reduce(max) + data.reduce(min)) / 2).ceil()} 명",style: TextStyle(fontSize: 13.sp)),
-                      Text("${data.reduce(min).ceil()} 명",style: TextStyle(fontSize: 13.sp),),
+                      Text("${data.reduce(max).ceil()} 명",
+                          style: TextStyle(fontSize: 13.sp)),
+                      Text(
+                          "${((data.reduce(max) + data.reduce(min)) / 2).ceil()} 명",
+                          style: TextStyle(fontSize: 13.sp)),
+                      Text(
+                        "${data.reduce(min).ceil()} 명",
+                        style: TextStyle(fontSize: 13.sp),
+                      ),
                     ],
                   ),
                 ),
@@ -200,7 +192,7 @@ class _GymStatistics_View extends State<GymStatistics_View> {
                                     left: 10.w, right: 10.w, bottom: 20.h),
                                 child: Sparkline(
                                   enableGridLines: true,
-                                  max: data.reduce(max)+12,
+                                  max: data.reduce(max) + 2.5.h,
                                   pointsMode: PointsMode.all,
                                   pointSize: 8.0,
                                   fallbackHeight: 200.h,

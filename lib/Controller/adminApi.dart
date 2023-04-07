@@ -93,7 +93,6 @@ class AdminApi with ChangeNotifier {
     if (res.statusCode == 200) {
       return true;
     } else {
-      showtoast("데이터 혹은 와이파이를 확인해주세요");
       return false;
     }
   }
@@ -122,7 +121,6 @@ class AdminApi with ChangeNotifier {
 
       return gyms;
     } else {
-      showtoast("데이터 혹은 와이파이를 확인해주세요");
       return null;
     }
   }
@@ -149,7 +147,6 @@ class AdminApi with ChangeNotifier {
 
       return searchById;
     } else {
-      showtoast("데이터 혹은 와이파이를 확인해주세요");
     }
   }
 
@@ -173,8 +170,8 @@ class AdminApi with ChangeNotifier {
 
       return trainerDto;
     } else {
-      showtoast("데이터 혹은 와이파이를 확인해주세요");
     }
+
   }
 
   Future<bool?> register_profile(PickedFile profile, String managerId) async {
@@ -244,7 +241,6 @@ class AdminApi with ChangeNotifier {
       // prefs.setString("userId", data['id'].toString());
       return data['id'];
     } else {
-      showtoast("데이터 혹은 와이파이를 확인해주세요");
       return null;
     }
   }
@@ -272,7 +268,6 @@ class AdminApi with ChangeNotifier {
       final data = jsonDecode(decodeData);
       return data['id'];
     } else {
-      showtoast("데이터 혹은 와이파이를 확인해주세요");
     }
   }
 
@@ -303,7 +298,6 @@ class AdminApi with ChangeNotifier {
     if (res.statusCode == 200) {
       return true;
     } else {
-      showtoast("데이터 혹은 와이파이를 확인해주세요");
     }
   }
 
@@ -330,8 +324,8 @@ class AdminApi with ChangeNotifier {
       final data = jsonDecode(decodeData);
       return data['id'];
     } else {
-      showtoast("데이터 혹은 와이파이를 확인해주세요");
     }
+
   }
 
   //manager,trainer,ceo 로그인
@@ -356,7 +350,6 @@ class AdminApi with ChangeNotifier {
       return data['token'];
     } else {
 
-      showtoast("데이터 혹은 와이파이를 확인해주세요");
       return "false!";
     }
   }

@@ -318,7 +318,7 @@ class GymApi with ChangeNotifier {
           "count": count,
           "onelineIntroduce": oneline_introduce,
           "introduce": introduce,
-          "code": code,
+          // "code": code,
           "area": area,
         }));
 

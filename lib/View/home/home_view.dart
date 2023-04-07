@@ -45,6 +45,7 @@ class _HomeView extends State<HomeView> {
   Future<bool> get_gyminfo() async {
     final prefs = await SharedPreferences.getInstance();
     var userId = prefs.getString("userId");
+    //로그인된 계정 정보를 가져옴
     var trainerDto = await AdminApi().get_userinfo(prefs.getString("token"));
 
     if (trainerDto?.role == "ROLE_CEO") {

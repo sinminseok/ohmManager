@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ohmmanager">
    <application
-        android:label="ohmmanager"
-        android:name="${applicationName}"
+        android:label="오헬몇관리자"
+        android:name="오헬몇관리자"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

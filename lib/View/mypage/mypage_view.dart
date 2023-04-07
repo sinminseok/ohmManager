@@ -203,7 +203,7 @@ class _MypageViewState extends State<MypageView> {
                                   user!.profile != null
                                       ? Container(
                                           margin:
-                                              EdgeInsets.only(top: 0, left: 23),
+                                              EdgeInsets.only(bottom: 30, left: 23),
                                           width: size.width * 0.16,
                                           height: size.height * 0.08,
                                           child: CircleAvatar(

@@ -34,8 +34,6 @@ class _PostView extends State<PostView> {
       results =
       await PostApi().findall_posts(prefs.getString("gymId").toString());
     }
-
-
     return results;
   }
 

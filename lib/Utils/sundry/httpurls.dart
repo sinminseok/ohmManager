@@ -1,8 +1,6 @@
-String endpoint = "http://192.168.0.101:8080/api/";
-//172.20.10.2 핫스팟
-//192.168.0.101 집
-//172.30.3.57 -- >스벅
+String endpoint = "http://localhost:8080/api/";
 
+//ec2-3-37-169-45.ap-northeast-2.compute.amazonaws.com
 class AdminApi_Url {
   String save_ceo = endpoint+"ceo";
 
