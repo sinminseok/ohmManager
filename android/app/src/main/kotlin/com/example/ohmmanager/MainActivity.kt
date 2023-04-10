@@ -1,4 +1,4 @@
-package com.example.ohmmanager
+package com.comumu.ohmmanager
 
 import io.flutter.embedding.android.FlutterActivity
 

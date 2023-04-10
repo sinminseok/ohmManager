@@ -1,4 +1,4 @@
-String endpoint = "http://localhost:8080/api/";
+String endpoint = "http://ec2-3-37-169-45.ap-northeast-2.compute.amazonaws.com:8080/api/";
 
 //ec2-3-37-169-45.ap-northeast-2.compute.amazonaws.com
 class AdminApi_Url {
