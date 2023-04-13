@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ohmmanager/Utils/sundry/date.dart';
+import 'package:ohmmanager/Utils/sundry/toast.dart';
+import 'package:ohmmanager/View/account/login_view.dart';
 import 'package:ohmmanager/View/home/popup/register_popup.dart';
 import 'package:ohmmanager/View/home/widget/gym_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -48,50 +50,59 @@ class _HomeView extends State<HomeView> {
     //로그인된 계정 정보를 가져옴
     var trainerDto = await AdminApi().get_userinfo(prefs.getString("token"));
 
-    if (trainerDto?.role == "ROLE_CEO") {
-      setState(() {
-        role_ceo = true;
-      });
+    if(trainerDto?.available == false){
+      showtoast("승인 대기중인 계정입니다.");
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+          builder: (BuildContext context) =>
+              LoginView()), (route) => false);
 
-      final prefs = await SharedPreferences.getInstance();
-      var gynId =await prefs.getString("gymId");
-      if(gynId == null){
-        gyms  =await AdminApi().findgyms_byceo(prefs.getString("userId"), prefs.getString("token"));
-        return true;
-      }else{
-        var gg = await GymApi().search_byId(int.parse(gynId));
-        if(gg == null){
-          setState(() {
-            gym_null = true;
-          });
+      return false;
+    }else{
+      if (trainerDto?.role == "ROLE_CEO") {
+        setState(() {
+          role_ceo = true;
+        });
 
+        final prefs = await SharedPreferences.getInstance();
+        var gynId =await prefs.getString("gymId");
+        if(gynId == null){
+          gyms  =await AdminApi().findgyms_byceo(prefs.getString("userId"), prefs.getString("token"));
+          return true;
         }else{
-          setState(() {
-            gymDto = gg;
-          });
-          await get_avg();
+          var gg = await GymApi().search_byId(int.parse(gynId));
+          if(gg == null){
+            setState(() {
+              gym_null = true;
+            });
+
+          }else{
+            setState(() {
+              gymDto = gg;
+            });
+            await get_avg();
+          }
+
+          return true;
         }
 
-        return true;
+
+      }else{
+        //일반 admin이 gyminfo를 가져옴 (단일 조회)
+        var gym = await AdminApi().gyminfo_byManager(userId, prefs.getString("token"));
+
+        //gym 정보가 아직 등록되지 않았을때
+        if (gym == null) {
+          gymDto = null;
+          return false;
+        } else {
+          setState(() {
+            gymDto = gym;
+          });
+          await get_avg();
+          return true;
+        }
       }
 
-
-    }else{
-      //일반 admin이 gyminfo를 가져옴 (단일 조회)
-      var gym =
-      await AdminApi().gyminfo_byManager(userId, prefs.getString("token"));
-
-      //gym 정보가 아직 등록되지 않았을때
-      if (gym == null) {
-        gymDto = null;
-        return false;
-      } else {
-        setState(() {
-          gymDto = gym;
-        });
-        await get_avg();
-        return true;
-      }
     }
 
 
@@ -269,6 +280,7 @@ class _HomeView extends State<HomeView> {
                                     ),
                                   ),
                                 ),
+
                                 gyms == null?Container():Container(
                                   width: 350.w,
                                   height: 450.h,

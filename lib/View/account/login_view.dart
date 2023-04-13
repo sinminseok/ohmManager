@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../Utils/sundry/constants.dart';
 import '../../Utils/sundry/toast.dart';
 import 'ceo/ceo_code.dart';
+import 'ceo/signup_ceo.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -304,7 +305,7 @@ class _LoginView extends State<LoginView> with SingleTickerProviderStateMixin {
                                         context,
                                         PageTransition(
                                             type: PageTransitionType.fade,
-                                            child: CEO_CodeView()));
+                                            child: Signup_Ceo()));
                                   },
                                   child: Text(
                                     "회원가입 하러가기",

@@ -136,6 +136,8 @@ class GymApi with ChangeNotifier {
       Uri.parse(GymApi_Url().find_byId + "${gymId}"),
       headers: {'Content-Type': 'application/json'},
     );
+    // print("dasdd");
+    // print(res.body);
 
     if (res.statusCode == 200) {
       List<GymImgDto> imgs = [];
@@ -201,6 +203,9 @@ class GymApi with ChangeNotifier {
           "friday": friday,
           "holiday": holiday
         })));
+
+    print(res.body);
+    print("return register time");
 
     if (res.statusCode == 200) {
       return true;

@@ -2,13 +2,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ohmmanager/Utils/sundry/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
@@ -30,7 +25,6 @@ class AdminApi with ChangeNotifier {
       },
     );
 
-    print(res);
     if (res.statusCode == 200) {
       return true;
     } else {
@@ -50,7 +44,6 @@ class AdminApi with ChangeNotifier {
     if (res.statusCode == 200) {
       return true;
     } else {
-
       return false;
     }
   }
@@ -138,16 +131,14 @@ class AdminApi with ChangeNotifier {
     if (res.statusCode == 200) {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
-
-      GymDto? searchById = await GymApi().search_byId(data['gymDto']['id']);
+      GymDto? searchById = await GymApi().search_byId(data['gymId']);
       final prefs = await SharedPreferences.getInstance();
       if (prefs.getString("gymId") == null) {
         prefs.setString("gymId", searchById!.id.toString());
       }
 
       return searchById;
-    } else {
-    }
+    } else {}
   }
 
   Future<TrainerDto?> get_userinfo(String? token) async {
@@ -165,13 +156,12 @@ class AdminApi with ChangeNotifier {
       final data = jsonDecode(decodeData);
       // AuthorityDto authorityDto = AuthorityDto.fromJson(data['authorities'][0]);
 
+      print("dasdasd");
       print(data);
       TrainerDto trainerDto = TrainerDto.fromJson(data);
 
       return trainerDto;
-    } else {
-    }
-
+    } else {}
   }
 
   Future<bool?> register_profile(PickedFile profile, String managerId) async {
@@ -267,8 +257,7 @@ class AdminApi with ChangeNotifier {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
       return data['id'];
-    } else {
-    }
+    } else {}
   }
 
   //manager 정보수정
@@ -297,8 +286,7 @@ class AdminApi with ChangeNotifier {
 
     if (res.statusCode == 200) {
       return true;
-    } else {
-    }
+    } else {}
   }
 
   //trainer 회원가입
@@ -323,9 +311,7 @@ class AdminApi with ChangeNotifier {
       final decodeData = utf8.decode(res.bodyBytes);
       final data = jsonDecode(decodeData);
       return data['id'];
-    } else {
-    }
-
+    } else {}
   }
 
   //manager,trainer,ceo 로그인
@@ -349,7 +335,6 @@ class AdminApi with ChangeNotifier {
       await prefs.setString("userId", trainerDto!.id.toString());
       return data['token'];
     } else {
-
       return "false!";
     }
   }

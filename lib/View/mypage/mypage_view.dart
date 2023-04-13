@@ -391,6 +391,13 @@ class _MypageViewState extends State<MypageView> {
                   "(주)코무무 | komumu",
                   style: TextStyle(color: Colors.black38),
                 ),
+                Container(
+                  margin: EdgeInsets.only(top: 4,bottom: 4),
+                  child: Text(
+                    "오헬몇 관리자 version 1.0.3",
+                    style: TextStyle(color: Colors.black38),
+                  ),
+                ),
                 Text(
                   "@Copyright 신민석,김영솔",
                   style: TextStyle(color: Colors.black38),

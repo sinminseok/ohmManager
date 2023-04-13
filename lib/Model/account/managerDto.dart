@@ -14,9 +14,12 @@ class TrainerDto {
 
   bool? showProfile;
 
+
   String? nickname;
 
   String? role;
+
+  bool? available;
 
   TrainerDto(
       {required this.showProfile,
@@ -24,6 +27,7 @@ class TrainerDto {
       required this.position,
       required this.id,
       required this.name,
+        required this.available,
       required this.profile,
       required this.oneline_introduce,
       required this.introduce,
@@ -36,6 +40,7 @@ class TrainerDto {
       position: json['position'],
       name: json['username'],
       profile: json['profile'],
+      available : json['available'],
       oneline_introduce: json['onelineIntroduce'],
       introduce: json['introduce'],
       nickname: json['nickname'],
